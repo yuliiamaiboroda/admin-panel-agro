@@ -1,7 +1,21 @@
-import React from 'react';
+import { useEffect } from 'react';
 import { Routes, Route, Navigate, Link } from 'react-router-dom';
+import { useAppDispatch, useAppSelector } from 'hooks';
+import { selectUser, loginUser } from 'redux/user';
 
 function App() {
+  const user = useAppSelector(selectUser);
+  const dispatch = useAppDispatch();
+  useEffect(() => {
+    dispatch(
+      loginUser({
+        email: 'hello@mail.com',
+        password: 'World123',
+      })
+    );
+  }, [dispatch]);
+
+  console.log(user);
   return (
     <div className="App">
       <ul>
