@@ -39,7 +39,7 @@ const createFiles = async (folderName, fileName) => {
   if (CONFIGURATION.stylesExtension) {
     await fs.writeFile(
       path.join(folderName, fileName + CONFIGURATION.stylesExtension),
-      ''
+      'export const none = null;\n'
     );
   }
 };

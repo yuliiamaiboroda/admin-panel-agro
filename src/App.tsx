@@ -1,19 +1,10 @@
-import { useEffect } from 'react';
 import { Routes, Route, Navigate, Link } from 'react-router-dom';
-import { useAppDispatch, useAppSelector } from 'hooks';
-import { selectUser, loginUser } from 'redux/user';
+import { useAppSelector } from 'hooks';
+import { selectUser } from 'redux/user';
+import LoginPage from 'pages/LoginPage';
 
 function App() {
   const user = useAppSelector(selectUser);
-  const dispatch = useAppDispatch();
-  useEffect(() => {
-    dispatch(
-      loginUser({
-        email: 'hello@mail.com',
-        password: 'World123',
-      })
-    );
-  }, [dispatch]);
 
   console.log(user);
   return (
@@ -40,6 +31,9 @@ function App() {
         <li>
           <Link to="/feedbacks">Feedbacks</Link>
         </li>
+        <li>
+          <Link to="/login">Login</Link>
+        </li>
       </ul>
       <Routes>
         <Route path="/" element={<h1>Home page</h1>} />
@@ -49,6 +43,7 @@ function App() {
         <Route path="/vacancies" element={<h1>Vacancies page</h1>} />
         <Route path="/resumes" element={<h1>Resumes page</h1>} />
         <Route path="/feedbacks" element={<h1>Feedbacks page</h1>} />
+        <Route path="/login" element={<LoginPage />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </div>
