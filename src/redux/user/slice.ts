@@ -4,6 +4,13 @@ import { loginUser } from './operations';
 
 interface IUserState {
   accessToken: string | null;
+  refreshToken: string | null;
+  user: {
+    email: string | null;
+    name: string | null;
+    surname: string | null;
+    role: string | null;
+  };
   isAuthorized: boolean;
   isLoading: boolean;
   error: string | null;
@@ -11,6 +18,13 @@ interface IUserState {
 
 const initialState: IUserState = {
   accessToken: null,
+  refreshToken: null,
+  user: {
+    email: null,
+    name: null,
+    surname: null,
+    role: null,
+  },
   isAuthorized: false,
   isLoading: false,
   error: null,
@@ -34,7 +48,9 @@ const userSlice = createSlice({
           ...state,
           isLoading: false,
           isAuthorized: true,
-          accessToken: action.payload,
+          accessToken: action.payload.accessToken,
+          refreshToken: action.payload.refreshToken,
+          user: action.payload.user,
         };
       })
       .addCase(loginUser.rejected, (state, action) => {

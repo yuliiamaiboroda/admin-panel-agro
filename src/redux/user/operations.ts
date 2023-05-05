@@ -13,7 +13,7 @@ interface IUser {
 }
 
 export const loginUser = createAsyncThunk<
-  string,
+  IUser,
   { email: string; password: string },
   { rejectValue: string }
 >('loginUser', async (userCredentials, thunkApi) => {
@@ -23,7 +23,7 @@ export const loginUser = createAsyncThunk<
       userCredentials
     );
 
-    return data.accessToken;
+    return data;
   } catch (err) {
     const error = err as AxiosError;
     return thunkApi.rejectWithValue(error.message);
