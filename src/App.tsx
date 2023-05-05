@@ -1,7 +1,12 @@
-import React from 'react';
 import { Routes, Route, Navigate, Link } from 'react-router-dom';
+import { useAppSelector } from 'hooks';
+import { selectUser } from 'redux/user';
+import LoginPage from 'pages/LoginPage';
 
 function App() {
+  const user = useAppSelector(selectUser);
+
+  console.log(user);
   return (
     <div className="App">
       <ul>
@@ -26,6 +31,9 @@ function App() {
         <li>
           <Link to="/feedbacks">Feedbacks</Link>
         </li>
+        <li>
+          <Link to="/login">Login</Link>
+        </li>
       </ul>
       <Routes>
         <Route path="/" element={<h1>Home page</h1>} />
@@ -35,6 +43,7 @@ function App() {
         <Route path="/vacancies" element={<h1>Vacancies page</h1>} />
         <Route path="/resumes" element={<h1>Resumes page</h1>} />
         <Route path="/feedbacks" element={<h1>Feedbacks page</h1>} />
+        <Route path="/login" element={<LoginPage />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </div>
