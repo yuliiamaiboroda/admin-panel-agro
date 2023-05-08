@@ -1,10 +1,21 @@
+// import { useEffect } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
+// import { useAppDispatch } from 'hooks';
+// import { refreshUser } from 'redux/user';
 import HomePage from 'pages/HomePage';
 import LoginPage from 'pages/LoginPage';
 import RestrictedRoute from 'components/RestrictedRoute';
 import PrivateRoute from 'components/PrivateRoute';
 
 function App() {
+  // TODO:  Add fetch of refresh user
+
+  // const dispatch = useAppDispatch();
+
+  // useEffect(() => {
+  //   dispatch(refreshUser());
+  // }, [dispatch]);
+
   return (
     <div className="App">
       <Routes>

@@ -15,7 +15,8 @@ import { userReducer } from './user';
 const persistConfig = {
   key: 'credentials',
   storage,
-  whitelist: ['accessToken', 'refreshToken'],
+  // TODO:  Change whitelist to the next, when fixed fetch of refresh routes
+  // whitelist: ['accessToken', 'refreshToken'],
 };
 
 const credentialsPersistReducer = persistReducer(persistConfig, userReducer);
