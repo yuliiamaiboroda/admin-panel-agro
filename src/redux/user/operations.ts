@@ -27,7 +27,7 @@ export const loginUser = createAsyncThunk<
   IUser,
   { email: string; password: string },
   { rejectValue: string }
->('loginUser', async (userCredentials, thunkApi) => {
+>('user/loginUser', async (userCredentials, thunkApi) => {
   try {
     const { data } = await axios.post<IUser>(
       '/api/users/login',
@@ -47,12 +47,12 @@ export const loginUser = createAsyncThunk<
 //   IUser,
 //   undefined,
 //   { rejectValue: string; state: RootState }
-// >('refreshUser', async (_, thunkApi) => {
-//   const { user } = thunkApi.getState();
-//   if (!user.refreshToken) {
+// >('user/refreshUser', async (_, thunkApi) => {
+//   const { userData } = thunkApi.getState();
+//   if (!userData.refreshToken) {
 //     return thunkApi.rejectWithValue('Unable to refresh user');
 //   }
-//   setToken(user.refreshToken);
+//   setToken(userData.refreshToken);
 //   try {
 //     const { data } = await axios.post<IUser>('/api/users/refresh');
 //     setToken(data.accessToken);

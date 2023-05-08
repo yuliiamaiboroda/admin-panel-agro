@@ -11,6 +11,7 @@ import {
 } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import { userReducer } from './user';
+import { productsReducer } from './products';
 
 const persistConfig = {
   key: 'credentials',
@@ -22,7 +23,7 @@ const persistConfig = {
 const credentialsPersistReducer = persistReducer(persistConfig, userReducer);
 
 export const store = configureStore({
-  reducer: { user: credentialsPersistReducer },
+  reducer: { userData: credentialsPersistReducer, products: productsReducer },
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware({
       serializableCheck: {
