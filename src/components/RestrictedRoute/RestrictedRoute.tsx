@@ -10,8 +10,8 @@ export default function RestrictedRoute({
   component,
   redirectTo = '/',
 }: IProps) {
-  const { isAuthorized } = useAppSelector(selectUser);
-  if (isAuthorized) {
+  const { user } = useAppSelector(selectUser);
+  if (user.role !== 'ApplyManager') {
     return <Navigate to={redirectTo} replace />;
   }
   return component;

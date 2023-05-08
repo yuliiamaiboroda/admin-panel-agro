@@ -4,7 +4,6 @@ import { Routes, Route, Navigate } from 'react-router-dom';
 // import { refreshUser } from 'redux/user';
 import HomePage from 'pages/HomePage';
 import LoginPage from 'pages/LoginPage';
-import RestrictedRoute from 'components/RestrictedRoute';
 import PrivateRoute from 'components/PrivateRoute';
 
 function App() {
@@ -22,7 +21,7 @@ function App() {
         <Route
           path="/"
           element={
-            <PrivateRoute component={<HomePage />} redirectTo="/login" />
+            <PrivateRoute component={<HomePage />} auth redirectTo="/login" />
           }
         >
           <Route index element={<Navigate to="products" />} />
@@ -35,7 +34,13 @@ function App() {
         </Route>
         <Route
           path="/login"
-          element={<RestrictedRoute component={<LoginPage />} redirectTo="/" />}
+          element={
+            <PrivateRoute
+              component={<LoginPage />}
+              auth={false}
+              redirectTo="/"
+            />
+          }
         />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>

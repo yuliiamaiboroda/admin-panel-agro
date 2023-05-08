@@ -4,12 +4,19 @@ import { selectUser } from 'redux/user';
 
 interface IProps {
   component: JSX.Element;
+  auth: boolean;
   redirectTo: string;
 }
-export default function PrivateRoute({ component, redirectTo = '/' }: IProps) {
+export default function PrivateRoute({
+  component,
+  auth,
+  redirectTo = '/',
+}: IProps) {
   const { isAuthorized } = useAppSelector(selectUser);
-  if (!isAuthorized) {
+
+  if (isAuthorized !== auth) {
     return <Navigate to={redirectTo} replace />;
   }
+
   return component;
 }
