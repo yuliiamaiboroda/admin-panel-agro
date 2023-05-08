@@ -1,49 +1,42 @@
-import { Routes, Route, Navigate, Link } from 'react-router-dom';
-import { useAppSelector } from 'hooks';
-import { selectUser } from 'redux/user';
+// import { useEffect } from 'react';
+import { Routes, Route, Navigate } from 'react-router-dom';
+// import { useAppDispatch } from 'hooks';
+// import { refreshUser } from 'redux/user';
+import HomePage from 'pages/HomePage';
 import LoginPage from 'pages/LoginPage';
+import RestrictedRoute from 'components/RestrictedRoute';
+import PrivateRoute from 'components/PrivateRoute';
 
 function App() {
-  const user = useAppSelector(selectUser);
+  // TODO:  Add fetch of refresh user
 
-  console.log(user);
+  // const dispatch = useAppDispatch();
+
+  // useEffect(() => {
+  //   dispatch(refreshUser());
+  // }, [dispatch]);
+
   return (
     <div className="App">
-      <ul>
-        <li>
-          <Link to="/">Home</Link>
-        </li>
-        <li>
-          <Link to="/users">Users</Link>
-        </li>
-        <li>
-          <Link to="/products">Products</Link>
-        </li>
-        <li>
-          <Link to="/services">Services</Link>
-        </li>
-        <li>
-          <Link to="/vacancies">Vacancies</Link>
-        </li>
-        <li>
-          <Link to="/resumes">Resumes</Link>
-        </li>
-        <li>
-          <Link to="/feedbacks">Feedbacks</Link>
-        </li>
-        <li>
-          <Link to="/login">Login</Link>
-        </li>
-      </ul>
       <Routes>
-        <Route path="/" element={<h1>Home page</h1>} />
-        <Route path="/users" element={<h1>Users page</h1>} />
-        <Route path="/products" element={<h1>Products page</h1>} />
-        <Route path="/services" element={<h1>Services page</h1>} />
-        <Route path="/vacancies" element={<h1>Vacancies page</h1>} />
-        <Route path="/resumes" element={<h1>Resumes page</h1>} />
-        <Route path="/feedbacks" element={<h1>Feedbacks page</h1>} />
-        <Route path="/login" element={<LoginPage />} />
+        <Route
+          path="/"
+          element={
+            <PrivateRoute component={<HomePage />} redirectTo="/login" />
+          }
+        >
+          <Route index element={<Navigate to="products" />} />
+          <Route path="users" element={<h1>Users page</h1>} />
+          <Route path="products" element={<h1>Products page</h1>} />
+          <Route path="services" element={<h1>Services page</h1>} />
+          <Route path="vacancies" element={<h1>Vacancies page</h1>} />
+          <Route path="resumes" element={<h1>Resumes page</h1>} />
+          <Route path="feedbacks" element={<h1>Feedbacks page</h1>} />
+        </Route>
+        <Route
+          path="/login"
+          element={<RestrictedRoute component={<LoginPage />} redirectTo="/" />}
+        />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </div>
