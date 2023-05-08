@@ -7,11 +7,9 @@ export default function ProductsPage() {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    console.log('useEffect()');
     dispatch(getAllProducts());
   }, [dispatch]);
 
-  console.log({ products });
   return (
     <div>
       <h1>Products page</h1>
