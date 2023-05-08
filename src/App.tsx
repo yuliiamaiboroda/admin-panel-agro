@@ -28,8 +28,6 @@ function App() {
         >
           <Route index element={<Navigate to="products" />} />
           <Route path="users" element={<UsersPage />} />
-          <Route path="products" element={<h1>Products page</h1>} />
-          <Route path="users" element={<h1>Users page</h1>} />
           <Route path="products" element={<ProductsPage />} />
           <Route path="services" element={<h1>Services page</h1>} />
           <Route path="vacancies" element={<h1>Vacancies page</h1>} />
