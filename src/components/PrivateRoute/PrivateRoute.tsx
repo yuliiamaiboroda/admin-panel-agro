@@ -4,12 +4,12 @@ import { selectUser } from 'redux/user';
 
 interface IProps {
   component: JSX.Element;
-  auth: boolean;
+  auth?: boolean;
   redirectTo: string;
 }
 export default function PrivateRoute({
   component,
-  auth,
+  auth = false,
   redirectTo = '/',
 }: IProps) {
   const { isAuthorized } = useAppSelector(selectUser);

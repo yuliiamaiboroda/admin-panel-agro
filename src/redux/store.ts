@@ -23,7 +23,10 @@ const persistConfig = {
 const credentialsPersistReducer = persistReducer(persistConfig, userReducer);
 
 export const store = configureStore({
-  reducer: { userData: credentialsPersistReducer, products: productsReducer },
+  reducer: {
+    userData: credentialsPersistReducer,
+    products: productsReducer,
+  },
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware({
       serializableCheck: {

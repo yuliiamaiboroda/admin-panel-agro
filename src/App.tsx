@@ -35,13 +35,7 @@ function App() {
         </Route>
         <Route
           path="/login"
-          element={
-            <PrivateRoute
-              component={<LoginPage />}
-              auth={false}
-              redirectTo="/"
-            />
-          }
+          element={<PrivateRoute component={<LoginPage />} redirectTo="/" />}
         />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
