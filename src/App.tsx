@@ -5,6 +5,7 @@ import { Routes, Route, Navigate } from 'react-router-dom';
 import HomePage from 'pages/HomePage';
 import LoginPage from 'pages/LoginPage';
 import PrivateRoute from 'components/PrivateRoute';
+import ProductsPage from 'pages/ProductsPage';
 
 function App() {
   // TODO:  Add fetch of refresh user
@@ -26,7 +27,7 @@ function App() {
         >
           <Route index element={<Navigate to="products" />} />
           <Route path="users" element={<h1>Users page</h1>} />
-          <Route path="products" element={<h1>Products page</h1>} />
+          <Route path="products" element={<ProductsPage />} />
           <Route path="services" element={<h1>Services page</h1>} />
           <Route path="vacancies" element={<h1>Vacancies page</h1>} />
           <Route path="resumes" element={<h1>Resumes page</h1>} />
