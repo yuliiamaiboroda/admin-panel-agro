@@ -1,6 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios, { AxiosError } from 'axios';
 // import { RootState } from 'redux/store';
+import { Notify } from 'notiflix';
 
 interface IUser {
   accessToken: string;
@@ -37,6 +38,7 @@ export const loginUser = createAsyncThunk<
     return data;
   } catch (err) {
     const error = err as AxiosError;
+    Notify.failure('Please change your email or name and try again');
     return thunkApi.rejectWithValue(error.message);
   }
 });
