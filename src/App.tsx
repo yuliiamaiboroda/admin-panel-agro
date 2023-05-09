@@ -7,6 +7,7 @@ import LoginPage from 'pages/LoginPage';
 import PrivateRoute from 'components/PrivateRoute';
 import UsersPage from 'pages/UsersPage/UsersPage';
 import ProductsPage from 'pages/ProductsPage';
+import ServicesPage from 'pages/ServicesPage';
 
 function App() {
   // TODO:  Add fetch of refresh user
@@ -29,7 +30,7 @@ function App() {
           <Route index element={<Navigate to="products" />} />
           <Route path="users" element={<UsersPage />} />
           <Route path="products" element={<ProductsPage />} />
-          <Route path="services" element={<h1>Services page</h1>} />
+          <Route path="services" element={<ServicesPage />} />
           <Route path="vacancies" element={<h1>Vacancies page</h1>} />
           <Route path="resumes" element={<h1>Resumes page</h1>} />
           <Route path="feedbacks" element={<h1>Feedbacks page</h1>} />
