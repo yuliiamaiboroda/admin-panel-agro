@@ -1,19 +1,21 @@
-// import { useEffect } from 'react';
+import { useEffect } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
-// import { useAppDispatch } from 'hooks';
-// import { refreshUser } from 'redux/user';
+import { useAppDispatch } from 'hooks';
+import { refreshUser } from 'redux/user';
 import HomePage from 'pages/HomePage';
 import LoginPage from 'pages/LoginPage';
 import PrivateRoute from 'components/PrivateRoute';
+import UsersPage from 'pages/UsersPage/UsersPage';
+import ProductsPage from 'pages/ProductsPage';
 
 function App() {
   // TODO:  Add fetch of refresh user
 
-  // const dispatch = useAppDispatch();
+  const dispatch = useAppDispatch();
 
-  // useEffect(() => {
-  //   dispatch(refreshUser());
-  // }, [dispatch]);
+  useEffect(() => {
+    dispatch(refreshUser());
+  }, [dispatch]);
 
   return (
     <div className="App">
@@ -25,8 +27,8 @@ function App() {
           }
         >
           <Route index element={<Navigate to="products" />} />
-          <Route path="users" element={<h1>Users page</h1>} />
-          <Route path="products" element={<h1>Products page</h1>} />
+          <Route path="users" element={<UsersPage />} />
+          <Route path="products" element={<ProductsPage />} />
           <Route path="services" element={<h1>Services page</h1>} />
           <Route path="vacancies" element={<h1>Vacancies page</h1>} />
           <Route path="resumes" element={<h1>Resumes page</h1>} />
@@ -34,13 +36,7 @@ function App() {
         </Route>
         <Route
           path="/login"
-          element={
-            <PrivateRoute
-              component={<LoginPage />}
-              auth={false}
-              redirectTo="/"
-            />
-          }
+          element={<PrivateRoute component={<LoginPage />} redirectTo="/" />}
         />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>

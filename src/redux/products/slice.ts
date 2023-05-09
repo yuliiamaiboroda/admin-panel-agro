@@ -33,7 +33,7 @@ const productsSlice = createSlice({
       .addCase(getAllProducts.fulfilled, (state, action) => {
         return {
           ...state,
-          entitites: [...state.entities, ...action.payload],
+          entities: action.payload,
         };
       })
       .addCase(getAllProducts.rejected, (state, action) => {
