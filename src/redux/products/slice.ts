@@ -33,6 +33,7 @@ const productsSlice = createSlice({
       .addCase(getAllProducts.fulfilled, (state, action) => {
         return {
           ...state,
+          isLoading: false,
           entities: action.payload,
         };
       })
