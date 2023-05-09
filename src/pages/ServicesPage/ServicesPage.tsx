@@ -12,6 +12,7 @@ export default function ServicesPage() {
     dispatch(getAllServices());
   }, [dispatch]);
 
+  console.log('hello, world')
   return (
     <>
       <PageTitle title="Company services" />
