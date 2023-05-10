@@ -13,6 +13,7 @@ import storage from 'redux-persist/lib/storage';
 import { userReducer } from './user';
 import { productsReducer } from './products';
 import { usersReducer } from './users';
+import { servicesReducer } from './services';
 
 const persistConfig = {
   key: 'credentials',
@@ -28,6 +29,7 @@ export const store = configureStore({
     userData: credentialsPersistReducer,
     products: productsReducer,
     usersList: usersReducer,
+    services: servicesReducer,
   },
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware({

@@ -1,16 +1,19 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { getAllProducts } from './operations';
+import { getAllServices } from './operations';
 
-export interface IProduct {
+export interface IService {
   _id: string;
   title: string;
-  imageURL: string;
   description: string;
+  imageURL: string;
+  price: string;
+  contactMail: string;
+  contactPhone: string;
   createdAt: string;
 }
 
 interface IState {
-  entities: IProduct[];
+  entities: IService[];
   isLoading: boolean;
   error: string | null;
 }
@@ -21,23 +24,23 @@ const initialState: IState = {
   error: null,
 };
 
-const productsSlice = createSlice({
-  name: 'products',
+const servicesSlice = createSlice({
+  name: 'services',
   initialState,
   reducers: {},
   extraReducers: builder =>
     builder
-      .addCase(getAllProducts.pending, state => {
+      .addCase(getAllServices.pending, state => {
         return { ...state, isLoading: true, error: null };
       })
-      .addCase(getAllProducts.fulfilled, (state, action) => {
+      .addCase(getAllServices.fulfilled, (state, action) => {
         return {
           ...state,
           isLoading: false,
           entities: action.payload,
         };
       })
-      .addCase(getAllProducts.rejected, (state, action) => {
+      .addCase(getAllServices.rejected, (state, action) => {
         console.log(action.payload);
         return {
           ...state,
@@ -47,4 +50,4 @@ const productsSlice = createSlice({
       }),
 });
 
-export const productsReducer = productsSlice.reducer;
+export const servicesReducer = servicesSlice.reducer;
