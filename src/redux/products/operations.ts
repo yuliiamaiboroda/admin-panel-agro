@@ -18,13 +18,18 @@ export const getAllProducts = createAsyncThunk<
 
 export const createProduct = createAsyncThunk<
   IProduct,
-  { title: string; description: string; image: FileList },
+  { title: string; description: string; image: File },
   { rejectValue: string }
->('products/createProduct', async (product, thunkApi) => {
+>('products/createProduct', async ({ title, description, image }, thunkApi) => {
   try {
-    const { data } = await axios.post('/api/products/all', product, {
+    const reqBody = new FormData();
+    reqBody.append('title', title);
+    reqBody.append('description', description);
+    reqBody.append('image', image);
+    const { data } = await axios.post('/api/products/certain', reqBody, {
       headers: { 'Content-Type': 'multipart/form-data' },
     });
+    console.log('data', data);
     return data;
   } catch (err) {
     const error = err as AxiosError;
