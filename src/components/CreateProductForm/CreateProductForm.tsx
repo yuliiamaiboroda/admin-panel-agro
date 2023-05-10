@@ -1,14 +1,8 @@
 import React, { useRef } from 'react';
-import { Formik, Form, Field, useField, FieldHookConfig } from 'formik';
+import { Formik, Form, Field, useField } from 'formik';
 
 interface IProps {
   onSubmit?: Function;
-}
-
-interface IFormState {
-  title: string;
-  description: string;
-  image: string;
 }
 
 export default function CreateProductForm({ onSubmit }: IProps) {
@@ -16,10 +10,12 @@ export default function CreateProductForm({ onSubmit }: IProps) {
 
   return (
     <Formik
-      initialValues={{ title: '', description: '', image: '' }}
+      initialValues={{ title: '', description: '', image: '', file: null }}
       onSubmit={(values, actions) => {
-        console.log(values);
+        console.log({ values, actions });
         actions.resetForm();
+        console.log('fileField.current?.files', fileField.current?.files);
+
         if (onSubmit) {
           onSubmit();
         }
@@ -30,7 +26,7 @@ export default function CreateProductForm({ onSubmit }: IProps) {
         <br />
         <Field id="description" name="description" type="text" />
         <br />
-
+        <UploadFile name="image" fileRef={fileField} />
         <br />
         <button type="submit">Add product</button>
       </Form>
@@ -40,26 +36,22 @@ export default function CreateProductForm({ onSubmit }: IProps) {
 
 function UploadFile({
   fileRef,
-  ...props
+  name,
 }: {
   fileRef: React.RefObject<HTMLInputElement>;
-  props: FieldHookConfig<IFormState>;
+  name: string;
 }) {
-  const [field, meta] = useField(props);
+  const [field, meta] = useField(name);
 
   return (
-    <label>
-      Upload file
-      <input
-        id="image"
-        // name="image"
-        {...field}
-        type="file"
-        ref={fileRef}
-        onChange={() => {
-          console.log('meta', meta);
-        }}
-      />
-    </label>
+    <>
+      <label>
+        Upload file
+        <input type="file" ref={fileRef} {...field} />
+      </label>
+      {meta.touched && meta.error ? (
+        <p style={{ color: 'red' }}>{meta.error}</p>
+      ) : null}
+    </>
   );
 }
