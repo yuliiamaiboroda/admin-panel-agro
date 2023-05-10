@@ -29,7 +29,11 @@ export const createProduct = createAsyncThunk<
     const { data } = await axios.post('/api/products/certain', reqBody, {
       headers: { 'Content-Type': 'multipart/form-data' },
     });
-    console.log('data', data);
+    if (!data) {
+      thunkApi.rejectWithValue(
+        "Something went wrong... Response doesn't return product"
+      );
+    }
     return data;
   } catch (err) {
     const error = err as AxiosError;

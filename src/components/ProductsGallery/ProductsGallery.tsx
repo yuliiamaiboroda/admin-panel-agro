@@ -24,7 +24,7 @@ export default function ProductsGallery() {
       </ul>
       {isModalOpen && (
         <Modal onClose={handleModalClose}>
-          <CreateProductForm />
+          <CreateProductForm onSubmit={handleModalClose} />
         </Modal>
       )}
     </>
