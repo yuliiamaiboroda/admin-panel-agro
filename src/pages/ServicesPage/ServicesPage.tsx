@@ -6,6 +6,7 @@ import PageTitle from 'components/PageTitle';
 import ServicesGallery from 'components/ServicesGallery';
 import CreateNewAd from 'components/CreateNewAd';
 import Modal from 'components/Modal';
+import CreateServiceForm from 'components/CreateServiceForm';
 
 export default function ServicesPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -25,7 +26,7 @@ export default function ServicesPage() {
       <CreateNewAd onClick={handleModalOpen} />
       {isModalOpen && (
         <Modal onClose={handleModalClose}>
-          <p>modal fields...</p>
+          <CreateServiceForm onSubmit={handleModalClose} />
         </Modal>
       )}
     </>
