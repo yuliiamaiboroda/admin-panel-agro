@@ -64,3 +64,19 @@ export const refreshUser = createAsyncThunk<
     return thunkApi.rejectWithValue(error.message);
   }
 });
+
+export const logoutUser = createAsyncThunk<
+  undefined,
+  undefined,
+  { rejectValue: string }
+>('users/logoutUser', async (_, thunkApi) => {
+  try {
+    await axios.post('/api/users/logout');
+    axios.defaults.headers.common.Authorization = '';
+
+    // rewrite on one func
+  } catch (err) {
+    const error = err as AxiosError;
+    return thunkApi.rejectWithValue(error.message);
+  }
+});
