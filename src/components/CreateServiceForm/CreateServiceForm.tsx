@@ -24,14 +24,16 @@ export default function CreateServiceForm({ onSubmit }: IProps) {
       }}
       onSubmit={(values, actions) => {
         if (fileField.current?.files) {
+          const { title, description, price, contactMail, contactPhone } =
+            values;
           dispatch(
             createService({
-              title: values.title,
-              description: values.description,
+              title,
+              description,
               image: fileField.current?.files[0],
-              price: values.price,
-              contactMail: values.contactMail,
-              contactPhone: values.contactPhone,
+              price,
+              contactMail,
+              contactPhone,
             })
           );
         }

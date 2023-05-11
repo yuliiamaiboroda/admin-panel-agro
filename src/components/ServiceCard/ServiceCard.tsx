@@ -1,3 +1,7 @@
+import { useState } from 'react';
+import ActionButton from 'components/ActionButton';
+import Modal from 'components/Modal';
+
 interface IProps {
   title: string;
   description: string;
@@ -15,6 +19,15 @@ export default function ServiceCard({
   contactMail,
   contactPhone,
 }: IProps) {
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+
+  const handleDeleteModalOpen = () => setIsDeleteModalOpen(true);
+  const handleDeleteModalClose = () => setIsDeleteModalOpen(false);
+
+  const handleEditModalOpen = () => setIsEditModalOpen(true);
+  const handleEditModalClose = () => setIsEditModalOpen(false);
+
   return (
     <li>
       <img src={imageURL} alt={title} width="348" height="222" />
@@ -23,6 +36,20 @@ export default function ServiceCard({
       <p>{price}</p>
       <p>{contactPhone}</p>
       <p>{contactMail}</p>
+
+      <ActionButton onClick={handleDeleteModalOpen} />
+      {isDeleteModalOpen && (
+        <Modal onClose={handleDeleteModalClose}>
+          <h2>DELETE modal content</h2>
+        </Modal>
+      )}
+
+      <ActionButton title="Змінити" onClick={handleEditModalOpen} />
+      {isEditModalOpen && (
+        <Modal onClose={handleEditModalClose}>
+          <h2>EDIT modal content</h2>
+        </Modal>
+      )}
     </li>
   );
 }
