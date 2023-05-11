@@ -2,7 +2,7 @@
 import { useAppDispatch } from 'hooks';
 import { loginUser, selectUser } from 'redux/user';
 import { Formik, Form, Field } from 'formik';
-import loginSchema from 'helpers/schemas/auth';
+import loginSchema from 'helpers/schemas/auth/login.schema';
 import { useAppSelector } from 'hooks';
 
 interface LoginFormValues {
@@ -13,15 +13,8 @@ interface LoginFormValues {
 const FORM_INITIAL_STATE: LoginFormValues = { email: '', password: '' };
 
 export default function LoginForm() {
-  // const [formState, setFormState] = useState(FORM_INITIAL_STATE);
   const dispatch = useAppDispatch();
   const user = useAppSelector(selectUser);
-
-  // const handleInputChange = ({
-  //   target,
-  // }: React.ChangeEvent<HTMLInputElement>) => {
-  //   setFormState(prevState => ({ ...prevState, [target.name]: target.value }));
-  // };
 
   const handleSubmitForm = (values: LoginFormValues, actions: any) => {
     actions.setSubmitting(true);
@@ -44,35 +37,18 @@ export default function LoginForm() {
         validationSchema={loginSchema}
       >
         {({ errors, touched }) => (
-          <Form
-          // onSubmit={event => {
-          //   event.preventDefault();
-          //   dispatch(loginUser(formState));
-          //   setFormState(FORM_INITIAL_STATE);
-          // }}
-          >
+          <Form>
             <label>
               Email:
               <br />
-              <Field
-                name="email"
-                type="email"
-                placeholder="hello@mail.com"
-                // value={formState.email}
-                // onChange={handleInputChange}
-              />
+              <Field name="email" type="email" placeholder="hello@mail.com" />
             </label>
             {errors.email && touched.email ? <span>{errors.email}</span> : null}
             <br />
             <label>
               Password:
               <br />
-              <Field
-                name="password"
-                type="password"
-                // value={formState.password}
-                // onChange={handleInputChange}
-              />
+              <Field name="password" type="password" />
             </label>
             {errors.password && touched.password ? (
               <span>{errors.password}</span>

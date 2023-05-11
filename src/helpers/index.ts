@@ -1,5 +1,3 @@
-import loginSchema from './schemas/auth';
-
-const helpers = { loginSchema };
+const helpers = {};
 
 export default helpers;
