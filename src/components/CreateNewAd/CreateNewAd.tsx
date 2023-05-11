@@ -1,11 +1,15 @@
 interface IProps {
-  title: string;
+  title?: string;
+  onClick: () => void;
 }
 
-export default function CreateNewAd({ title }: IProps) {
+export default function CreateNewAd({
+  title = 'Створити нове оголошення',
+  onClick,
+}: IProps) {
   return (
     <div>
-      <button>{title}</button>
+      <button onClick={onClick}>{title}</button>
     </div>
   );
 }
