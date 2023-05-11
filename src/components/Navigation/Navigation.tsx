@@ -1,6 +1,10 @@
 import { useAppSelector } from 'hooks';
 import { NavLink } from 'react-router-dom';
 import { selectUser } from 'redux/user';
+import { HiUsers, HiOutlineTruck } from 'react-icons/hi';
+import { MdProductionQuantityLimits, MdWork, MdFeedback } from 'react-icons/md';
+import { GrUserWorker } from 'react-icons/gr';
+import { IconType } from 'react-icons';
 
 enum ROLES {
   admin = 'admin',
@@ -14,15 +18,41 @@ interface ILink {
   href: string;
   title: string;
   access: ROLES;
+  icon: IconType;
 }
 
 const navigationLinks: ILink[] = [
-  { href: '/users', title: 'Users', access: ROLES.admin },
-  { href: '/products', title: 'Products', access: ROLES.freeAccess },
-  { href: '/services', title: 'Services', access: ROLES.freeAccess },
-  { href: '/vacancies', title: 'Vacancies', access: ROLES.freeAccess },
-  { href: '/resumes', title: 'Resumes', access: ROLES.applyManager },
-  { href: '/feedbacks', title: 'Feedbacks', access: ROLES.admin },
+  { href: '/users', title: 'Користувачі', access: ROLES.admin, icon: HiUsers },
+  {
+    href: '/products',
+    title: 'Продукти компанії',
+    access: ROLES.freeAccess,
+    icon: MdProductionQuantityLimits,
+  },
+  {
+    href: '/services',
+    title: 'Послуги компанії',
+    access: ROLES.freeAccess,
+    icon: HiOutlineTruck,
+  },
+  {
+    href: '/vacancies',
+    title: 'Вакансії',
+    access: ROLES.freeAccess,
+    icon: MdWork,
+  },
+  {
+    href: '/resumes',
+    title: 'Резюме',
+    access: ROLES.applyManager,
+    icon: GrUserWorker,
+  },
+  {
+    href: '/feedbacks',
+    title: 'Фідбеки',
+    access: ROLES.admin,
+    icon: MdFeedback,
+  },
 ];
 
 export default function Navigation() {
@@ -41,11 +71,17 @@ export default function Navigation() {
 
   return (
     <ul>
-      {isAccessRights().map(({ href, title }, index) => (
-        <li key={index}>
-          <NavLink to={href}>{title}</NavLink>
-        </li>
-      ))}
+      {isAccessRights().map(({ href, title, icon }, index) => {
+        const Icon = icon;
+        return (
+          <li key={index}>
+            <NavLink to={href}>
+              <Icon />
+              {title}
+            </NavLink>
+          </li>
+        );
+      })}
     </ul>
   );
 }
