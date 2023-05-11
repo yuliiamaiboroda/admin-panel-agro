@@ -5,16 +5,22 @@ import { selectUsersList } from 'redux/users';
 import UsersList from 'components/UsersList/UsersList';
 import Modal from 'components/Modal/Modal';
 import CreateUserForm from 'components/CreateUserForm/CreateUserForm';
+import { selectUser } from 'redux/user';
 
 export default function UsersDashboard() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const dispatch = useAppDispatch();
-
+  const { isLoading: isCurrentUserDataLoading } = useAppSelector(selectUser);
   const { entities, isLoading } = useAppSelector(selectUsersList);
 
   useEffect(() => {
-    dispatch(getAllUsers());
-  }, [dispatch]);
+    if (!isCurrentUserDataLoading) {
+      const timer = setTimeout(() => {
+        dispatch(getAllUsers());
+      }, 100);
+      return () => clearTimeout(timer);
+    }
+  }, [dispatch, isCurrentUserDataLoading]);
 
   if (isLoading) {
     return <h2>Loading</h2>;
@@ -32,7 +38,7 @@ export default function UsersDashboard() {
         <h2>There arent any users</h2>
       )}
       <button type="button" onClick={() => setIsModalOpen(true)}>
-        add{' '}
+        add
       </button>
       {isModalOpen && (
         <Modal onClose={() => setIsModalOpen(false)}>

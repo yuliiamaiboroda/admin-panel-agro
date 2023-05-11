@@ -18,7 +18,6 @@ export const getAllUsers = createAsyncThunk<
     return data;
   } catch (err) {
     const error = err as AxiosError;
-    console.log(error.response?.status);
     return thunkApi.rejectWithValue({
       message: error.message,
       code: error.response?.status,
@@ -27,13 +26,13 @@ export const getAllUsers = createAsyncThunk<
 });
 
 export const removeUserById = createAsyncThunk<
-  IUser,
-  IUser,
+  string,
+  string,
   { rejectValue: IReject }
->('users/removeById', async (user, thunkApi) => {
+>('users/removeById', async (_id, thunkApi) => {
   try {
-    await axios.delete(`/api/users/${user._id}`);
-    return user;
+    await axios.delete(`/api/users/${_id}`);
+    return _id;
   } catch (err) {
     const error = err as AxiosError;
     return thunkApi.rejectWithValue({

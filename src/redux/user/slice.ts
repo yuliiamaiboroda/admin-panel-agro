@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
-import { loginUser, refreshUser } from './operations';
+import { loginUser, logoutUser, refreshUser } from './operations';
 
 interface IUserState {
   accessToken: string | null;
@@ -76,6 +76,19 @@ const userSlice = createSlice({
       })
       .addCase(refreshUser.rejected, (state, action) => {
         console.log(action.payload);
+        return {
+          ...state,
+          isLoading: false,
+          ...(action.payload ? { error: action.payload } : null),
+        };
+      })
+      .addCase(logoutUser.pending, state => {
+        return { ...state, isLoading: true, error: null };
+      })
+      .addCase(logoutUser.fulfilled, state => {
+        return (state = initialState);
+      })
+      .addCase(logoutUser.rejected, (state, action) => {
         return {
           ...state,
           isLoading: false,

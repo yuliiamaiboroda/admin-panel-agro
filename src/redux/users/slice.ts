@@ -49,7 +49,7 @@ const usersSlice = createSlice({
       })
       .addCase(removeUserById.fulfilled, (state, { payload }) => {
         const filteredEntities = state.entities.filter(
-          el => el._id !== payload._id
+          el => el._id !== payload
         );
         return { ...state, isLoading: false, entities: filteredEntities };
       })
