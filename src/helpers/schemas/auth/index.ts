@@ -1,1 +1,2 @@
-export { default } from './login.schema';
+export * from './createNewUser.schema';
+export * from './login.schema';

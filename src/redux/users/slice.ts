@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { getAllUsers, removeUserById } from './operations';
+import { getAllUsers, registerNewUser, removeUserById } from './operations';
 
 export interface IUser {
   _id: string;
@@ -13,12 +13,14 @@ interface IState {
   entities: IUser[];
   isLoading: boolean;
   error: string | null;
+  errorCode: number | null;
 }
 
 const initialState: IState = {
   entities: [],
   isLoading: false,
   error: null,
+  errorCode: null,
 };
 
 const usersSlice = createSlice({
@@ -28,7 +30,7 @@ const usersSlice = createSlice({
   extraReducers: builder =>
     builder
       .addCase(getAllUsers.pending, state => {
-        return { ...state, isLoading: true, error: null };
+        return { ...state, isLoading: true, error: null, errorCode: null };
       })
       .addCase(getAllUsers.fulfilled, (state, { payload }) => {
         return { ...state, isLoading: false, entities: payload };
@@ -37,11 +39,13 @@ const usersSlice = createSlice({
         return {
           ...state,
           isLoading: false,
-          ...(payload ? { error: payload } : null),
+          ...(payload
+            ? { error: payload.message, errorCode: payload.code }
+            : null),
         };
       })
       .addCase(removeUserById.pending, state => {
-        return { ...state, isLoading: true, error: null };
+        return { ...state, isLoading: true, error: null, errorCode: null };
       })
       .addCase(removeUserById.fulfilled, (state, { payload }) => {
         const filteredEntities = state.entities.filter(
@@ -53,7 +57,28 @@ const usersSlice = createSlice({
         return {
           ...state,
           isLoading: false,
-          ...(payload ? { error: payload } : null),
+          ...(payload
+            ? { error: payload.message, errorCode: payload.code }
+            : null),
+        };
+      })
+      .addCase(registerNewUser.pending, state => {
+        return { ...state, isLoading: true, error: null, errorCode: null };
+      })
+      .addCase(registerNewUser.fulfilled, (state, { payload }) => {
+        return {
+          ...state,
+          isLoading: false,
+          entities: [...state.entities, payload],
+        };
+      })
+      .addCase(registerNewUser.rejected, (state, { payload }) => {
+        return {
+          ...state,
+          isLoading: false,
+          ...(payload
+            ? { error: payload.message, errorCode: payload.code }
+            : null),
         };
       }),
 });
