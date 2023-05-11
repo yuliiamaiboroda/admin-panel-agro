@@ -7,9 +7,7 @@ interface IProps {
   description: string;
 }
 
-// TODO: refactor spread props for card
-
-export default function ProductsCard({ title, imageURL, description }: IProps) {
+export default function ProductCard({ title, imageURL, description }: IProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleModalClose = () => setIsModalOpen(false);
