@@ -2,12 +2,13 @@ import { useEffect } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { useAppDispatch } from 'hooks';
 import { refreshUser } from 'redux/user';
-import HomePage from 'pages/HomePage';
+// import HomePage from 'pages/HomePage';
 import LoginPage from 'pages/LoginPage';
 import PrivateRoute from 'components/PrivateRoute';
 import UsersPage from 'pages/UsersPage/UsersPage';
 import ProductsPage from 'pages/ProductsPage';
 import ServicesPage from 'pages/ServicesPage';
+import SharedLayout from 'components/SharedLayout/SharedLayout';
 
 function App() {
   // TODO:  Add fetch of refresh user
@@ -24,7 +25,11 @@ function App() {
         <Route
           path="/"
           element={
-            <PrivateRoute component={<HomePage />} auth redirectTo="/login" />
+            <PrivateRoute
+              component={<SharedLayout />}
+              auth
+              redirectTo="/login"
+            />
           }
         >
           <Route index element={<Navigate to="products" />} />
