@@ -8,7 +8,8 @@ import PrivateRoute from 'components/PrivateRoute';
 import UsersPage from 'pages/UsersPage/UsersPage';
 import ProductsPage from 'pages/ProductsPage';
 import ServicesPage from 'pages/ServicesPage';
-import SharedLayout from 'components/SharedLayout/SharedLayout';
+import SharedLayout from 'components/SharedLayout';
+import VacanciesPage from 'pages/VacanciesPage';
 
 function App() {
   // TODO:  Add fetch of refresh user
@@ -36,7 +37,7 @@ function App() {
           <Route path="users" element={<UsersPage />} />
           <Route path="products" element={<ProductsPage />} />
           <Route path="services" element={<ServicesPage />} />
-          <Route path="vacancies" element={<h1>Vacancies page</h1>} />
+          <Route path="vacancies" element={<VacanciesPage />} />
           <Route path="resumes" element={<h1>Resumes page</h1>} />
           <Route path="feedbacks" element={<h1>Feedbacks page</h1>} />
         </Route>

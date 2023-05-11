@@ -1,4 +1,4 @@
-import UserCard from 'components/UserCard';
+import UserCard from 'components/Users/UserCard';
 
 interface IUser {
   _id: string;
