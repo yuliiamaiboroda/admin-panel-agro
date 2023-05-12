@@ -1,5 +1,5 @@
-import Modal from 'components/Modal/Modal';
-import ModalDelete from 'components/ModalDelete/ModalDelete';
+import Modal from 'components/Modal';
+import ModalDelete from 'components/ModalDelete';
 import { useAppDispatch } from 'hooks';
 import { useState } from 'react';
 import { removeVacancyById } from 'redux/vacancies';

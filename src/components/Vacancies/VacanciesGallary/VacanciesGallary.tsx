@@ -1,7 +1,7 @@
 import { useAppDispatch, useAppSelector } from 'hooks';
 import { useEffect } from 'react';
 import { getAllVacancies, selectVacancies } from 'redux/vacancies';
-import VacancyCard from '../VacancyCard/VacancyCard';
+import VacancyCard from '../VacancyCard';
 
 export default function VacanciesGallary() {
   const dispatch = useAppDispatch();

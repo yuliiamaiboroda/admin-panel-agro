@@ -2,6 +2,18 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios, { AxiosError } from 'axios';
 import { IVacancy } from './slice';
 
+interface INewVacancy {
+  category: string;
+  title: string;
+  description: string;
+  sallary: string;
+  education: string;
+  contactMail: string;
+  contactPhone: string;
+  workExperienceRequired: string;
+  location: string;
+}
+
 export const getAllVacancies = createAsyncThunk<
   IVacancy[],
   undefined,
@@ -29,3 +41,43 @@ export const removeVacancyById = createAsyncThunk<
     return thunkApi.rejectWithValue(error.message);
   }
 });
+
+export const createVacancy = createAsyncThunk<
+  IVacancy,
+  INewVacancy,
+  { rejectValue: string }
+>(
+  'vacancies/create',
+  async (
+    {
+      category,
+      title,
+      description,
+      sallary,
+      education,
+      contactMail,
+      contactPhone,
+      workExperienceRequired,
+      location,
+    },
+    thunkApi
+  ) => {
+    try {
+      const { data } = await axios.post('/api/vacancies/create', {
+        category,
+        title,
+        description,
+        sallary,
+        education,
+        contactMail,
+        contactPhone,
+        workExperienceRequired,
+        location,
+      });
+      return data;
+    } catch (err) {
+      const error = err as AxiosError;
+      thunkApi.rejectWithValue(error.message);
+    }
+  }
+);
