@@ -57,3 +57,16 @@ export const createService = createAsyncThunk<
     }
   }
 );
+
+export const deleteService = createAsyncThunk(
+  'services/delete',
+  async (_id : string) => {
+    try {
+      await axios.delete(`/api/services/${_id}`, {
+      });
+    } catch (err : any) {
+      const error = err?.message
+      return error
+    }
+  }
+);
