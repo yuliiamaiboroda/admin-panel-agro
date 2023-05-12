@@ -1,4 +1,4 @@
-import UsersDashboard from 'components/UsersDashboard';
+import UsersDashboard from 'components/Users/UsersDashboard';
 
 export default function UsersPage() {
   return <UsersDashboard />;

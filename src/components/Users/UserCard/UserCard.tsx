@@ -1,4 +1,5 @@
 import Modal from 'components/Modal';
+import ModalDelete from 'components/ModalDelete/ModalDelete';
 import { useAppDispatch } from 'hooks';
 import { useState } from 'react';
 import { removeUserById } from 'redux/users';
@@ -39,31 +40,11 @@ export default function UserCard({ _id, email, name, surname, role }: IUser) {
       </div>
       {isModalDeleteOpen && (
         <Modal onClose={() => setIsModalDeleteOpen(false)}>
-          <>
-            <h2>are u sure</h2>
-            <ul>
-              <li>
-                <button
-                  type="button"
-                  onClick={(e: React.MouseEvent<HTMLButtonElement>) =>
-                    setIsModalDeleteOpen(false)
-                  }
-                >
-                  Cancel
-                </button>
-              </li>
-              <li>
-                <button
-                  type="button"
-                  onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
-                    handleRemoveById(_id);
-                  }}
-                >
-                  Delete
-                </button>
-              </li>
-            </ul>
-          </>
+          <ModalDelete
+            onClose={() => setIsModalDeleteOpen(false)}
+            handleDelete={() => handleRemoveById(_id)}
+            title={surname}
+          />
         </Modal>
       )}
     </li>
