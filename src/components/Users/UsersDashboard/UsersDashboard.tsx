@@ -2,9 +2,9 @@ import { useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from 'hooks';
 import { getAllUsers } from 'redux/users/operations';
 import { selectUsersList } from 'redux/users';
-import UsersList from 'components/UsersList/UsersList';
+import UsersList from 'components/Users/UsersList/UsersList';
 import Modal from 'components/Modal/Modal';
-import CreateUserForm from 'components/CreateUserForm/CreateUserForm';
+import CreateUserForm from 'components/Users/CreateUserForm/CreateUserForm';
 import { selectUser } from 'redux/user';
 
 export default function UsersDashboard() {
