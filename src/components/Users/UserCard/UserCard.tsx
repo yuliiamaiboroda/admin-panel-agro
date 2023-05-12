@@ -43,7 +43,7 @@ export default function UserCard({ _id, email, name, surname, role }: IUser) {
           <ModalDelete
             onClose={() => setIsModalDeleteOpen(false)}
             handleDelete={() => handleRemoveById(_id)}
-            title={surname}
+            title={`користувача ${name} ${surname}`}
           />
         </Modal>
       )}

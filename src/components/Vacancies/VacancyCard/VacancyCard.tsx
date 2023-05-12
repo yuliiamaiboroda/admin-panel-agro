@@ -87,7 +87,7 @@ export default function VacancyCard({
           <ModalDelete
             onClose={() => setIsModalDeleteOpen(false)}
             handleDelete={() => handleDelete(_id)}
-            title={title}
+            title={`вакансію ${title}`}
           />
         </Modal>
       )}
