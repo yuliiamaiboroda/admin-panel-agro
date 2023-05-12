@@ -9,7 +9,7 @@ export default function ServicesGallery() {
   return (
     <ul>
       {services.map(({ _id, ...rest }) => (
-        <ServiceCard key={_id} {...rest} />
+        <ServiceCard key={_id} _id={_id} {...rest} />
       ))}
     </ul>
   );

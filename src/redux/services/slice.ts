@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import { getAllServices } from './operations';
 
 export interface IService {
-  _id?: string;
+  _id: string;
   title: string;
   description: string;
   imageURL: string;

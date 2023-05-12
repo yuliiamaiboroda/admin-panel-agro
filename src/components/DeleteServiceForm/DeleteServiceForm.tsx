@@ -2,19 +2,20 @@ import { useAppDispatch } from 'hooks';
 import { deleteService } from 'redux/services';
 
 interface IProps {
+  _id: string;
   title: string;
   imageURL: string;
   onSubmit?: Function;
 }
 
 export default function DeleteServiceForm({
+  _id,
   title,
   imageURL,
   onSubmit,
 }: IProps) {
   const dispatch = useAppDispatch();
 
-  const id = '645dfb6da9fa27a2baaac600'
   return (
     <>
       <h3>Ви впевнені, що хочете видалити оголошення "{title}"?</h3>
@@ -35,7 +36,7 @@ export default function DeleteServiceForm({
       <button
         type="button"
         onClick={() => {
-          dispatch(deleteService(id));
+          dispatch(deleteService(_id));
           if (onSubmit) {
             onSubmit();
           }
