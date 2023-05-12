@@ -1,20 +1,16 @@
-import { useState } from 'react';
-import { useAppSelector } from 'hooks';
+import { useAppSelector, useModal } from 'hooks';
 import { selectProducts } from 'redux/products';
 import ProductCard from 'components/ProductCard';
 import Modal from 'components/Modal';
 import CreateProductForm from 'components/CreateProductForm';
 
 export default function ProductsGallery() {
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const products = useAppSelector(selectProducts);
-
-  const handleModalClose = () => setIsModalOpen(false);
-  const handleModalOpen = () => setIsModalOpen(true);
+  const { isModalOpen, openModal, closeModal } = useModal();
 
   return (
     <>
-      <button type="button" onClick={handleModalOpen}>
+      <button type="button" onClick={openModal}>
         Add product
       </button>
       <ul>
@@ -23,8 +19,8 @@ export default function ProductsGallery() {
         ))}
       </ul>
       {isModalOpen && (
-        <Modal onClose={handleModalClose}>
-          <CreateProductForm onSubmit={handleModalClose} />
+        <Modal onClose={closeModal}>
+          <CreateProductForm onSubmit={closeModal} />
         </Modal>
       )}
     </>

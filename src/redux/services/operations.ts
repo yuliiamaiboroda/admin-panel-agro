@@ -1,5 +1,4 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { AnyAsyncThunk } from '@reduxjs/toolkit/dist/matchers';
 import axios, { AxiosError } from 'axios';
 import type { IService } from './slice';
 
@@ -59,32 +58,19 @@ export const createService = createAsyncThunk<
   }
 );
 
-export const deleteService = createAsyncThunk(
-  //  TODO
-  // <
-  //   undefined,
-  //   string,
-  //   { rejectValue: string }
-  // >
-  'services/delete',
-  async (
-    _id: string
-    // thunkApi
-  ) => {
-    try {
-      await axios.delete(`/api/services/${_id}`);
-      return _id;
-    } catch (err: any) {
-      const { message } = err?.response?.data;
-      console.log('error.message >>>', message);
-      return message;
-
-      // const error = err as AxiosError;
-      // console.log('error', error)
-      // if (error.response?.data.message) {
-      //   const {message} = error.response?.data
-      //   return thunkApi.rejectWithValue(message);
-      // }
+export const deleteService = createAsyncThunk<
+  string,
+  string,
+  { rejectValue: string }
+>('services/delete', async (_id, thunkApi) => {
+  try {
+    await axios.delete(`/api/services/${_id}`);
+    return _id;
+  } catch (err) {
+    const error = err as AxiosError<{ message: string }>;
+    if (!error.response) {
+      return thunkApi.rejectWithValue('Something went wrong...');
     }
+    return thunkApi.rejectWithValue(error.response.data.message);
   }
-);
+});
