@@ -1,3 +1,9 @@
+import Modal from 'components/Modal/Modal';
+import ModalDelete from 'components/ModalDelete/ModalDelete';
+import { useAppDispatch } from 'hooks';
+import { useState } from 'react';
+import { removeVacancyById } from 'redux/vacancies';
+
 interface IVacancy {
   _id: string;
   category: string;
@@ -23,6 +29,13 @@ export default function VacancyCard({
   workExperienceRequired,
   location,
 }: IVacancy) {
+  const [isModalDeleteOpen, setIsModalDeleteOpen] = useState(false);
+
+  const dispatch = useAppDispatch();
+  const handleDelete = (_id: string) => {
+    dispatch(removeVacancyById(_id));
+  };
+
   return (
     <li>
       <h3>{title}</h3>
@@ -59,9 +72,25 @@ export default function VacancyCard({
         <a href={`mailto:${contactMail}`}>{contactMail}</a>
       </p>
       <div>
-        <button type="button">delete</button>
+        <button
+          type="button"
+          onClick={(e: React.MouseEvent<HTMLButtonElement>) =>
+            setIsModalDeleteOpen(true)
+          }
+        >
+          delete
+        </button>
         <button type="button">change </button>
       </div>
+      {isModalDeleteOpen && (
+        <Modal onClose={() => setIsModalDeleteOpen(false)}>
+          <ModalDelete
+            onClose={() => setIsModalDeleteOpen(false)}
+            handleDelete={() => handleDelete(_id)}
+            title={title}
+          />
+        </Modal>
+      )}
     </li>
   );
 }
