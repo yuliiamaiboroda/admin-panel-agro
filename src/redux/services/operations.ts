@@ -60,7 +60,6 @@ export const createService = createAsyncThunk<
         return thunkApi.rejectWithValue('Something went wrong');
       }
       return thunkApi.rejectWithValue(error.response.data.message);
-  
     }
   }
 );
