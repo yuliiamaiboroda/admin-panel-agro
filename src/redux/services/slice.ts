@@ -1,5 +1,5 @@
-import { createSlice } from '@reduxjs/toolkit';
-import { getAllServices } from './operations';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createService, deleteService, getAllServices } from './operations';
 
 export interface IService {
   _id: string;
@@ -24,15 +24,29 @@ const initialState: IState = {
   error: null,
 };
 
+const servicesPendingReducer = (state: IState) => {
+  return { ...state, isLoading: true, error: null };
+};
+
+const servicesRejectedReducer = (
+  state: IState,
+  action: PayloadAction<string | undefined>
+) => {
+  console.log('action.payload in servicesRejectedReducer >>>', action.payload);
+  return {
+    ...state,
+    isLoading: false,
+    ...(action.payload ? { error: action.payload } : null),
+  };
+};
+
 const servicesSlice = createSlice({
   name: 'services',
   initialState,
   reducers: {},
   extraReducers: builder =>
     builder
-      .addCase(getAllServices.pending, state => {
-        return { ...state, isLoading: true, error: null };
-      })
+      .addCase(getAllServices.pending, servicesPendingReducer)
       .addCase(getAllServices.fulfilled, (state, action) => {
         return {
           ...state,
@@ -40,14 +54,25 @@ const servicesSlice = createSlice({
           entities: action.payload,
         };
       })
-      .addCase(getAllServices.rejected, (state, action) => {
-        console.log(action.payload);
+      .addCase(getAllServices.rejected, servicesRejectedReducer)
+      .addCase(createService.pending, servicesPendingReducer)
+      .addCase(createService.fulfilled, (state, action) => {
         return {
           ...state,
           isLoading: false,
-          ...(action.payload ? { error: action.payload } : null),
+          entities: [...state.entities, action.payload],
         };
-      }),
+      })
+      .addCase(createService.rejected, servicesRejectedReducer)
+      .addCase(deleteService.pending, servicesPendingReducer)
+      .addCase(deleteService.fulfilled, (state, action) => {
+        return {
+          ...state,
+          isLoading: false,
+          entities: state.entities.filter(item => item._id !== action.payload),
+        };
+      })
+      .addCase(deleteService.rejected, servicesRejectedReducer),
 });
 
 export const servicesReducer = servicesSlice.reducer;
