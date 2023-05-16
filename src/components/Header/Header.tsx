@@ -1,5 +1,6 @@
 import Modal from 'components/Modal/Modal';
 import ModalLogout from 'components/ModalLogout/ModalLogout';
+import translateRole from 'helpers/translateRoles';
 import { useAppDispatch, useAppSelector } from 'hooks';
 import { useState } from 'react';
 import { AiOutlineLogout } from 'react-icons/ai';
@@ -19,7 +20,8 @@ export default function Header() {
       <h2>
         {name} {surname}
       </h2>
-      <div>{role}</div>
+      {role !== null && <div>{translateRole(role)}</div>}
+
       <p>{email}</p>
       <button
         type="button"
@@ -27,7 +29,7 @@ export default function Header() {
           setIsModalOpen(true)
         }
       >
-        <AiOutlineLogout /> log out
+        <AiOutlineLogout /> Вийти з аккаунту
       </button>
       {isModalOpen && (
         <Modal onClose={() => setIsModalOpen(false)}>
