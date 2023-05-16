@@ -31,7 +31,7 @@ export default function UsersDashboard() {
         <h2>There arent any users</h2>
       )}
       <button type="button" onClick={() => setIsModalOpen(true)}>
-        add
+        Створити нового користувача
       </button>
       {isModalOpen && (
         <Modal onClose={() => setIsModalOpen(false)}>
