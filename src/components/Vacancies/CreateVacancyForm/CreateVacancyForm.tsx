@@ -155,7 +155,6 @@ export default function CreateVacancyForm({ onClose }: Iprops) {
                 type="radio"
                 id={Categories.actual}
                 value={Categories.actual}
-                checked
               />
             </label>
             <label>
