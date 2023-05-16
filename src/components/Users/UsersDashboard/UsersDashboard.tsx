@@ -2,25 +2,18 @@ import { useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from 'hooks';
 import { getAllUsers } from 'redux/users/operations';
 import { selectUsersList } from 'redux/users';
-import UsersList from 'components/Users/UsersList/UsersList';
-import Modal from 'components/Modal/Modal';
-import CreateUserForm from 'components/Users/CreateUserForm/CreateUserForm';
-import { selectUser } from 'redux/user';
+import UsersList from 'components/Users/UsersList';
+import Modal from 'components/Modal';
+import CreateUserForm from 'components/Users/CreateUserForm';
 
 export default function UsersDashboard() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const dispatch = useAppDispatch();
-  const { isLoading: isCurrentUserDataLoading } = useAppSelector(selectUser);
   const { entities, isLoading } = useAppSelector(selectUsersList);
 
   useEffect(() => {
-    if (!isCurrentUserDataLoading) {
-      const timer = setTimeout(() => {
-        dispatch(getAllUsers());
-      }, 100);
-      return () => clearTimeout(timer);
-    }
-  }, [dispatch, isCurrentUserDataLoading]);
+    dispatch(getAllUsers());
+  }, [dispatch]);
 
   if (isLoading) {
     return <h2>Loading</h2>;

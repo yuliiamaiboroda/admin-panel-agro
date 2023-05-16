@@ -112,7 +112,7 @@ export const refreshUser = createAsyncThunk<
   try {
     const { data } = await axios.post<IUser>('/api/users/refresh');
     setToken(data.accessToken);
-
+    setCookie(document.cookie);
     try {
       const { data: userData } = await axios.get('/api/users/current');
       return { accessToken: data.accessToken, user: userData };

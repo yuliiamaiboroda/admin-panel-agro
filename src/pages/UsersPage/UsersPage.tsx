@@ -1,5 +1,11 @@
+import PageTitle from 'components/PageTitle';
 import UsersDashboard from 'components/Users/UsersDashboard';
 
 export default function UsersPage() {
-  return <UsersDashboard />;
+  return (
+    <>
+      <PageTitle title="Користувачі" />
+      <UsersDashboard />
+    </>
+  );
 }

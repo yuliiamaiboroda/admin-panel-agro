@@ -1,7 +1,6 @@
 import { Field, Form, Formik } from 'formik';
 import createNewVacancySchema from 'helpers/schemas/vacancies/createVacancy.schema';
 import { useAppDispatch } from 'hooks';
-
 import { createVacancy } from 'redux/vacancies';
 
 enum Categories {
