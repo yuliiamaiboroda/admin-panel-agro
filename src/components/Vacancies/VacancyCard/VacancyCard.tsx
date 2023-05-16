@@ -1,9 +1,16 @@
 import Modal from 'components/Modal';
 import ModalDelete from 'components/ModalDelete';
-import { useAppDispatch } from 'hooks';
-import { useState } from 'react';
+import { useAppDispatch, useAppSelector } from 'hooks';
+import { useEffect, useState } from 'react';
+import { selectUser } from 'redux/user';
 import { removeVacancyById } from 'redux/vacancies';
 
+enum ROLES {
+  admin = 'admin',
+  applyManager = 'applyManager',
+  servicesManager = 'servicesManager',
+  productsManager = 'productsManager',
+}
 interface IVacancy {
   _id: string;
   category: string;
@@ -30,11 +37,23 @@ export default function VacancyCard({
   location,
 }: IVacancy) {
   const [isModalDeleteOpen, setIsModalDeleteOpen] = useState(false);
+  const [isAccessedToChangeVacancy, setIsAccessedToChangeVacancy] =
+    useState(false);
 
   const dispatch = useAppDispatch();
+  const {
+    user: { role },
+  } = useAppSelector(selectUser);
+
   const handleDelete = (_id: string) => {
     dispatch(removeVacancyById(_id));
   };
+
+  useEffect(() => {
+    if (role === ROLES.admin || role === ROLES.applyManager) {
+      setIsAccessedToChangeVacancy(true);
+    }
+  }, [role]);
 
   return (
     <li>
@@ -71,17 +90,20 @@ export default function VacancyCard({
         Контактна пошта:
         <a href={`mailto:${contactMail}`}>{contactMail}</a>
       </p>
-      <div>
-        <button
-          type="button"
-          onClick={(e: React.MouseEvent<HTMLButtonElement>) =>
-            setIsModalDeleteOpen(true)
-          }
-        >
-          delete
-        </button>
-        <button type="button">change </button>
-      </div>
+      {isAccessedToChangeVacancy && (
+        <div>
+          <button
+            type="button"
+            onClick={(e: React.MouseEvent<HTMLButtonElement>) =>
+              setIsModalDeleteOpen(true)
+            }
+          >
+            delete
+          </button>
+          <button type="button">change </button>
+        </div>
+      )}
+
       {isModalDeleteOpen && (
         <Modal onClose={() => setIsModalDeleteOpen(false)}>
           <ModalDelete

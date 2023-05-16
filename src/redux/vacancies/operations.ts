@@ -77,7 +77,7 @@ export const createVacancy = createAsyncThunk<
       return data;
     } catch (err) {
       const error = err as AxiosError;
-      thunkApi.rejectWithValue(error.message);
+      return thunkApi.rejectWithValue(error.message);
     }
   }
 );
