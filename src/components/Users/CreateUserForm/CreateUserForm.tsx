@@ -36,7 +36,6 @@ export default function CreateUserForm({ onClose }: Iprops) {
     <Formik
       initialValues={FORM_INITIAL_STATE}
       onSubmit={(values, actions) => {
-        console.log(values);
         dispatch(registerNewUser(values));
         actions.resetForm();
         onClose();

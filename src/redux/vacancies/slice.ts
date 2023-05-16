@@ -1,5 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { getAllVacancies, removeVacancyById } from './operations';
+import {
+  createVacancy,
+  getAllVacancies,
+  removeVacancyById,
+} from './operations';
 
 export interface IVacancy {
   _id: string;
@@ -52,6 +56,23 @@ const vacanciesSlice = createSlice({
         return { ...state, isLoading: false, entities: filteredArr };
       })
       .addCase(removeVacancyById.rejected, (state, { payload }) => {
+        return {
+          ...state,
+          isLoading: false,
+          ...(payload ? { error: payload } : null),
+        };
+      })
+      .addCase(createVacancy.pending, state => {
+        return { ...state, isLoading: true, error: null };
+      })
+      .addCase(createVacancy.fulfilled, (state, { payload }) => {
+        return {
+          ...state,
+          isLoading: false,
+          entities: [...state.entities, payload],
+        };
+      })
+      .addCase(createVacancy.rejected, (state, { payload }) => {
         return {
           ...state,
           isLoading: false,

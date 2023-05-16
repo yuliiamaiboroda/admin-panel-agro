@@ -1,19 +1,21 @@
+import React from 'react';
+
 interface IProps {
-  title: string;
   onClose: () => void;
-  handleDelete: () => void;
+  handleLogout: () => void;
 }
-export default function ModalDelete({ title, onClose, handleDelete }: IProps) {
+
+export default function ModalLogout({ onClose, handleLogout }: IProps) {
   return (
-    <>
-      <h2>Ви впевнені, що хочете видалити {title} ?</h2>
+    <div>
+      <h2>Ви впевнені, що хочете вийти?</h2>
       <ul>
         <li>
           <button
             type="button"
-            onClick={(e: React.MouseEvent<HTMLButtonElement>) => handleDelete()}
+            onClick={(e: React.MouseEvent<HTMLButtonElement>) => handleLogout()}
           >
-            Видалити
+            вихід
           </button>
         </li>
         <li>
@@ -21,10 +23,10 @@ export default function ModalDelete({ title, onClose, handleDelete }: IProps) {
             type="button"
             onClick={(e: React.MouseEvent<HTMLButtonElement>) => onClose()}
           >
-            Скасувати
+            скасувати
           </button>
         </li>
       </ul>
-    </>
+    </div>
   );
 }
