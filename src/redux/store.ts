@@ -20,7 +20,7 @@ const persistConfig = {
   key: 'credentials',
   storage,
   // TODO:  Change whitelist to the next, when fixed fetch of refresh routes
-  // whitelist: ['accessToken', 'refreshToken'],
+  whitelist: ['accessToken'],
 };
 
 const credentialsPersistReducer = persistReducer(persistConfig, userReducer);
