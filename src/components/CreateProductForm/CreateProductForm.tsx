@@ -5,16 +5,29 @@ import { createProduct } from 'redux/products';
 import UploadFileField from 'components/UploadFileField';
 
 interface IProps {
+  productData?: {
+    _id: string;
+    title: string;
+    description: string;
+    image: string;
+  };
   onSubmit?: Function;
 }
 
-export default function CreateProductForm({ onSubmit }: IProps) {
+const PRODUCT_DATA = { _id: '', title: '', description: '', image: '' };
+
+export default function CreateProductForm({
+  productData = PRODUCT_DATA,
+  onSubmit,
+}: IProps) {
   const fileField = useRef<HTMLInputElement>(null);
   const dispatch = useAppDispatch();
 
+  const { title, description, image } = productData;
+
   return (
     <Formik
-      initialValues={{ title: '', description: '', image: '' }}
+      initialValues={{ title, description, image }}
       onSubmit={(values, actions) => {
         console.log({ values, actions });
         actions.resetForm();
