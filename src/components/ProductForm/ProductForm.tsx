@@ -1,37 +1,42 @@
 import React, { useRef } from 'react';
 import { Formik, Form, Field } from 'formik';
-import { useAppDispatch } from 'hooks';
-import { createProduct } from 'redux/products';
 import UploadFileField from 'components/UploadFileField';
 
-interface IProps {
-  onSubmit?: Function;
+interface IProductState {
+  title: string;
+  description: string;
+  image: File | null;
 }
 
-export default function CreateProductForm({ onSubmit }: IProps) {
+interface IProps {
+  productData?: {
+    title: string;
+    description: string;
+    imageURL?: string;
+  };
+  onSubmit: (values: IProductState) => void;
+}
+
+const PRODUCT_DATA = { title: '', description: '' };
+
+export default function ProductForm({
+  productData = PRODUCT_DATA,
+  onSubmit,
+}: IProps) {
   const fileField = useRef<HTMLInputElement>(null);
-  const dispatch = useAppDispatch();
+
+  const { title, description } = productData;
 
   return (
     <Formik
-      initialValues={{ title: '', description: '', image: '' }}
+      initialValues={{ title, description, image: '' }}
       onSubmit={(values, actions) => {
-        console.log({ values, actions });
+        onSubmit({
+          title: values.title,
+          description: values.description,
+          image: fileField.current?.files ? fileField.current?.files[0] : null,
+        });
         actions.resetForm();
-        if (fileField.current?.files) {
-          console.log('fileField.current?.files', fileField.current?.files[0]);
-          dispatch(
-            createProduct({
-              title: values.title,
-              description: values.description,
-              image: fileField.current?.files[0],
-            })
-          );
-        }
-
-        if (onSubmit) {
-          onSubmit();
-        }
       }}
     >
       <Form>
