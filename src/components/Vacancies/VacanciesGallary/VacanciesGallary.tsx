@@ -3,6 +3,7 @@ import { useEffect } from 'react';
 import {
   getActualVacancies,
   getAllVacancies,
+  getIrrelevantVacancies,
   selectVacancies,
 } from 'redux/vacancies';
 import VacancyCard from '../VacancyCard';
@@ -19,15 +20,32 @@ export default function VacanciesGallary() {
 
   const Interaction_With_API = async () => {
     try {
-      if (categoryName === 'all-vacancies') {
-        dispatch(getAllVacancies());
+      switch (categoryName) {
+        case 'all-vacancies':
+          dispatch(getAllVacancies());
+          break;
+        case 'actual-vacancies':
+          dispatch(getActualVacancies());
+          break;
+        case 'irrelevant-vacancies':
+          dispatch(getIrrelevantVacancies());
+          break;
+        default:
+          navigate('all-vacancies');
+          break;
       }
-      if (categoryName === 'actual-vacancies') {
-        dispatch(getActualVacancies());
-      }
-      if (!categoryName) {
-        navigate('all-vacancies');
-      }
+      // if (categoryName === 'all-vacancies') {
+      //   dispatch(getAllVacancies());
+      // }
+      // if (categoryName === 'actual-vacancies') {
+      //   dispatch(getActualVacancies());
+      // }
+      // if (categoryName === 'irrelevant-vacancies') {
+      //   dispatch(getIrrelevantVacancies());
+      // }
+      // if (!categoryName) {
+      //   navigate('all-vacancies');
+      // }
     } catch (err) {
       Notify.failure('Упс щось пішло не так');
     }
@@ -46,6 +64,9 @@ export default function VacanciesGallary() {
         </li>
         <li>
           <NavLink to={'actual-vacancies'}>Актуальні вакансії</NavLink>
+        </li>
+        <li>
+          <NavLink to={'irrelevant-vacancies'}>Неактуальні вакансії</NavLink>
         </li>
       </ul>
       {isLoading ? (

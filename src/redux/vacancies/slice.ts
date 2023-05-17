@@ -3,6 +3,7 @@ import {
   createVacancy,
   getActualVacancies,
   getAllVacancies,
+  getIrrelevantVacancies,
   removeVacancyById,
 } from './operations';
 
@@ -84,15 +85,21 @@ const vacanciesSlice = createSlice({
       .addCase(getAllVacancies.pending, vacanciesPendingReducer)
       .addCase(getAllVacancies.fulfilled, getAllVacanciesFulfilledReducer)
       .addCase(getAllVacancies.rejected, vacanciesRejectedReducer)
+      .addCase(getActualVacancies.pending, vacanciesPendingReducer)
+      .addCase(getActualVacancies.fulfilled, getAllVacanciesFulfilledReducer)
+      .addCase(getActualVacancies.rejected, vacanciesRejectedReducer)
+      .addCase(getIrrelevantVacancies.pending, vacanciesPendingReducer)
+      .addCase(
+        getIrrelevantVacancies.fulfilled,
+        getAllVacanciesFulfilledReducer
+      )
+      .addCase(getIrrelevantVacancies.rejected, vacanciesRejectedReducer)
       .addCase(removeVacancyById.pending, vacanciesPendingReducer)
       .addCase(removeVacancyById.fulfilled, removeVacancyByIdFulfilledReducer)
       .addCase(removeVacancyById.rejected, vacanciesRejectedReducer)
       .addCase(createVacancy.pending, vacanciesPendingReducer)
       .addCase(createVacancy.fulfilled, createVacancyFulfilledReducer)
-      .addCase(createVacancy.rejected, vacanciesRejectedReducer)
-      .addCase(getActualVacancies.pending, vacanciesPendingReducer)
-      .addCase(getActualVacancies.fulfilled, getAllVacanciesFulfilledReducer)
-      .addCase(getActualVacancies.rejected, vacanciesRejectedReducer),
+      .addCase(createVacancy.rejected, vacanciesRejectedReducer),
 });
 
 export const vacanciesReducer = vacanciesSlice.reducer;

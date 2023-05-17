@@ -42,6 +42,20 @@ export const getActualVacancies = createAsyncThunk<
   }
 });
 
+export const getIrrelevantVacancies = createAsyncThunk<
+  IVacancy[],
+  undefined,
+  { rejectValue: string }
+>('vacancies/getIrrelevant', async (_, thunkApi) => {
+  try {
+    const { data } = await axios.get('/api/vacancies/irrelevant');
+    return data;
+  } catch (err) {
+    const error = err as AxiosError;
+    return thunkApi.rejectWithValue(error.message);
+  }
+});
+
 export const removeVacancyById = createAsyncThunk<
   string,
   string,
