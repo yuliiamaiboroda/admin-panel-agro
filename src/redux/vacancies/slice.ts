@@ -1,6 +1,7 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import {
   createVacancy,
+  getActualVacancies,
   getAllVacancies,
   removeVacancyById,
 } from './operations';
@@ -29,56 +30,69 @@ const initialState: IState = {
   isLoading: false,
   error: null,
 };
+
+const vacanciesPendingReducer = (state: IState) => {
+  return { ...state, isLoading: true, error: null };
+};
+
+const vacanciesRejectedReducer = (
+  state: IState,
+  action: PayloadAction<string | undefined>
+) => {
+  return {
+    ...state,
+    isLoading: false,
+    ...(action.payload ? { error: action.payload } : null),
+  };
+};
+
+const getAllVacanciesFulfilledReducer = (
+  state: IState,
+  action: PayloadAction<IVacancy[], string>
+) => {
+  return { ...state, isLoading: false, entities: action.payload };
+};
+
+const removeVacancyByIdFulfilledReducer = (
+  state: IState,
+  action: PayloadAction<string, string>
+) => {
+  return {
+    ...state,
+    isLoading: false,
+    entities: state.entities.filter(item => item._id !== action.payload),
+  };
+};
+
+const createVacancyFulfilledReducer = (
+  state: IState,
+  action: PayloadAction<IVacancy, string>
+) => {
+  return {
+    ...state,
+    isLoading: false,
+    entities: [...state.entities, action.payload],
+  };
+};
+
 const vacanciesSlice = createSlice({
   name: 'vacancies',
   initialState,
   reducers: {},
   extraReducers: builder =>
     builder
-      .addCase(getAllVacancies.pending, state => {
-        return { ...state, isLoading: true, error: null };
-      })
-      .addCase(getAllVacancies.fulfilled, (state, { payload }) => {
-        return { ...state, isLoading: false, entities: payload };
-      })
-      .addCase(getAllVacancies.rejected, (state, { payload }) => {
-        return {
-          ...state,
-          isLoading: false,
-          ...(payload ? { error: payload } : null),
-        };
-      })
-      .addCase(removeVacancyById.pending, state => {
-        return { ...state, isLoading: true, error: null };
-      })
-      .addCase(removeVacancyById.fulfilled, (state, { payload }) => {
-        const filteredArr = state.entities.filter(el => el._id !== payload);
-        return { ...state, isLoading: false, entities: filteredArr };
-      })
-      .addCase(removeVacancyById.rejected, (state, { payload }) => {
-        return {
-          ...state,
-          isLoading: false,
-          ...(payload ? { error: payload } : null),
-        };
-      })
-      .addCase(createVacancy.pending, state => {
-        return { ...state, isLoading: true, error: null };
-      })
-      .addCase(createVacancy.fulfilled, (state, { payload }) => {
-        return {
-          ...state,
-          isLoading: false,
-          entities: [...state.entities, payload],
-        };
-      })
-      .addCase(createVacancy.rejected, (state, { payload }) => {
-        return {
-          ...state,
-          isLoading: false,
-          ...(payload ? { error: payload } : null),
-        };
-      }),
+      .addCase(getAllVacancies.pending, vacanciesPendingReducer)
+      .addCase(getAllVacancies.fulfilled, getAllVacanciesFulfilledReducer)
+      .addCase(getAllVacancies.rejected, vacanciesRejectedReducer)
+      .addCase(removeVacancyById.pending, vacanciesPendingReducer)
+      .addCase(removeVacancyById.fulfilled, removeVacancyByIdFulfilledReducer)
+      .addCase(removeVacancyById.rejected, vacanciesRejectedReducer)
+      .addCase(createVacancy.pending, vacanciesPendingReducer)
+      .addCase(createVacancy.fulfilled, createVacancyFulfilledReducer)
+      .addCase(createVacancy.rejected, vacanciesRejectedReducer)
+      .addCase(getActualVacancies.pending, vacanciesPendingReducer)
+      .addCase(getActualVacancies.fulfilled, getAllVacanciesFulfilledReducer)
+      .addCase(getActualVacancies.rejected, vacanciesRejectedReducer),
 });
 
 export const vacanciesReducer = vacanciesSlice.reducer;
