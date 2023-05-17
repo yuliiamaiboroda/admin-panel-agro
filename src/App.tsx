@@ -11,6 +11,7 @@ import ServicesPage from 'pages/ServicesPage';
 import SharedLayout from 'components/SharedLayout';
 import VacanciesPage from 'pages/VacanciesPage';
 import { Watch } from 'react-loader-spinner';
+import FeedbackPage from 'pages/FeedbackPage';
 
 function App() {
   // TODO:  Add fetch of refresh user
@@ -55,7 +56,7 @@ function App() {
             <Route path="services" element={<ServicesPage />} />
             <Route path="vacancies" element={<VacanciesPage />} />
             <Route path="resumes" element={<h1>Resumes page</h1>} />
-            <Route path="feedbacks" element={<h1>Feedbacks page</h1>} />
+            <Route path="feedbacks" element={<FeedbackPage />} />
           </Route>
           <Route
             path="/login"

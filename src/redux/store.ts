@@ -15,6 +15,7 @@ import { productsReducer } from './products';
 import { usersReducer } from './users';
 import { servicesReducer } from './services';
 import { vacanciesReducer } from './vacancies';
+import { feedbacksReducer } from './feedbacks';
 
 const persistConfig = {
   key: 'credentials',
@@ -32,6 +33,7 @@ export const store = configureStore({
     usersList: usersReducer,
     services: servicesReducer,
     vacancies: vacanciesReducer,
+    feedbacks: feedbacksReducer,
   },
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware({
