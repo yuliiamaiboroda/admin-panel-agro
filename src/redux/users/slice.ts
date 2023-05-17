@@ -13,14 +13,12 @@ interface IState {
   entities: IUser[];
   isLoading: boolean;
   error: string | null;
-  errorCode: number | null;
 }
 
 const initialState: IState = {
   entities: [],
   isLoading: false,
   error: null,
-  errorCode: null,
 };
 
 const usersSlice = createSlice({
@@ -30,7 +28,7 @@ const usersSlice = createSlice({
   extraReducers: builder =>
     builder
       .addCase(getAllUsers.pending, state => {
-        return { ...state, isLoading: true, error: null, errorCode: null };
+        return { ...state, isLoading: true, error: null };
       })
       .addCase(getAllUsers.fulfilled, (state, { payload }) => {
         return { ...state, isLoading: false, entities: payload };
@@ -39,13 +37,11 @@ const usersSlice = createSlice({
         return {
           ...state,
           isLoading: false,
-          ...(payload
-            ? { error: payload.message, errorCode: payload.code }
-            : null),
+          ...(payload ? { error: payload } : null),
         };
       })
       .addCase(removeUserById.pending, state => {
-        return { ...state, isLoading: true, error: null, errorCode: null };
+        return { ...state, isLoading: true, error: null };
       })
       .addCase(removeUserById.fulfilled, (state, { payload }) => {
         const filteredEntities = state.entities.filter(
@@ -57,9 +53,7 @@ const usersSlice = createSlice({
         return {
           ...state,
           isLoading: false,
-          ...(payload
-            ? { error: payload.message, errorCode: payload.code }
-            : null),
+          ...(payload ? { error: payload } : null),
         };
       })
       .addCase(registerNewUser.pending, state => {
@@ -76,9 +70,7 @@ const usersSlice = createSlice({
         return {
           ...state,
           isLoading: false,
-          ...(payload
-            ? { error: payload.message, errorCode: payload.code }
-            : null),
+          ...(payload ? { error: payload } : null),
         };
       }),
 });
