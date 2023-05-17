@@ -5,6 +5,7 @@ import { selectUsersList } from 'redux/users';
 import UsersList from 'components/Users/UsersList';
 import Modal from 'components/Modal';
 import CreateUserForm from 'components/Users/CreateUserForm';
+import Loader from 'components/Loader';
 
 export default function UsersDashboard() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -15,29 +16,32 @@ export default function UsersDashboard() {
     dispatch(getAllUsers());
   }, [dispatch]);
 
-  if (isLoading) {
-    return <h2>Loading</h2>;
-  }
   return (
-    <div>
-      <ul>
-        <li>Користувач</li>
-        <li>Роль</li>
-        <li>Опціі</li>
-      </ul>
-      {entities?.length ? (
-        <UsersList usersList={entities} />
+    <section style={{ position: 'relative' }}>
+      {isLoading ? (
+        <Loader top="200px" />
       ) : (
-        <h2>There arent any users</h2>
+        <>
+          <ul>
+            <li>Користувач</li>
+            <li>Роль</li>
+            <li>Опціі</li>
+          </ul>
+          {entities?.length ? (
+            <UsersList usersList={entities} />
+          ) : (
+            <h2>There arent any users</h2>
+          )}
+          <button type="button" onClick={() => setIsModalOpen(true)}>
+            Створити нового користувача
+          </button>
+          {isModalOpen && (
+            <Modal onClose={() => setIsModalOpen(false)}>
+              <CreateUserForm onClose={() => setIsModalOpen(false)} />
+            </Modal>
+          )}
+        </>
       )}
-      <button type="button" onClick={() => setIsModalOpen(true)}>
-        Створити нового користувача
-      </button>
-      {isModalOpen && (
-        <Modal onClose={() => setIsModalOpen(false)}>
-          <CreateUserForm onClose={() => setIsModalOpen(false)} />
-        </Modal>
-      )}
-    </div>
+    </section>
   );
 }

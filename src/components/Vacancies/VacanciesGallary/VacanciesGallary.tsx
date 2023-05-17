@@ -8,6 +8,7 @@ import {
 import VacancyCard from '../VacancyCard';
 import { NavLink, useNavigate, useParams } from 'react-router-dom';
 import { Notify } from 'notiflix';
+import Loader from 'components/Loader/Loader';
 
 export default function VacanciesGallary() {
   const dispatch = useAppDispatch();
@@ -38,7 +39,7 @@ export default function VacanciesGallary() {
   }, [categoryName]);
 
   return (
-    <>
+    <section style={{ position: 'relative' }}>
       <ul>
         <li>
           <NavLink to={'all-vacancies'}>Всі вакансії</NavLink>
@@ -48,7 +49,7 @@ export default function VacanciesGallary() {
         </li>
       </ul>
       {isLoading ? (
-        <h2>Loading</h2>
+        <Loader top="200px" />
       ) : (
         <ul>
           {entities.length ? (
@@ -58,6 +59,6 @@ export default function VacanciesGallary() {
           )}
         </ul>
       )}
-    </>
+    </section>
   );
 }

@@ -10,8 +10,10 @@ import ProductsPage from 'pages/ProductsPage';
 import ServicesPage from 'pages/ServicesPage';
 import SharedLayout from 'components/SharedLayout';
 import VacanciesPage from 'pages/VacanciesPage';
-import { Watch } from 'react-loader-spinner';
+// import { Watch } from 'react-loader-spinner';
 import FeedbackPage from 'pages/FeedbackPage';
+import ButtonUp from 'components/ButtonUp';
+import Loader from 'components/Loader';
 
 function App() {
   // TODO:  Add fetch of refresh user
@@ -29,15 +31,7 @@ function App() {
   return (
     <div className="App">
       {isLoading ? (
-        <Watch
-          height="80"
-          width="80"
-          radius="48"
-          color="#4fa94d"
-          ariaLabel="watch-loading"
-          wrapperStyle={{}}
-          visible={true}
-        />
+        <Loader top="" />
       ) : (
         <Routes>
           <Route
@@ -67,6 +61,7 @@ function App() {
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       )}
+      <ButtonUp />
     </div>
   );
 }
