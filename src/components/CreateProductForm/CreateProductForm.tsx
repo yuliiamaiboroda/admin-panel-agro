@@ -12,12 +12,12 @@ interface IProps {
   productData?: {
     title: string;
     description: string;
-    image: string;
+    imageURL?: string;
   };
   onSubmit: (values: IProductState) => void;
 }
 
-const PRODUCT_DATA = { title: '', description: '', image: '' };
+const PRODUCT_DATA = { title: '', description: '' };
 
 export default function CreateProductForm({
   productData = PRODUCT_DATA,
@@ -25,11 +25,11 @@ export default function CreateProductForm({
 }: IProps) {
   const fileField = useRef<HTMLInputElement>(null);
 
-  const { title, description, image } = productData;
+  const { title, description } = productData;
 
   return (
     <Formik
-      initialValues={{ title, description, image }}
+      initialValues={{ title, description, image: '' }}
       onSubmit={(values, actions) => {
         onSubmit({
           title: values.title,

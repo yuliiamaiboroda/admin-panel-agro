@@ -17,8 +17,8 @@ export default function ProductsGallery() {
         Add product
       </button>
       <ul>
-        {products.map(({ _id, ...rest }) => (
-          <ProductCard key={_id} {...rest} />
+        {products.map(product => (
+          <ProductCard key={product._id} {...product} />
         ))}
       </ul>
       {isModalOpen && (
