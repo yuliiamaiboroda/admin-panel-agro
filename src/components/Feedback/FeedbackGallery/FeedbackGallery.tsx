@@ -1,6 +1,7 @@
 import { useAppDispatch, useAppSelector } from 'hooks';
 import { useEffect } from 'react';
 import { getAllFeedback, selectFeedbacks } from 'redux/feedbacks';
+import FeedbackCard from '../FeedbackCard';
 
 export default function FeedbackGallery() {
   const dispatch = useAppDispatch();
@@ -14,8 +15,8 @@ export default function FeedbackGallery() {
     <>
       {entities.length !== 0 ? (
         <ul>
-          {entities.map(el => (
-            <li>{el._id}</li>
+          {entities.map(item => (
+            <FeedbackCard key={item._id} {...item} />
           ))}
         </ul>
       ) : (

@@ -1,4 +1,4 @@
-import FeedbackGallery from 'components/Feedback/FeedbackGallery/';
+import FeedbackGallery from 'components/Feedback/FeedbackGallery';
 import PageTitle from 'components/PageTitle';
 
 export default function FeedbackPage() {
