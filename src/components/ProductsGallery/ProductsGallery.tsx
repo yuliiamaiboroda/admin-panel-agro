@@ -1,30 +1,34 @@
-import { useState } from 'react';
-import { useAppSelector } from 'hooks';
+import { useAppSelector, useModal } from 'hooks';
 import { selectProducts } from 'redux/products';
 import ProductCard from 'components/ProductCard';
 import Modal from 'components/Modal';
-import CreateProductForm from 'components/CreateProductForm';
+import ProductForm from 'components/ProductForm';
+import { useAppDispatch } from 'hooks';
+import { createProduct } from 'redux/products';
 
 export default function ProductsGallery() {
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const products = useAppSelector(selectProducts);
-
-  const handleModalClose = () => setIsModalOpen(false);
-  const handleModalOpen = () => setIsModalOpen(true);
+  const { isModalOpen, openModal, closeModal } = useModal();
+  const dispatch = useAppDispatch();
 
   return (
     <>
-      <button type="button" onClick={handleModalOpen}>
+      <button type="button" onClick={openModal}>
         Add product
       </button>
       <ul>
-        {products.map(({ _id, ...rest }) => (
-          <ProductCard key={_id} {...rest} />
+        {products.map(product => (
+          <ProductCard key={product._id} {...product} />
         ))}
       </ul>
       {isModalOpen && (
-        <Modal onClose={handleModalClose}>
-          <CreateProductForm onSubmit={handleModalClose} />
+        <Modal onClose={closeModal}>
+          <ProductForm
+            onSubmit={productData => {
+              dispatch(createProduct(productData));
+              closeModal();
+            }}
+          />
         </Modal>
       )}
     </>

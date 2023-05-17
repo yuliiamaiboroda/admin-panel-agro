@@ -1,5 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { getAllProducts, createProduct } from './operations';
+import type { PayloadAction } from '@reduxjs/toolkit';
+import {
+  getAllProducts,
+  createProduct,
+  editProduct,
+  removeProduct,
+} from './operations';
 
 export interface IProduct {
   _id: string;
@@ -21,15 +27,28 @@ const initialState: IState = {
   error: null,
 };
 
+const pendingReducer = (state: IState) => ({
+  ...state,
+  isLoading: true,
+  error: null,
+});
+
+const rejectedReducer = (
+  state: IState,
+  action: PayloadAction<string | undefined>
+) => ({
+  ...state,
+  isLoading: false,
+  ...(action.payload ? { error: action.payload } : null),
+});
+
 const productsSlice = createSlice({
   name: 'products',
   initialState,
   reducers: {},
   extraReducers: builder =>
     builder
-      .addCase(getAllProducts.pending, state => {
-        return { ...state, isLoading: true, error: null };
-      })
+      .addCase(getAllProducts.pending, pendingReducer)
       .addCase(getAllProducts.fulfilled, (state, action) => {
         return {
           ...state,
@@ -37,17 +56,8 @@ const productsSlice = createSlice({
           entities: action.payload,
         };
       })
-      .addCase(getAllProducts.rejected, (state, action) => {
-        console.log(action.payload);
-        return {
-          ...state,
-          isLoading: false,
-          ...(action.payload ? { error: action.payload } : null),
-        };
-      })
-      .addCase(createProduct.pending, state => {
-        return { ...state, isLoading: true, error: null };
-      })
+      .addCase(getAllProducts.rejected, rejectedReducer)
+      .addCase(createProduct.pending, pendingReducer)
       .addCase(createProduct.fulfilled, (state, action) => {
         console.log('action.payload', action.payload);
         return {
@@ -56,13 +66,32 @@ const productsSlice = createSlice({
           entities: [...state.entities, action.payload],
         };
       })
-      .addCase(createProduct.rejected, (state, action) => {
+      .addCase(createProduct.rejected, rejectedReducer)
+      .addCase(editProduct.pending, pendingReducer)
+      .addCase(editProduct.fulfilled, (state, action) => {
         return {
           ...state,
           isLoading: false,
-          ...(action.payload ? { error: action.payload } : null),
+          entities: state.entities.map(product => {
+            if (product._id !== action.payload._id) {
+              return product;
+            }
+            return { ...product, ...action.payload };
+          }),
         };
-      }),
+      })
+      .addCase(editProduct.rejected, rejectedReducer)
+      .addCase(removeProduct.pending, pendingReducer)
+      .addCase(removeProduct.fulfilled, (state, action) => {
+        return {
+          ...state,
+          isLoading: false,
+          entities: state.entities.filter(
+            product => product._id !== action.payload
+          ),
+        };
+      })
+      .addCase(removeProduct.rejected, rejectedReducer),
 });
 
 export const productsReducer = productsSlice.reducer;
