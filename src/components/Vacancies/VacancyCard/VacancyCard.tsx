@@ -98,9 +98,9 @@ export default function VacancyCard({
               setIsModalDeleteOpen(true)
             }
           >
-            delete
+            видалити
           </button>
-          <button type="button">change </button>
+          <button type="button">змінити </button>
         </div>
       )}
 

@@ -9,7 +9,6 @@ import {
 
 interface IUserState {
   accessToken: string | null;
-  refreshToken: string | null;
   user: {
     email: string | null;
     name: string | null;
@@ -23,7 +22,6 @@ interface IUserState {
 
 const initialState: IUserState = {
   accessToken: null,
-  refreshToken: null,
   user: {
     email: null,
     name: null,
@@ -54,7 +52,6 @@ const userSlice = createSlice({
           isLoading: false,
           isAuthorized: true,
           accessToken: action.payload.accessToken,
-          refreshToken: action.payload.refreshToken,
           user: action.payload.user,
         };
       })

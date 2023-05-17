@@ -1,7 +1,6 @@
 import { Field, Form, Formik } from 'formik';
 import createNewVacancySchema from 'helpers/schemas/vacancies/createVacancy.schema';
 import { useAppDispatch } from 'hooks';
-
 import { createVacancy } from 'redux/vacancies';
 
 enum Categories {
@@ -156,7 +155,6 @@ export default function CreateVacancyForm({ onClose }: Iprops) {
                 type="radio"
                 id={Categories.actual}
                 value={Categories.actual}
-                checked
               />
             </label>
             <label>

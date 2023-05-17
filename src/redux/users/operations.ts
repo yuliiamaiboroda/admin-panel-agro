@@ -63,7 +63,7 @@ export const registerNewUser = createAsyncThunk<
         role,
         password,
       });
-      return data.user;
+      return data;
     } catch (err) {
       const error = err as AxiosError;
       Notify.failure('something went wrong ');

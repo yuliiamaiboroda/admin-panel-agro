@@ -24,8 +24,6 @@ export default function LoginForm() {
     if (!user.error) {
       actions.resetForm();
     }
-
-    console.log({ values });
   };
 
   return (
@@ -39,14 +37,14 @@ export default function LoginForm() {
         {({ errors, touched }) => (
           <Form>
             <label>
-              Email:
+              Електронна пошта:
               <br />
               <Field name="email" type="email" placeholder="hello@mail.com" />
             </label>
             {errors.email && touched.email ? <span>{errors.email}</span> : null}
             <br />
             <label>
-              Password:
+              Пароль:
               <br />
               <Field name="password" type="password" />
             </label>
@@ -55,7 +53,7 @@ export default function LoginForm() {
             ) : null}
 
             <br />
-            <button type="submit">Log in</button>
+            <button type="submit">Увійти</button>
           </Form>
         )}
       </Formik>

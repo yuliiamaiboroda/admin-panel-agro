@@ -33,7 +33,7 @@ const setCookie = (cookie: string) => {
   cookies.set('jwt', cookie);
 };
 
-const unsetCookie = () => {
+const removeCookie = () => {
   cookies.remove('jwt');
 };
 
@@ -56,8 +56,6 @@ export const loginUser = createAsyncThunk<
       userCredentials
     );
     setToken(data.accessToken);
-    console.log(document.cookie);
-
     setCookie(document.cookie);
     return data;
   } catch (err) {
@@ -77,7 +75,7 @@ export const logoutUser = createAsyncThunk<
   try {
     await axios.post('/api/users/logout');
     removeToken();
-    unsetCookie();
+    removeCookie();
   } catch (err) {
     const error = err as AxiosError;
     return thunkApi.rejectWithValue(error.message);
@@ -112,7 +110,7 @@ export const refreshUser = createAsyncThunk<
   try {
     const { data } = await axios.post<IUser>('/api/users/refresh');
     setToken(data.accessToken);
-
+    setCookie(document.cookie);
     try {
       const { data: userData } = await axios.get('/api/users/current');
       return { accessToken: data.accessToken, user: userData };
@@ -122,7 +120,7 @@ export const refreshUser = createAsyncThunk<
     }
   } catch (err) {
     const error = err as AxiosError;
-    unsetCookie();
+    removeCookie();
     return thunkApi.rejectWithValue(error.message);
   }
 });

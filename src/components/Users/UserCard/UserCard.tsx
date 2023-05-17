@@ -1,5 +1,6 @@
 import Modal from 'components/Modal';
-import ModalDelete from 'components/ModalDelete/ModalDelete';
+import ModalDelete from 'components/ModalDelete';
+import translateRole from 'helpers/translateRoles';
 import { useAppDispatch } from 'hooks';
 import { useState } from 'react';
 import { removeUserById } from 'redux/users';
@@ -26,7 +27,7 @@ export default function UserCard({ _id, email, name, surname, role }: IUser) {
         {name} {surname}
       </div>
       <div>{email}</div>
-      <div>{role}</div>
+      <div>{translateRole(role)}</div>
       <div>
         <button
           type="button"
@@ -34,9 +35,9 @@ export default function UserCard({ _id, email, name, surname, role }: IUser) {
             setIsModalDeleteOpen(true)
           }
         >
-          delete
+          Видалити
         </button>
-        <button type="button">change</button>
+        <button type="button">Змінити</button>
       </div>
       {isModalDeleteOpen && (
         <Modal onClose={() => setIsModalDeleteOpen(false)}>
