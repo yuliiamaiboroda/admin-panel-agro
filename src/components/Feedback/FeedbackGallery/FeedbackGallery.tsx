@@ -9,7 +9,7 @@ export default function FeedbackGallery() {
 
   useEffect(() => {
     dispatch(getAllFeedback());
-  }, []);
+  }, [dispatch]);
 
   return (
     <>

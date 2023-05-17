@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { getAllUsers, registerNewUser, removeUserById } from './operations';
 
 export interface IUser {
@@ -21,58 +21,65 @@ const initialState: IState = {
   error: null,
 };
 
+const usersPendingReducer = (state: IState) => {
+  return { ...state, isLoading: true, error: null };
+};
+
+const usersRejectedReducer = (
+  state: IState,
+  action: PayloadAction<string | undefined>
+) => {
+  return {
+    ...state,
+    isLoading: false,
+    ...(action.payload ? { error: action.payload } : null),
+  };
+};
+
+const getAllUsersFulfilledReducer = (
+  state: IState,
+  action: PayloadAction<IUser[], string>
+) => {
+  return { ...state, isLoading: false, entities: action.payload };
+};
+
+const removeUserByIdFulfilledReducer = (
+  state: IState,
+  action: PayloadAction<string, string>
+) => {
+  return {
+    ...state,
+    isLoading: false,
+    entities: state.entities.filter(item => item._id !== action.payload),
+  };
+};
+
+const registerNewUserFulfilledReducer = (
+  state: IState,
+  action: PayloadAction<IUser, string>
+) => {
+  return {
+    ...state,
+    isLoading: false,
+    entities: [...state.entities, action.payload],
+  };
+};
+
 const usersSlice = createSlice({
   name: 'users',
   initialState,
   reducers: {},
   extraReducers: builder =>
     builder
-      .addCase(getAllUsers.pending, state => {
-        return { ...state, isLoading: true, error: null };
-      })
-      .addCase(getAllUsers.fulfilled, (state, { payload }) => {
-        return { ...state, isLoading: false, entities: payload };
-      })
-      .addCase(getAllUsers.rejected, (state, { payload }) => {
-        return {
-          ...state,
-          isLoading: false,
-          ...(payload ? { error: payload } : null),
-        };
-      })
-      .addCase(removeUserById.pending, state => {
-        return { ...state, isLoading: true, error: null };
-      })
-      .addCase(removeUserById.fulfilled, (state, { payload }) => {
-        const filteredEntities = state.entities.filter(
-          el => el._id !== payload
-        );
-        return { ...state, isLoading: false, entities: filteredEntities };
-      })
-      .addCase(removeUserById.rejected, (state, { payload }) => {
-        return {
-          ...state,
-          isLoading: false,
-          ...(payload ? { error: payload } : null),
-        };
-      })
-      .addCase(registerNewUser.pending, state => {
-        return { ...state, isLoading: true, error: null, errorCode: null };
-      })
-      .addCase(registerNewUser.fulfilled, (state, { payload }) => {
-        return {
-          ...state,
-          isLoading: false,
-          entities: [...state.entities, payload],
-        };
-      })
-      .addCase(registerNewUser.rejected, (state, { payload }) => {
-        return {
-          ...state,
-          isLoading: false,
-          ...(payload ? { error: payload } : null),
-        };
-      }),
+      .addCase(getAllUsers.pending, usersPendingReducer)
+      .addCase(getAllUsers.fulfilled, getAllUsersFulfilledReducer)
+      .addCase(getAllUsers.rejected, usersRejectedReducer)
+      .addCase(removeUserById.pending, usersPendingReducer)
+      .addCase(removeUserById.fulfilled, removeUserByIdFulfilledReducer)
+      .addCase(removeUserById.rejected, usersRejectedReducer)
+      .addCase(registerNewUser.pending, usersPendingReducer)
+      .addCase(registerNewUser.fulfilled, registerNewUserFulfilledReducer)
+      .addCase(registerNewUser.rejected, usersRejectedReducer),
 });
 
 export const usersReducer = usersSlice.reducer;
