@@ -86,3 +86,20 @@ export const editProduct = createAsyncThunk<
     }
   }
 );
+
+export const removeProduct = createAsyncThunk<
+  string,
+  string,
+  { rejectValue: string }
+>('products/removeProduct', async (_id, thunkApi) => {
+  try {
+    await axios.delete(`/api/products/certain/${_id}`);
+    return _id;
+  } catch (err) {
+    const error = err as AxiosError<{ message: string }>;
+    if (!error.response) {
+      return thunkApi.rejectWithValue('Something went wrong');
+    }
+    return thunkApi.rejectWithValue(error.response.data.message);
+  }
+});

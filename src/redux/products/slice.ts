@@ -1,6 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
-import { getAllProducts, createProduct, editProduct } from './operations';
+import {
+  getAllProducts,
+  createProduct,
+  editProduct,
+  removeProduct,
+} from './operations';
 
 export interface IProduct {
   _id: string;
@@ -75,7 +80,18 @@ const productsSlice = createSlice({
           }),
         };
       })
-      .addCase(editProduct.rejected, rejectedReducer),
+      .addCase(editProduct.rejected, rejectedReducer)
+      .addCase(removeProduct.pending, pendingReducer)
+      .addCase(removeProduct.fulfilled, (state, action) => {
+        return {
+          ...state,
+          isLoading: false,
+          entities: state.entities.filter(
+            product => product._id !== action.payload
+          ),
+        };
+      })
+      .addCase(removeProduct.rejected, rejectedReducer),
 });
 
 export const productsReducer = productsSlice.reducer;

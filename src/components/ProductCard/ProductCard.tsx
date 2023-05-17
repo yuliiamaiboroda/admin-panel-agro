@@ -1,5 +1,5 @@
 import { useModal, useAppDispatch } from 'hooks';
-import { editProduct } from 'redux/products';
+import { editProduct, removeProduct } from 'redux/products';
 import Modal from 'components/Modal';
 import CreateProductForm from 'components/CreateProductForm';
 
@@ -22,6 +22,11 @@ export default function ProductCard({
     openModal: openEditModal,
     closeModal: closeEditModal,
   } = useModal();
+  const {
+    isModalOpen: isRemoveModalOpen,
+    openModal: openRemoveModal,
+    closeModal: closeRemoveModal,
+  } = useModal();
   const dispatch = useAppDispatch();
 
   return (
@@ -38,6 +43,9 @@ export default function ProductCard({
         <p>{description}</p>
         <button type="button" onClick={openEditModal}>
           Edit
+        </button>
+        <button type="button" onClick={openRemoveModal}>
+          Remove
         </button>
       </li>
       {isModalOpen && (
@@ -56,6 +64,23 @@ export default function ProductCard({
               closeEditModal();
             }}
           />
+        </Modal>
+      )}
+      {isRemoveModalOpen && (
+        <Modal onClose={closeRemoveModal}>
+          <p>Are you sure wont to delete "{title}" product?</p>
+          <button
+            type="button"
+            onClick={() => {
+              dispatch(removeProduct(_id));
+              closeRemoveModal();
+            }}
+          >
+            Yes
+          </button>
+          <button type="button" onClick={closeRemoveModal}>
+            Cancel
+          </button>
         </Modal>
       )}
     </>
