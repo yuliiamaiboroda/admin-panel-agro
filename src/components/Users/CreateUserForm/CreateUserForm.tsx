@@ -1,5 +1,6 @@
 import { Field, Form, Formik } from 'formik';
 import createNewUserSchema from 'helpers/schemas/auth/createNewUser.schema';
+import translateRole from 'helpers/translateRoles';
 import { useAppDispatch } from 'hooks';
 import { registerNewUser } from 'redux/users';
 
@@ -36,7 +37,6 @@ export default function CreateUserForm({ onClose }: Iprops) {
     <Formik
       initialValues={FORM_INITIAL_STATE}
       onSubmit={(values, actions) => {
-        console.log(values);
         dispatch(registerNewUser(values));
         actions.resetForm();
         onClose();
@@ -47,33 +47,33 @@ export default function CreateUserForm({ onClose }: Iprops) {
       {({ errors, touched }) => (
         <Form style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
           <label>
-            Email:
+            Електронна пошта:
             <Field name="email" type="email" id="email" placeholder="email" />
             {errors.email && touched.email ? <span>{errors.email}</span> : null}
           </label>
           <label>
-            Password
+            Пароль:
             <Field name="password" type="password" id="password" />
           </label>
           {errors.password && touched.password ? (
             <span>{errors.password}</span>
           ) : null}
           <label>
-            Name
+            Ім'я:
             <Field name="name" type="text" id="name" />
           </label>
           {errors.name && touched.name ? <span>{errors.name}</span> : null}
           <label>
-            Surname
+            Прізвище:
             <Field name="surname" type="text" id="surname" />
           </label>
           {errors.surname && touched.surname ? (
             <span>{errors.surname}</span>
           ) : null}
           <label style={{ display: 'flex', flexDirection: 'column' }}>
-            Role
+            Роль нового користувача
             <label>
-              admin
+              {translateRole(ROLES.admin)}
               <Field
                 name="role"
                 type="radio"
@@ -82,7 +82,7 @@ export default function CreateUserForm({ onClose }: Iprops) {
               />
             </label>
             <label>
-              apply manager
+              {translateRole(ROLES.applyManager)}
               <Field
                 name="role"
                 type="radio"
@@ -91,7 +91,7 @@ export default function CreateUserForm({ onClose }: Iprops) {
               />
             </label>
             <label>
-              services manager
+              {translateRole(ROLES.servicesManager)}
               <Field
                 name="role"
                 type="radio"
@@ -100,7 +100,7 @@ export default function CreateUserForm({ onClose }: Iprops) {
               />
             </label>
             <label>
-              product manager
+              {translateRole(ROLES.productsManager)}
               <Field
                 name="role"
                 type="radio"
@@ -110,7 +110,7 @@ export default function CreateUserForm({ onClose }: Iprops) {
             </label>
           </label>
           {errors.role && touched.role ? <span>{errors.role}</span> : null}
-          <button type="submit">Submit</button>
+          <button type="submit">Створити нового користувача</button>
         </Form>
       )}
     </Formik>

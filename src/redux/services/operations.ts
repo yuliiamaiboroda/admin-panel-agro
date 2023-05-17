@@ -11,8 +11,11 @@ export const getAllServices = createAsyncThunk<
     const { data } = await axios.get('/api/services/getAll');
     return data;
   } catch (err) {
-    const error = err as AxiosError;
-    thunkApi.rejectWithValue(error.message);
+    const error = err as AxiosError<{ message: string }>;
+    if (!error.response) {
+      return thunkApi.rejectWithValue('Something went wrong');
+    }
+    return thunkApi.rejectWithValue(error.response.data.message);
   }
 });
 
@@ -52,8 +55,11 @@ export const createService = createAsyncThunk<
       }
       return data;
     } catch (err) {
-      const error = err as AxiosError;
-      return thunkApi.rejectWithValue(error.message);
+      const error = err as AxiosError<{ message: string }>;
+      if (!error.response) {
+        return thunkApi.rejectWithValue('Something went wrong');
+      }
+      return thunkApi.rejectWithValue(error.response.data.message);
     }
   }
 );
@@ -69,7 +75,65 @@ export const deleteService = createAsyncThunk<
   } catch (err) {
     const error = err as AxiosError<{ message: string }>;
     if (!error.response) {
-      return thunkApi.rejectWithValue('Something went wrong...');
+      return thunkApi.rejectWithValue('Something went wrong');
+    }
+    return thunkApi.rejectWithValue(error.response.data.message);
+  }
+});
+
+export const updateService = createAsyncThunk<
+  IService,
+  {
+    _id: string;
+    title?: string;
+    description?: string;
+    image?: File;
+    price?: string;
+    contactMail?: string;
+    contactPhone?: string;
+  },
+  { rejectValue: string }
+>(
+  'services/update',
+  async (
+    { _id, title, description, image, price, contactMail, contactPhone },
+    thunkApi
+  ) => {
+    try {
+      const reqBody = new FormData();
+      if (title) {
+        reqBody.append('title', title);
+      }
+      if (description) {
+        reqBody.append('description', description);
+      }
+      if (image) {
+        reqBody.append('image', image);
+      }
+      if (price) {
+        reqBody.append('price', price);
+      }
+      if (contactMail) {
+        reqBody.append('contactMail', contactMail);
+      }
+      if (contactPhone) {
+        reqBody.append('contactPhone', contactPhone);
+      }
+      const { data } = await axios.patch(`/api/services/${_id}`, reqBody, {
+        headers: { 'Content-Type': 'multipart/form-data' },
+      });
+      if (!data) {
+        thunkApi.rejectWithValue(
+          "Something went wrong... Response doesn't return product"
+        );
+      }
+      return data;
+    } catch (err) {
+      const error = err as AxiosError<{ message: string }>;
+      if (!error.response) {
+        return thunkApi.rejectWithValue('Something went wrong');
+      }
+      return thunkApi.rejectWithValue(error.response.data.message);
     }
     return thunkApi.rejectWithValue(error.response.data.message);
   }

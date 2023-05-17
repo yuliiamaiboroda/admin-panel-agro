@@ -1,10 +1,14 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
-import { loginUser, logoutUser, refreshUser } from './operations';
+import {
+  // fetchCurrentUser,
+  loginUser,
+  logoutUser,
+  refreshUser,
+} from './operations';
 
 interface IUserState {
   accessToken: string | null;
-  refreshToken: string | null;
   user: {
     email: string | null;
     name: string | null;
@@ -18,7 +22,6 @@ interface IUserState {
 
 const initialState: IUserState = {
   accessToken: null,
-  refreshToken: null,
   user: {
     email: null,
     name: null,
@@ -49,7 +52,6 @@ const userSlice = createSlice({
           isLoading: false,
           isAuthorized: true,
           accessToken: action.payload.accessToken,
-          refreshToken: action.payload.refreshToken,
           user: action.payload.user,
         };
       })
@@ -70,8 +72,7 @@ const userSlice = createSlice({
           isLoading: false,
           isAuthorized: true,
           accessToken: action.payload.accessToken,
-          refreshToken: action.payload.refreshToken,
-          // user: action.payload.user,
+          user: action.payload.user,
         };
       })
       .addCase(refreshUser.rejected, (state, action) => {
@@ -95,6 +96,23 @@ const userSlice = createSlice({
           ...(action.payload ? { error: action.payload } : null),
         };
       });
+    // .addCase(fetchCurrentUser.pending, state => {
+    //   return { ...state, isLoading: true, error: null };
+    // })
+    // .addCase(fetchCurrentUser.fulfilled, (state, action) => {
+    //   return {
+    //     ...state,
+    //     isLoading: false,
+    //     user: action.payload,
+    //   };
+    // })
+    // .addCase(fetchCurrentUser.rejected, (state, action) => {
+    //   return {
+    //     ...state,
+    //     isLoading: false,
+    //     ...(action.payload ? { error: action.payload } : null),
+    //   };
+    // });
   },
 });
 

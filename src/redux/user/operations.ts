@@ -1,7 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios, { AxiosError } from 'axios';
-import { RootState } from 'redux/store';
 import { Notify } from 'notiflix';
+import Cookies from 'universal-cookie';
 
 interface IUser {
   accessToken: string;
@@ -14,15 +14,36 @@ interface IUser {
   };
 }
 
+interface IRefresh {
+  accessToken: string;
+  user: {
+    email: string;
+    name: string;
+    surname: string;
+    role: string;
+  };
+}
+
+const cookies = new Cookies();
+
 axios.defaults.baseURL = 'https://ahrokhimpromtsentr.cyclic.app';
+axios.defaults.withCredentials = true;
+
+const setCookie = (cookie: string) => {
+  cookies.set('jwt', cookie);
+};
+
+const removeCookie = () => {
+  cookies.remove('jwt');
+};
 
 const setToken = (token: string) => {
   axios.defaults.headers.authorization = `Bearer ${token}`;
 };
 
-// const removeToken = () => {
-//   axios.defaults.headers.authorization = '';
-// };
+const removeToken = () => {
+  axios.defaults.headers.authorization = '';
+};
 
 export const loginUser = createAsyncThunk<
   IUser,
@@ -35,6 +56,7 @@ export const loginUser = createAsyncThunk<
       userCredentials
     );
     setToken(data.accessToken);
+    setCookie(document.cookie);
     return data;
   } catch (err) {
     const error = err as AxiosError;
@@ -45,26 +67,6 @@ export const loginUser = createAsyncThunk<
 
 // TODO:  Create extra fields on backend or new route to fetch user
 
-export const refreshUser = createAsyncThunk<
-  IUser,
-  undefined,
-  { rejectValue: string; state: RootState }
->('user/refreshUser', async (_, thunkApi) => {
-  const { userData } = thunkApi.getState();
-  if (!userData.refreshToken) {
-    return thunkApi.rejectWithValue('Unable to refresh user');
-  }
-  setToken(userData.refreshToken);
-  try {
-    const { data } = await axios.post<IUser>('/api/users/refresh');
-    setToken(data.accessToken);
-    return data;
-  } catch (err) {
-    const error = err as AxiosError;
-    return thunkApi.rejectWithValue(error.message);
-  }
-});
-
 export const logoutUser = createAsyncThunk<
   undefined,
   undefined,
@@ -72,11 +74,53 @@ export const logoutUser = createAsyncThunk<
 >('users/logoutUser', async (_, thunkApi) => {
   try {
     await axios.post('/api/users/logout');
-    axios.defaults.headers.common.Authorization = '';
-
-    // rewrite on one func
+    removeToken();
+    removeCookie();
   } catch (err) {
     const error = err as AxiosError;
+    return thunkApi.rejectWithValue(error.message);
+  }
+});
+
+// export const fetchCurrentUser = createAsyncThunk<
+//   IUser['user'],
+//   undefined,
+//   { rejectValue: string }
+// >('users/current', async (_, thunkApi) => {
+//   try {
+//     const { data } = await axios.get('/api/users/current');
+//     console.log(data);
+
+//     return data;
+//   } catch (err) {
+//     const error = err as AxiosError;
+//     return thunkApi.rejectWithValue(error.message);
+//   }
+// });
+
+export const refreshUser = createAsyncThunk<
+  IRefresh,
+  undefined,
+  { rejectValue: string }
+>('user/refreshUser', async (_, thunkApi) => {
+  if (!cookies.get('jwt')) {
+    return thunkApi.rejectWithValue('Unable to refresh user');
+  }
+
+  try {
+    const { data } = await axios.post<IUser>('/api/users/refresh');
+    setToken(data.accessToken);
+    setCookie(document.cookie);
+    try {
+      const { data: userData } = await axios.get('/api/users/current');
+      return { accessToken: data.accessToken, user: userData };
+    } catch (err) {
+      const error = err as AxiosError;
+      return thunkApi.rejectWithValue(error.message);
+    }
+  } catch (err) {
+    const error = err as AxiosError;
+    removeCookie();
     return thunkApi.rejectWithValue(error.message);
   }
 });
