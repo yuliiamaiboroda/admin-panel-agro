@@ -19,7 +19,7 @@ interface IProps {
 
 const PRODUCT_DATA = { title: '', description: '' };
 
-export default function CreateProductForm({
+export default function ProductForm({
   productData = PRODUCT_DATA,
   onSubmit,
 }: IProps) {

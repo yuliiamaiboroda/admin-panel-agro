@@ -2,7 +2,7 @@ import { useAppSelector, useModal } from 'hooks';
 import { selectProducts } from 'redux/products';
 import ProductCard from 'components/ProductCard';
 import Modal from 'components/Modal';
-import CreateProductForm from 'components/CreateProductForm';
+import ProductForm from 'components/ProductForm';
 import { useAppDispatch } from 'hooks';
 import { createProduct } from 'redux/products';
 
@@ -23,7 +23,7 @@ export default function ProductsGallery() {
       </ul>
       {isModalOpen && (
         <Modal onClose={closeModal}>
-          <CreateProductForm
+          <ProductForm
             onSubmit={productData => {
               dispatch(createProduct(productData));
               closeModal();

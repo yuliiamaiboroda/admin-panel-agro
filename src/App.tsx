@@ -12,6 +12,10 @@ import SharedLayout from 'components/SharedLayout';
 import VacanciesPage from 'pages/VacanciesPage';
 import { Watch } from 'react-loader-spinner';
 import FeedbackPage from 'pages/FeedbackPage';
+import ProductModalLayout from 'components/ProductModalLayout';
+import ProductModalDetails from 'components/ProductModalDetails';
+import ProductModalEditForm from 'components/ProductModalEditForm';
+import ProductModalConfirmation from 'components/ProductModalConfirmation';
 
 function App() {
   // TODO:  Add fetch of refresh user
@@ -52,7 +56,14 @@ function App() {
           >
             <Route index element={<Navigate to="products" />} />
             <Route path="users" element={<UsersPage />} />
-            <Route path="products" element={<ProductsPage />} />
+            <Route path="products" element={<ProductsPage />}>
+              <Route path=":productId" element={<ProductModalLayout />}>
+                <Route index element={<ProductModalDetails />} />
+                <Route path="form" element={<ProductModalEditForm />} />
+                <Route path="confirm" element={<ProductModalConfirmation />} />
+                <Route path="*" element={<Navigate to="/products" replace />} />
+              </Route>
+            </Route>
             <Route path="services" element={<ServicesPage />} />
             <Route path="vacancies" element={<VacanciesPage />}>
               <Route path=":categoryName" element={<VacanciesPage />} />

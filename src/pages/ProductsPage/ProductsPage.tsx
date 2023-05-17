@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { Outlet, Link } from 'react-router-dom';
 import { useAppDispatch } from 'hooks';
 import { getAllProducts } from 'redux/products';
 import ProductsGallery from 'components/ProductsGallery';
@@ -13,7 +14,9 @@ export default function ProductsPage() {
   return (
     <div>
       <h1>Products page</h1>
+      <Link to="blablabla">To blablabla !</Link>
       <ProductsGallery />
+      <Outlet />
     </div>
   );
 }
