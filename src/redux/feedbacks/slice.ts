@@ -37,7 +37,7 @@ const feedbackRejectedReducer = (
   };
 };
 
-const getAllFeedbackFullfiledReducer = (
+const getAllFeedbackFulfiledReducer = (
   state: IState,
   action: PayloadAction<IFeedback[], string>
 ) => {
@@ -48,7 +48,7 @@ const getAllFeedbackFullfiledReducer = (
   };
 };
 
-const removeFeedbackFullfilledReducer = (
+const removeFeedbackFulfilledReducer = (
   state: IState,
   action: PayloadAction<string, string>
 ) => {
@@ -66,10 +66,10 @@ const feedbacksSlice = createSlice({
   extraReducers: builder =>
     builder
       .addCase(getAllFeedback.pending, feedbackPendingReducer)
-      .addCase(getAllFeedback.fulfilled, getAllFeedbackFullfiledReducer)
+      .addCase(getAllFeedback.fulfilled, getAllFeedbackFulfiledReducer)
       .addCase(getAllFeedback.rejected, feedbackRejectedReducer)
       .addCase(removeFeedbackById.pending, feedbackPendingReducer)
-      .addCase(removeFeedbackById.fulfilled, removeFeedbackFullfilledReducer)
+      .addCase(removeFeedbackById.fulfilled, removeFeedbackFulfilledReducer)
       .addCase(removeFeedbackById.rejected, feedbackRejectedReducer),
 });
 
