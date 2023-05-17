@@ -135,6 +135,5 @@ export const updateService = createAsyncThunk<
       }
       return thunkApi.rejectWithValue(error.response.data.message);
     }
-    return thunkApi.rejectWithValue(error.response.data.message);
   }
-});
+);

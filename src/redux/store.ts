@@ -20,7 +20,6 @@ import { feedbacksReducer } from './feedbacks';
 const persistConfig = {
   key: 'credentials',
   storage,
-  // TODO:  Change whitelist to the next, when fixed fetch of refresh routes
   whitelist: ['accessToken'],
 };
 

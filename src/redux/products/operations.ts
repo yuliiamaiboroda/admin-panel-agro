@@ -11,17 +11,23 @@ export const getAllProducts = createAsyncThunk<
     const { data } = await axios.get('/api/products/all');
     return data;
   } catch (err) {
-    const error = err as AxiosError;
-    thunkApi.rejectWithValue(error.message);
+    const error = err as AxiosError<{ message: string }>;
+    if (!error.response) {
+      return thunkApi.rejectWithValue('Something went wrong');
+    }
+    return thunkApi.rejectWithValue(error.response.data.message);
   }
 });
 
 export const createProduct = createAsyncThunk<
   IProduct,
-  { title: string; description: string; image: File },
+  { title: string; description: string; image: File | null },
   { rejectValue: string }
 >('products/createProduct', async ({ title, description, image }, thunkApi) => {
   try {
+    if (!image) {
+      return thunkApi.rejectWithValue('File should be uploaded');
+    }
     const reqBody = new FormData();
     reqBody.append('title', title);
     reqBody.append('description', description);
@@ -30,13 +36,16 @@ export const createProduct = createAsyncThunk<
       headers: { 'Content-Type': 'multipart/form-data' },
     });
     if (!data) {
-      thunkApi.rejectWithValue(
+      return thunkApi.rejectWithValue(
         "Something went wrong... Response doesn't return product"
       );
     }
     return data;
   } catch (err) {
-    const error = err as AxiosError;
-    thunkApi.rejectWithValue(error.message);
+    const error = err as AxiosError<{ message: string }>;
+    if (!error.response) {
+      return thunkApi.rejectWithValue('Something went wrong');
+    }
+    return thunkApi.rejectWithValue(error.response.data.message);
   }
 });

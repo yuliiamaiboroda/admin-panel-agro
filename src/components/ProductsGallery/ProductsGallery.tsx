@@ -3,10 +3,13 @@ import { selectProducts } from 'redux/products';
 import ProductCard from 'components/ProductCard';
 import Modal from 'components/Modal';
 import CreateProductForm from 'components/CreateProductForm';
+import { useAppDispatch } from 'hooks';
+import { createProduct } from 'redux/products';
 
 export default function ProductsGallery() {
   const products = useAppSelector(selectProducts);
   const { isModalOpen, openModal, closeModal } = useModal();
+  const dispatch = useAppDispatch();
 
   return (
     <>
@@ -20,7 +23,12 @@ export default function ProductsGallery() {
       </ul>
       {isModalOpen && (
         <Modal onClose={closeModal}>
-          <CreateProductForm onSubmit={closeModal} />
+          <CreateProductForm
+            onSubmit={productData => {
+              dispatch(createProduct(productData));
+              closeModal();
+            }}
+          />
         </Modal>
       )}
     </>
