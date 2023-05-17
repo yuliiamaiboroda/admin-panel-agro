@@ -4,6 +4,7 @@ import { useAppDispatch, useAppSelector } from 'hooks';
 import { useEffect, useState } from 'react';
 import { selectUser } from 'redux/user';
 import { removeVacancyById } from 'redux/vacancies';
+import UpdateVacancyForm from '../UpdateVacancyForm/UpdateVacancyForm';
 
 enum ROLES {
   admin = 'admin',
@@ -37,6 +38,7 @@ export default function VacancyCard({
   location,
 }: IVacancy) {
   const [isModalDeleteOpen, setIsModalDeleteOpen] = useState(false);
+  const [isModalUpdateOpen, setIsModalUpdateOpen] = useState(false);
   const [isAccessedToChangeVacancy, setIsAccessedToChangeVacancy] =
     useState(false);
 
@@ -100,7 +102,14 @@ export default function VacancyCard({
           >
             видалити
           </button>
-          <button type="button">змінити </button>
+          <button
+            type="button"
+            onClick={(e: React.MouseEvent<HTMLButtonElement>) =>
+              setIsModalUpdateOpen(true)
+            }
+          >
+            змінити
+          </button>
         </div>
       )}
 
@@ -110,6 +119,23 @@ export default function VacancyCard({
             onClose={() => setIsModalDeleteOpen(false)}
             handleDelete={() => handleDelete(_id)}
             title={`вакансію ${title}`}
+          />
+        </Modal>
+      )}
+      {isModalUpdateOpen && (
+        <Modal onClose={() => setIsModalUpdateOpen(false)}>
+          <UpdateVacancyForm
+            onClose={() => setIsModalUpdateOpen(false)}
+            _id={_id}
+            category={category}
+            title={title}
+            description={description}
+            sallary={sallary}
+            education={education}
+            contactMail={contactMail}
+            contactPhone={contactPhone}
+            workExperienceRequired={workExperienceRequired}
+            location={location}
           />
         </Modal>
       )}
