@@ -54,7 +54,9 @@ function App() {
             <Route path="users" element={<UsersPage />} />
             <Route path="products" element={<ProductsPage />} />
             <Route path="services" element={<ServicesPage />} />
-            <Route path="vacancies" element={<VacanciesPage />} />
+            <Route path="vacancies" element={<VacanciesPage />}>
+              <Route path=":categoryName" element={<VacanciesPage />} />
+            </Route>
             <Route path="resumes" element={<h1>Resumes page</h1>} />
             <Route path="feedbacks" element={<FeedbackPage />} />
           </Route>

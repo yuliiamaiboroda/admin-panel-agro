@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import {
   createVacancy,
+  getActualVacancies,
   getAllVacancies,
   removeVacancyById,
 } from './operations';
@@ -88,7 +89,10 @@ const vacanciesSlice = createSlice({
       .addCase(removeVacancyById.rejected, vacanciesRejectedReducer)
       .addCase(createVacancy.pending, vacanciesPendingReducer)
       .addCase(createVacancy.fulfilled, createVacancyFulfilledReducer)
-      .addCase(createVacancy.rejected, vacanciesRejectedReducer),
+      .addCase(createVacancy.rejected, vacanciesRejectedReducer)
+      .addCase(getActualVacancies.pending, vacanciesPendingReducer)
+      .addCase(getActualVacancies.fulfilled, getAllVacanciesFulfilledReducer)
+      .addCase(getActualVacancies.rejected, vacanciesRejectedReducer),
 });
 
 export const vacanciesReducer = vacanciesSlice.reducer;
