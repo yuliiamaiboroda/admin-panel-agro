@@ -61,3 +61,26 @@ export const registerNewUser = createAsyncThunk<
     }
   }
 );
+
+export const updateUserById = createAsyncThunk<
+  IUser,
+  IUser,
+  {
+    rejectValue: string;
+  }
+>('users/updateById', async ({ email, name, surname, role, _id }, thunkApi) => {
+  try {
+    const { data } = await axios.patch(`/api/users/${_id}`, {
+      email,
+      name,
+      surname,
+      role,
+    });
+    return data;
+  } catch (err) {
+    const error = err as AxiosError;
+    Notify.failure('something went wrong ');
+    console.log(error);
+    return thunkApi.rejectWithValue(error.message);
+  }
+});

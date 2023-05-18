@@ -2,6 +2,8 @@ import { Field, Form, Formik } from 'formik';
 
 import updateUserSchema from 'helpers/schemas/auth/updateUser.schema';
 import translateRole from 'helpers/translateRoles';
+import { useAppDispatch } from 'hooks';
+import { updateUserById } from 'redux/users';
 
 enum ROLES {
   admin = 'admin',
@@ -12,7 +14,6 @@ enum ROLES {
 
 interface IProps {
   email: string;
-
   name: string;
   surname: string;
   role: string;
@@ -35,6 +36,7 @@ export default function UpdateUserForm({
     role,
     _id,
   };
+  const dispatch = useAppDispatch();
   return (
     <>
       <h2>
@@ -44,6 +46,7 @@ export default function UpdateUserForm({
         initialValues={FORM_INITIAL_STATE}
         onSubmit={(values, actions) => {
           console.log(values);
+          dispatch(updateUserById(values));
           onClose();
         }}
         validateOnBlur
@@ -112,7 +115,7 @@ export default function UpdateUserForm({
               </label>
             </label>
             {errors.role && touched.role ? <span>{errors.role}</span> : null}
-            <button type="submit">Створити нового користувача</button>
+            <button type="submit">Оновити</button>
           </Form>
         )}
       </Formik>
