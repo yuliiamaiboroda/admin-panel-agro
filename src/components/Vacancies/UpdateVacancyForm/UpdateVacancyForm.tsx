@@ -1,5 +1,7 @@
 import { Field, Form, Formik } from 'formik';
 import createNewVacancySchema from 'helpers/schemas/vacancies/createVacancy.schema';
+import { useAppDispatch } from 'hooks';
+import { updateVacancyById } from 'redux/vacancies';
 enum Categories {
   all = 'all-vacancies',
   actual = 'actual-vacancies',
@@ -43,6 +45,7 @@ export default function UpdateVacancyForm({
     location,
     _id,
   };
+  const dispatch = useAppDispatch();
   return (
     <>
       <h2>Оновити вакансію</h2>
@@ -50,7 +53,7 @@ export default function UpdateVacancyForm({
         initialValues={FORM_INITIAL_STATE}
         onSubmit={(values, actions) => {
           console.log(values);
-
+          dispatch(updateVacancyById(values));
           onClose();
         }}
         validateOnBlur

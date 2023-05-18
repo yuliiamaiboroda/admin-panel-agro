@@ -5,6 +5,7 @@ import {
   getAllVacancies,
   getIrrelevantVacancies,
   removeVacancyById,
+  updateVacancyById,
 } from './operations';
 
 export interface IVacancy {
@@ -75,7 +76,33 @@ const createVacancyFulfilledReducer = (
     entities: [...state.entities, action.payload],
   };
 };
-
+const updateVacancyFulfilledReducer = (
+  state: IState,
+  action: PayloadAction<IVacancy, string>
+) => {
+  return {
+    ...state,
+    isLoading: false,
+    entities: state.entities.map(item => {
+      if (item._id === action.payload._id) {
+        return {
+          ...item,
+          _id: action.payload._id,
+          category: action.payload.category,
+          title: action.payload.title,
+          description: action.payload.description,
+          sallary: action.payload.sallary,
+          education: action.payload.education,
+          contactMail: action.payload.contactMail,
+          contactPhone: action.payload.contactPhone,
+          workExperienceRequired: action.payload.workExperienceRequired,
+          location: action.payload.location,
+        };
+      }
+      return item;
+    }),
+  };
+};
 const vacanciesSlice = createSlice({
   name: 'vacancies',
   initialState,
@@ -99,7 +126,10 @@ const vacanciesSlice = createSlice({
       .addCase(removeVacancyById.rejected, vacanciesRejectedReducer)
       .addCase(createVacancy.pending, vacanciesPendingReducer)
       .addCase(createVacancy.fulfilled, createVacancyFulfilledReducer)
-      .addCase(createVacancy.rejected, vacanciesRejectedReducer),
+      .addCase(createVacancy.rejected, vacanciesRejectedReducer)
+      .addCase(updateVacancyById.pending, vacanciesPendingReducer)
+      .addCase(updateVacancyById.fulfilled, updateVacancyFulfilledReducer)
+      .addCase(updateVacancyById.rejected, vacanciesRejectedReducer),
 });
 
 export const vacanciesReducer = vacanciesSlice.reducer;
