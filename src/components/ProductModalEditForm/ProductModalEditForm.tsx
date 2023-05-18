@@ -1,35 +1,28 @@
-import { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { useAppSelector, useAppDispatch } from 'hooks';
-import { selectProducts, editProduct } from 'redux/products';
-import type { IProduct } from 'redux/products';
+import { selectCertainProduct, editProduct } from 'redux/products';
 import ProductForm from 'components/ProductForm';
 
 export default function ProductModalEditForm() {
-  const [choosedProduct, setChoosedProduct] = useState<IProduct>();
-  const products = useAppSelector(selectProducts);
+  const product = useAppSelector(selectCertainProduct);
   const dispatch = useAppDispatch();
-  const { productId } = useParams();
   const navigate = useNavigate();
+  const location = useLocation();
 
-  useEffect(() => {
-    const product = products.find(product => product._id === productId);
-    if (product) {
-      setChoosedProduct(product);
-    }
-  }, [productId, products]);
+  const backLinkHref = location.state?.from ?? '/products';
 
-  if (!choosedProduct) {
-    return <h1>Ooops... o_o</h1>;
+  if (!product) {
+    return null;
   }
 
   return (
     <ProductForm
-      productData={choosedProduct}
+      productData={product}
       onSubmit={productData => {
-        dispatch(editProduct({ ...productData, _id: choosedProduct._id }));
-        navigate('/products');
+        dispatch(editProduct({ ...productData, _id: product._id }));
+        navigate(backLinkHref);
       }}
+      onCancel={() => navigate(backLinkHref)}
     />
   );
 }
