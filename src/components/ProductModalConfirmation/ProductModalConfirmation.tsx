@@ -1,12 +1,14 @@
-import { useParams, useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { useAppSelector, useAppDispatch } from 'hooks';
 import { selectCertainProduct, removeProduct } from 'redux/products';
 
 export default function ProductModalConfirmation() {
   const product = useAppSelector(selectCertainProduct);
   const dispatch = useAppDispatch();
-  const { productId } = useParams();
   const navigate = useNavigate();
+  const location = useLocation();
+
+  const backLinkHref = location.state?.from ?? '/products';
 
   if (!product) {
     return <h1>Ooops... o_o</h1>;
@@ -24,7 +26,7 @@ export default function ProductModalConfirmation() {
       >
         Yes
       </button>
-      <button type="button" onClick={() => navigate(`/products/${productId}`)}>
+      <button type="button" onClick={() => navigate(backLinkHref)}>
         Cancel
       </button>
     </div>

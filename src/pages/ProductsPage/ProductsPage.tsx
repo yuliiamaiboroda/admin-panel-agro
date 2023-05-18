@@ -14,7 +14,6 @@ export default function ProductsPage() {
   return (
     <div>
       <h1>Products page</h1>
-      <Link to="blablabla">To blablabla !</Link>
       <ProductsGallery />
       <Outlet />
     </div>
