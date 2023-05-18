@@ -1,35 +1,29 @@
-import { useEffect, useState } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { useAppSelector } from 'hooks';
-import { selectProducts } from 'redux/products';
-import type { IProduct } from 'redux/products';
+import { selectCertainProduct } from 'redux/products';
 
 export default function ProductModalDetails() {
-  const [choosedProduct, setChoosedProduct] = useState<IProduct>();
-  const products = useAppSelector(selectProducts);
-  const { productId } = useParams();
+  const product = useAppSelector(selectCertainProduct);
+  const location = useLocation();
 
-  useEffect(() => {
-    const product = products.find(product => product._id === productId);
-    if (product) {
-      setChoosedProduct(product);
-    }
-  }, [productId, products]);
-
-  if (!choosedProduct) {
-    return <h1>Ooops... o_o</h1>;
+  if (!product) {
+    return null;
   }
 
-  const { title, description, imageURL, createdAt } = choosedProduct;
+  const { title, description, imageURL, createdAt } = product;
   return (
     <div>
       <h1>{title}</h1>
       <img src={imageURL} alt={title} width="300" height="auto" />
       <p>{description}</p>
       <p>Created at: {createdAt}</p>
-      <Link to="form">Edit</Link>
+      <Link to="form" state={{ from: location }}>
+        Edit
+      </Link>
       <br />
-      <Link to="confirm">Remove</Link>
+      <Link to="confirm" state={{ from: location }}>
+        Remove
+      </Link>
     </div>
   );
 }

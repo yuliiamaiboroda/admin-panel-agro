@@ -28,6 +28,7 @@ export default function ProductsGallery() {
               dispatch(createProduct(productData));
               closeModal();
             }}
+            onCancel={() => closeModal()}
           />
         </Modal>
       )}

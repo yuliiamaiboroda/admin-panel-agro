@@ -2,6 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import {
   getAllProducts,
+  getCertainProduct,
   createProduct,
   editProduct,
   removeProduct,
@@ -17,12 +18,14 @@ export interface IProduct {
 
 interface IState {
   entities: IProduct[];
+  certain: IProduct | null;
   isLoading: boolean;
   error: string | null;
 }
 
 const initialState: IState = {
   entities: [],
+  certain: null,
   isLoading: false,
   error: null,
 };
@@ -45,7 +48,11 @@ const rejectedReducer = (
 const productsSlice = createSlice({
   name: 'products',
   initialState,
-  reducers: {},
+  reducers: {
+    removeCertainProduct(state) {
+      return { ...state, certain: null };
+    },
+  },
   extraReducers: builder =>
     builder
       .addCase(getAllProducts.pending, pendingReducer)
@@ -57,9 +64,17 @@ const productsSlice = createSlice({
         };
       })
       .addCase(getAllProducts.rejected, rejectedReducer)
+      .addCase(getCertainProduct.pending, pendingReducer)
+      .addCase(getCertainProduct.fulfilled, (state, action) => {
+        return {
+          ...state,
+          isLoading: false,
+          certain: action.payload,
+        };
+      })
+      .addCase(getCertainProduct.rejected, rejectedReducer)
       .addCase(createProduct.pending, pendingReducer)
       .addCase(createProduct.fulfilled, (state, action) => {
-        console.log('action.payload', action.payload);
         return {
           ...state,
           isLoading: false,
@@ -95,3 +110,4 @@ const productsSlice = createSlice({
 });
 
 export const productsReducer = productsSlice.reducer;
+export const { removeCertainProduct } = productsSlice.actions;
