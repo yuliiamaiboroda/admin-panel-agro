@@ -25,6 +25,23 @@ export const getAllProducts = createAsyncThunk<
   }
 });
 
+export const getCertainProduct = createAsyncThunk<
+  IProduct,
+  string,
+  { rejectValue: string }
+>('products/getCertainProduct', async (_id, thunkApi) => {
+  try {
+    const { data } = await axios.get(`/api/products/certain/${_id}`);
+    return data;
+  } catch (err) {
+    const error = err as AxiosError<{ message: string }>;
+    if (!error.response) {
+      return thunkApi.rejectWithValue('Something went wrong');
+    }
+    return thunkApi.rejectWithValue(error.response.data.message);
+  }
+});
+
 export const createProduct = createAsyncThunk<
   IProduct,
   IProductData,

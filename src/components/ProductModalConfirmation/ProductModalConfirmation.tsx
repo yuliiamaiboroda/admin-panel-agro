@@ -1,34 +1,24 @@
-import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useAppSelector, useAppDispatch } from 'hooks';
-import { selectProducts, removeProduct } from 'redux/products';
-import type { IProduct } from 'redux/products';
+import { selectCertainProduct, removeProduct } from 'redux/products';
 
 export default function ProductModalConfirmation() {
-  const [choosedProduct, setChoosedProduct] = useState<IProduct>();
-  const products = useAppSelector(selectProducts);
+  const product = useAppSelector(selectCertainProduct);
   const dispatch = useAppDispatch();
   const { productId } = useParams();
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const product = products.find(product => product._id === productId);
-    if (product) {
-      setChoosedProduct(product);
-    }
-  }, [productId, products]);
-
-  if (!choosedProduct) {
+  if (!product) {
     return <h1>Ooops... o_o</h1>;
   }
 
   return (
     <div>
-      <h1>Are you sure want to delete "{choosedProduct.title}"?</h1>
+      <h1>Are you sure want to delete "{product.title}"?</h1>
       <button
         type="button"
         onClick={() => {
-          dispatch(removeProduct(choosedProduct._id));
+          dispatch(removeProduct(product._id));
           navigate('/products');
         }}
       >

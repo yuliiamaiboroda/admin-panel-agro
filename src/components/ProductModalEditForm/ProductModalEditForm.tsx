@@ -1,33 +1,22 @@
-import { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useAppSelector, useAppDispatch } from 'hooks';
-import { selectProducts, editProduct } from 'redux/products';
-import type { IProduct } from 'redux/products';
+import { selectCertainProduct, editProduct } from 'redux/products';
 import ProductForm from 'components/ProductForm';
 
 export default function ProductModalEditForm() {
-  const [choosedProduct, setChoosedProduct] = useState<IProduct>();
-  const products = useAppSelector(selectProducts);
+  const product = useAppSelector(selectCertainProduct);
   const dispatch = useAppDispatch();
-  const { productId } = useParams();
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const product = products.find(product => product._id === productId);
-    if (product) {
-      setChoosedProduct(product);
-    }
-  }, [productId, products]);
-
-  if (!choosedProduct) {
+  if (!product) {
     return <h1>Ooops... o_o</h1>;
   }
 
   return (
     <ProductForm
-      productData={choosedProduct}
+      productData={product}
       onSubmit={productData => {
-        dispatch(editProduct({ ...productData, _id: choosedProduct._id }));
+        dispatch(editProduct({ ...productData, _id: product._id }));
         navigate('/products');
       }}
     />
