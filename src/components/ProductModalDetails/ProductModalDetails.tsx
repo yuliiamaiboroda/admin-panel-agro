@@ -7,7 +7,7 @@ export default function ProductModalDetails() {
   const location = useLocation();
 
   if (!product) {
-    return <h1>Ooops... o_o</h1>;
+    return null;
   }
 
   const { title, description, imageURL, createdAt } = product;

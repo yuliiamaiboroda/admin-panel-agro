@@ -11,7 +11,7 @@ export default function ProductModalConfirmation() {
   const backLinkHref = location.state?.from ?? '/products';
 
   if (!product) {
-    return <h1>Ooops... o_o</h1>;
+    return null;
   }
 
   return (

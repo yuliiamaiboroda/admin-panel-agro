@@ -12,21 +12,17 @@ export default function ProductModalEditForm() {
   const backLinkHref = location.state?.from ?? '/products';
 
   if (!product) {
-    return <h1>Ooops... o_o</h1>;
+    return null;
   }
 
   return (
-    <>
-      <ProductForm
-        productData={product}
-        onSubmit={productData => {
-          dispatch(editProduct({ ...productData, _id: product._id }));
-          navigate(backLinkHref);
-        }}
-      />
-      <button type="button" onClick={() => navigate(backLinkHref)}>
-        Cancel
-      </button>
-    </>
+    <ProductForm
+      productData={product}
+      onSubmit={productData => {
+        dispatch(editProduct({ ...productData, _id: product._id }));
+        navigate(backLinkHref);
+      }}
+      onCancel={() => navigate(backLinkHref)}
+    />
   );
 }
