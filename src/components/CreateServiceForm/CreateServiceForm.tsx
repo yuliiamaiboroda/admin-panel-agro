@@ -69,20 +69,22 @@ export default function CreateServiceForm({ onSubmit }: IProps) {
           </label>
           <br />
           <label>
-            Контактна пошта: <Field id="contactMail" name="contactMail" type="text" />
+            Контактна пошта:
+            <Field id="contactMail" name="contactMail" type="text" />
             {errors.contactMail && touched.contactMail ? (
               <span>{errors.contactMail}</span>
             ) : null}
           </label>
           <br />
           <label>
-            Контактний номер: <Field id="contactPhone" name="contactPhone" type="text" />
+            Контактний номер:
+            <Field id="contactPhone" name="contactPhone" type="text" />
             {errors.contactPhone && touched.contactPhone ? (
               <span>{errors.contactPhone}</span>
             ) : null}
           </label>
           <br />
-          <button type="submit">Add service</button>
+          <button type="submit">Додати послугу</button>
         </Form>
       )}
     </Formik>
