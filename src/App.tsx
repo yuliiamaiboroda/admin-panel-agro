@@ -16,6 +16,7 @@ import ProductModalLayout from 'components/ProductModalLayout';
 import ProductModalDetails from 'components/ProductModalDetails';
 import ProductModalEditForm from 'components/ProductModalEditForm';
 import ProductModalConfirmation from 'components/ProductModalConfirmation';
+import ResumesPage from 'pages/ResumesPage';
 
 function App() {
   // TODO:  Add fetch of refresh user
@@ -68,7 +69,7 @@ function App() {
             <Route path="vacancies" element={<VacanciesPage />}>
               <Route path=":categoryName" element={<VacanciesPage />} />
             </Route>
-            <Route path="resumes" element={<h1>Resumes page</h1>} />
+            <Route path="resumes" element={<ResumesPage />} />
             <Route path="feedbacks" element={<FeedbackPage />} />
           </Route>
           <Route
