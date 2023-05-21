@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
-import { getAllResumes } from './operations';
+import { getAllResumes, getCertainResume } from './operations';
 
 export interface IResume {
   _id: string;
@@ -53,7 +53,12 @@ const resumesSlice = createSlice({
       .addCase(getAllResumes.fulfilled, (state, action) => {
         return { ...state, isLoading: false, entities: action.payload };
       })
-      .addCase(getAllResumes.rejected, rejectedReducer);
+      .addCase(getAllResumes.rejected, rejectedReducer)
+      .addCase(getCertainResume.pending, pendingReducer)
+      .addCase(getCertainResume.fulfilled, (state, action) => {
+        return { ...state, isLoading: false, certain: action.payload };
+      })
+      .addCase(getCertainResume.rejected, rejectedReducer);
   },
 });
 
