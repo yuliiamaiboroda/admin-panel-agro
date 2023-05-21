@@ -46,7 +46,11 @@ const rejectedReducer = (
 const resumesSlice = createSlice({
   name: 'resumes',
   initialState,
-  reducers: {},
+  reducers: {
+    removeCertainResume(state) {
+      return { ...state, certain: null };
+    },
+  },
   extraReducers: builder => {
     builder
       .addCase(getAllResumes.pending, pendingReducer)
@@ -63,3 +67,4 @@ const resumesSlice = createSlice({
 });
 
 export const resumesReducer = resumesSlice.reducer;
+export const { removeCertainResume } = resumesSlice.actions;

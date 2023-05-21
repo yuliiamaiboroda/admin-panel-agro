@@ -1,10 +1,14 @@
 import { useEffect } from 'react';
-import { useAppDispatch, useAppSelector } from 'hooks';
-import { getAllResumes, selectResumes } from 'redux/resumes';
+import { Outlet } from 'react-router-dom';
+import { useAppDispatch, useModal } from 'hooks';
+import { getAllResumes } from 'redux/resumes';
+import ResumesGallery from 'components/ResumesGallery';
+import Modal from 'components/Modal';
+import ResumeForm from 'components/ResumeForm';
 
 export default function ResumesPage() {
-  const resumes = useAppSelector(selectResumes);
   const dispatch = useAppDispatch();
+  const { isModalOpen, openModal, closeModal } = useModal();
 
   useEffect(() => {
     dispatch(getAllResumes());
@@ -12,21 +16,17 @@ export default function ResumesPage() {
 
   return (
     <>
-      <h1>This is ResumesPage!</h1>;
-      <ul>
-        {resumes.map(
-          ({ _id, name, phone, email, position, resumeFileURL, comment }) => (
-            <li key={_id}>
-              <h2>{name}</h2>
-              <a href={`tel:${phone}`}>{phone}</a>
-              <a href={`mailto:${email}`}>{email}</a>
-              <h3>{position}</h3>
-              <a href={resumeFileURL}>Resume file</a>
-              <p>{comment}</p>
-            </li>
-          )
-        )}
-      </ul>
+      <h1>This is ResumesPage!</h1>
+      <button type="button" onClick={openModal}>
+        Create resume
+      </button>
+      <ResumesGallery />
+      <Outlet />
+      {isModalOpen && (
+        <Modal onClose={closeModal}>
+          <ResumeForm />
+        </Modal>
+      )}
     </>
   );
 }
