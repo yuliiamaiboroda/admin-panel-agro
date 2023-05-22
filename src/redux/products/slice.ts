@@ -93,6 +93,7 @@ const productsSlice = createSlice({
             }
             return { ...product, ...action.payload };
           }),
+          ...(state.certain ? { certain: action.payload } : null),
         };
       })
       .addCase(editProduct.rejected, rejectedReducer)

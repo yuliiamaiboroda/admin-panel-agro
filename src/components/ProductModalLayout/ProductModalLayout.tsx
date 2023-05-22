@@ -35,7 +35,7 @@ export default function ProductModalLayout() {
 
   return (
     <Modal onClose={() => navigate('/products')}>
-      {isLoading ? <Loader top="" /> : <Outlet />}
+      {isLoading ? <Loader /> : <Outlet />}
     </Modal>
   );
 }
