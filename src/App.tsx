@@ -88,7 +88,13 @@ function App() {
                 />
               </Route>
             </Route>
-            <Route path="resumes" element={<h1>Resumes page</h1>} />
+            <Route path="resumes" element={<ResumesPage />}>
+              <Route path=":resumeId" element={<ResumeModalLayout />}>
+                <Route index element={<ResumeModalDetails />} />
+                <Route path="confirm" element={<ResumeModalConfirmation />} />
+                <Route path="*" element={<Navigate to="/resumes" replace />} />
+              </Route>
+            </Route>
             <Route path="feedbacks" element={<FeedbackPage />} />
           </Route>
           <Route
