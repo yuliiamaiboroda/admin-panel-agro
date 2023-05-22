@@ -24,7 +24,7 @@ export default function ResumesPage() {
       <Outlet />
       {isModalOpen && (
         <Modal onClose={closeModal}>
-          <ResumeForm />
+          <ResumeForm onSubmit={closeModal} />
         </Modal>
       )}
     </>

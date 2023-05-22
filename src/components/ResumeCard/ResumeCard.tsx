@@ -16,6 +16,7 @@ export default function ResumeCard({
     <li onClick={() => navigate(_id)}>
       <h2>{name}</h2>
       <a href={`tel:${phone}`}>{phone}</a>
+      <br />
       <a href={`mailto:${email}`}>{email}</a>
       <h3>{position}</h3>
       <a href={resumeFileURL}>Resume file</a>

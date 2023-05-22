@@ -1,9 +1,16 @@
 import { useRef } from 'react';
 import { Formik, Form, Field } from 'formik';
 import UploadFileField from 'components/UploadFileField';
+import { useAppDispatch } from 'hooks';
+import { createResume } from 'redux/resumes';
 
-export default function ResumeForm() {
+interface IProps {
+  onSubmit?: () => void;
+}
+
+export default function ResumeForm({ onSubmit }: IProps) {
   const fileField = useRef<HTMLInputElement>(null);
+  const dispatch = useAppDispatch();
 
   return (
     <Formik
@@ -16,9 +23,27 @@ export default function ResumeForm() {
         comment: '',
         agreement: false,
       }}
-      onSubmit={(values, action) => {
-        console.log({ values, file: fileField.current?.files });
+      onSubmit={(
+        { name, phone, email, position, comment, agreement },
+        action
+      ) => {
+        dispatch(
+          createResume({
+            name,
+            phone,
+            email,
+            position,
+            comment,
+            agreement,
+            resume: fileField.current?.files
+              ? fileField.current?.files[0]
+              : null,
+          })
+        );
         action.resetForm();
+        if (onSubmit) {
+          onSubmit();
+        }
       }}
     >
       {({ values }) => (
@@ -36,7 +61,7 @@ export default function ResumeForm() {
           </label>
           <br />
           <label>
-            position: <Field id="position" name="position" type="text" />
+            Position: <Field id="position" name="position" type="text" />
           </label>
           <br />
           <UploadFileField name="resumeFile" fileRef={fileField} />
