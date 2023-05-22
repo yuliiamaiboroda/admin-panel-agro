@@ -1,5 +1,10 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { getAllUsers, registerNewUser, removeUserById } from './operations';
+import {
+  getAllUsers,
+  registerNewUser,
+  removeUserById,
+  updateUserById,
+} from './operations';
 
 export interface IUser {
   _id: string;
@@ -65,6 +70,29 @@ const registerNewUserFulfilledReducer = (
   };
 };
 
+const updateUserByIdFulfilledReducer = (
+  state: IState,
+  action: PayloadAction<IUser, string>
+) => {
+  return {
+    ...state,
+    isLoading: false,
+    entities: state.entities.map(item => {
+      if (item._id === action.payload._id) {
+        return {
+          ...item,
+          _id: action.payload._id,
+          email: action.payload.email,
+          name: action.payload.name,
+          surname: action.payload.surname,
+          role: action.payload.role,
+        };
+      }
+      return item;
+    }),
+  };
+};
+
 const usersSlice = createSlice({
   name: 'users',
   initialState,
@@ -79,7 +107,10 @@ const usersSlice = createSlice({
       .addCase(removeUserById.rejected, usersRejectedReducer)
       .addCase(registerNewUser.pending, usersPendingReducer)
       .addCase(registerNewUser.fulfilled, registerNewUserFulfilledReducer)
-      .addCase(registerNewUser.rejected, usersRejectedReducer),
+      .addCase(registerNewUser.rejected, usersRejectedReducer)
+      .addCase(updateUserById.pending, usersPendingReducer)
+      .addCase(updateUserById.fulfilled, updateUserByIdFulfilledReducer)
+      .addCase(updateUserById.rejected, usersRejectedReducer),
 });
 
 export const usersReducer = usersSlice.reducer;

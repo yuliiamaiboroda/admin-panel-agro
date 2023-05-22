@@ -4,6 +4,7 @@ import translateRole from 'helpers/translateRoles';
 import { useAppDispatch } from 'hooks';
 import { useState } from 'react';
 import { removeUserById } from 'redux/users';
+import UpdateUserForm from '../UpdateUserForm/UpdateUserForm';
 
 interface IUser {
   _id: string;
@@ -14,6 +15,7 @@ interface IUser {
 }
 export default function UserCard({ _id, email, name, surname, role }: IUser) {
   const [isModalDeleteOpen, setIsModalDeleteOpen] = useState(false);
+  const [isModalUpdateOpen, setIsModalUpdateOpen] = useState(false);
 
   const dispatch = useAppDispatch();
 
@@ -37,7 +39,14 @@ export default function UserCard({ _id, email, name, surname, role }: IUser) {
         >
           Видалити
         </button>
-        <button type="button">Змінити</button>
+        <button
+          type="button"
+          onClick={(e: React.MouseEvent<HTMLButtonElement>) =>
+            setIsModalUpdateOpen(true)
+          }
+        >
+          Змінити
+        </button>
       </div>
       {isModalDeleteOpen && (
         <Modal onClose={() => setIsModalDeleteOpen(false)}>
@@ -45,6 +54,18 @@ export default function UserCard({ _id, email, name, surname, role }: IUser) {
             onClose={() => setIsModalDeleteOpen(false)}
             handleDelete={() => handleRemoveById(_id)}
             title={`користувача ${name} ${surname}`}
+          />
+        </Modal>
+      )}
+      {isModalUpdateOpen && (
+        <Modal onClose={() => setIsModalUpdateOpen(false)}>
+          <UpdateUserForm
+            onClose={() => setIsModalUpdateOpen(false)}
+            _id={_id}
+            email={email}
+            name={name}
+            surname={surname}
+            role={role}
           />
         </Modal>
       )}

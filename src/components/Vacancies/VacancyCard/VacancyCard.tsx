@@ -1,9 +1,7 @@
-import Modal from 'components/Modal';
-import ModalDelete from 'components/ModalDelete';
-import { useAppDispatch, useAppSelector } from 'hooks';
+import { useAppSelector } from 'hooks';
 import { useEffect, useState } from 'react';
 import { selectUser } from 'redux/user';
-import { removeVacancyById } from 'redux/vacancies';
+import { Link, useNavigate } from 'react-router-dom';
 
 enum ROLES {
   admin = 'admin',
@@ -36,18 +34,12 @@ export default function VacancyCard({
   workExperienceRequired,
   location,
 }: IVacancy) {
-  const [isModalDeleteOpen, setIsModalDeleteOpen] = useState(false);
   const [isAccessedToChangeVacancy, setIsAccessedToChangeVacancy] =
     useState(false);
-
-  const dispatch = useAppDispatch();
   const {
     user: { role },
   } = useAppSelector(selectUser);
-
-  const handleDelete = (_id: string) => {
-    dispatch(removeVacancyById(_id));
-  };
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (role === ROLES.admin || role === ROLES.applyManager) {
@@ -56,7 +48,13 @@ export default function VacancyCard({
   }, [role]);
 
   return (
-    <li>
+    <li
+      onClick={event => {
+        if (event.target === event.currentTarget) {
+          navigate(`/vacancies/details/${_id}`);
+        }
+      }}
+    >
       <h3>{title}</h3>
       <p>
         Опис:
@@ -92,26 +90,9 @@ export default function VacancyCard({
       </p>
       {isAccessedToChangeVacancy && (
         <div>
-          <button
-            type="button"
-            onClick={(e: React.MouseEvent<HTMLButtonElement>) =>
-              setIsModalDeleteOpen(true)
-            }
-          >
-            видалити
-          </button>
-          <button type="button">змінити </button>
+          <Link to={`/vacancies/details/${_id}/confirm`}>видалити</Link>
+          <Link to={`/vacancies/details/${_id}/form`}>змінити</Link>
         </div>
-      )}
-
-      {isModalDeleteOpen && (
-        <Modal onClose={() => setIsModalDeleteOpen(false)}>
-          <ModalDelete
-            onClose={() => setIsModalDeleteOpen(false)}
-            handleDelete={() => handleDelete(_id)}
-            title={`вакансію ${title}`}
-          />
-        </Modal>
       )}
     </li>
   );

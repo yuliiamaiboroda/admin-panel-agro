@@ -35,7 +35,7 @@ export default function ResumeModalLayout() {
 
   return (
     <Modal onClose={() => navigate('/resumes')}>
-      {isLoading ? <Loader /> : <Outlet />}
+      {isLoading ? <Loader top="" /> : <Outlet />}
     </Modal>
   );
 }

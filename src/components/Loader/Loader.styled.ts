@@ -1,10 +1,13 @@
 import styled, { keyframes } from 'styled-components';
 import { GiFarmTractor } from 'react-icons/gi';
+interface IProps {
+  top: string;
+}
 
-export const LoaderWrapper = styled.div`
+export const LoaderWrapper = styled.div<IProps>`
   width: 100%;
   position: absolute;
-  top: 50%;
+  top: ${props => (props.top ? props.top : '50%')};
   left: 50%;
   transform: translateX(-50%) translateY(-50%);
   z-index: 100;

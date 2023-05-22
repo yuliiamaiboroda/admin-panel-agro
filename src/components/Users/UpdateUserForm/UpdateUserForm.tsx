@@ -1,8 +1,9 @@
 import { Field, Form, Formik } from 'formik';
-import createNewUserSchema from 'helpers/schemas/auth/createNewUser.schema';
+
+import updateUserSchema from 'helpers/schemas/auth/updateUser.schema';
 import translateRole from 'helpers/translateRoles';
 import { useAppDispatch } from 'hooks';
-import { registerNewUser } from 'redux/users';
+import { updateUserById } from 'redux/users';
 
 enum ROLES {
   admin = 'admin',
@@ -10,41 +11,46 @@ enum ROLES {
   servicesManager = 'servicesManager',
   productsManager = 'productsManager',
 }
-interface INewUser {
+
+interface IProps {
   email: string;
-  password: string;
   name: string;
   surname: string;
   role: string;
-}
-
-interface Iprops {
+  _id: string;
   onClose: () => void;
 }
 
-const FORM_INITIAL_STATE: INewUser = {
-  email: '',
-  password: '',
-  name: '',
-  surname: '',
-  role: '',
-};
-
-export default function CreateUserForm({ onClose }: Iprops) {
+export default function UpdateUserForm({
+  email,
+  name,
+  surname,
+  role,
+  _id,
+  onClose,
+}: IProps) {
+  const FORM_INITIAL_STATE = {
+    email,
+    name,
+    surname,
+    role,
+    _id,
+  };
   const dispatch = useAppDispatch();
-
   return (
     <>
-      <h2>Остворити нового користувача</h2>
+      <h2>
+        Оновити користувача {name} {surname}
+      </h2>
       <Formik
         initialValues={FORM_INITIAL_STATE}
         onSubmit={(values, actions) => {
-          dispatch(registerNewUser(values));
-          actions.resetForm();
+          console.log(values);
+          dispatch(updateUserById(values));
           onClose();
         }}
         validateOnBlur
-        validationSchema={createNewUserSchema}
+        validationSchema={updateUserSchema}
       >
         {({ errors, touched }) => (
           <Form
@@ -57,13 +63,6 @@ export default function CreateUserForm({ onClose }: Iprops) {
                 <span>{errors.email}</span>
               ) : null}
             </label>
-            <label>
-              Пароль:
-              <Field name="password" type="password" id="password" />
-            </label>
-            {errors.password && touched.password ? (
-              <span>{errors.password}</span>
-            ) : null}
             <label>
               Ім'я:
               <Field name="name" type="text" id="name" />
@@ -116,7 +115,7 @@ export default function CreateUserForm({ onClose }: Iprops) {
               </label>
             </label>
             {errors.role && touched.role ? <span>{errors.role}</span> : null}
-            <button type="submit">Створити нового користувача</button>
+            <button type="submit">Оновити</button>
           </Form>
         )}
       </Formik>

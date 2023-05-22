@@ -3,11 +3,13 @@ import { useEffect } from 'react';
 import {
   getActualVacancies,
   getAllVacancies,
+  getIrrelevantVacancies,
   selectVacancies,
 } from 'redux/vacancies';
 import VacancyCard from '../VacancyCard';
-import { NavLink, useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { Notify } from 'notiflix';
+import Loader from 'components/Loader/Loader';
 
 export default function VacanciesGallary() {
   const dispatch = useAppDispatch();
@@ -18,15 +20,32 @@ export default function VacanciesGallary() {
 
   const Interaction_With_API = async () => {
     try {
-      if (categoryName === 'all-vacancies') {
-        dispatch(getAllVacancies());
+      switch (categoryName) {
+        case 'all-vacancies':
+          dispatch(getAllVacancies());
+          break;
+        case 'actual-vacancies':
+          dispatch(getActualVacancies());
+          break;
+        case 'irrelevant-vacancies':
+          dispatch(getIrrelevantVacancies());
+          break;
+        default:
+          navigate('/all-vacancies');
+          break;
       }
-      if (categoryName === 'actual-vacancies') {
-        dispatch(getActualVacancies());
-      }
-      if (!categoryName) {
-        navigate('all-vacancies');
-      }
+      // if (categoryName === 'all-vacancies') {
+      //   dispatch(getAllVacancies());
+      // }
+      // if (categoryName === 'actual-vacancies') {
+      //   dispatch(getActualVacancies());
+      // }
+      // if (categoryName === 'irrelevant-vacancies') {
+      //   dispatch(getIrrelevantVacancies());
+      // }
+      // if (!categoryName) {
+      //   navigate('all-vacancies');
+      // }
     } catch (err) {
       Notify.failure('Упс щось пішло не так');
     }
@@ -38,17 +57,9 @@ export default function VacanciesGallary() {
   }, [categoryName]);
 
   return (
-    <>
-      <ul>
-        <li>
-          <NavLink to={'all-vacancies'}>Всі вакансії</NavLink>
-        </li>
-        <li>
-          <NavLink to={'actual-vacancies'}>Актуальні вакансії</NavLink>
-        </li>
-      </ul>
+    <section style={{ position: 'relative' }}>
       {isLoading ? (
-        <h2>Loading</h2>
+        <Loader top="200px" />
       ) : (
         <ul>
           {entities.length ? (
@@ -58,6 +69,6 @@ export default function VacanciesGallary() {
           )}
         </ul>
       )}
-    </>
+    </section>
   );
 }

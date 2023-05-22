@@ -1,8 +1,12 @@
 import { IconLoader, LoaderWrapper } from './Loader.styled';
 
-export default function Loader() {
+interface IProps {
+  top: string;
+}
+
+export default function Loader({ top }: IProps) {
   return (
-    <LoaderWrapper>
+    <LoaderWrapper top={top}>
       <IconLoader />
     </LoaderWrapper>
   );
