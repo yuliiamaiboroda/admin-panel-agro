@@ -7,7 +7,7 @@ import {
   selectVacancies,
 } from 'redux/vacancies';
 import VacancyCard from '../VacancyCard';
-import { NavLink, useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { Notify } from 'notiflix';
 import Loader from 'components/Loader/Loader';
 
@@ -31,7 +31,7 @@ export default function VacanciesGallary() {
           dispatch(getIrrelevantVacancies());
           break;
         default:
-          navigate('all-vacancies');
+          navigate('/all-vacancies');
           break;
       }
       // if (categoryName === 'all-vacancies') {
@@ -58,17 +58,6 @@ export default function VacanciesGallary() {
 
   return (
     <section style={{ position: 'relative' }}>
-      <ul>
-        <li>
-          <NavLink to={'all-vacancies'}>Всі вакансії</NavLink>
-        </li>
-        <li>
-          <NavLink to={'actual-vacancies'}>Актуальні вакансії</NavLink>
-        </li>
-        <li>
-          <NavLink to={'irrelevant-vacancies'}>Неактуальні вакансії</NavLink>
-        </li>
-      </ul>
       {isLoading ? (
         <Loader top="200px" />
       ) : (

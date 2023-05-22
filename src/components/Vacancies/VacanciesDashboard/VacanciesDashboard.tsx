@@ -4,6 +4,7 @@ import Modal from 'components/Modal';
 import CreateVacancyForm from '../CreateVacancyForm';
 import { useAppSelector } from 'hooks';
 import { selectUser } from 'redux/user';
+import VacanciesNavigator from 'components/Vacancies/VacanciesNavigator';
 
 enum ROLES {
   admin = 'admin',
@@ -29,6 +30,7 @@ export default function VacanciesDashboard() {
 
   return (
     <div>
+      <VacanciesNavigator />
       <VacanciesGallary />
       {isAccessedToCreateVacancy && (
         <button

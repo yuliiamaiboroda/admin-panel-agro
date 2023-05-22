@@ -20,6 +20,11 @@ import ProductModalLayout from 'components/ProductModalLayout';
 import ProductModalDetails from 'components/ProductModalDetails';
 import ProductModalEditForm from 'components/ProductModalEditForm';
 import ProductModalConfirmation from 'components/ProductModalConfirmation';
+import VacanciesDashboard from 'components/Vacancies/VacanciesDashboard';
+import VacanciesModalLayout from 'components/VacanciesModalLayout';
+import VacanciesModalDetails from 'components/VacanciesModalDetails';
+import VacanciesModalUpdateForm from 'components/VacanciesModalUpdateForm';
+import VacanciesModalConfirm from 'components/VacanciesModalConfirm';
 
 function App() {
   // TODO:  Add fetch of refresh user
@@ -62,7 +67,20 @@ function App() {
             </Route>
             <Route path="services" element={<ServicesPage />} />
             <Route path="vacancies" element={<VacanciesPage />}>
-              <Route path=":categoryName" element={<VacanciesPage />} />
+              <Route index element={<Navigate to="all-vacancies" replace />} />
+              <Route path=":categoryName" element={<VacanciesDashboard />} />
+              <Route
+                path="details/:vacanciesId"
+                element={<VacanciesModalLayout />}
+              >
+                <Route index element={<VacanciesModalDetails />} />
+                <Route path="form" element={<VacanciesModalUpdateForm />} />
+                <Route path="confirm" element={<VacanciesModalConfirm />} />
+                <Route
+                  path="*"
+                  element={<Navigate to="/vacancies" replace />}
+                />
+              </Route>
             </Route>
             <Route path="resumes" element={<h1>Resumes page</h1>} />
             <Route path="feedbacks" element={<FeedbackPage />} />
