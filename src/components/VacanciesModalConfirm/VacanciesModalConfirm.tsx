@@ -1,35 +1,25 @@
 import { useAppDispatch, useAppSelector } from 'hooks';
-import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { IVacancy, removeVacancyById, selectVacancies } from 'redux/vacancies';
+import { removeVacancyById, selectVacancies } from 'redux/vacancies';
 
 export default function VacanciesModalConfirm() {
-  const [choosedVacancy, setChoosedVacancy] = useState<IVacancy>();
-  const vacancies = useAppSelector(selectVacancies);
+  const { certain } = useAppSelector(selectVacancies);
   const { vacanciesId } = useParams();
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  useEffect(() => {
-    const vacancy = vacancies.entities.find(
-      vacancy => vacancy._id === vacanciesId
-    );
-    if (vacancy) {
-      setChoosedVacancy(vacancy);
-    }
-  }, [vacanciesId, vacancies]);
 
-  if (!choosedVacancy) {
+  if (!certain) {
     return <h1>something went wrong </h1>;
   }
   return (
     <div>
-      <h1>Ви впевнені що хочете видалити вакансію {choosedVacancy.title}</h1>
+      <h1>Ви впевнені що хочете видалити вакансію {certain.title}</h1>
       <ul>
         <li>
           <button
             type="button"
             onClick={() => {
-              dispatch(removeVacancyById(choosedVacancy._id));
+              dispatch(removeVacancyById(certain._id));
               navigate('/vacancies');
             }}
           >
@@ -39,7 +29,7 @@ export default function VacanciesModalConfirm() {
         <li>
           <button
             type="button"
-            onClick={() => navigate(`vacancies/details/${vacanciesId}`)}
+            onClick={() => navigate(`/vacancies/details/${vacanciesId}`)}
           >
             відміна
           </button>

@@ -2,7 +2,6 @@ import { useEffect } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from 'hooks';
 import { refreshUser, selectUser } from 'redux/user';
-import { Watch } from 'react-loader-spinner';
 // import HomePage from 'pages/HomePage';
 import LoginPage from 'pages/LoginPage';
 import PrivateRoute from 'components/PrivateRoute';

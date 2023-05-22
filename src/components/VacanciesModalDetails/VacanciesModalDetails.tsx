@@ -1,23 +1,11 @@
-import { useEffect, useState } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useAppSelector } from 'hooks';
-import { IVacancy, selectVacancies } from 'redux/vacancies';
+import { selectVacancies } from 'redux/vacancies';
 
 export default function VacanciesModalDetails() {
-  const [choosedVacancy, setChoosedVacancy] = useState<IVacancy>();
-  const vacancies = useAppSelector(selectVacancies);
-  const { vacanciesId } = useParams();
+  const { certain } = useAppSelector(selectVacancies);
 
-  useEffect(() => {
-    const vacancy = vacancies.entities.find(
-      vacancy => vacancy._id === vacanciesId
-    );
-    if (vacancy) {
-      setChoosedVacancy(vacancy);
-    }
-  }, [vacanciesId, vacancies]);
-
-  if (!choosedVacancy) {
+  if (!certain) {
     return <h1>something went wrong </h1>;
   }
 
@@ -31,7 +19,7 @@ export default function VacanciesModalDetails() {
     contactMail,
     contactPhone,
     workExperienceRequired,
-  } = choosedVacancy;
+  } = certain;
   return (
     <div>
       <h3>{title}</h3>

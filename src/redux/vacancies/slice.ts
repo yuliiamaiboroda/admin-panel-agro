@@ -3,6 +3,7 @@ import {
   createVacancy,
   getActualVacancies,
   getAllVacancies,
+  getCertainVacancy,
   getIrrelevantVacancies,
   removeVacancyById,
   updateVacancyById,
@@ -24,6 +25,7 @@ export interface IVacancy {
 interface IState {
   entities: IVacancy[];
   isLoading: boolean;
+  certain: IVacancy | null;
   error: string | null;
 }
 
@@ -31,6 +33,7 @@ const initialState: IState = {
   entities: [],
   isLoading: false,
   error: null,
+  certain: null,
 };
 
 const vacanciesPendingReducer = (state: IState) => {
@@ -103,10 +106,26 @@ const updateVacancyFulfilledReducer = (
     }),
   };
 };
+
+const getCertainFulfilledReducer = (
+  state: IState,
+  action: PayloadAction<IVacancy, string>
+) => {
+  return {
+    ...state,
+    isLoading: false,
+    certain: action.payload,
+  };
+};
+
 const vacanciesSlice = createSlice({
   name: 'vacancies',
   initialState,
-  reducers: {},
+  reducers: {
+    removeCertainVacancy(state) {
+      return { ...state, certain: null };
+    },
+  },
   extraReducers: builder =>
     builder
       .addCase(getAllVacancies.pending, vacanciesPendingReducer)
@@ -129,7 +148,11 @@ const vacanciesSlice = createSlice({
       .addCase(createVacancy.rejected, vacanciesRejectedReducer)
       .addCase(updateVacancyById.pending, vacanciesPendingReducer)
       .addCase(updateVacancyById.fulfilled, updateVacancyFulfilledReducer)
-      .addCase(updateVacancyById.rejected, vacanciesRejectedReducer),
+      .addCase(updateVacancyById.rejected, vacanciesRejectedReducer)
+      .addCase(getCertainVacancy.pending, vacanciesPendingReducer)
+      .addCase(getCertainVacancy.fulfilled, getCertainFulfilledReducer)
+      .addCase(getCertainVacancy.rejected, vacanciesRejectedReducer),
 });
 
 export const vacanciesReducer = vacanciesSlice.reducer;
+export const { removeCertainVacancy } = vacanciesSlice.actions;

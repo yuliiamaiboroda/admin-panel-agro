@@ -92,7 +92,6 @@ export default function VacancyCard({
         <div>
           <Link to={`/vacancies/details/${_id}/confirm`}>видалити</Link>
           <Link to={`/vacancies/details/${_id}/form`}>змінити</Link>
-          <Link to={`/vacancies/irrelevant-vacancies`}>TEST</Link>
         </div>
       )}
     </li>

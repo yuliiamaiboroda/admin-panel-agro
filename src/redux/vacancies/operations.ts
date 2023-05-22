@@ -152,3 +152,19 @@ export const updateVacancyById = createAsyncThunk<
     }
   }
 );
+
+export const getCertainVacancy = createAsyncThunk<
+  IVacancy,
+  string,
+  {
+    rejectValue: string;
+  }
+>('vacancies/getCertain', async (_id, thunkApi) => {
+  try {
+    const { data } = await axios.get(`/api/vacancies/${_id}`);
+    return data;
+  } catch (err) {
+    const error = err as AxiosError;
+    return thunkApi.rejectWithValue(error.message);
+  }
+});
