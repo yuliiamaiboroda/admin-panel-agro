@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import { useRef } from 'react';
 import { Formik, Form, Field } from 'formik';
 import UploadFileField from 'components/UploadFileField';
 

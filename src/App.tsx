@@ -2,7 +2,6 @@ import { useEffect } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from 'hooks';
 import { refreshUser, selectUser } from 'redux/user';
-// import HomePage from 'pages/HomePage';
 import LoginPage from 'pages/LoginPage';
 import PrivateRoute from 'components/PrivateRoute';
 import UsersPage from 'pages/UsersPage/UsersPage';
@@ -19,6 +18,10 @@ import ProductModalLayout from 'components/ProductModalLayout';
 import ProductModalDetails from 'components/ProductModalDetails';
 import ProductModalEditForm from 'components/ProductModalEditForm';
 import ProductModalConfirmation from 'components/ProductModalConfirmation';
+import ResumesPage from 'pages/ResumesPage';
+import ResumeModalLayout from 'components/ResumeModalLayout';
+import ResumeModalDetails from 'components/ResumeModalDetails';
+import ResumeModalConfirmation from 'components/ResumeModalConfirmation';
 import VacanciesDashboard from 'components/Vacancies/VacanciesDashboard';
 import VacanciesModalLayout from 'components/VacanciesModalLayout';
 import VacanciesModalDetails from 'components/VacanciesModalDetails';
@@ -37,6 +40,10 @@ function App() {
 
     // dispatch(fetchCurrentUser());
   }, [dispatch]);
+
+  if (isLoading) {
+    return <Loader top="" />;
+  }
 
   return (
     <div className="App">
