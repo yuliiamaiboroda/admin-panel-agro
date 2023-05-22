@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import { BsArrowUpCircleFill } from 'react-icons/bs';
 import { Button, ArrowUp } from './ButtonUp.styled';
 
 export default function ButtonUp() {
