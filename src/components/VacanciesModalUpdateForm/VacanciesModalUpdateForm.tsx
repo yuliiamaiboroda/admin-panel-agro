@@ -1,18 +1,21 @@
 import UpdateVacancyForm from 'components/Vacancies/UpdateVacancyForm';
 import { useAppSelector } from 'hooks';
 
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { selectVacancies } from 'redux/vacancies';
 
 export default function VacanciesModalUpdateForm() {
   const { certain } = useAppSelector(selectVacancies);
   const navigate = useNavigate();
+  const routeLocation = useLocation();
+
+  const backLinkHref = routeLocation.state?.from ?? '/vacancies';
 
   if (!certain) {
-    return <h1>something went wrong </h1>;
+    return null;
   }
 
   return (
-    <UpdateVacancyForm {...certain} onClose={() => navigate('vacancies')} />
+    <UpdateVacancyForm {...certain} onClose={() => navigate(backLinkHref)} />
   );
 }

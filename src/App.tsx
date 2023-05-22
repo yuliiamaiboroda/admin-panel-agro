@@ -64,12 +64,13 @@ function App() {
         <Route path="services" element={<ServicesPage />} />
         <Route path="vacancies" element={<VacanciesPage />}>
           <Route index element={<Navigate to="all-vacancies" replace />} />
-          <Route path=":categoryName" element={<VacanciesDashboard />} />
-          <Route path="details/:vacanciesId" element={<VacanciesModalLayout />}>
-            <Route index element={<VacanciesModalDetails />} />
-            <Route path="form" element={<VacanciesModalUpdateForm />} />
-            <Route path="confirm" element={<VacanciesModalConfirm />} />
-            <Route path="*" element={<Navigate to="/vacancies" replace />} />
+          <Route path=":categoryName" element={<VacanciesDashboard />}>
+            <Route path=":vacanciesId" element={<VacanciesModalLayout />}>
+              <Route index element={<VacanciesModalDetails />} />
+              <Route path="form" element={<VacanciesModalUpdateForm />} />
+              <Route path="confirm" element={<VacanciesModalConfirm />} />
+              <Route path="*" element={<Navigate to="/vacancies" replace />} />
+            </Route>
           </Route>
         </Route>
         <Route path="resumes" element={<ResumesPage />}>

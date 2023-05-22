@@ -1,12 +1,13 @@
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { useAppSelector } from 'hooks';
 import { selectVacancies } from 'redux/vacancies';
 
 export default function VacanciesModalDetails() {
   const { certain } = useAppSelector(selectVacancies);
+  const routeLocation = useLocation();
 
   if (!certain) {
-    return <h1>something went wrong </h1>;
+    return null;
   }
 
   const {
@@ -55,8 +56,12 @@ export default function VacanciesModalDetails() {
         Контактна пошта:
         <a href={`mailto:${contactMail}`}>{contactMail}</a>
       </p>
-      <Link to="form">змінити</Link>
-      <Link to="confirm">видалити</Link>
+      <Link to="form" state={{ from: routeLocation }}>
+        змінити
+      </Link>
+      <Link to="confirm" state={{ from: routeLocation }}>
+        видалити
+      </Link>
     </div>
   );
 }

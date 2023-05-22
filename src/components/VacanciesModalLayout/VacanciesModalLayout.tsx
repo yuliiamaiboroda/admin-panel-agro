@@ -14,7 +14,8 @@ export default function VacanciesModalLayout() {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const { error, isLoading } = useAppSelector(selectVacancies);
-  const { vacanciesId } = useParams();
+  const { categoryName, vacanciesId } = useParams();
+
   useEffect(() => {
     if (vacanciesId) {
       dispatch(getCertainVacancy(vacanciesId));
@@ -26,13 +27,13 @@ export default function VacanciesModalLayout() {
 
   if (error) {
     Notify.failure(error);
-    return <Navigate to="/vacancies" replace />;
+    return <Navigate to={`/vacancies/${categoryName || ''}`} replace />;
   }
 
   return (
     <>
-      <Modal onClose={() => navigate('/vacancies')}>
-        {isLoading ? <Loader top="" /> : <Outlet />}
+      <Modal onClose={() => navigate(`/vacancies/${categoryName || ''}`)}>
+        {isLoading ? <Loader /> : <Outlet />}
       </Modal>
     </>
   );
