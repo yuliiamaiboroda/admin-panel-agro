@@ -10,8 +10,6 @@ import ServicesPage from 'pages/ServicesPage';
 import SharedLayout from 'components/SharedLayout';
 import VacanciesPage from 'pages/VacanciesPage';
 import FeedbackPage from 'pages/FeedbackPage';
-
-import ButtonUp from 'components/ButtonUp';
 import Loader from 'components/Loader';
 
 import ProductModalLayout from 'components/ProductModalLayout';
@@ -42,70 +40,53 @@ function App() {
   }, [dispatch]);
 
   if (isLoading) {
-    return <Loader top="" />;
+    return <Loader />;
   }
 
   return (
-    <div className="App">
-      {isLoading ? (
-        <Loader top="" />
-      ) : (
-        <Routes>
-          <Route
-            path="/"
-            element={
-              <PrivateRoute
-                component={<SharedLayout />}
-                auth
-                redirectTo="/login"
-              />
-            }
-          >
-            <Route index element={<Navigate to="products" />} />
-            <Route path="users" element={<UsersPage />} />
-            <Route path="products" element={<ProductsPage />}>
-              <Route path=":productId" element={<ProductModalLayout />}>
-                <Route index element={<ProductModalDetails />} />
-                <Route path="form" element={<ProductModalEditForm />} />
-                <Route path="confirm" element={<ProductModalConfirmation />} />
-                <Route path="*" element={<Navigate to="/products" replace />} />
-              </Route>
-            </Route>
-            <Route path="services" element={<ServicesPage />} />
-            <Route path="vacancies" element={<VacanciesPage />}>
-              <Route index element={<Navigate to="all-vacancies" replace />} />
-              <Route path=":categoryName" element={<VacanciesDashboard />} />
-              <Route
-                path="details/:vacanciesId"
-                element={<VacanciesModalLayout />}
-              >
-                <Route index element={<VacanciesModalDetails />} />
-                <Route path="form" element={<VacanciesModalUpdateForm />} />
-                <Route path="confirm" element={<VacanciesModalConfirm />} />
-                <Route
-                  path="*"
-                  element={<Navigate to="/vacancies" replace />}
-                />
-              </Route>
-            </Route>
-            <Route path="resumes" element={<ResumesPage />}>
-              <Route path=":resumeId" element={<ResumeModalLayout />}>
-                <Route index element={<ResumeModalDetails />} />
-                <Route path="confirm" element={<ResumeModalConfirmation />} />
-                <Route path="*" element={<Navigate to="/resumes" replace />} />
-              </Route>
-            </Route>
-            <Route path="feedbacks" element={<FeedbackPage />} />
+    <Routes>
+      <Route
+        path="/"
+        element={
+          <PrivateRoute component={<SharedLayout />} auth redirectTo="/login" />
+        }
+      >
+        <Route index element={<Navigate to="products" />} />
+        <Route path="users" element={<UsersPage />} />
+        <Route path="products" element={<ProductsPage />}>
+          <Route path=":productId" element={<ProductModalLayout />}>
+            <Route index element={<ProductModalDetails />} />
+            <Route path="form" element={<ProductModalEditForm />} />
+            <Route path="confirm" element={<ProductModalConfirmation />} />
+            <Route path="*" element={<Navigate to="/products" replace />} />
           </Route>
-          <Route
-            path="/login"
-            element={<PrivateRoute component={<LoginPage />} redirectTo="/" />}
-          />
-          <Route path="*" element={<Navigate to="/" replace />} />
-        </Routes>
-      )}
-      <ButtonUp />
-    </div>
+        </Route>
+        <Route path="services" element={<ServicesPage />} />
+        <Route path="vacancies" element={<VacanciesPage />}>
+          <Route index element={<Navigate to="all-vacancies" replace />} />
+          <Route path=":categoryName" element={<VacanciesDashboard />} />
+          <Route path="details/:vacanciesId" element={<VacanciesModalLayout />}>
+            <Route index element={<VacanciesModalDetails />} />
+            <Route path="form" element={<VacanciesModalUpdateForm />} />
+            <Route path="confirm" element={<VacanciesModalConfirm />} />
+            <Route path="*" element={<Navigate to="/vacancies" replace />} />
+          </Route>
+        </Route>
+        <Route path="resumes" element={<ResumesPage />}>
+          <Route path=":resumeId" element={<ResumeModalLayout />}>
+            <Route index element={<ResumeModalDetails />} />
+            <Route path="confirm" element={<ResumeModalConfirmation />} />
+            <Route path="*" element={<Navigate to="/resumes" replace />} />
+          </Route>
+        </Route>
+        <Route path="feedbacks" element={<FeedbackPage />} />
+      </Route>
+      <Route
+        path="/login"
+        element={<PrivateRoute component={<LoginPage />} redirectTo="/" />}
+      />
+      <Route path="*" element={<Navigate to="/" replace />} />
+    </Routes>
   );
 }
 
