@@ -184,6 +184,9 @@ export default function UpdateVacancyForm({
                 <span>{errors.category}</span>
               ) : null}
             </label>
+            <button type="button" onClick={onClose}>
+              Cancel
+            </button>
             <button type="submit">Опублікувати</button>
           </Form>
         )}

@@ -1,7 +1,7 @@
 import { useAppSelector } from 'hooks';
 import { useEffect, useState } from 'react';
 import { selectUser } from 'redux/user';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 
 enum ROLES {
   admin = 'admin',
@@ -40,6 +40,7 @@ export default function VacancyCard({
     user: { role },
   } = useAppSelector(selectUser);
   const navigate = useNavigate();
+  const routeLocation = useLocation();
 
   useEffect(() => {
     if (role === ROLES.admin || role === ROLES.applyManager) {
@@ -51,7 +52,7 @@ export default function VacancyCard({
     <li
       onClick={event => {
         if (event.target === event.currentTarget) {
-          navigate(`/vacancies/details/${_id}`);
+          navigate(`${_id}`, { state: { from: routeLocation } });
         }
       }}
     >
@@ -90,8 +91,12 @@ export default function VacancyCard({
       </p>
       {isAccessedToChangeVacancy && (
         <div>
-          <Link to={`/vacancies/details/${_id}/confirm`}>видалити</Link>
-          <Link to={`/vacancies/details/${_id}/form`}>змінити</Link>
+          <Link to={`${_id}/confirm`} state={{ from: routeLocation }}>
+            видалити
+          </Link>
+          <Link to={`${_id}/form`} state={{ from: routeLocation }}>
+            змінити
+          </Link>
         </div>
       )}
     </li>

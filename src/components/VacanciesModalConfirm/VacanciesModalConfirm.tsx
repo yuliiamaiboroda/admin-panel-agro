@@ -1,15 +1,17 @@
 import { useAppDispatch, useAppSelector } from 'hooks';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { removeVacancyById, selectVacancies } from 'redux/vacancies';
 
 export default function VacanciesModalConfirm() {
   const { certain } = useAppSelector(selectVacancies);
-  const { vacanciesId } = useParams();
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
+  const routeLocation = useLocation();
+
+  const backLinkHref = routeLocation.state?.from ?? '/vacancies';
 
   if (!certain) {
-    return <h1>something went wrong </h1>;
+    return null;
   }
   return (
     <div>
@@ -27,10 +29,7 @@ export default function VacanciesModalConfirm() {
           </button>
         </li>
         <li>
-          <button
-            type="button"
-            onClick={() => navigate(`/vacancies/details/${vacanciesId}`)}
-          >
+          <button type="button" onClick={() => navigate(backLinkHref)}>
             відміна
           </button>
         </li>
