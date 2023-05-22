@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import type { IResume } from 'redux/resumes';
 
 export default function ResumeCard({
@@ -13,7 +13,13 @@ export default function ResumeCard({
   const navigate = useNavigate();
 
   return (
-    <li onClick={() => navigate(_id)}>
+    <li
+      onClick={event => {
+        if (event.currentTarget === event.target) {
+          navigate(_id);
+        }
+      }}
+    >
       <h2>{name}</h2>
       <a href={`tel:${phone}`}>{phone}</a>
       <br />
@@ -21,6 +27,7 @@ export default function ResumeCard({
       <h3>{position}</h3>
       <a href={resumeFileURL}>Resume file</a>
       <p>{comment}</p>
+      <Link to={`${_id}/confirm`}>Remove</Link>
     </li>
   );
 }
