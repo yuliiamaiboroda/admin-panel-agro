@@ -1,4 +1,4 @@
-import { Navigate } from 'react-router-dom';
+import { Navigate, useLocation } from 'react-router-dom';
 import { useAppSelector } from 'hooks';
 import { selectUser } from 'redux/user';
 
@@ -13,9 +13,12 @@ export default function PrivateRoute({
   redirectTo = '/',
 }: IProps) {
   const { isAuthorized } = useAppSelector(selectUser);
+  const location = useLocation();
+
+  const redirectHref = location.state?.from ?? redirectTo;
 
   if (isAuthorized !== auth) {
-    return <Navigate to={redirectTo} replace />;
+    return <Navigate to={redirectHref} replace state={{ from: location }} />;
   }
 
   return component;

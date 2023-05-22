@@ -15,6 +15,7 @@ interface IProps {
     imageURL?: string;
   };
   onSubmit: (values: IProductState) => void;
+  onCancel: () => void;
 }
 
 const PRODUCT_DATA = { title: '', description: '' };
@@ -22,6 +23,7 @@ const PRODUCT_DATA = { title: '', description: '' };
 export default function ProductForm({
   productData = PRODUCT_DATA,
   onSubmit,
+  onCancel,
 }: IProps) {
   const fileField = useRef<HTMLInputElement>(null);
 
@@ -50,6 +52,9 @@ export default function ProductForm({
         <br />
         <UploadFileField name="image" fileRef={fileField} />
         <br />
+        <button type="button" onClick={onCancel}>
+          Cancel
+        </button>
         <button type="submit">Add product</button>
       </Form>
     </Formik>
