@@ -3,7 +3,7 @@ import { Formik, Form, Field } from 'formik';
 import { useAppDispatch } from 'hooks';
 import { createService } from 'redux/services';
 import UploadFileField from 'components/UploadFileField';
-import createServiceSchema from 'helpers/schemas/services/createService.schema';
+import {serviceSchema} from 'helpers/schemas/services';
 
 interface IProps {
   onSubmit?: Function;
@@ -24,7 +24,7 @@ export default function CreateServiceForm({ onSubmit }: IProps) {
         contactPhone: '',
       }}
       validateOnBlur
-      validationSchema={createServiceSchema}
+      validationSchema={serviceSchema}
       onSubmit={(values, actions) => {
         if (fileField.current?.files) {
           const { title, description, price, contactMail, contactPhone } =
