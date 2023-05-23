@@ -38,16 +38,16 @@ export default function ProductForm({
         description: Yup.string().min(2).max(2000).required(),
         image: Yup.mixed()
           .test('is-file-exist', 'File should be uploaded', () => {
-            const file = fileField.current?.files;
-            return !file?.length && !imageURL ? false : true;
+            const files = fileField.current?.files;
+            return !files?.length && !imageURL ? false : true;
           })
           .test(
             'is-correct-format',
-            'Image sould be one of the next formats: jpg, jpeg, png',
+            'Image should be one of the next formats: jpg, jpeg, png',
             () => {
               const files = fileField.current?.files;
               const validFormats = ['jpg', 'jpeg', 'png'];
-              if (files && files.length) {
+              if (files?.length) {
                 const file = files[0];
                 const extension = file.type.split('/')[1];
                 return validFormats.includes(extension);
@@ -55,9 +55,9 @@ export default function ProductForm({
               return true;
             }
           )
-          .test('is-correct-size', 'Image sould not be more than 5Mb', () => {
+          .test('is-correct-size', 'Image should not be more than 5Mb', () => {
             const files = fileField.current?.files;
-            if (files && files.length) {
+            if (files?.length) {
               const file = files[0];
               const size = file.size / 1024 / 1024;
               return size <= 5;
