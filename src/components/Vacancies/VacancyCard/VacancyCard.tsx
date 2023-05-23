@@ -1,9 +1,14 @@
-import Modal from 'components/Modal/Modal';
-import ModalDelete from 'components/ModalDelete/ModalDelete';
-import { useAppDispatch } from 'hooks';
-import { useState } from 'react';
-import { removeVacancyById } from 'redux/vacancies';
+import { useAppSelector } from 'hooks';
+import { useEffect, useState } from 'react';
+import { selectUser } from 'redux/user';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 
+enum ROLES {
+  admin = 'admin',
+  applyManager = 'applyManager',
+  servicesManager = 'servicesManager',
+  productsManager = 'productsManager',
+}
 interface IVacancy {
   _id: string;
   category: string;
@@ -29,15 +34,28 @@ export default function VacancyCard({
   workExperienceRequired,
   location,
 }: IVacancy) {
-  const [isModalDeleteOpen, setIsModalDeleteOpen] = useState(false);
+  const [isAccessedToChangeVacancy, setIsAccessedToChangeVacancy] =
+    useState(false);
+  const {
+    user: { role },
+  } = useAppSelector(selectUser);
+  const navigate = useNavigate();
+  const routeLocation = useLocation();
 
-  const dispatch = useAppDispatch();
-  const handleDelete = (_id: string) => {
-    dispatch(removeVacancyById(_id));
-  };
+  useEffect(() => {
+    if (role === ROLES.admin || role === ROLES.applyManager) {
+      setIsAccessedToChangeVacancy(true);
+    }
+  }, [role]);
 
   return (
-    <li>
+    <li
+      onClick={event => {
+        if (event.target === event.currentTarget) {
+          navigate(`${_id}`, { state: { from: routeLocation } });
+        }
+      }}
+    >
       <h3>{title}</h3>
       <p>
         Опис:
@@ -71,25 +89,15 @@ export default function VacancyCard({
         Контактна пошта:
         <a href={`mailto:${contactMail}`}>{contactMail}</a>
       </p>
-      <div>
-        <button
-          type="button"
-          onClick={(e: React.MouseEvent<HTMLButtonElement>) =>
-            setIsModalDeleteOpen(true)
-          }
-        >
-          delete
-        </button>
-        <button type="button">change </button>
-      </div>
-      {isModalDeleteOpen && (
-        <Modal onClose={() => setIsModalDeleteOpen(false)}>
-          <ModalDelete
-            onClose={() => setIsModalDeleteOpen(false)}
-            handleDelete={() => handleDelete(_id)}
-            title={title}
-          />
-        </Modal>
+      {isAccessedToChangeVacancy && (
+        <div>
+          <Link to={`${_id}/confirm`} state={{ from: routeLocation }}>
+            видалити
+          </Link>
+          <Link to={`${_id}/form`} state={{ from: routeLocation }}>
+            змінити
+          </Link>
+        </div>
       )}
     </li>
   );

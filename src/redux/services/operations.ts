@@ -80,3 +80,60 @@ export const deleteService = createAsyncThunk<
     return thunkApi.rejectWithValue(error.response.data.message);
   }
 });
+
+export const updateService = createAsyncThunk<
+  IService,
+  {
+    _id: string;
+    title?: string;
+    description?: string;
+    image?: File;
+    price?: string;
+    contactMail?: string;
+    contactPhone?: string;
+  },
+  { rejectValue: string }
+>(
+  'services/update',
+  async (
+    { _id, title, description, image, price, contactMail, contactPhone },
+    thunkApi
+  ) => {
+    try {
+      const reqBody = new FormData();
+      if (title) {
+        reqBody.append('title', title);
+      }
+      if (description) {
+        reqBody.append('description', description);
+      }
+      if (image) {
+        reqBody.append('image', image);
+      }
+      if (price) {
+        reqBody.append('price', price);
+      }
+      if (contactMail) {
+        reqBody.append('contactMail', contactMail);
+      }
+      if (contactPhone) {
+        reqBody.append('contactPhone', contactPhone);
+      }
+      const { data } = await axios.patch(`/api/services/${_id}`, reqBody, {
+        headers: { 'Content-Type': 'multipart/form-data' },
+      });
+      if (!data) {
+        thunkApi.rejectWithValue(
+          "Something went wrong... Response doesn't return product"
+        );
+      }
+      return data;
+    } catch (err) {
+      const error = err as AxiosError<{ message: string }>;
+      if (!error.response) {
+        return thunkApi.rejectWithValue('Something went wrong');
+      }
+      return thunkApi.rejectWithValue(error.response.data.message);
+    }
+  }
+);

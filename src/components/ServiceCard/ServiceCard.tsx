@@ -2,6 +2,7 @@ import { useState } from 'react';
 import ActionButton from 'components/ActionButton';
 import Modal from 'components/Modal';
 import DeleteServiceForm from 'components/DeleteServiceForm';
+import UpdateServiceForm from 'components/UpdateServiceForm';
 
 interface IProps {
   _id: string;
@@ -43,14 +44,28 @@ export default function ServiceCard({
       <ActionButton onClick={handleDeleteModalOpen} />
       {isDeleteModalOpen && (
         <Modal onClose={handleDeleteModalClose}>
-          <DeleteServiceForm _id={_id} title={title} imageURL={imageURL} onSubmit={handleDeleteModalClose}/>
+          <DeleteServiceForm
+            _id={_id}
+            title={title}
+            imageURL={imageURL}
+            onSubmit={handleDeleteModalClose}
+          />
         </Modal>
       )}
 
       <ActionButton title="Змінити" onClick={handleEditModalOpen} />
       {isEditModalOpen && (
         <Modal onClose={handleEditModalClose}>
-          <h2>EDIT modal content</h2>
+          <UpdateServiceForm
+            onSubmit={handleEditModalClose}
+            _id={_id}
+            title={title}
+            description={description}
+            imageURL={imageURL}
+            price={price}
+            contactPhone={contactPhone}
+            contactMail={contactMail}
+          />
         </Modal>
       )}
     </li>

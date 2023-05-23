@@ -9,41 +9,44 @@ enum ROLES {
 
 const createNewUserSchema = Yup.object().shape({
   email: Yup.string()
-    .min(10, 'Email is too short - should be 10 chars minimum.')
-    .max(63, 'Password is too long - should be 63 chars maximum.')
-    .email('Invalid email')
+    .min(
+      10,
+      'Електронна пошта занадто коротка - має містити мінімум 10 символів.'
+    )
+    .max(
+      63,
+      'Електронна пошта занадто довга - має містити максимум 63 символів.'
+    )
+    .email('Невалідна пошта')
     .matches(
       /^(\w+([.-]?\w+){1,})*@\w+([.-]?\w+)*(.\w{2,3})+$/,
-      'Please enter valid email'
+      'Будь ласка введіть валідну адресу електронної пошти'
     )
-    .required('No email provided.'),
+    .required("Електронна пошта є обов'язковим полем"),
   password: Yup.string()
-    .min(7, 'Password is too short - should be 7 chars minimum.')
-    .max(32, 'Password is too long - should be 32 chars maximum.')
+    .min(7, 'Пароль занадто короткий - має містити мінімум 7 символів.')
+    .max(32, 'Пароль занадтно довгий - має містити максимум 32 символи.')
     .matches(
       /^\d*(?=.*[a-z])(?=.*[A-Z])\S+\D*\d*$/,
-      'The password field should contain only: capital letter, small letter and number'
+      'Пароль має містити лише: великі літери, маленькі літери та цифри'
     )
-    .required('No password provided.'),
+    .required("Пароль є обов'язковим полем"),
   name: Yup.string()
-    .min(2, 'Name is too short - should be 2 chars mininum')
-    .max(30, 'Name is too long - should be 30 chars maximum')
-    .matches(
-      /^([a-zA-Z-А-Яа-яЁёЇїІіЄєҐґ']+)$/,
-      'The name field shold contain only letters'
-    )
-    .required('No name provided.'),
+    .min(2, "Ім'я занадто коротке - має містити мінімум 2 символи")
+    .max(30, "Ім'я занадтно довге - має містити максимум 30 символів")
+    .matches(/^([a-zA-Z-А-Яа-яЁёЇїІіЄєҐґ']+)$/, "Ім'я має містити лише літери")
+    .required("Ім'я є обов'язковим полем"),
   surname: Yup.string()
-    .min(2, 'Surname is too short - should be 2 chars mininum')
-    .max(40, 'Surname is too long - should be 40 chars maximum')
+    .min(2, 'Прізвище занадто коротке - має містити мінімум 2 символів')
+    .max(40, 'Прізвище занадтно довге - має містити максимум 40 символів')
     .matches(
       /^([a-zA-Z-А-Яа-яЁёЇїІіЄєҐґ']+)$/,
-      'The name field shold contain only letters'
+      'Прізвище має містити лише літери'
     )
-    .required('No surname provided.'),
+    .required("Прізвище є обов'язковим полем"),
   role: Yup.mixed<ROLES>()
     .oneOf(Object.values(ROLES))
-    .required('No role provided.'),
+    .required("Роль нового користувача є обов'язковим полем"),
 });
 
 export default createNewUserSchema;

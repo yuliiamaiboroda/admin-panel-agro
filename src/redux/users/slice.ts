@@ -1,5 +1,10 @@
-import { createSlice } from '@reduxjs/toolkit';
-import { getAllUsers, registerNewUser, removeUserById } from './operations';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import {
+  getAllUsers,
+  registerNewUser,
+  removeUserById,
+  updateUserById,
+} from './operations';
 
 export interface IUser {
   _id: string;
@@ -13,14 +18,79 @@ interface IState {
   entities: IUser[];
   isLoading: boolean;
   error: string | null;
-  errorCode: number | null;
 }
 
 const initialState: IState = {
   entities: [],
   isLoading: false,
   error: null,
-  errorCode: null,
+};
+
+const usersPendingReducer = (state: IState) => {
+  return { ...state, isLoading: true, error: null };
+};
+
+const usersRejectedReducer = (
+  state: IState,
+  action: PayloadAction<string | undefined>
+) => {
+  return {
+    ...state,
+    isLoading: false,
+    ...(action.payload ? { error: action.payload } : null),
+  };
+};
+
+const getAllUsersFulfilledReducer = (
+  state: IState,
+  action: PayloadAction<IUser[], string>
+) => {
+  return { ...state, isLoading: false, entities: action.payload };
+};
+
+const removeUserByIdFulfilledReducer = (
+  state: IState,
+  action: PayloadAction<string, string>
+) => {
+  return {
+    ...state,
+    isLoading: false,
+    entities: state.entities.filter(item => item._id !== action.payload),
+  };
+};
+
+const registerNewUserFulfilledReducer = (
+  state: IState,
+  action: PayloadAction<IUser, string>
+) => {
+  return {
+    ...state,
+    isLoading: false,
+    entities: [...state.entities, action.payload],
+  };
+};
+
+const updateUserByIdFulfilledReducer = (
+  state: IState,
+  action: PayloadAction<IUser, string>
+) => {
+  return {
+    ...state,
+    isLoading: false,
+    entities: state.entities.map(item => {
+      if (item._id === action.payload._id) {
+        return {
+          ...item,
+          _id: action.payload._id,
+          email: action.payload.email,
+          name: action.payload.name,
+          surname: action.payload.surname,
+          role: action.payload.role,
+        };
+      }
+      return item;
+    }),
+  };
 };
 
 const usersSlice = createSlice({
@@ -29,58 +99,18 @@ const usersSlice = createSlice({
   reducers: {},
   extraReducers: builder =>
     builder
-      .addCase(getAllUsers.pending, state => {
-        return { ...state, isLoading: true, error: null, errorCode: null };
-      })
-      .addCase(getAllUsers.fulfilled, (state, { payload }) => {
-        return { ...state, isLoading: false, entities: payload };
-      })
-      .addCase(getAllUsers.rejected, (state, { payload }) => {
-        return {
-          ...state,
-          isLoading: false,
-          ...(payload
-            ? { error: payload.message, errorCode: payload.code }
-            : null),
-        };
-      })
-      .addCase(removeUserById.pending, state => {
-        return { ...state, isLoading: true, error: null, errorCode: null };
-      })
-      .addCase(removeUserById.fulfilled, (state, { payload }) => {
-        const filteredEntities = state.entities.filter(
-          el => el._id !== payload
-        );
-        return { ...state, isLoading: false, entities: filteredEntities };
-      })
-      .addCase(removeUserById.rejected, (state, { payload }) => {
-        return {
-          ...state,
-          isLoading: false,
-          ...(payload
-            ? { error: payload.message, errorCode: payload.code }
-            : null),
-        };
-      })
-      .addCase(registerNewUser.pending, state => {
-        return { ...state, isLoading: true, error: null, errorCode: null };
-      })
-      .addCase(registerNewUser.fulfilled, (state, { payload }) => {
-        return {
-          ...state,
-          isLoading: false,
-          entities: [...state.entities, payload],
-        };
-      })
-      .addCase(registerNewUser.rejected, (state, { payload }) => {
-        return {
-          ...state,
-          isLoading: false,
-          ...(payload
-            ? { error: payload.message, errorCode: payload.code }
-            : null),
-        };
-      }),
+      .addCase(getAllUsers.pending, usersPendingReducer)
+      .addCase(getAllUsers.fulfilled, getAllUsersFulfilledReducer)
+      .addCase(getAllUsers.rejected, usersRejectedReducer)
+      .addCase(removeUserById.pending, usersPendingReducer)
+      .addCase(removeUserById.fulfilled, removeUserByIdFulfilledReducer)
+      .addCase(removeUserById.rejected, usersRejectedReducer)
+      .addCase(registerNewUser.pending, usersPendingReducer)
+      .addCase(registerNewUser.fulfilled, registerNewUserFulfilledReducer)
+      .addCase(registerNewUser.rejected, usersRejectedReducer)
+      .addCase(updateUserById.pending, usersPendingReducer)
+      .addCase(updateUserById.fulfilled, updateUserByIdFulfilledReducer)
+      .addCase(updateUserById.rejected, usersRejectedReducer),
 });
 
 export const usersReducer = usersSlice.reducer;

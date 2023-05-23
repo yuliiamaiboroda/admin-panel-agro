@@ -1,5 +1,5 @@
 import React from 'react';
-import { useField } from 'formik';
+import { useField, ErrorMessage } from 'formik';
 
 export default function UploadFileField({
   fileRef,
@@ -10,7 +10,7 @@ export default function UploadFileField({
   label?: string;
   name: string;
 }) {
-  const [field, meta] = useField(name);
+  const [field] = useField(name);
 
   return (
     <>
@@ -18,9 +18,8 @@ export default function UploadFileField({
         {label}
         <input type="file" ref={fileRef} {...field} />
       </label>
-      {meta.touched && meta.error ? (
-        <p style={{ color: 'red' }}>{meta.error}</p>
-      ) : null}
+      <br />
+      <ErrorMessage name={field.name} />
     </>
   );
 }

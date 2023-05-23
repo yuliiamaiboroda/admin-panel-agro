@@ -15,11 +15,12 @@ import { productsReducer } from './products';
 import { usersReducer } from './users';
 import { servicesReducer } from './services';
 import { vacanciesReducer } from './vacancies';
+import { feedbacksReducer } from './feedbacks';
+import { resumesReducer } from './resumes';
 
 const persistConfig = {
   key: 'credentials',
   storage,
-  // TODO:  Change whitelist to the next, when fixed fetch of refresh routes
   whitelist: ['accessToken'],
 };
 
@@ -32,6 +33,8 @@ export const store = configureStore({
     usersList: usersReducer,
     services: servicesReducer,
     vacancies: vacanciesReducer,
+    feedbacks: feedbacksReducer,
+    resumes: resumesReducer,
   },
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware({

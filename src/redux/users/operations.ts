@@ -3,42 +3,31 @@ import axios, { AxiosError } from 'axios';
 import { IUser } from './slice';
 import { Notify } from 'notiflix';
 
-interface IReject {
-  message: string | undefined;
-  code: number | undefined;
-}
-
 export const getAllUsers = createAsyncThunk<
   IUser[],
   undefined,
-  { rejectValue: IReject }
+  { rejectValue: string }
 >('users/getAll', async (_, thunkApi) => {
   try {
     const { data } = await axios.get('/api/users/getAllUser');
     return data;
   } catch (err) {
     const error = err as AxiosError;
-    return thunkApi.rejectWithValue({
-      message: error.message,
-      code: error.response?.status,
-    });
+    return thunkApi.rejectWithValue(error.message);
   }
 });
 
 export const removeUserById = createAsyncThunk<
   string,
   string,
-  { rejectValue: IReject }
+  { rejectValue: string }
 >('users/removeById', async (_id, thunkApi) => {
   try {
     await axios.delete(`/api/users/${_id}`);
     return _id;
   } catch (err) {
     const error = err as AxiosError;
-    return thunkApi.rejectWithValue({
-      message: error.message,
-      code: error.response?.status,
-    });
+    return thunkApi.rejectWithValue(error.message);
   }
 });
 
@@ -51,7 +40,7 @@ export const registerNewUser = createAsyncThunk<
     role: string;
     password: string;
   },
-  { rejectValue: IReject }
+  { rejectValue: string }
 >(
   'users/register',
   async ({ email, name, surname, role, password }, thunkApi) => {
@@ -63,15 +52,35 @@ export const registerNewUser = createAsyncThunk<
         role,
         password,
       });
-      return data.user;
+      return data;
     } catch (err) {
       const error = err as AxiosError;
       Notify.failure('something went wrong ');
       console.log(error);
-      return thunkApi.rejectWithValue({
-        message: error.message,
-        code: error.response?.status,
-      });
+      return thunkApi.rejectWithValue(error.message);
     }
   }
 );
+
+export const updateUserById = createAsyncThunk<
+  IUser,
+  IUser,
+  {
+    rejectValue: string;
+  }
+>('users/updateById', async ({ email, name, surname, role, _id }, thunkApi) => {
+  try {
+    const { data } = await axios.patch(`/api/users/${_id}`, {
+      email,
+      name,
+      surname,
+      role,
+    });
+    return data;
+  } catch (err) {
+    const error = err as AxiosError;
+    Notify.failure('something went wrong ');
+    console.log(error);
+    return thunkApi.rejectWithValue(error.message);
+  }
+});
