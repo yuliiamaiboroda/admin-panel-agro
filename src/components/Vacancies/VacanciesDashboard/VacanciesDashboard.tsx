@@ -1,9 +1,16 @@
-import React, { useEffect, useState } from 'react';
-import VacanciesGallary from '../VacanciesGallary';
+import React, { useEffect } from 'react';
+import { Outlet, useParams, useNavigate } from 'react-router-dom';
+import VacanciesGallery from '../VacanciesGallery';
 import Modal from 'components/Modal';
 import CreateVacancyForm from '../CreateVacancyForm';
-import { useAppSelector } from 'hooks';
-import { selectUser } from 'redux/user';
+import { useAppDispatch, useAppSelector, useModal } from 'hooks';
+import { selectUserRole } from 'redux/user';
+import {
+  getAllVacancies,
+  getActualVacancies,
+  getIrrelevantVacancies,
+} from 'redux/vacancies';
+import VacanciesNavigator from 'components/Vacancies/VacanciesNavigator';
 
 enum ROLES {
   admin = 'admin',
@@ -13,37 +20,44 @@ enum ROLES {
 }
 
 export default function VacanciesDashboard() {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isAccessedToCreateVacancy, setIsAccessedToCreateVacancy] =
-    useState(false);
-
-  const {
-    user: { role },
-  } = useAppSelector(selectUser);
+  const { isModalOpen, openModal, closeModal } = useModal();
+  const dispatch = useAppDispatch();
+  const { categoryName } = useParams();
+  const navigate = useNavigate();
+  const role = useAppSelector(selectUserRole);
 
   useEffect(() => {
-    if (role === ROLES.admin || role === ROLES.applyManager) {
-      setIsAccessedToCreateVacancy(true);
+    switch (categoryName) {
+      case 'all-vacancies':
+        dispatch(getAllVacancies());
+        break;
+      case 'actual-vacancies':
+        dispatch(getActualVacancies());
+        break;
+      case 'irrelevant-vacancies':
+        dispatch(getIrrelevantVacancies());
+        break;
+      default:
+        navigate('/vacancies');
     }
-  }, [role]);
+  }, [categoryName, dispatch, navigate]);
 
   return (
     <div>
-      <VacanciesGallary />
-      {isAccessedToCreateVacancy && (
-        <button
-          type="button"
-          onClick={(e: React.MouseEvent) => setIsModalOpen(true)}
-        >
+      <VacanciesNavigator />
+      <VacanciesGallery />
+      {role === ROLES.admin || role === ROLES.applyManager ? (
+        <button type="button" onClick={openModal}>
           Створити нове оголошення
         </button>
-      )}
+      ) : null}
 
       {isModalOpen && (
-        <Modal onClose={() => setIsModalOpen(false)}>
-          <CreateVacancyForm onClose={() => setIsModalOpen(false)} />
+        <Modal onClose={closeModal}>
+          <CreateVacancyForm onClose={closeModal} />
         </Modal>
       )}
+      <Outlet />
     </div>
   );
 }
