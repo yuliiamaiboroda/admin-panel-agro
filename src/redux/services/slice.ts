@@ -4,6 +4,7 @@ import {
   deleteService,
   getAllServices,
   updateService,
+  getCertainService,
 } from './operations';
 
 export interface IService {
@@ -19,12 +20,14 @@ export interface IService {
 
 interface IState {
   entities: IService[];
+  certain: IService | null;
   isLoading: boolean;
   error: string | null;
 }
 
 const initialState: IState = {
   entities: [],
+  certain: null,
   isLoading: false,
   error: null,
 };
@@ -53,6 +56,17 @@ const getAllServicesFulfilledReducer = (
     ...state,
     isLoading: false,
     entities: action.payload,
+  };
+};
+
+const getCertainServiceFulfilledReducer = (
+  state: IState,
+  action: PayloadAction<IService, string>
+) => {
+  return {
+    ...state,
+    isLoading: false,
+    certain: action.payload,
   };
 };
 
@@ -105,12 +119,19 @@ const updateServiceFulfilledReducer = (
 const servicesSlice = createSlice({
   name: 'services',
   initialState,
-  reducers: {},
+  reducers: {
+    removeCertainService(state) {
+      return { ...state, certain: null };
+    },
+  },
   extraReducers: builder =>
     builder
       .addCase(getAllServices.pending, servicesPendingReducer)
       .addCase(getAllServices.fulfilled, getAllServicesFulfilledReducer)
       .addCase(getAllServices.rejected, servicesRejectedReducer)
+      .addCase(getCertainService.pending, servicesPendingReducer)
+      .addCase(getCertainService.fulfilled, getCertainServiceFulfilledReducer)
+      .addCase(getCertainService.rejected, servicesRejectedReducer)
       .addCase(createService.pending, servicesPendingReducer)
       .addCase(createService.fulfilled, createServiceFulfilledReducer)
       .addCase(createService.rejected, servicesRejectedReducer)
@@ -123,3 +144,4 @@ const servicesSlice = createSlice({
 });
 
 export const servicesReducer = servicesSlice.reducer;
+export const { removeCertainService } = servicesSlice.actions;
