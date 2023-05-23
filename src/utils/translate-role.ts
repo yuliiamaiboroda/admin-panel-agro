@@ -1,24 +1,19 @@
-enum ROLES {
-  admin = 'admin',
-  applyManager = 'applyManager',
-  servicesManager = 'servicesManager',
-  productsManager = 'productsManager',
-}
+import { Roles } from 'helpers/constants';
 
-export default function translateRole(role: ROLES | string): string {
+export default function translateRole(role: Roles): string {
   let translatedRole = '';
 
   switch (role) {
-    case ROLES.admin || 'admin':
+    case Roles.admin:
       translatedRole = 'Адміністратор';
       break;
-    case ROLES.applyManager || 'applyManager':
+    case Roles.applyManager:
       translatedRole = 'Менеджер з найму';
       break;
-    case ROLES.productsManager || 'servicesManager':
+    case Roles.productsManager:
       translatedRole = 'Менеджер з продукції компанії';
       break;
-    case ROLES.servicesManager || 'productsManager':
+    case Roles.servicesManager:
       translatedRole = 'Менеджер з послуг компанії';
       break;
     default:

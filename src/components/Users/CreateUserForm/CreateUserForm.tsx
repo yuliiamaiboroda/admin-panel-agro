@@ -1,15 +1,10 @@
 import { Field, Form, Formik } from 'formik';
 import createNewUserSchema from 'helpers/schemas/auth/createNewUser.schema';
-import translateRole from 'helpers/translateRoles';
+import translateRole from 'utils/translate-role';
 import { useAppDispatch } from 'hooks';
 import { registerNewUser } from 'redux/users';
+import { Roles } from 'helpers/constants';
 
-enum ROLES {
-  admin = 'admin',
-  applyManager = 'applyManager',
-  servicesManager = 'servicesManager',
-  productsManager = 'productsManager',
-}
 interface INewUser {
   email: string;
   password: string;
@@ -79,39 +74,39 @@ export default function CreateUserForm({ onClose }: Iprops) {
             <label style={{ display: 'flex', flexDirection: 'column' }}>
               Роль нового користувача
               <label>
-                {translateRole(ROLES.admin)}
+                {translateRole(Roles.admin)}
                 <Field
                   name="role"
                   type="radio"
-                  id={ROLES.admin}
-                  value={ROLES.admin}
+                  id={Roles.admin}
+                  value={Roles.admin}
                 />
               </label>
               <label>
-                {translateRole(ROLES.applyManager)}
+                {translateRole(Roles.applyManager)}
                 <Field
                   name="role"
                   type="radio"
-                  id={ROLES.applyManager}
-                  value={ROLES.applyManager}
+                  id={Roles.applyManager}
+                  value={Roles.applyManager}
                 />
               </label>
               <label>
-                {translateRole(ROLES.servicesManager)}
+                {translateRole(Roles.servicesManager)}
                 <Field
                   name="role"
                   type="radio"
-                  id={ROLES.servicesManager}
-                  value={ROLES.servicesManager}
+                  id={Roles.servicesManager}
+                  value={Roles.servicesManager}
                 />
               </label>
               <label>
-                {translateRole(ROLES.productsManager)}
+                {translateRole(Roles.productsManager)}
                 <Field
                   name="role"
                   type="radio"
-                  id={ROLES.productsManager}
-                  value={ROLES.productsManager}
+                  id={Roles.productsManager}
+                  value={Roles.productsManager}
                 />
               </label>
             </label>
