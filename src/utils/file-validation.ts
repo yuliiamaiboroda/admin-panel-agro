@@ -12,7 +12,7 @@ export const fileConditional =
   };
 
 export const fileFormat =
-  (fileField: RefObject<HTMLInputElement>, validFormats: [string]) => () => {
+  (fileField: RefObject<HTMLInputElement>, validFormats: string[]) => () => {
     const files = fileField.current?.files;
     if (files?.length) {
       const file = files[0];

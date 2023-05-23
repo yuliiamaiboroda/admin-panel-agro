@@ -1,9 +1,9 @@
 import { useRef } from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
-import UploadFileField from 'components/UploadFileField';
 import { useAppDispatch } from 'hooks';
 import { createResume } from 'redux/resumes';
-import { resumeShema } from 'helpers/schemas/resume';
+import { resumeShema } from 'helpers/schemas/resumes';
+import UploadFileField from 'components/UploadFileField';
 
 interface IProps {
   onSubmit?: () => void;
