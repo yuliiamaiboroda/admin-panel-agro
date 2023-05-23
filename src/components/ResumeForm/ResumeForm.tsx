@@ -1,6 +1,5 @@
 import { useRef } from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
-import * as Yup from 'yup';
 import UploadFileField from 'components/UploadFileField';
 import { useAppDispatch } from 'hooks';
 import { createResume } from 'redux/resumes';
