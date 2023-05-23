@@ -1,18 +1,24 @@
 import { Navigate } from 'react-router-dom';
 import { useAppSelector } from 'hooks';
-import { selectUser } from 'redux/user';
+import { selectUserRole } from 'redux/user';
+import { Roles } from 'helpers/constants';
 
 interface IProps {
   component: JSX.Element;
-  redirectTo: string;
+  redirectTo?: string;
+  accessRight?: `${Roles}`[];
 }
 export default function RestrictedRoute({
   component,
   redirectTo = '/',
+  accessRight,
 }: IProps) {
-  const { user } = useAppSelector(selectUser);
-  if (user.role !== 'ApplyManager') {
-    return <Navigate to={redirectTo} replace />;
+  const role = useAppSelector(selectUserRole);
+
+  if (role) {
+    if (role === Roles.admin || accessRight?.includes(role)) {
+      return component;
+    }
   }
-  return component;
+  return <Navigate to={redirectTo} replace />;
 }

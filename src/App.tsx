@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from 'hooks';
 import { refreshUser, selectUser } from 'redux/user';
+import { Roles } from 'helpers/constants';
 import LoginPage from 'pages/LoginPage';
 import PrivateRoute from 'components/PrivateRoute';
 import UsersPage from 'pages/UsersPage/UsersPage';
@@ -30,6 +31,8 @@ import ServiceModalDetails from 'components/ServiceModalDetails';
 import ServiceModalEditForm from 'components/ServiceModalEditForm';
 import ServiceModalConfirmation from 'components/ServiceModalConfirmation';
 
+import RestrictedRoute from 'components/RestrictedRoute';
+
 function App() {
   // TODO:  Add fetch of refresh user
 
@@ -56,7 +59,10 @@ function App() {
         }
       >
         <Route index element={<Navigate to="products" />} />
-        <Route path="users" element={<UsersPage />} />
+        <Route
+          path="users"
+          element={<RestrictedRoute component={<UsersPage />} />}
+        />
         <Route path="products" element={<ProductsPage />}>
           <Route path=":productId" element={<ProductModalLayout />}>
             <Route index element={<ProductModalDetails />} />
@@ -84,14 +90,25 @@ function App() {
             </Route>
           </Route>
         </Route>
-        <Route path="resumes" element={<ResumesPage />}>
+        <Route
+          path="resumes"
+          element={
+            <RestrictedRoute
+              component={<ResumesPage />}
+              accessRight={[Roles.applyManager]}
+            />
+          }
+        >
           <Route path=":resumeId" element={<ResumeModalLayout />}>
             <Route index element={<ResumeModalDetails />} />
             <Route path="confirm" element={<ResumeModalConfirmation />} />
             <Route path="*" element={<Navigate to="/resumes" replace />} />
           </Route>
         </Route>
-        <Route path="feedbacks" element={<FeedbackPage />} />
+        <Route
+          path="feedbacks"
+          element={<RestrictedRoute component={<FeedbackPage />} />}
+        />
       </Route>
       <Route
         path="/login"

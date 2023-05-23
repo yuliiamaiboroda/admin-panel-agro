@@ -5,13 +5,14 @@ import {
   removeUserById,
   updateUserById,
 } from './operations';
+import type { Roles } from 'helpers/constants';
 
 export interface IUser {
   _id: string;
   email: string;
   name: string;
   surname: string;
-  role: string;
+  role: `${Roles}`;
 }
 
 interface IState {

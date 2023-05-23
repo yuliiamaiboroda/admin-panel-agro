@@ -1,12 +1,5 @@
 import UserCard from 'components/Users/UserCard';
-
-interface IUser {
-  _id: string;
-  email: string;
-  name: string;
-  surname: string;
-  role: string;
-}
+import type { IUser } from 'redux/users';
 
 interface IProps {
   usersList: IUser[];

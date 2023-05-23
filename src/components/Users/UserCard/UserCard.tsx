@@ -1,18 +1,13 @@
 import Modal from 'components/Modal';
 import ModalDelete from 'components/ModalDelete';
-import translateRole from 'helpers/translateRoles';
+import translateRole from 'utils/translate-role';
 import { useAppDispatch } from 'hooks';
 import { useState } from 'react';
 import { removeUserById } from 'redux/users';
+import { Roles } from 'helpers/constants';
+import type { IUser } from 'redux/users';
 import UpdateUserForm from '../UpdateUserForm/UpdateUserForm';
 
-interface IUser {
-  _id: string;
-  email: string;
-  name: string;
-  surname: string;
-  role: string;
-}
 export default function UserCard({ _id, email, name, surname, role }: IUser) {
   const [isModalDeleteOpen, setIsModalDeleteOpen] = useState(false);
   const [isModalUpdateOpen, setIsModalUpdateOpen] = useState(false);
@@ -29,7 +24,7 @@ export default function UserCard({ _id, email, name, surname, role }: IUser) {
         {name} {surname}
       </div>
       <div>{email}</div>
-      <div>{translateRole(role)}</div>
+      <div>{translateRole(Roles[role])}</div>
       <div>
         <button
           type="button"
