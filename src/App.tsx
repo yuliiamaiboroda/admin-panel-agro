@@ -25,6 +25,10 @@ import VacanciesModalLayout from 'components/VacanciesModalLayout';
 import VacanciesModalDetails from 'components/VacanciesModalDetails';
 import VacanciesModalUpdateForm from 'components/VacanciesModalUpdateForm';
 import VacanciesModalConfirm from 'components/VacanciesModalConfirm';
+import ServiceModalLayout from 'components/ServiceModalLayout';
+import ServiceModalDetails from 'components/ServiceModalDetails';
+import ServiceModalEditForm from 'components/ServiceModalEditForm';
+import ServiceModalConfirmation from 'components/ServiceModalConfirmation';
 
 function App() {
   // TODO:  Add fetch of refresh user
@@ -61,7 +65,14 @@ function App() {
             <Route path="*" element={<Navigate to="/products" replace />} />
           </Route>
         </Route>
-        <Route path="services" element={<ServicesPage />} />
+        <Route path="services" element={<ServicesPage />}>
+          <Route path=":serviceId" element={<ServiceModalLayout />}>
+            <Route index element={<ServiceModalDetails />} />
+            <Route path="form" element={<ServiceModalEditForm />} />
+            <Route path="confirm" element={<ServiceModalConfirmation />} />
+            <Route path="*" element={<Navigate to="/services" replace />} />
+          </Route>
+        </Route>
         <Route path="vacancies" element={<VacanciesPage />}>
           <Route index element={<Navigate to="all-vacancies" replace />} />
           <Route path=":categoryName" element={<VacanciesDashboard />}>
