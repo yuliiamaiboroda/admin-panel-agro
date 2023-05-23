@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/admin-panel-agro/static/css/main.e6c13ad2.css",
-    "main.js": "/admin-panel-agro/static/js/main.09accd4f.js",
+    "main.js": "/admin-panel-agro/static/js/main.e4b89e58.js",
     "index.html": "/admin-panel-agro/index.html",
     "main.e6c13ad2.css.map": "/admin-panel-agro/static/css/main.e6c13ad2.css.map",
-    "main.09accd4f.js.map": "/admin-panel-agro/static/js/main.09accd4f.js.map"
+    "main.e4b89e58.js.map": "/admin-panel-agro/static/js/main.e4b89e58.js.map"
   },
   "entrypoints": [
     "static/css/main.e6c13ad2.css",
-    "static/js/main.09accd4f.js"
+    "static/js/main.e4b89e58.js"
   ]
 }
