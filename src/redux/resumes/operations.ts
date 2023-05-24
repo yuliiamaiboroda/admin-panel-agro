@@ -9,7 +9,7 @@ export const getAllResumes = createAsyncThunk<
   { rejectValue: string }
 >('resumes/getAllResumes', async (_, thunkApi) => {
   try {
-    const { data } = await axios.get('/api/resume/all');
+    const { data } = await axios.get('/api/resumes/all');
     return data;
   } catch (err) {
     const error = err as AxiosError<{ message: string }>;
@@ -26,7 +26,7 @@ export const getCertainResume = createAsyncThunk<
   { rejectValue: string }
 >('resumes/getCertainResume', async (_id, thunkApi) => {
   try {
-    const { data } = await axios.get(`/api/resume/certain/${_id}`);
+    const { data } = await axios.get(`/api/resumes/certain/${_id}`);
     return data;
   } catch (err) {
     const error = err as AxiosError<{ message: string }>;
@@ -57,7 +57,7 @@ export const createResume = createAsyncThunk<
       return thunkApi.rejectWithValue('File should be uploaded');
     }
     const reqBody = createFormData(resumeData);
-    const { data } = await axios.post('/api/resume', reqBody, {
+    const { data } = await axios.post('/api/resumes', reqBody, {
       headers: { 'Content-Type': 'multipart/form-data' },
     });
     return data;
@@ -76,7 +76,7 @@ export const removeResume = createAsyncThunk<
   { rejectValue: string }
 >('resumes/removeResume', async (_id, thunkApi) => {
   try {
-    await axios.delete(`/api/resume/certain/${_id}`);
+    await axios.delete(`/api/resumes/certain/${_id}`);
     return _id;
   } catch (err) {
     const error = err as AxiosError<{ message: string }>;
