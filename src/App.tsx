@@ -66,8 +66,26 @@ function App() {
         <Route path="products" element={<ProductsPage />}>
           <Route path=":productId" element={<ProductModalLayout />}>
             <Route index element={<ProductModalDetails />} />
-            <Route path="form" element={<ProductModalEditForm />} />
-            <Route path="confirm" element={<ProductModalConfirmation />} />
+            <Route
+              path="form"
+              element={
+                <RestrictedRoute
+                  component={<ProductModalEditForm />}
+                  accessRight={Roles.productsManager}
+                  redirectTo="/products"
+                />
+              }
+            />
+            <Route
+              path="confirm"
+              element={
+                <RestrictedRoute
+                  component={<ProductModalConfirmation />}
+                  accessRight={Roles.productsManager}
+                  redirectTo="/products"
+                />
+              }
+            />
             <Route path="*" element={<Navigate to="/products" replace />} />
           </Route>
         </Route>
@@ -95,7 +113,7 @@ function App() {
           element={
             <RestrictedRoute
               component={<ResumesPage />}
-              accessRight={[Roles.applyManager]}
+              accessRight={Roles.applyManager}
             />
           }
         >

@@ -1,6 +1,5 @@
 import { useNavigate, Link } from 'react-router-dom';
 import type { IResume } from 'redux/resumes';
-
 export default function ResumeCard({
   _id,
   name,
