@@ -15,55 +15,13 @@ interface INewVacancy {
   location: string;
 }
 
-export const getAllVacancies = createAsyncThunk<
-  IVacancy[],
-  undefined,
-  { rejectValue: string }
->('vacancies/getAll', async (_, thunkApi) => {
-  try {
-    const { data } = await axios.get('/api/vacancies/all');
-    return data;
-  } catch (err) {
-    const error = err as AxiosError;
-    return thunkApi.rejectWithValue(error.message);
-  }
-});
-
-export const getActualVacancies = createAsyncThunk<
-  IVacancy[],
-  undefined,
-  { rejectValue: string }
->('vacancies/getActual', async (_, thunkApi) => {
-  try {
-    const { data } = await axios.get('/api/vacancies/actual');
-    return data;
-  } catch (err) {
-    const error = err as AxiosError;
-    return thunkApi.rejectWithValue(error.message);
-  }
-});
-
-export const getIrrelevantVacancies = createAsyncThunk<
-  IVacancy[],
-  undefined,
-  { rejectValue: string }
->('vacancies/getIrrelevant', async (_, thunkApi) => {
-  try {
-    const { data } = await axios.get('/api/vacancies/irrelevant');
-    return data;
-  } catch (err) {
-    const error = err as AxiosError;
-    return thunkApi.rejectWithValue(error.message);
-  }
-});
-
 export const getVacanciesByCategories = createAsyncThunk<
   IVacancy[],
   string,
   { rejectValue: string }
 >('vacancies/getListByCategory', async (categoryName, thunkApi) => {
   try {
-    const { data } = await axios.get(`/api/vacancies/${categoryName}`);
+    const { data } = await axios.get(`/api/vacancies/category/${categoryName}`);
     return data;
   } catch (err) {
     const error = err as AxiosError<{ message: string }>;
@@ -188,7 +146,7 @@ export const getCertainVacancy = createAsyncThunk<
   }
 >('vacancies/getCertain', async (_id, thunkApi) => {
   try {
-    const { data } = await axios.get(`/api/vacancies/${_id}`);
+    const { data } = await axios.get(`/api/vacancies/certain/${_id}`);
     return data;
   } catch (err) {
     const error = err as AxiosError<{ message: string }>;

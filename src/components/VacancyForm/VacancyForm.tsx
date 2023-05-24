@@ -1,10 +1,8 @@
-import { Field, Form, Formik } from 'formik';
+import { Field, Form, Formik, ErrorMessage } from 'formik';
 import { Categories } from 'helpers/constants';
-import createNewVacancySchema from 'helpers/schemas/vacancies/createVacancy.schema';
-import { useAppDispatch } from 'hooks';
-import { createVacancy } from 'redux/vacancies';
+import createAndUpdateVacancySchema from 'helpers/schemas/vacancies/createAndUpdateVacancy.schema';
 
-interface INewVacancy {
+interface IVacancy {
   category: keyof typeof Categories;
   title: string;
   description: string;
@@ -16,11 +14,25 @@ interface INewVacancy {
   location: string;
 }
 
-interface Iprops {
+interface IProps {
+  vacancyData?: {
+    category: keyof typeof Categories;
+    title: string;
+    description: string;
+    sallary: string;
+    education: string;
+    contactMail: string;
+    contactPhone: string;
+    workExperienceRequired: string;
+    location: string;
+  };
   onClose: () => void;
+  onSubmit: (values: IVacancy) => void;
+  buttonName: string;
+  formName: string;
 }
 
-const FORM_INITIAL_STATE: INewVacancy = {
+const VACANCY_DATA: IVacancy = {
   category: 'irrelevant',
   title: '',
   description: '',
@@ -32,21 +44,46 @@ const FORM_INITIAL_STATE: INewVacancy = {
   location: '',
 };
 
-export default function CreateVacancyForm({ onClose }: Iprops) {
-  const dispatch = useAppDispatch();
+export default function VacancyForm({
+  vacancyData = VACANCY_DATA,
+  onClose,
+  onSubmit,
+  buttonName,
+  formName,
+}: IProps) {
+  const {
+    category,
+    title,
+    description,
+    sallary,
+    education,
+    contactMail,
+    contactPhone,
+    workExperienceRequired,
+    location,
+  } = vacancyData;
 
   return (
-    <Formik
-      initialValues={FORM_INITIAL_STATE}
-      onSubmit={(values, actions) => {
-        dispatch(createVacancy(values));
-        actions.resetForm();
-        onClose();
-      }}
-      validateOnBlur
-      validationSchema={createNewVacancySchema}
-    >
-      {({ errors, touched }) => (
+    <>
+      <h2>{formName}</h2>
+      <Formik
+        initialValues={{
+          category,
+          title,
+          description,
+          sallary,
+          education,
+          contactMail,
+          contactPhone,
+          workExperienceRequired,
+          location,
+        }}
+        onSubmit={(values, actions) => {
+          onSubmit(values);
+        }}
+        validateOnBlur
+        validationSchema={createAndUpdateVacancySchema}
+      >
         <Form style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
           <label>
             Заголовок вакасії
@@ -56,7 +93,7 @@ export default function CreateVacancyForm({ onClose }: Iprops) {
               id="title"
               placeholder="Заголовок вакасії"
             />
-            {errors.title && touched.title ? <span>{errors.title}</span> : null}
+            <ErrorMessage name="title" />
           </label>
           <label>
             Опис
@@ -66,9 +103,7 @@ export default function CreateVacancyForm({ onClose }: Iprops) {
               type="text"
               placeholder="Опис"
             />
-            {errors.description && touched.description ? (
-              <span>{errors.description}</span>
-            ) : null}
+            <ErrorMessage name="description" />
           </label>
           <label>
             Заробітня плата
@@ -78,9 +113,7 @@ export default function CreateVacancyForm({ onClose }: Iprops) {
               type="text"
               placeholder="Заробітня плата"
             />
-            {errors.sallary && touched.sallary ? (
-              <span>{errors.sallary}</span>
-            ) : null}
+            <ErrorMessage name="sallary" />
           </label>
           <label>
             Освіта
@@ -90,9 +123,7 @@ export default function CreateVacancyForm({ onClose }: Iprops) {
               type="text"
               placeholder="Освіта"
             />
-            {errors.education && touched.education ? (
-              <span>{errors.education}</span>
-            ) : null}
+            <ErrorMessage name="education" />
           </label>
           <label>
             Контактна пошта
@@ -102,9 +133,7 @@ export default function CreateVacancyForm({ onClose }: Iprops) {
               id="contactMail"
               placeholder="Контактна пошта"
             />
-            {errors.contactMail && touched.contactMail ? (
-              <span>{errors.contactMail}</span>
-            ) : null}
+            <ErrorMessage name="contactMail" />
           </label>
           <label>
             Контактний телефон
@@ -114,9 +143,7 @@ export default function CreateVacancyForm({ onClose }: Iprops) {
               id="contactPhone"
               placeholder="Контактний телефон"
             />
-            {errors.contactPhone && touched.contactPhone ? (
-              <span>{errors.contactPhone}</span>
-            ) : null}
+            <ErrorMessage name="contactPhone" />
           </label>
           <label>
             Необхідний досвід роботи
@@ -126,9 +153,7 @@ export default function CreateVacancyForm({ onClose }: Iprops) {
               type="text"
               placeholder="Необхідний досвід роботи"
             />
-            {errors.workExperienceRequired && touched.workExperienceRequired ? (
-              <span>{errors.workExperienceRequired}</span>
-            ) : null}
+            <ErrorMessage name="workExperienceRequired" />
           </label>
           <label>
             Місце розташування
@@ -138,9 +163,7 @@ export default function CreateVacancyForm({ onClose }: Iprops) {
               type="text"
               placeholder="Місце розташування"
             />
-            {errors.location && touched.location ? (
-              <span>{errors.location}</span>
-            ) : null}
+            <ErrorMessage name="location" />
           </label>
           <label style={{ display: 'flex', flexDirection: 'column' }}>
             Категорія вакансії
@@ -162,13 +185,14 @@ export default function CreateVacancyForm({ onClose }: Iprops) {
                 value={Categories.irrelevant}
               />
             </label>
-            {errors.category && touched.category ? (
-              <span>{errors.category}</span>
-            ) : null}
+            <ErrorMessage name="category" />
           </label>
-          <button type="submit">Опублікувати</button>
+          <button type="button" onClick={onClose}>
+            Відмінити
+          </button>
+          <button type="submit">{buttonName}</button>
         </Form>
-      )}
-    </Formik>
+      </Formik>
+    </>
   );
 }
