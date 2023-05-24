@@ -1,17 +1,16 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import {
   createVacancy,
-  getActualVacancies,
-  getAllVacancies,
   getCertainVacancy,
-  getIrrelevantVacancies,
+  getVacanciesByCategories,
   removeVacancyById,
   updateVacancyById,
 } from './operations';
+import { Categories } from 'helpers/constants';
 
 export interface IVacancy {
   _id: string;
-  category: string;
+  category: keyof typeof Categories;
   title: string;
   description: string;
   sallary: string;
@@ -25,6 +24,7 @@ export interface IVacancy {
 interface IState {
   entities: IVacancy[];
   isLoading: boolean;
+  isListLoading: boolean;
   certain: IVacancy | null;
   error: string | null;
 }
@@ -32,12 +32,17 @@ interface IState {
 const initialState: IState = {
   entities: [],
   isLoading: false,
+  isListLoading: false,
   error: null,
   certain: null,
 };
 
 const vacanciesPendingReducer = (state: IState) => {
   return { ...state, isLoading: true, error: null };
+};
+
+const vacanciesListPendingReducer = (state: IState) => {
+  return { ...state, isLoading: true, isListLoading: true, error: null };
 };
 
 const vacanciesRejectedReducer = (
@@ -47,15 +52,21 @@ const vacanciesRejectedReducer = (
   return {
     ...state,
     isLoading: false,
+    isListLoading: false,
     ...(action.payload ? { error: action.payload } : null),
   };
 };
 
-const getAllVacanciesFulfilledReducer = (
+const getVacanciesFulfilledReducer = (
   state: IState,
   action: PayloadAction<IVacancy[], string>
 ) => {
-  return { ...state, isLoading: false, entities: action.payload };
+  return {
+    ...state,
+    isLoading: false,
+    isListLoading: false,
+    entities: action.payload,
+  };
 };
 
 const removeVacancyByIdFulfilledReducer = (
@@ -65,6 +76,7 @@ const removeVacancyByIdFulfilledReducer = (
   return {
     ...state,
     isLoading: false,
+    isListLoading: false,
     entities: state.entities.filter(item => item._id !== action.payload),
   };
 };
@@ -76,9 +88,11 @@ const createVacancyFulfilledReducer = (
   return {
     ...state,
     isLoading: false,
+    isListLoading: false,
     entities: [...state.entities, action.payload],
   };
 };
+
 const updateVacancyFulfilledReducer = (
   state: IState,
   action: PayloadAction<IVacancy, string>
@@ -86,6 +100,7 @@ const updateVacancyFulfilledReducer = (
   return {
     ...state,
     isLoading: false,
+    isListLoading: false,
     entities: state.entities.map(item => {
       if (item._id === action.payload._id) {
         return {
@@ -104,6 +119,7 @@ const updateVacancyFulfilledReducer = (
       }
       return item;
     }),
+    ...(state.certain ? { certain: action.payload } : null),
   };
 };
 
@@ -128,18 +144,9 @@ const vacanciesSlice = createSlice({
   },
   extraReducers: builder =>
     builder
-      .addCase(getAllVacancies.pending, vacanciesPendingReducer)
-      .addCase(getAllVacancies.fulfilled, getAllVacanciesFulfilledReducer)
-      .addCase(getAllVacancies.rejected, vacanciesRejectedReducer)
-      .addCase(getActualVacancies.pending, vacanciesPendingReducer)
-      .addCase(getActualVacancies.fulfilled, getAllVacanciesFulfilledReducer)
-      .addCase(getActualVacancies.rejected, vacanciesRejectedReducer)
-      .addCase(getIrrelevantVacancies.pending, vacanciesPendingReducer)
-      .addCase(
-        getIrrelevantVacancies.fulfilled,
-        getAllVacanciesFulfilledReducer
-      )
-      .addCase(getIrrelevantVacancies.rejected, vacanciesRejectedReducer)
+      .addCase(getVacanciesByCategories.pending, vacanciesListPendingReducer)
+      .addCase(getVacanciesByCategories.fulfilled, getVacanciesFulfilledReducer)
+      .addCase(getVacanciesByCategories.rejected, vacanciesRejectedReducer)
       .addCase(removeVacancyById.pending, vacanciesPendingReducer)
       .addCase(removeVacancyById.fulfilled, removeVacancyByIdFulfilledReducer)
       .addCase(removeVacancyById.rejected, vacanciesRejectedReducer)

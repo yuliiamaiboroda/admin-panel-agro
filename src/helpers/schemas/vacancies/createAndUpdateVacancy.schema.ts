@@ -1,11 +1,7 @@
 import * as Yup from 'yup';
+import { Categories } from 'helpers/constants';
 
-enum Categories {
-  all = 'all-vacancies',
-  actual = 'actual-vacancies',
-}
-
-const createNewVacancySchema = Yup.object().shape({
+const createAndUpdateVacancySchema = Yup.object().shape({
   category: Yup.mixed<Categories>()
     .oneOf(Object.values(Categories))
     .required("Категорія вакансії є обов'язковим полем"),
@@ -89,4 +85,4 @@ const createNewVacancySchema = Yup.object().shape({
     .required("Місце розташування є обов'язковим полем"),
 });
 
-export default createNewVacancySchema;
+export default createAndUpdateVacancySchema;

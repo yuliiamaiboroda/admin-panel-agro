@@ -1,9 +1,10 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios, { AxiosError } from 'axios';
 import { IVacancy } from './slice';
+import { Categories } from 'helpers/constants';
 
 interface INewVacancy {
-  category: string;
+  category: keyof typeof Categories;
   title: string;
   description: string;
   sallary: string;
@@ -14,45 +15,20 @@ interface INewVacancy {
   location: string;
 }
 
-export const getAllVacancies = createAsyncThunk<
+export const getVacanciesByCategories = createAsyncThunk<
   IVacancy[],
-  undefined,
+  string,
   { rejectValue: string }
->('vacancies/getAll', async (_, thunkApi) => {
+>('vacancies/getListByCategory', async (categoryName, thunkApi) => {
   try {
-    const { data } = await axios.get('/api/vacancies/all');
+    const { data } = await axios.get(`/api/vacancies/category/${categoryName}`);
     return data;
   } catch (err) {
-    const error = err as AxiosError;
-    return thunkApi.rejectWithValue(error.message);
-  }
-});
-
-export const getActualVacancies = createAsyncThunk<
-  IVacancy[],
-  undefined,
-  { rejectValue: string }
->('vacancies/getActual', async (_, thunkApi) => {
-  try {
-    const { data } = await axios.get('/api/vacancies/actual');
-    return data;
-  } catch (err) {
-    const error = err as AxiosError;
-    return thunkApi.rejectWithValue(error.message);
-  }
-});
-
-export const getIrrelevantVacancies = createAsyncThunk<
-  IVacancy[],
-  undefined,
-  { rejectValue: string }
->('vacancies/getIrrelevant', async (_, thunkApi) => {
-  try {
-    const { data } = await axios.get('/api/vacancies/irrelevant');
-    return data;
-  } catch (err) {
-    const error = err as AxiosError;
-    return thunkApi.rejectWithValue(error.message);
+    const error = err as AxiosError<{ message: string }>;
+    if (!error.response) {
+      return thunkApi.rejectWithValue('Something went wrong');
+    }
+    return thunkApi.rejectWithValue(error.response.data.message);
   }
 });
 
@@ -65,8 +41,11 @@ export const removeVacancyById = createAsyncThunk<
     await axios.delete(`api/vacancies/${_id}`);
     return _id;
   } catch (err) {
-    const error = err as AxiosError;
-    return thunkApi.rejectWithValue(error.message);
+    const error = err as AxiosError<{ message: string }>;
+    if (!error.response) {
+      return thunkApi.rejectWithValue('Something went wrong');
+    }
+    return thunkApi.rejectWithValue(error.response.data.message);
   }
 });
 
@@ -104,8 +83,11 @@ export const createVacancy = createAsyncThunk<
       });
       return data;
     } catch (err) {
-      const error = err as AxiosError;
-      return thunkApi.rejectWithValue(error.message);
+      const error = err as AxiosError<{ message: string }>;
+      if (!error.response) {
+        return thunkApi.rejectWithValue('Something went wrong');
+      }
+      return thunkApi.rejectWithValue(error.response.data.message);
     }
   }
 );
@@ -147,8 +129,11 @@ export const updateVacancyById = createAsyncThunk<
       });
       return data;
     } catch (err) {
-      const error = err as AxiosError;
-      return thunkApi.rejectWithValue(error.message);
+      const error = err as AxiosError<{ message: string }>;
+      if (!error.response) {
+        return thunkApi.rejectWithValue('Something went wrong');
+      }
+      return thunkApi.rejectWithValue(error.response.data.message);
     }
   }
 );
@@ -161,10 +146,13 @@ export const getCertainVacancy = createAsyncThunk<
   }
 >('vacancies/getCertain', async (_id, thunkApi) => {
   try {
-    const { data } = await axios.get(`/api/vacancies/${_id}`);
+    const { data } = await axios.get(`/api/vacancies/certain/${_id}`);
     return data;
   } catch (err) {
-    const error = err as AxiosError;
-    return thunkApi.rejectWithValue(error.message);
+    const error = err as AxiosError<{ message: string }>;
+    if (!error.response) {
+      return thunkApi.rejectWithValue('Something went wrong');
+    }
+    return thunkApi.rejectWithValue(error.response.data.message);
   }
 });

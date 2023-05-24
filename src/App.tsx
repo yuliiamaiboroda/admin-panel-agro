@@ -120,8 +120,26 @@ function App() {
           <Route path=":categoryName" element={<VacanciesDashboard />}>
             <Route path=":vacanciesId" element={<VacanciesModalLayout />}>
               <Route index element={<VacanciesModalDetails />} />
-              <Route path="form" element={<VacanciesModalUpdateForm />} />
-              <Route path="confirm" element={<VacanciesModalConfirm />} />
+              <Route
+                path="form"
+                element={
+                  <RestrictedRoute
+                    component={<VacanciesModalUpdateForm />}
+                    accessRight={Roles.applyManager}
+                    redirectTo="/vacancies"
+                  />
+                }
+              />
+              <Route
+                path="confirm"
+                element={
+                  <RestrictedRoute
+                    component={<VacanciesModalConfirm />}
+                    accessRight={Roles.applyManager}
+                    redirectTo="/vacancies"
+                  />
+                }
+              />
               <Route path="*" element={<Navigate to="/vacancies" replace />} />
             </Route>
           </Route>
