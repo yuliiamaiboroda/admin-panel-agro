@@ -1,6 +1,8 @@
 import { Link, useLocation } from 'react-router-dom';
 import { useAppSelector } from 'hooks';
 import { selectCertainProduct } from 'redux/products';
+import { Roles } from 'helpers/constants';
+import RestrictedComponent from 'components/RestrictedComponent';
 
 export default function ProductModalDetails() {
   const product = useAppSelector(selectCertainProduct);
@@ -17,13 +19,15 @@ export default function ProductModalDetails() {
       <img src={imageURL} alt={title} width="300" height="auto" />
       <p>{description}</p>
       <p>Created at: {createdAt}</p>
-      <Link to="form" state={{ from: location }}>
-        Edit
-      </Link>
-      <br />
-      <Link to="confirm" state={{ from: location }}>
-        Remove
-      </Link>
+      <RestrictedComponent accessRight={Roles.productsManager}>
+        <Link to="form" state={{ from: location }}>
+          Edit
+        </Link>
+        <br />
+        <Link to="confirm" state={{ from: location }}>
+          Remove
+        </Link>
+      </RestrictedComponent>
     </div>
   );
 }

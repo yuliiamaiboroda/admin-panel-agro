@@ -5,7 +5,7 @@ import { Roles } from 'helpers/constants';
 
 interface IProps {
   children: ReactNode;
-  accessRight?: `${Roles}` | `${Roles}`[];
+  accessRight?: keyof typeof Roles | (keyof typeof Roles)[];
 }
 
 export default function RestrictedComponent({ children, accessRight }: IProps) {

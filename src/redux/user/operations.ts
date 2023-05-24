@@ -11,7 +11,7 @@ interface IUser {
     email: string;
     name: string;
     surname: string;
-    role: `${Roles}`;
+    role: keyof typeof Roles;
   };
 }
 
@@ -21,7 +21,7 @@ interface IRefresh {
     email: string;
     name: string;
     surname: string;
-    role: `${Roles}`;
+    role: keyof typeof Roles;
   };
 }
 
