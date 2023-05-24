@@ -1,6 +1,8 @@
 import { Link, useLocation } from 'react-router-dom';
 import { useAppSelector } from 'hooks';
 import { selectCertainService } from 'redux/services';
+import { Roles } from 'helpers/constants';
+import RestrictedComponent from 'components/RestrictedComponent';
 
 export default function ServiceModalDetails() {
   const service = useAppSelector(selectCertainService);
@@ -29,13 +31,16 @@ export default function ServiceModalDetails() {
       <p>{contactMail}</p>
 
       <p>Створено: {createdAt}</p>
-      <Link to="form" state={{ from: location }}>
-        Змінити
-      </Link>
-      <br />
-      <Link to="confirm" state={{ from: location }}>
-        Видалити
-      </Link>
+
+      <RestrictedComponent accessRight={Roles.servicesManager}>
+        <Link to="form" state={{ from: location }}>
+          Змінити
+        </Link>
+        <br />
+        <Link to="confirm" state={{ from: location }}>
+          Видалити
+        </Link>
+      </RestrictedComponent>
     </div>
   );
 }

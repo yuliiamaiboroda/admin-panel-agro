@@ -43,6 +43,9 @@ export default function ServiceForm({
   const { title, description, imageURL, price, contactMail, contactPhone } =
     serviceData;
 
+  const submitBtnTitle =
+    serviceData === SERVICE_DATA ? 'Додати послугу' : 'Змінити послугу';
+
   return (
     <Formik
       initialValues={{
@@ -99,7 +102,7 @@ export default function ServiceForm({
         <button type="button" onClick={onCancel}>
           Назад
         </button>
-        <button type="submit">Додати послугу</button>
+        <button type="submit">{submitBtnTitle}</button>
       </Form>
     </Formik>
   );

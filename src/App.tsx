@@ -92,8 +92,26 @@ function App() {
         <Route path="services" element={<ServicesPage />}>
           <Route path=":serviceId" element={<ServiceModalLayout />}>
             <Route index element={<ServiceModalDetails />} />
-            <Route path="form" element={<ServiceModalEditForm />} />
-            <Route path="confirm" element={<ServiceModalConfirmation />} />
+            <Route
+              path="form"
+              element={
+                <RestrictedRoute
+                  component={<ServiceModalEditForm />}
+                  accessRight={Roles.servicesManager}
+                  redirectTo="/services"
+                />
+              }
+            />
+            <Route
+              path="confirm"
+              element={
+                <RestrictedRoute
+                  component={<ServiceModalConfirmation />}
+                  accessRight={Roles.servicesManager}
+                  redirectTo="/products"
+                />
+              }
+            />
             <Route path="*" element={<Navigate to="/services" replace />} />
           </Route>
         </Route>

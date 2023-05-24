@@ -1,4 +1,6 @@
 import { useNavigate, Link } from 'react-router-dom';
+import { Roles } from 'helpers/constants';
+import RestrictedComponent from 'components/RestrictedComponent';
 
 interface IProps {
   _id: string;
@@ -36,9 +38,11 @@ export default function ServiceCard({
       <p>{contactPhone}</p>
       <p>{contactMail}</p>
 
-      <Link to={`${_id}/form`}>Змінити</Link>
-      <br />
-      <Link to={`${_id}/confirm`}>Видалити</Link>
+      <RestrictedComponent accessRight={Roles.servicesManager}>
+        <Link to={`${_id}/form`}>Змінити</Link>
+        <br />
+        <Link to={`${_id}/confirm`}>Видалити</Link>
+      </RestrictedComponent>
     </li>
   );
 }

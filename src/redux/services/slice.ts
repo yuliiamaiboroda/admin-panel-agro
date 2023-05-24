@@ -113,6 +113,7 @@ const updateServiceFulfilledReducer = (
       }
       return item;
     }),
+    ...(state.certain ? { certain: action.payload } : null),
   };
 };
 
