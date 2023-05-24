@@ -5,6 +5,8 @@ import CreateNewAd from 'components/CreateNewAd';
 import Modal from 'components/Modal';
 import ServiceCard from 'components/ServiceCard';
 import ServiceForm from 'components/ServiceForm';
+import { Roles } from 'helpers/constants';
+import RestrictedComponent from 'components/RestrictedComponent';
 
 export default function ServicesGallery() {
   const services = useAppSelector(selectServices);
@@ -13,7 +15,9 @@ export default function ServicesGallery() {
 
   return (
     <>
-      <CreateNewAd onClick={openModal} />
+      <RestrictedComponent accessRight={Roles.servicesManager}>
+        <CreateNewAd onClick={openModal} />
+      </RestrictedComponent>
       <ul>
         {services.map(({ _id, ...rest }) => (
           <ServiceCard key={_id} _id={_id} {...rest} />
