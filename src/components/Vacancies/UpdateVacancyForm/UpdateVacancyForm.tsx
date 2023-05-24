@@ -1,14 +1,11 @@
 import { Field, Form, Formik } from 'formik';
+import { Categories } from 'helpers/constants';
 import createNewVacancySchema from 'helpers/schemas/vacancies/createVacancy.schema';
 import { useAppDispatch } from 'hooks';
 import { updateVacancyById } from 'redux/vacancies';
-enum Categories {
-  all = 'all-vacancies',
-  actual = 'actual-vacancies',
-}
 
 interface IProps {
-  category: string;
+  category: keyof typeof Categories;
   title: string;
   description: string;
   sallary: string;
@@ -172,12 +169,12 @@ export default function UpdateVacancyForm({
                 />
               </label>
               <label>
-                Всі вакансії
+                Не актуальні вакансії
                 <Field
                   name="category"
                   type="radio"
-                  id={Categories.all}
-                  value={Categories.all}
+                  id={Categories.irrelevant}
+                  value={Categories.irrelevant}
                 />
               </label>
               {errors.category && touched.category ? (

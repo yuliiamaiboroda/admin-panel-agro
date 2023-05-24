@@ -5,13 +5,15 @@ import {
   getAllVacancies,
   getCertainVacancy,
   getIrrelevantVacancies,
+  getVacanciesByCategories,
   removeVacancyById,
   updateVacancyById,
 } from './operations';
+import { Categories } from 'helpers/constants';
 
 export interface IVacancy {
   _id: string;
-  category: string;
+  category: keyof typeof Categories;
   title: string;
   description: string;
   sallary: string;
@@ -140,6 +142,12 @@ const vacanciesSlice = createSlice({
         getAllVacanciesFulfilledReducer
       )
       .addCase(getIrrelevantVacancies.rejected, vacanciesRejectedReducer)
+      .addCase(getVacanciesByCategories.pending, vacanciesPendingReducer)
+      .addCase(
+        getVacanciesByCategories.fulfilled,
+        getAllVacanciesFulfilledReducer
+      )
+      .addCase(getVacanciesByCategories.rejected, vacanciesRejectedReducer)
       .addCase(removeVacancyById.pending, vacanciesPendingReducer)
       .addCase(removeVacancyById.fulfilled, removeVacancyByIdFulfilledReducer)
       .addCase(removeVacancyById.rejected, vacanciesRejectedReducer)

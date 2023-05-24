@@ -4,11 +4,7 @@ import VacanciesGallery from '../VacanciesGallery';
 import Modal from 'components/Modal';
 import CreateVacancyForm from '../CreateVacancyForm';
 import { useAppDispatch, useModal } from 'hooks';
-import {
-  getAllVacancies,
-  getActualVacancies,
-  getIrrelevantVacancies,
-} from 'redux/vacancies';
+import { getVacanciesByCategories } from 'redux/vacancies';
 import { Roles } from 'helpers/constants';
 import VacanciesNavigator from 'components/Vacancies/VacanciesNavigator';
 import RestrictedComponent from 'components/RestrictedComponent';
@@ -20,19 +16,9 @@ export default function VacanciesDashboard() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    switch (categoryName) {
-      case 'all-vacancies':
-        dispatch(getAllVacancies());
-        break;
-      case 'actual-vacancies':
-        dispatch(getActualVacancies());
-        break;
-      case 'irrelevant-vacancies':
-        dispatch(getIrrelevantVacancies());
-        break;
-      default:
-        navigate('/vacancies');
-    }
+    categoryName
+      ? dispatch(getVacanciesByCategories(categoryName))
+      : navigate('all-vacancies');
   }, [categoryName, dispatch, navigate]);
 
   return (
