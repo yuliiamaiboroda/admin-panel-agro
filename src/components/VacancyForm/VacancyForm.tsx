@@ -1,6 +1,7 @@
 import { Field, Form, Formik, ErrorMessage } from 'formik';
 import { Categories } from 'helpers/constants';
 import createAndUpdateVacancySchema from 'helpers/schemas/vacancies/createAndUpdateVacancy.schema';
+import translateCategory from 'utils/translate-vacancy-category';
 
 interface IVacancy {
   category: keyof typeof Categories;
@@ -168,7 +169,7 @@ export default function VacancyForm({
           <label style={{ display: 'flex', flexDirection: 'column' }}>
             Категорія вакансії
             <label>
-              Актуальні вакансії
+              {translateCategory(Categories.actual)}
               <Field
                 name="category"
                 type="radio"
@@ -177,7 +178,7 @@ export default function VacancyForm({
               />
             </label>
             <label>
-              Не актуальні вакансії
+              {translateCategory(Categories.irrelevant)}
               <Field
                 name="category"
                 type="radio"
