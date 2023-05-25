@@ -6,6 +6,7 @@ import {
   updateService,
   getCertainService,
 } from './operations';
+import translateError from 'utils/translate-error';
 
 export interface IService {
   _id: string;
@@ -40,11 +41,10 @@ const servicesRejectedReducer = (
   state: IState,
   action: PayloadAction<string | undefined>
 ) => {
-  console.log('action.payload in servicesRejectedReducer >>>', action.payload);
   return {
     ...state,
     isLoading: false,
-    ...(action.payload ? { error: action.payload } : null),
+    ...(action.payload ? { error: translateError(action.payload) } : null),
   };
 };
 
