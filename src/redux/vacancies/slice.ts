@@ -5,6 +5,7 @@ import {
   getVacanciesByCategories,
   removeVacancyById,
   updateVacancyById,
+  getAllVacancyTitles,
 } from './operations';
 import { Categories } from 'helpers/constants';
 
@@ -21,8 +22,14 @@ export interface IVacancy {
   location: string;
 }
 
+export interface IVacancyTitle {
+  _id: string;
+  title: string;
+}
+
 interface IState {
   entities: IVacancy[];
+  titles: IVacancyTitle[];
   isLoading: boolean;
   isListLoading: boolean;
   certain: IVacancy | null;
@@ -31,6 +38,7 @@ interface IState {
 
 const initialState: IState = {
   entities: [],
+  titles: [],
   isLoading: false,
   isListLoading: false,
   error: null,
@@ -134,6 +142,13 @@ const getCertainFulfilledReducer = (
   };
 };
 
+const getAllVacancyTitlesFulfilledReducer = (
+  state: IState,
+  action: PayloadAction<IVacancyTitle[], string>
+) => {
+  return { ...state, isLoading: false, titles: action.payload };
+};
+
 const vacanciesSlice = createSlice({
   name: 'vacancies',
   initialState,
@@ -158,7 +173,13 @@ const vacanciesSlice = createSlice({
       .addCase(updateVacancyById.rejected, vacanciesRejectedReducer)
       .addCase(getCertainVacancy.pending, vacanciesPendingReducer)
       .addCase(getCertainVacancy.fulfilled, getCertainFulfilledReducer)
-      .addCase(getCertainVacancy.rejected, vacanciesRejectedReducer),
+      .addCase(getCertainVacancy.rejected, vacanciesRejectedReducer)
+      .addCase(getAllVacancyTitles.pending, vacanciesPendingReducer)
+      .addCase(
+        getAllVacancyTitles.fulfilled,
+        getAllVacancyTitlesFulfilledReducer
+      )
+      .addCase(getAllVacancyTitles.rejected, vacanciesRejectedReducer),
 });
 
 export const vacanciesReducer = vacanciesSlice.reducer;

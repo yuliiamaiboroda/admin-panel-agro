@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios, { AxiosError } from 'axios';
-import { IVacancy } from './slice';
+import { IVacancy, IVacancyTitle } from './slice';
 import { Categories } from 'helpers/constants';
 
 interface INewVacancy {
@@ -147,6 +147,23 @@ export const getCertainVacancy = createAsyncThunk<
 >('vacancies/getCertain', async (_id, thunkApi) => {
   try {
     const { data } = await axios.get(`/api/vacancies/certain/${_id}`);
+    return data;
+  } catch (err) {
+    const error = err as AxiosError<{ message: string }>;
+    if (!error.response) {
+      return thunkApi.rejectWithValue('Something went wrong');
+    }
+    return thunkApi.rejectWithValue(error.response.data.message);
+  }
+});
+
+export const getAllVacancyTitles = createAsyncThunk<
+  IVacancyTitle[],
+  undefined,
+  { rejectValue: string }
+>('vacancies/getTittles', async (_, thunkApi) => {
+  try {
+    const { data } = await axios.get('/api/vacancies/titles');
     return data;
   } catch (err) {
     const error = err as AxiosError<{ message: string }>;
