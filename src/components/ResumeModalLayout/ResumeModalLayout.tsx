@@ -1,6 +1,5 @@
 import { useEffect } from 'react';
 import { Outlet, useNavigate, useParams, Navigate } from 'react-router-dom';
-import { Notify } from 'notiflix';
 import { useAppDispatch, useAppSelector } from 'hooks';
 import {
   getCertainResume,
@@ -29,7 +28,6 @@ export default function ResumeModalLayout() {
   }, [dispatch, resumeId]);
 
   if (error) {
-    Notify.failure(error);
     return <Navigate to="/resumes" replace />;
   }
 

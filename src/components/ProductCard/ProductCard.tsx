@@ -21,18 +21,23 @@ export default function ProductCard({
     <>
       <li
         onClick={event => {
-          if (event.target === event.currentTarget) {
-            navigate(`${_id}`);
-          }
+          navigate(`${_id}`);
         }}
       >
         <h2>{title}</h2>
         <img src={imageURL} alt={title} width="150" height="auto" />
         <p>{description}</p>
         <RestrictedComponent accessRight={Roles.productsManager}>
-          <Link to={`${_id}/form`}>Edit</Link>
+          <Link onClick={event => event.stopPropagation()} to={`${_id}/form`}>
+            Edit
+          </Link>
           <br />
-          <Link to={`${_id}/confirm`}>Remove</Link>
+          <Link
+            onClick={event => event.stopPropagation()}
+            to={`${_id}/confirm`}
+          >
+            Remove
+          </Link>
         </RestrictedComponent>
       </li>
     </>
