@@ -1,10 +1,12 @@
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { Roles } from 'helpers/constants';
 import RestrictedComponent from 'components/RestrictedComponent';
+import translateCategory from 'utils/translate-vacancy-category';
+import { Categories } from 'helpers/constants';
 
 interface IVacancy {
   _id: string;
-  category: string;
+  category: keyof typeof Categories;
   title: string;
   description: string;
   sallary: string;
@@ -45,7 +47,7 @@ export default function VacancyCard({
       </p>
       <p>
         Категорія:
-        <span>{category}</span>
+        <span>{translateCategory(category)}</span>
       </p>
       <p>
         Зарплатня:
