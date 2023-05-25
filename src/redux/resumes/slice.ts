@@ -15,12 +15,18 @@ export interface IResume {
   position: string;
   resumeFileURL: string;
   comment: string;
-  agreement: boolean;
-  createdAt: string;
+}
+
+export interface IResumeEntity {
+  _id: string;
+  name: string;
+  position: string;
+  comment: string;
+  isReviewed: boolean;
 }
 
 interface IState {
-  entities: IResume[];
+  entities: IResumeEntity[];
   certain: IResume | null;
   isLoading: boolean;
   error: string | null;

@@ -10,8 +10,7 @@ export default function ResumeModalDetails() {
     return null;
   }
 
-  const { name, phone, email, position, resumeFileURL, comment, createdAt } =
-    resume;
+  const { name, phone, email, position, resumeFileURL, comment } = resume;
   return (
     <>
       <h1>{name}</h1>
@@ -21,10 +20,6 @@ export default function ResumeModalDetails() {
       <h3>{position}</h3>
       <a href={resumeFileURL}>Resume file</a>
       <p>{comment}</p>
-      <p>
-        Created at:
-        {createdAt}
-      </p>
       <Link to="confirm" state={{ from: location }}>
         Remove
       </Link>

@@ -6,7 +6,7 @@ export default function ResumesGallery() {
   const resumes = useAppSelector(selectResumes);
 
   return (
-    <ul>
+    <ul style={{ display: 'flex', flexWrap: 'wrap', gap: '16px' }}>
       {resumes.map(resume => (
         <ResumeCard key={resume._id} {...resume} />
       ))}

@@ -1,16 +1,16 @@
 import axios, { AxiosError } from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import type { IResume } from './slice';
+import type { IResume, IResumeEntity } from './slice';
 import { createFormData } from 'utils';
 
 export const getAllResumes = createAsyncThunk<
-  IResume[],
+  IResumeEntity[],
   undefined,
   { rejectValue: string }
 >('resumes/getAllResumes', async (_, thunkApi) => {
   try {
     const { data } = await axios.get('/api/resumes/all');
-    return data;
+    return data.resumes;
   } catch (err) {
     const error = err as AxiosError<{ message: string }>;
     if (!error.response) {
@@ -48,7 +48,7 @@ interface IResumeData {
 }
 
 export const createResume = createAsyncThunk<
-  IResume,
+  IResumeEntity,
   IResumeData,
   { rejectValue: string }
 >('resumes/createResume', async (resumeData, thunkApi) => {
@@ -60,7 +60,9 @@ export const createResume = createAsyncThunk<
     const { data } = await axios.post('/api/resumes', reqBody, {
       headers: { 'Content-Type': 'multipart/form-data' },
     });
-    return data;
+
+    const { _id, name, position, comment } = data;
+    return { _id, name, position, comment, isReviewed: false };
   } catch (err) {
     const error = err as AxiosError<{ message: string }>;
     if (!error.response) {
