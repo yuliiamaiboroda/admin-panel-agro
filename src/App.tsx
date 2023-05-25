@@ -62,11 +62,11 @@ function App() {
           <PrivateRoute component={<SharedLayout />} auth redirectTo="/login" />
         }
       >
-        <Route index element={<Navigate to="products" />} />
+        <Route index element={<Navigate to="/products" />} />
         <Route
           path="users"
           element={
-            <RestrictedRoute component={<UsersPage />} redirectTo="products" />
+            <RestrictedRoute component={<UsersPage />} redirectTo="/products" />
           }
         >
           <Route
@@ -74,7 +74,7 @@ function App() {
             element={
               <RestrictedRoute
                 component={<UsersModalLayout />}
-                redirectTo="products"
+                redirectTo="/products"
               />
             }
           >
@@ -83,7 +83,7 @@ function App() {
               element={
                 <RestrictedRoute
                   component={<UsersModalDetails />}
-                  redirectTo="products"
+                  redirectTo="/products"
                 />
               }
             />
@@ -92,7 +92,7 @@ function App() {
               element={
                 <RestrictedRoute
                   component={<UsersModalUpdateForm />}
-                  redirectTo="products"
+                  redirectTo="/products"
                 />
               }
             />
@@ -101,7 +101,7 @@ function App() {
               element={
                 <RestrictedRoute
                   component={<UsersModalConfirm />}
-                  redirectTo="products"
+                  redirectTo="/products"
                 />
               }
             />
