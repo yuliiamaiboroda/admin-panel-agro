@@ -5,6 +5,7 @@ import {
   getCertainResume,
   createResume,
   removeResume,
+  updateResumeViews,
 } from './operations';
 
 export interface IResume {
@@ -93,7 +94,20 @@ const resumesSlice = createSlice({
           ),
         };
       })
-      .addCase(removeResume.rejected, rejectedReducer);
+      .addCase(removeResume.rejected, rejectedReducer)
+      .addCase(updateResumeViews.pending, pendingReducer)
+      .addCase(updateResumeViews.fulfilled, (state, action) => {
+        return {
+          ...state,
+          isLoading: false,
+          entities: state.entities.map(entity =>
+            entity._id === action.payload
+              ? { ...entity, isReviewed: true }
+              : entity
+          ),
+        };
+      })
+      .addCase(updateResumeViews.rejected, rejectedReducer);
   },
 });
 

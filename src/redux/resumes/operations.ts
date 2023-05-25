@@ -88,3 +88,20 @@ export const removeResume = createAsyncThunk<
     return thunkApi.rejectWithValue(error.response.data.message);
   }
 });
+
+export const updateResumeViews = createAsyncThunk<
+  string,
+  string,
+  { rejectValue: string }
+>('resumes/updateResumeViews', async (_id, thunkApi) => {
+  try {
+    await axios.patch(`/api/resumes/certain/views/${_id}`);
+    return _id;
+  } catch (err) {
+    const error = err as AxiosError<{ message: string }>;
+    if (!error.response) {
+      return thunkApi.rejectWithValue('Something went wrong');
+    }
+    return thunkApi.rejectWithValue(error.response.data.message);
+  }
+});
