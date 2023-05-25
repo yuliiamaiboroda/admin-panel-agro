@@ -32,6 +32,10 @@ import ServiceModalEditForm from 'components/ServiceModalEditForm';
 import ServiceModalConfirmation from 'components/ServiceModalConfirmation';
 
 import RestrictedRoute from 'components/RestrictedRoute';
+import UsersModalLayout from 'components/UsersModalLayout';
+import UsersModalDetails from 'components/UsersModalDetails';
+import UsersModalUpdateForm from 'components/UsersModalUpdateForm';
+import UsersModalConfirm from 'components/UsersModalConfirm';
 
 function App() {
   // TODO:  Add fetch of refresh user
@@ -58,11 +62,52 @@ function App() {
           <PrivateRoute component={<SharedLayout />} auth redirectTo="/login" />
         }
       >
-        <Route index element={<Navigate to="products" />} />
+        <Route index element={<Navigate to="/products" />} />
         <Route
           path="users"
-          element={<RestrictedRoute component={<UsersPage />} />}
-        />
+          element={
+            <RestrictedRoute component={<UsersPage />} redirectTo="/products" />
+          }
+        >
+          <Route
+            path=":userId"
+            element={
+              <RestrictedRoute
+                component={<UsersModalLayout />}
+                redirectTo="/products"
+              />
+            }
+          >
+            <Route
+              index
+              element={
+                <RestrictedRoute
+                  component={<UsersModalDetails />}
+                  redirectTo="/products"
+                />
+              }
+            />
+            <Route
+              path="form"
+              element={
+                <RestrictedRoute
+                  component={<UsersModalUpdateForm />}
+                  redirectTo="/products"
+                />
+              }
+            />
+            <Route
+              path="confirm"
+              element={
+                <RestrictedRoute
+                  component={<UsersModalConfirm />}
+                  redirectTo="/products"
+                />
+              }
+            />
+            <Route path="*" element={<Navigate to="/users" replace />} />
+          </Route>
+        </Route>
         <Route path="products" element={<ProductsPage />}>
           <Route path=":productId" element={<ProductModalLayout />}>
             <Route index element={<ProductModalDetails />} />

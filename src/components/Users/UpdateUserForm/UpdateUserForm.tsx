@@ -1,5 +1,4 @@
 import { Field, Form, Formik } from 'formik';
-
 import updateUserSchema from 'helpers/schemas/auth/updateUser.schema';
 import translateRole from 'utils/translate-role';
 import { useAppDispatch } from 'hooks';
