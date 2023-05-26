@@ -29,6 +29,8 @@ const FORM_INITIAL_STATE: INewUser = {
 
 export default function CreateUserForm({ onClose }: Iprops) {
   const [isVisiblePassword, setIsVisiblePassword] = useState(false);
+  const [isVisibleConfirmPassword, setIsVisibleConfirmPassword] =
+    useState(false);
   const dispatch = useAppDispatch();
 
   return (
@@ -69,14 +71,16 @@ export default function CreateUserForm({ onClose }: Iprops) {
             Підтвердіть пароль:
             <Field
               name="confirmPassword"
-              type={isVisiblePassword ? 'text' : 'password'}
+              type={isVisibleConfirmPassword ? 'text' : 'password'}
               id="confirmPassword"
             />
             <button
               type="button"
-              onClick={() => setIsVisiblePassword(!isVisiblePassword)}
+              onClick={() =>
+                setIsVisibleConfirmPassword(!isVisibleConfirmPassword)
+              }
             >
-              {isVisiblePassword ? <RxEyeClosed /> : <RxEyeOpen />}
+              {isVisibleConfirmPassword ? <RxEyeClosed /> : <RxEyeOpen />}
             </button>
             <ErrorMessage name="confirmPassword" />
           </label>
