@@ -71,14 +71,7 @@ export const registerNewUser = createAsyncThunk<
 
 export const updateUserById = createAsyncThunk<
   IUser,
-  {
-    email: string;
-    name: string;
-    surname: string;
-    role: string;
-    password: string | null;
-    _id: string;
-  },
+  { password: string | null } & IUser,
   {
     rejectValue: string;
   }
