@@ -5,11 +5,13 @@ import { createFormData } from 'utils';
 
 export const getAllResumes = createAsyncThunk<
   IResumeEntity[],
-  undefined,
+  { position: string | null },
   { rejectValue: string }
->('resumes/getAllResumes', async (_, thunkApi) => {
+>('resumes/getAllResumes', async (params, thunkApi) => {
   try {
-    const { data } = await axios.get('/api/resumes/all');
+    const { data } = await axios.get('/api/resumes/all', {
+      params: { ...(params.position ? { position: params.position } : null) },
+    });
     return data.resumes;
   } catch (err) {
     const error = err as AxiosError<{ message: string }>;
