@@ -17,33 +17,41 @@ export default function ResumesPage() {
   const positionParam = searchParams.get('position');
   const sortParam = searchParams.get('sort');
 
+  const getSearchQueryParams = () => {
+    const queryParams: { [x: string]: string } = {};
+
+    searchParams.forEach((value, key) => (queryParams[key] = value));
+
+    return queryParams;
+  };
+
+  const updateSearchQueryParams = (object: { [x: string]: string }) => {
+    const queryParams = getSearchQueryParams();
+
+    Object.entries(object).forEach(([key, value]) => {
+      if (!value) {
+        delete queryParams[key];
+      } else {
+        queryParams[key] = value;
+      }
+    });
+
+    setSearchParams(queryParams);
+  };
+
+  const params = getSearchQueryParams();
+
   useEffect(() => {
     dispatch(getAllVacancyTitles());
   }, [dispatch]);
 
   useEffect(() => {
-    dispatch(getAllResumes({ position: positionParam }));
-  }, [dispatch, positionParam]);
+    dispatch(getAllResumes(params));
+  }, [dispatch, params]);
 
   if (error) {
     Notify.failure(error);
   }
-
-  const updateSearchQueryParams = (object: { [x: string]: string }) => {
-    const pervParams: { [x: string]: string } = {};
-
-    searchParams.forEach((value, key) => (pervParams[key] = value));
-
-    Object.entries(object).forEach(([key, value]) => {
-      if (value === '') {
-        delete pervParams[key];
-      } else {
-        pervParams[key] = value;
-      }
-    });
-
-    setSearchParams(pervParams);
-  };
 
   return (
     <>
