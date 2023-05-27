@@ -14,42 +14,62 @@ export default function ResumesPage() {
   const error = useAppSelector(selectResumeError);
   const titles = useAppSelector(selectVacancyTitles);
   const [searchParams, setSearchParams] = useSearchParams();
-  const position = searchParams.get('position');
+  const positionParam = searchParams.get('position');
+  const sortParam = searchParams.get('sort');
 
   useEffect(() => {
     dispatch(getAllVacancyTitles());
   }, [dispatch]);
 
   useEffect(() => {
-    dispatch(getAllResumes({ position }));
-  }, [dispatch, position]);
+    dispatch(getAllResumes({ position: positionParam }));
+  }, [dispatch, positionParam]);
 
   if (error) {
     Notify.failure(error);
   }
 
-  console.log("searchParams.get('position'):\n", searchParams.get('position'));
+  const updateSearchQueryParams = (object: { [x: string]: string }) => {
+    const pervParams: { [x: string]: string } = {};
 
-  const updateQueryString = (position: string) => {
-    const nextParams: {} | { position: string } =
-      position !== '' ? { position } : {};
-    setSearchParams(nextParams);
+    searchParams.forEach((value, key) => (pervParams[key] = value));
+
+    Object.entries(object).forEach(([key, value]) => {
+      if (value === '') {
+        delete pervParams[key];
+      } else {
+        pervParams[key] = value;
+      }
+    });
+
+    setSearchParams(pervParams);
   };
 
   return (
     <>
       <h1>This is ResumesPage!</h1>
       <select
-        onChange={({ target }) => updateQueryString(target.value)}
-        value={position ? position : ''}
+        onChange={({ target }) =>
+          updateSearchQueryParams({ position: target.value })
+        }
+        value={positionParam ? positionParam : ''}
       >
-        <option value="">Chosse option</option>
+        <option value="">All</option>
         {titles.map(({ _id, title }) => (
           <option key={_id} value={title}>
             {title}
           </option>
         ))}
         <option value="other">Other</option>
+      </select>
+      <select
+        onChange={({ target }) =>
+          updateSearchQueryParams({ sort: target.value })
+        }
+        value={sortParam ? sortParam : ''}
+      >
+        <option value="">Newer</option>
+        <option value="asc">Older</option>
       </select>
       <button type="button" onClick={openModal}>
         Create resume
