@@ -1,7 +1,8 @@
 import { useState } from 'react';
-// import { useAppDispatch } from 'hooks';
+import { useAppDispatch } from 'hooks';
 import { RxEyeClosed, RxEyeOpen } from 'react-icons/rx';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
+import { updatePasswordById } from 'redux/users';
 import updatePasswordSchema from 'helpers/schemas/auth/updatePassword.schema';
 
 interface IProps {
@@ -13,7 +14,7 @@ export default function ModalChangePassword({ onClose }: IProps) {
   const [isVisibleNewPassword, setIsVisibleNewPassword] = useState(false);
   const [isVisibleConfirmPassword, setIsVisibleConfirmPassword] =
     useState(false);
-  // const dispatch = useAppDispatch();
+  const dispatch = useAppDispatch();
 
   const initialState = {
     oldPassword: '',
@@ -26,13 +27,8 @@ export default function ModalChangePassword({ onClose }: IProps) {
       initialValues={initialState}
       validationSchema={updatePasswordSchema}
       onSubmit={(values, actions) => {
-        console.log(
-          'oldPassword >>>>',
-          values.oldPassword,
-          '|',
-          'newPassword >>>>',
-          values.newPassword,
-        );
+        const { oldPassword, newPassword } = values;
+        dispatch(updatePasswordById({ oldPassword, newPassword }));
         actions.resetForm();
         onClose();
       }}
@@ -54,7 +50,6 @@ export default function ModalChangePassword({ onClose }: IProps) {
           <ErrorMessage name="oldPassword" />
         </label>
         <br />
-
         <label>
           Новий пароль:
           <Field
@@ -71,7 +66,6 @@ export default function ModalChangePassword({ onClose }: IProps) {
           <ErrorMessage name="newPassword" />
         </label>
         <br />
-
         <label>
           Підтвердити новий пароль:
           <Field
