@@ -15,6 +15,13 @@ export default function ProductsPage() {
 
   if (error) {
     Notify.failure(error);
+    return (
+      <>
+        <h1>Products page</h1>
+        <h2>Ooops... Something went wrong</h2>
+        <h3>It seems like: {error}</h3>
+      </>
+    );
   }
 
   return (

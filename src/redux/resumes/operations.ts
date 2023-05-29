@@ -1,18 +1,42 @@
 import axios, { AxiosError } from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import type { IResume, IResumeEntity } from './slice';
+import type { IResume, IResumeEntity, IResumePagination } from './slice';
 import { createFormData } from 'utils';
 
 export const getAllResumes = createAsyncThunk<
-  IResumeEntity[],
-  { position: string | null },
+  { resumes: IResumeEntity[]; pagination: IResumePagination },
+  { [x: string]: string },
   { rejectValue: string }
 >('resumes/getAllResumes', async (params, thunkApi) => {
   try {
-    const { data } = await axios.get('/api/resumes/all', {
-      params: { ...(params.position ? { position: params.position } : null) },
+    const {
+      data: { resumes, ...pagination },
+    } = await axios.get('/api/resumes/all', {
+      params,
     });
-    return data.resumes;
+    return { resumes, pagination };
+  } catch (err) {
+    const error = err as AxiosError<{ message: string }>;
+    if (!error.response) {
+      return thunkApi.rejectWithValue('Something went wrong');
+    }
+    return thunkApi.rejectWithValue(error.response.data.message);
+  }
+});
+
+export const loadMoreResumes = createAsyncThunk<
+  { resumes: IResumeEntity[]; pagination: IResumePagination },
+  { [x: string]: string | number },
+  { rejectValue: string }
+>('resumes/loadMoreResumes', async (params, thunkApi) => {
+  try {
+    const {
+      data: { resumes, ...pagination },
+    } = await axios.get('/api/resumes/all', {
+      params,
+    });
+
+    return { resumes, pagination };
   } catch (err) {
     const error = err as AxiosError<{ message: string }>;
     if (!error.response) {
