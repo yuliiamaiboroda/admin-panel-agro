@@ -7,6 +7,7 @@ import Modal from 'components/Modal/Modal';
 import ModalLogout from 'components/ModalLogout/ModalLogout';
 import translateRole from 'utils/translate-role';
 import ModalChangePassword from 'components/ModalChangePassword';
+import PageTitle from 'components/PageTitle';
 
 export default function UserPage() {
   const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
@@ -19,7 +20,7 @@ export default function UserPage() {
 
   return (
     <>
-      <h1>Ваші особисті дані</h1>
+      <PageTitle title='Ваші особисті дані'/>
       <b>Ім'я :</b>
       <p>
         {name} {surname}
