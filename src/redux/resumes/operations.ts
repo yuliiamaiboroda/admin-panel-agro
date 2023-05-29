@@ -24,6 +24,28 @@ export const getAllResumes = createAsyncThunk<
   }
 });
 
+export const loadMoreResumes = createAsyncThunk<
+  { resumes: IResumeEntity[]; pagination: IResumePagination },
+  { [x: string]: string | number },
+  { rejectValue: string }
+>('resumes/loadMoreResumes', async (params, thunkApi) => {
+  try {
+    const {
+      data: { resumes, ...pagination },
+    } = await axios.get('/api/resumes/all', {
+      params,
+    });
+
+    return { resumes, pagination };
+  } catch (err) {
+    const error = err as AxiosError<{ message: string }>;
+    if (!error.response) {
+      return thunkApi.rejectWithValue('Something went wrong');
+    }
+    return thunkApi.rejectWithValue(error.response.data.message);
+  }
+});
+
 export const getCertainResume = createAsyncThunk<
   IResume,
   string,

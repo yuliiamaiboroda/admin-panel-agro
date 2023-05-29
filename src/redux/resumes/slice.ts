@@ -6,6 +6,7 @@ import {
   createResume,
   removeResume,
   updateResumeViews,
+  loadMoreResumes,
 } from './operations';
 
 export interface IResume {
@@ -34,7 +35,7 @@ export interface IResumePagination {
 
 interface IState {
   entities: IResumeEntity[];
-  pagination: IResumePagination | null;
+  pagination: IResumePagination;
   certain: IResume | null;
   isLoading: boolean;
   error: string | null;
@@ -42,7 +43,7 @@ interface IState {
 
 const initialState: IState = {
   entities: [],
-  pagination: null,
+  pagination: { skip: 0, limit: 0, total: 0 },
   certain: null,
   isLoading: false,
   error: null,
@@ -83,6 +84,16 @@ const resumesSlice = createSlice({
         };
       })
       .addCase(getAllResumes.rejected, rejectedReducer)
+      .addCase(loadMoreResumes.pending, pendingReducer)
+      .addCase(loadMoreResumes.fulfilled, (state, action) => {
+        return {
+          ...state,
+          isLoading: false,
+          entities: [...state.entities, ...action.payload.resumes],
+          pagination: action.payload.pagination,
+        };
+      })
+      .addCase(loadMoreResumes.rejected, rejectedReducer)
       .addCase(getCertainResume.pending, pendingReducer)
       .addCase(getCertainResume.fulfilled, (state, action) => {
         return { ...state, isLoading: false, certain: action.payload };
