@@ -1,7 +1,12 @@
 import { useEffect } from 'react';
-import { Outlet, useSearchParams } from 'react-router-dom';
+import { Outlet } from 'react-router-dom';
 import { Notify } from 'notiflix';
-import { useAppDispatch, useAppSelector, useModal } from 'hooks';
+import {
+  useAppDispatch,
+  useAppSelector,
+  useModal,
+  useQueryParams,
+} from 'hooks';
 import { getAllResumes, selectResumeError } from 'redux/resumes';
 import { getAllVacancyTitles, selectVacancyTitles } from 'redux/vacancies';
 import ResumesGallery from 'components/ResumesGallery';
@@ -13,41 +18,15 @@ export default function ResumesPage() {
   const { isModalOpen, openModal, closeModal } = useModal();
   const error = useAppSelector(selectResumeError);
   const titles = useAppSelector(selectVacancyTitles);
-  const [searchParams, setSearchParams] = useSearchParams();
-  const positionParam = searchParams.get('position');
-  const sortParam = searchParams.get('sort');
-
-  const getSearchQueryParams = () => {
-    const queryParams: { [x: string]: string } = {};
-
-    searchParams.forEach((value, key) => (queryParams[key] = value));
-
-    return queryParams;
-  };
-
-  const updateSearchQueryParams = (object: { [x: string]: string }) => {
-    const queryParams = getSearchQueryParams();
-
-    Object.entries(object).forEach(([key, value]) => {
-      if (!value) {
-        delete queryParams[key];
-      } else {
-        queryParams[key] = value;
-      }
-    });
-
-    setSearchParams(queryParams);
-  };
-
-  const params = getSearchQueryParams();
+  const [queryParams, setQueryParams] = useQueryParams();
 
   useEffect(() => {
     dispatch(getAllVacancyTitles());
   }, [dispatch]);
 
   useEffect(() => {
-    dispatch(getAllResumes(params));
-  }, [dispatch, params]);
+    dispatch(getAllResumes(queryParams));
+  }, [dispatch, queryParams]);
 
   if (error) {
     Notify.failure(error);
@@ -57,10 +36,8 @@ export default function ResumesPage() {
     <>
       <h1>This is ResumesPage!</h1>
       <select
-        onChange={({ target }) =>
-          updateSearchQueryParams({ position: target.value })
-        }
-        value={positionParam ? positionParam : ''}
+        onChange={({ target }) => setQueryParams({ position: target.value })}
+        value={queryParams.position ? queryParams.position : ''}
       >
         <option value="">All</option>
         {titles.map(({ _id, title }) => (
@@ -71,10 +48,8 @@ export default function ResumesPage() {
         <option value="other">Other</option>
       </select>
       <select
-        onChange={({ target }) =>
-          updateSearchQueryParams({ sort: target.value })
-        }
-        value={sortParam ? sortParam : ''}
+        onChange={({ target }) => setQueryParams({ sort: target.value })}
+        value={queryParams.sort ? queryParams.sort : ''}
       >
         <option value="">Newer</option>
         <option value="asc">Older</option>
