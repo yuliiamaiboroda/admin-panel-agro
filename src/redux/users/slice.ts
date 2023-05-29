@@ -4,6 +4,7 @@ import {
   getCertainUser,
   registerNewUser,
   removeUserById,
+  updatePasswordById,
   updateUserById,
 } from './operations';
 import type { Roles } from 'helpers/constants';
@@ -110,6 +111,15 @@ const getCertainFulfilledReducer = (
   };
 };
 
+const updatePasswordByIdFulfilledReducer = (
+  state: IState,
+) => {
+  return {
+    ...state,
+    isLoading: false,
+  };
+};
+
 const usersSlice = createSlice({
   name: 'users',
   initialState,
@@ -134,7 +144,10 @@ const usersSlice = createSlice({
       .addCase(registerNewUser.rejected, usersRejectedReducer)
       .addCase(updateUserById.pending, usersPendingReducer)
       .addCase(updateUserById.fulfilled, updateUserByIdFulfilledReducer)
-      .addCase(updateUserById.rejected, usersRejectedReducer),
+      .addCase(updateUserById.rejected, usersRejectedReducer)
+      .addCase(updatePasswordById.pending, usersPendingReducer)
+      .addCase(updatePasswordById.fulfilled, updatePasswordByIdFulfilledReducer)
+      .addCase(updatePasswordById.rejected, usersRejectedReducer),
 });
 
 export const usersReducer = usersSlice.reducer;

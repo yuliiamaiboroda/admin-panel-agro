@@ -11,6 +11,7 @@ import ServicesPage from 'pages/ServicesPage';
 import SharedLayout from 'components/SharedLayout';
 import VacanciesPage from 'pages/VacanciesPage';
 import FeedbackPage from 'pages/FeedbackPage';
+import UserPage from 'pages/UserPage';
 import Loader from 'components/Loader';
 
 import ProductModalLayout from 'components/ProductModalLayout';
@@ -62,6 +63,7 @@ function App() {
           <PrivateRoute component={<SharedLayout />} auth redirectTo="/login" />
         }
       >
+        <Route path="user" element={<UserPage />} />
         <Route index element={<Navigate to="/products" />} />
         <Route
           path="users"
