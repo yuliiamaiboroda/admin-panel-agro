@@ -1,9 +1,9 @@
-// import React, { useState } from 'react';
+import React, { useState } from 'react';
 import { useAppDispatch } from 'hooks';
-import { loginUser, selectUser } from 'redux/user';
-import { Formik, Form, Field } from 'formik';
+import { loginUser } from 'redux/user';
+import { Formik, Form, Field, ErrorMessage } from 'formik';
 import loginSchema from 'helpers/schemas/auth/login.schema';
-import { useAppSelector } from 'hooks';
+import { RxEyeClosed, RxEyeOpen } from 'react-icons/rx';
 
 interface LoginFormValues {
   email: string;
@@ -13,17 +13,11 @@ interface LoginFormValues {
 const FORM_INITIAL_STATE: LoginFormValues = { email: '', password: '' };
 
 export default function LoginForm() {
+  const [isVisiblePassword, setIsVisiblePassword] = useState(false);
   const dispatch = useAppDispatch();
-  const user = useAppSelector(selectUser);
 
   const handleSubmitForm = (values: LoginFormValues, actions: any) => {
-    actions.setSubmitting(true);
     dispatch(loginUser(values));
-    actions.setSubmitting(false);
-
-    if (!user.error) {
-      actions.resetForm();
-    }
   };
 
   return (
@@ -34,28 +28,32 @@ export default function LoginForm() {
         validateOnBlur
         validationSchema={loginSchema}
       >
-        {({ errors, touched }) => (
-          <Form>
-            <label>
-              Електронна пошта:
-              <br />
-              <Field name="email" type="email" placeholder="hello@mail.com" />
-            </label>
-            {errors.email && touched.email ? <span>{errors.email}</span> : null}
+        <Form>
+          <label>
+            Електронна пошта:
             <br />
-            <label>
-              Пароль:
-              <br />
-              <Field name="password" type="password" />
-            </label>
-            {errors.password && touched.password ? (
-              <span>{errors.password}</span>
-            ) : null}
-
+            <Field name="email" type="email" placeholder="hello@mail.com" />
+            <ErrorMessage name="email" />
+          </label>
+          <br />
+          <label>
+            Пароль:
             <br />
-            <button type="submit">Увійти</button>
-          </Form>
-        )}
+            <Field
+              name="password"
+              type={isVisiblePassword ? 'text' : 'password'}
+            />
+            <button
+              type="button"
+              onClick={() => setIsVisiblePassword(!isVisiblePassword)}
+            >
+              {isVisiblePassword ? <RxEyeClosed /> : <RxEyeOpen />}
+            </button>
+            <ErrorMessage name="password" />
+          </label>
+          <br />
+          <button type="submit">Увійти</button>
+        </Form>
       </Formik>
     </div>
   );

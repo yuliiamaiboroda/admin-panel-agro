@@ -33,6 +33,17 @@ const updateUserSchema = Yup.object().shape({
   role: Yup.mixed<Roles>()
     .oneOf(USER_ROLES)
     .required("Роль нового користувача є обов'язковим полем"),
+  password: Yup.string()
+    .min(7, 'Пароль занадто короткий - має містити мінімум 7 символів.')
+    .max(32, 'Пароль занадтно довгий - має містити максимум 32 символи.')
+    .matches(
+      /^\d*(?=.*[a-z])(?=.*[A-Z])\S+\D*\d*$/,
+      'Пароль має містити лише: великі літери, маленькі літери та цифри'
+    ),
+  confirmPassword: Yup.string().oneOf(
+    [Yup.ref('password'), ''],
+    'Паролі мають співпадати!'
+  ),
 });
 
 export default updateUserSchema;
