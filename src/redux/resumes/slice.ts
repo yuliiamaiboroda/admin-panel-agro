@@ -26,8 +26,15 @@ export interface IResumeEntity {
   isReviewed: boolean;
 }
 
+export interface IResumePagination {
+  skip: number;
+  limit: number;
+  total: number;
+}
+
 interface IState {
   entities: IResumeEntity[];
+  pagination: IResumePagination | null;
   certain: IResume | null;
   isLoading: boolean;
   error: string | null;
@@ -35,6 +42,7 @@ interface IState {
 
 const initialState: IState = {
   entities: [],
+  pagination: null,
   certain: null,
   isLoading: false,
   error: null,
@@ -67,7 +75,12 @@ const resumesSlice = createSlice({
     builder
       .addCase(getAllResumes.pending, pendingReducer)
       .addCase(getAllResumes.fulfilled, (state, action) => {
-        return { ...state, isLoading: false, entities: action.payload };
+        return {
+          ...state,
+          isLoading: false,
+          entities: action.payload.resumes,
+          pagination: action.payload.pagination,
+        };
       })
       .addCase(getAllResumes.rejected, rejectedReducer)
       .addCase(getCertainResume.pending, pendingReducer)
