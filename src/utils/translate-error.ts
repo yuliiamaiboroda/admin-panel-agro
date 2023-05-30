@@ -16,8 +16,8 @@ export default function translateError(error: string): string {
     case Errors.notHaveAccess:
       translatedError = 'У вас немає прав доступу до цього контенту';
       break;
-    case Errors.imageRequired:
-      translatedError = "Зображення є обов'язковим";
+    case Errors.fileRequired:
+      translatedError = "Файл є обов'язковим";
       break;
     case Errors.storageFailed:
       translatedError = 'Помилка в базі даних';
@@ -34,10 +34,12 @@ export default function translateError(error: string): string {
     case Errors.somethingWrong:
       translatedError = 'Щось пішло не так ...';
       break;
+    case Errors.isAlreadyViewed:
+      translatedError = 'Цю картку вже переглянуто';
+      break;
 
     default:
       translatedError = error;
-      break;
   }
   return translatedError;
 }

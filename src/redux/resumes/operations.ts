@@ -79,9 +79,10 @@ export const createResume = createAsyncThunk<
   { rejectValue: string }
 >('resumes/createResume', async (resumeData, thunkApi) => {
   try {
-    if (!resumeData.resume) {
-      return thunkApi.rejectWithValue('File should be uploaded');
-    }
+    // TODO:  discus is file required
+    // if (!resumeData.resume) {
+    //   return thunkApi.rejectWithValue('File should be uploaded');
+    // }
     const reqBody = createFormData(resumeData);
     const { data } = await axios.post('/api/resumes', reqBody, {
       headers: { 'Content-Type': 'multipart/form-data' },

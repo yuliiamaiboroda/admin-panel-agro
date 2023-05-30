@@ -104,7 +104,7 @@ const resumesSlice = createSlice({
         return {
           ...state,
           isLoading: false,
-          entities: [...state.entities, action.payload],
+          entities: [action.payload, ...state.entities],
         };
       })
       .addCase(createResume.rejected, rejectedReducer)
