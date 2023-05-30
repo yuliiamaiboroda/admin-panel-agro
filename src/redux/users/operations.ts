@@ -1,7 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios, { AxiosError } from 'axios';
 import { IUser } from './slice';
-// import { Notify } from 'notiflix';
+import { Notify } from 'notiflix';
 
 export const getAllUsers = createAsyncThunk<
   IUser[],
@@ -111,6 +111,28 @@ export const getCertainUser = createAsyncThunk<
 >('users/getCertain', async (_id, thunkApi) => {
   try {
     const { data } = await axios.get(`/api/users/certain/${_id}`);
+    return data;
+  } catch (err) {
+    const error = err as AxiosError<{ message: string }>;
+    if (!error.response) {
+      return thunkApi.rejectWithValue('Something went wrong');
+    }
+    return thunkApi.rejectWithValue(error.response.data.message);
+  }
+});
+
+export const updatePasswordById = createAsyncThunk<
+  string,
+  { oldPassword: string; newPassword: string },
+  {
+    rejectValue: string;
+  }
+>('users/updatePassword', async ({ oldPassword, newPassword }, thunkApi) => {
+  try {
+    let requestBody = { oldPassword, newPassword };
+
+    const { data } = await axios.post(`/api/users/updatePassword`, requestBody);
+    Notify.success(data);
     return data;
   } catch (err) {
     const error = err as AxiosError<{ message: string }>;
