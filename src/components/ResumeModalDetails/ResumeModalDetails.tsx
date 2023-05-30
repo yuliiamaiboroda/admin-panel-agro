@@ -1,16 +1,26 @@
 import { Link, useLocation } from 'react-router-dom';
-import { useAppSelector } from 'hooks';
-import { selectCertainResume } from 'redux/resumes';
+import { useAppSelector, useAppDispatch } from 'hooks';
+import { selectCertainResume, updateResumeIsFavorite } from 'redux/resumes';
 
 export default function ResumeModalDetails() {
   const resume = useAppSelector(selectCertainResume);
+  const dispatch = useAppDispatch();
   const location = useLocation();
 
   if (!resume) {
     return null;
   }
 
-  const { name, phone, email, position, resumeFileURL, comment } = resume;
+  const {
+    _id,
+    name,
+    phone,
+    email,
+    position,
+    resumeFileURL,
+    comment,
+    isFavorite,
+  } = resume;
   return (
     <>
       <h1>{name}</h1>
@@ -18,8 +28,21 @@ export default function ResumeModalDetails() {
       <br />
       <a href={`mailto:${email}`}>{email}</a>
       <h3>{position}</h3>
-      <a href={resumeFileURL}>Resume file</a>
+      <a
+        href={resumeFileURL}
+        style={{ color: !resumeFileURL ? 'lightgrey' : 'teal' }}
+      >
+        Resume file
+      </a>
       <p>{comment}</p>
+      <button
+        type="button"
+        onClick={() => {
+          dispatch(updateResumeIsFavorite(_id));
+        }}
+      >
+        {isFavorite ? 'Remove from favorites' : 'Add to favorites'}
+      </button>
       <Link to="confirm" state={{ from: location }}>
         Remove
       </Link>

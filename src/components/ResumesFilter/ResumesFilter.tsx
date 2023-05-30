@@ -30,6 +30,17 @@ export default function ResumesFilter() {
 
   return (
     <>
+      <label>
+        Show favorites
+        <input
+          type="checkbox"
+          name="isFavorite"
+          checked={queryParams.isFavorite ? true : false}
+          onChange={({ target }) =>
+            setQueryParams({ isFavorite: target.checked ? 'true' : '' })
+          }
+        />
+      </label>
       <select
         onChange={({ target }) => setQueryParams({ position: target.value })}
         value={queryParams.position ? queryParams.position : ''}

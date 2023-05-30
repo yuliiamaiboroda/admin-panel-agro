@@ -1,12 +1,13 @@
 import { useNavigate, Link } from 'react-router-dom';
 import { useAppDispatch } from 'hooks';
-import { updateResumeViews } from 'redux/resumes';
+import { updateResumeViews, updateResumeIsFavorite } from 'redux/resumes';
 import type { IResumeEntity } from 'redux/resumes';
 export default function ResumeCard({
   _id,
   name,
   position,
   comment,
+  isFavorite,
   isReviewed,
 }: IResumeEntity) {
   const navigate = useNavigate();
@@ -30,6 +31,15 @@ export default function ResumeCard({
       <h2>{name}</h2>
       <h3>{position}</h3>
       <p>{comment}</p>
+      <button
+        type="button"
+        onClick={event => {
+          event.stopPropagation();
+          dispatch(updateResumeIsFavorite(_id));
+        }}
+      >
+        {isFavorite ? 'Remove from fovorites' : 'Add to favorites'}
+      </button>
       <Link
         onClick={event => {
           event.stopPropagation();
