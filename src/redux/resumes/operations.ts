@@ -35,7 +35,6 @@ export const loadMoreResumes = createAsyncThunk<
     } = await axios.get('/api/resumes/all', {
       params,
     });
-
     return { resumes, pagination };
   } catch (err) {
     const error = err as AxiosError<{ message: string }>;
@@ -79,17 +78,20 @@ export const createResume = createAsyncThunk<
   { rejectValue: string }
 >('resumes/createResume', async (resumeData, thunkApi) => {
   try {
-    // TODO:  discus is file required
-    // if (!resumeData.resume) {
-    //   return thunkApi.rejectWithValue('File should be uploaded');
-    // }
     const reqBody = createFormData(resumeData);
     const { data } = await axios.post('/api/resumes', reqBody, {
       headers: { 'Content-Type': 'multipart/form-data' },
     });
 
     const { _id, name, position, comment } = data;
-    return { _id, name, position, comment, isReviewed: false };
+    return {
+      _id,
+      name,
+      position,
+      comment,
+      isReviewed: false,
+      isFavorite: false,
+    };
   } catch (err) {
     const error = err as AxiosError<{ message: string }>;
     if (!error.response) {
@@ -123,6 +125,23 @@ export const updateResumeViews = createAsyncThunk<
 >('resumes/updateResumeViews', async (_id, thunkApi) => {
   try {
     await axios.patch(`/api/resumes/certain/views/${_id}`);
+    return _id;
+  } catch (err) {
+    const error = err as AxiosError<{ message: string }>;
+    if (!error.response) {
+      return thunkApi.rejectWithValue('Something went wrong');
+    }
+    return thunkApi.rejectWithValue(error.response.data.message);
+  }
+});
+
+export const updateResumeIsFavorite = createAsyncThunk<
+  string,
+  string,
+  { rejectValue: string }
+>('resumes/updateResumeFavorite', async (_id, thunkApi) => {
+  try {
+    await axios.patch(`/api/resumes/certain/favorite/${_id}`);
     return _id;
   } catch (err) {
     const error = err as AxiosError<{ message: string }>;

@@ -1,10 +1,7 @@
 import React from 'react';
 import * as Yup from 'yup';
-import {
-  // fileRequired,
-  fileFormat,
-  fileSize,
-} from 'utils';
+import { fileFormat, fileSize } from 'utils';
+
 export const resumeShema = (fileField: React.RefObject<HTMLInputElement>) =>
   Yup.object({
     name: Yup.string().trim().min(2).max(62).required(),
@@ -25,19 +22,14 @@ export const resumeShema = (fileField: React.RefObject<HTMLInputElement>) =>
     position: Yup.string()
       .trim()
       // TODO:  discus about validation of position field
-      // .matches(
-      //   /^(?![-' ]+$)[a-zA-Zа-яА-ЯіІїЇєЄ0-9-'‘ʼ,./ ]+$/,
-      //   'Поле позиції повинно містити тільки: латинські літери, цифри, дефіси та апостроф'
-      // )
+      .matches(
+        /^(?![-' ]+$)[a-zA-Zа-яА-ЯіІїЇєЄ0-9-'‘ʼ,./ ]+$/,
+        'Поле позиції повинно містити тільки: латинські літери, цифри, дефіси та апостроф'
+      )
       .min(2)
       .max(62)
       .required(),
     resume: Yup.mixed()
-      // .test(
-      //   'is-file-exist',
-      //   'Потрібно обовʼязково завантажити файл',
-      //   fileRequired(fileField)
-      // )
       .test(
         'is-corrent-forat',
         'Резюме повине буди в форматі pdf',

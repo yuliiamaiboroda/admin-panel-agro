@@ -7,6 +7,7 @@ import {
   removeResume,
   updateResumeViews,
   loadMoreResumes,
+  updateResumeIsFavorite,
 } from './operations';
 
 export interface IResume {
@@ -17,6 +18,7 @@ export interface IResume {
   position: string;
   resumeFileURL: string;
   comment: string;
+  isFavorite: boolean;
 }
 
 export interface IResumeEntity {
@@ -24,6 +26,7 @@ export interface IResumeEntity {
   name: string;
   position: string;
   comment: string;
+  isFavorite: boolean;
   isReviewed: boolean;
 }
 
@@ -131,7 +134,28 @@ const resumesSlice = createSlice({
           ),
         };
       })
-      .addCase(updateResumeViews.rejected, rejectedReducer);
+      .addCase(updateResumeViews.rejected, rejectedReducer)
+      .addCase(updateResumeIsFavorite.pending, pendingReducer)
+      .addCase(updateResumeIsFavorite.fulfilled, (state, action) => {
+        return {
+          ...state,
+          isLoading: false,
+          entities: state.entities.map(entity =>
+            entity._id === action.payload
+              ? { ...entity, isFavorite: !entity.isFavorite }
+              : entity
+          ),
+          ...(state.certain
+            ? {
+                certain: {
+                  ...state.certain,
+                  isFavorite: !state.certain.isFavorite,
+                },
+              }
+            : null),
+        };
+      })
+      .addCase(updateResumeIsFavorite.rejected, rejectedReducer);
   },
 });
 
