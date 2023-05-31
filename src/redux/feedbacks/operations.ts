@@ -10,7 +10,7 @@ export const getAllFeedback = createAsyncThunk<
 >('feedback/getAll', async (_, thunkApi) => {
   try {
     const { data } = await axios.get('/api/feedback/all');
-    return data;
+    return data.feedbacks;
   } catch (err) {
     const error = err as AxiosError;
     Notify.failure(error.message);
@@ -27,6 +27,23 @@ export const removeFeedbackById = createAsyncThunk<
 >('feedback/removeById', async (_id, thunkApi) => {
   try {
     await axios.delete(`/api/feedback/${_id}`);
+    return _id;
+  } catch (err) {
+    const error = err as AxiosError;
+    Notify.failure(error.message);
+    return thunkApi.rejectWithValue(error.message);
+  }
+});
+
+export const updateFeedbackViews = createAsyncThunk<
+  string,
+  string,
+  {
+    rejectValue: string;
+  }
+>('feedback/updateViews', async (_id, thunkApi) => {
+  try {
+    await axios.patch(`/api/feedback/${_id}`);
     return _id;
   } catch (err) {
     const error = err as AxiosError;

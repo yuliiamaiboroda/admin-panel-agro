@@ -4,6 +4,13 @@ import { getAllFeedback, removeFeedbackById } from './operations';
 export interface IFeedback {
   _id: string;
   name: string;
+  comment: string;
+  isReviewed: boolean;
+  createdAt: string;
+}
+export interface IFeedbackCurrent {
+  _id: string;
+  name: string;
   contactPhone: string;
   contactMail: string;
   comment: string;

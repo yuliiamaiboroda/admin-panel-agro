@@ -3,22 +3,19 @@ import ModalDelete from 'components/ModalDelete';
 import { useAppDispatch } from 'hooks';
 import { useState } from 'react';
 import { removeFeedbackById } from 'redux/feedbacks';
-
-interface IFeedback {
+export interface IFeedback {
   _id: string;
   name: string;
-  contactPhone: string;
-  contactMail: string;
   comment: string;
-  agreement: boolean;
+  isReviewed: boolean;
+  createdAt: string;
 }
 export default function FeedbackCard({
   _id,
   name,
-  contactPhone,
-  contactMail,
+  isReviewed,
   comment,
-  agreement,
+  createdAt,
 }: IFeedback) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const dispatch = useAppDispatch();
@@ -29,6 +26,7 @@ export default function FeedbackCard({
 
   return (
     <li>
+      {isReviewed && <h2>New</h2>}
       <p>
         Ім'я:
         <span>{name}</span>
@@ -38,16 +36,7 @@ export default function FeedbackCard({
         <span>{comment}</span>
       </p>
       <p>
-        Контактний телефон:
-        <a href={`tel:${contactPhone}`}>{contactPhone}</a>
-      </p>
-      <p>
-        Контактна пошта:
-        <a href={`mailto:${contactMail}`}>{contactMail}</a>
-      </p>
-      <p>
-        Згода на обробку даних:
-        <span>{agreement ? 'Надана' : 'Не надана'}</span>
+        Створений <span>{createdAt}</span>
       </p>
       <button
         type="button"
