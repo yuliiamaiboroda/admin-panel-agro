@@ -6,4 +6,6 @@ export { Categories } from './vacancy-categories';
 
 export { Errors } from './errors';
 
-export {theme} from './theme'
+export { theme } from './theme';
+
+export { GlobalStyle } from './GlobalStyle';
