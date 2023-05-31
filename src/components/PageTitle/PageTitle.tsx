@@ -1,4 +1,4 @@
-import React from 'react';
+import { Title, TitleWrapper } from './PageTitle.styled';
 
 interface IProps {
   title: string;
@@ -6,8 +6,8 @@ interface IProps {
 
 export default function PageTitle({ title }: IProps) {
   return (
-    <div>
-      <h1>{title}</h1>
-    </div>
+    <TitleWrapper>
+      <Title>{title}</Title>
+    </TitleWrapper>
   );
 }
