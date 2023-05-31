@@ -3,10 +3,11 @@ export enum Errors {
   notFound = 'Not found',
   emailInUse = 'Email in use',
   notHaveAccess = 'Do not have access rights to the content',
-  imageRequired = 'Image required',
+  fileRequired = 'File required',
   storageFailed = 'File storage failed',
   forbiddenDelete = 'It is forbidden to delete the last account with these access rights',
   wrongPass = 'A wrong password has been entered',
   serverError = 'Server error',
   somethingWrong = 'Something went wrong',
+  isAlreadyViewed = 'The item has already been reviewed',
 }

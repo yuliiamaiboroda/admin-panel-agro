@@ -1,7 +1,8 @@
-import { useRef } from 'react';
+import { useRef, useEffect } from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
-import { useAppDispatch } from 'hooks';
+import { useAppDispatch, useAppSelector } from 'hooks';
 import { createResume } from 'redux/resumes';
+import { getAllVacancyTitles, selectVacancyTitles } from 'redux/vacancies';
 import { resumeShema } from 'helpers/schemas/resumes';
 import UploadFileField from 'components/UploadFileField';
 
@@ -11,7 +12,12 @@ interface IProps {
 
 export default function ResumeForm({ onSubmit }: IProps) {
   const fileField = useRef<HTMLInputElement>(null);
+  const vacancies = useAppSelector(selectVacancyTitles);
   const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(getAllVacancyTitles());
+  }, [dispatch]);
 
   return (
     <Formik
@@ -48,7 +54,7 @@ export default function ResumeForm({ onSubmit }: IProps) {
         }
       }}
     >
-      {({ values }) => (
+      {({ values, setFieldValue }) => (
         <Form>
           <label>
             Name: <Field id="name" name="name" type="text" />
@@ -66,7 +72,21 @@ export default function ResumeForm({ onSubmit }: IProps) {
           </label>
           <br />
           <label>
-            Position: <Field id="position" name="position" type="text" />
+            Position:
+            <select
+              name="position"
+              id="position"
+              value={values.position}
+              onChange={event => setFieldValue('position', event.target.value)}
+            >
+              <option value="">Оберіть вакансію</option>
+              {vacancies.map(({ _id, title }) => (
+                <option key={_id} value={title}>
+                  {title}
+                </option>
+              ))}
+              <option value="other">Інше</option>
+            </select>
             <ErrorMessage name="position" />
           </label>
           <br />

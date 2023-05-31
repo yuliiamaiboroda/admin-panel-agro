@@ -12,17 +12,17 @@ export const productSchema = (
     image: Yup.mixed()
       .test(
         'is-file-exist',
-        'File should be uploaded',
+        'Потрібно обовʼязково завантажити зображення',
         fileConditional(fileField, condition)
       )
       .test(
         'is-correct-format',
-        'Image should be one of the next formats: jpg, jpeg, png',
+        'Доступні формати зображення: jpg, jpeg, png',
         fileFormat(fileField, ['jpeg', 'png'])
       )
       .test(
         'is-correct-size',
-        'Image should not be more than 5Mb',
+        'Розмір зображення не повинен перевищувати 5Mb',
         fileSize(fileField, 5)
       ),
   });
