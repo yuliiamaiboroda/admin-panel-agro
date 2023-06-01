@@ -5,6 +5,7 @@ import { useAppDispatch, useAppSelector } from 'hooks';
 import { getAllProducts, selectProductError } from 'redux/products';
 import ProductsGallery from 'components/ProductsGallery';
 import Loader from 'components/Loader';
+import PageTitle from 'components/PageTitle';
 
 export default function ProductsPage() {
   const dispatch = useAppDispatch();
@@ -27,7 +28,7 @@ export default function ProductsPage() {
 
   return (
     <div>
-      <h1>Products page</h1>
+      <PageTitle title='Продукти компанії'/>
       <ProductsGallery />
       <Suspense fallback={<Loader />}>
         <Outlet />

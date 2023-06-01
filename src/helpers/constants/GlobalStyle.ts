@@ -16,6 +16,7 @@ const GlobalStyle = createGlobalStyle`
     -moz-osx-font-smoothing: grayscale;
 
     color: #8A92A6;
+    background-color: #E5E5E5;
 }
   code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
@@ -26,7 +27,7 @@ const GlobalStyle = createGlobalStyle`
     margin-bottom: 0px
 }
   img {
-    display: block; 
+    display: inline-block; 
     max-width: 100%; 
     height: auto
 }
