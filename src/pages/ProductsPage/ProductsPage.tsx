@@ -1,9 +1,10 @@
-import { useEffect } from 'react';
+import { useEffect, Suspense } from 'react';
 import { Outlet } from 'react-router-dom';
 import { Notify } from 'notiflix';
 import { useAppDispatch, useAppSelector } from 'hooks';
 import { getAllProducts, selectProductError } from 'redux/products';
 import ProductsGallery from 'components/ProductsGallery';
+import Loader from 'components/Loader';
 
 export default function ProductsPage() {
   const dispatch = useAppDispatch();
@@ -28,7 +29,9 @@ export default function ProductsPage() {
     <div>
       <h1>Products page</h1>
       <ProductsGallery />
-      <Outlet />
+      <Suspense fallback={<Loader />}>
+        <Outlet />
+      </Suspense>
     </div>
   );
 }

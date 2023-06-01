@@ -4,38 +4,23 @@ import { useAppDispatch, useAppSelector } from 'hooks';
 import { refreshUser, selectUser } from 'redux/user';
 import { Roles } from 'helpers/constants';
 
-// import SharedLayout from 'components/SharedLayout';
 import PrivateRoute from 'components/PrivateRoute';
 import Loader from 'components/Loader';
 
-// import LoginPage from 'pages/LoginPage';
-// import UsersPage from 'pages/UsersPage/UsersPage';
-// import ProfilePage from 'pages/ProfilePage';
-// import ProductsPage from 'pages/ProductsPage';
-// import ServicesPage from 'pages/ServicesPage';
-// import VacanciesPage from 'pages/VacanciesPage';
-// import FeedbackPage from 'pages/FeedbackPage';
-// import ResumesPage from 'pages/ResumesPage';
-
-// import ProductModalLayout from 'components/ProductModalLayout';
 import ProductModalDetails from 'components/ProductModalDetails';
 import ProductModalEditForm from 'components/ProductModalEditForm';
 import ProductModalConfirmation from 'components/ProductModalConfirmation';
-// import ResumeModalLayout from 'components/ResumeModalLayout';
 import ResumeModalDetails from 'components/ResumeModalDetails';
 import ResumeModalConfirmation from 'components/ResumeModalConfirmation';
 import VacanciesDashboard from 'components/Vacancies/VacanciesDashboard';
-// import VacanciesModalLayout from 'components/VacanciesModalLayout';
 import VacanciesModalDetails from 'components/VacanciesModalDetails';
 import VacanciesModalUpdateForm from 'components/VacanciesModalUpdateForm';
 import VacanciesModalConfirm from 'components/VacanciesModalConfirm';
-// import ServiceModalLayout from 'components/ServiceModalLayout';
 import ServiceModalDetails from 'components/ServiceModalDetails';
 import ServiceModalEditForm from 'components/ServiceModalEditForm';
 import ServiceModalConfirmation from 'components/ServiceModalConfirmation';
 
 import RestrictedRoute from 'components/RestrictedRoute';
-// import UsersModalLayout from 'components/UsersModalLayout';
 import UsersModalDetails from 'components/UsersModalDetails';
 import UsersModalUpdateForm from 'components/UsersModalUpdateForm';
 import UsersModalConfirm from 'components/UsersModalConfirm';
@@ -98,42 +83,10 @@ function App() {
               />
             }
           >
-            <Route
-              path=":userId"
-              element={
-                <RestrictedRoute
-                  component={<UsersModalLayout />}
-                  redirectTo="/products"
-                />
-              }
-            >
-              <Route
-                index
-                element={
-                  <RestrictedRoute
-                    component={<UsersModalDetails />}
-                    redirectTo="/products"
-                  />
-                }
-              />
-              <Route
-                path="form"
-                element={
-                  <RestrictedRoute
-                    component={<UsersModalUpdateForm />}
-                    redirectTo="/products"
-                  />
-                }
-              />
-              <Route
-                path="confirm"
-                element={
-                  <RestrictedRoute
-                    component={<UsersModalConfirm />}
-                    redirectTo="/products"
-                  />
-                }
-              />
+            <Route path=":userId" element={<UsersModalLayout />}>
+              <Route index element={<UsersModalDetails />} />
+              <Route path="form" element={<UsersModalUpdateForm />} />
+              <Route path="confirm" element={<UsersModalConfirm />} />
               <Route path="*" element={<Navigate to="/users" replace />} />
             </Route>
           </Route>
@@ -182,7 +135,7 @@ function App() {
                   <RestrictedRoute
                     component={<ServiceModalConfirmation />}
                     accessRight={Roles.servicesManager}
-                    redirectTo="/products"
+                    redirectTo="/services"
                   />
                 }
               />
