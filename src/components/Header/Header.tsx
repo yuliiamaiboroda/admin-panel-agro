@@ -1,10 +1,12 @@
 import Modal from 'components/Modal/Modal';
 import ModalLogout from 'components/ModalLogout/ModalLogout';
-import translateRole from 'helpers/translateRoles';
+import translateRole from 'utils/translate-role';
 import { useAppDispatch, useAppSelector } from 'hooks';
 import { useState } from 'react';
 import { AiOutlineLogout } from 'react-icons/ai';
 import { logoutUser, selectUser } from 'redux/user';
+import { Roles } from 'helpers/constants';
+import { NavLink } from 'react-router-dom';
 
 export default function Header() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -17,12 +19,15 @@ export default function Header() {
 
   return (
     <header>
-      <h2>
-        {name} {surname}
-      </h2>
-      {role !== null && <div>{translateRole(role)}</div>}
+      <NavLink to="/profile">
+        <h2>
+          {name} {surname}
+        </h2>
+        {role && <div>{translateRole(Roles[role])}</div>}
 
-      <p>{email}</p>
+        <p>{email}</p>
+      </NavLink>
+
       <button
         type="button"
         onClick={(e: React.MouseEvent<HTMLButtonElement>) =>

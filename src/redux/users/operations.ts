@@ -12,8 +12,11 @@ export const getAllUsers = createAsyncThunk<
     const { data } = await axios.get('/api/users/getAllUser');
     return data;
   } catch (err) {
-    const error = err as AxiosError;
-    return thunkApi.rejectWithValue(error.message);
+    const error = err as AxiosError<{ message: string }>;
+    if (!error.response) {
+      return thunkApi.rejectWithValue('Something went wrong');
+    }
+    return thunkApi.rejectWithValue(error.response.data.message);
   }
 });
 
@@ -26,8 +29,11 @@ export const removeUserById = createAsyncThunk<
     await axios.delete(`/api/users/${_id}`);
     return _id;
   } catch (err) {
-    const error = err as AxiosError;
-    return thunkApi.rejectWithValue(error.message);
+    const error = err as AxiosError<{ message: string }>;
+    if (!error.response) {
+      return thunkApi.rejectWithValue('Something went wrong');
+    }
+    return thunkApi.rejectWithValue(error.response.data.message);
   }
 });
 
@@ -54,33 +60,85 @@ export const registerNewUser = createAsyncThunk<
       });
       return data;
     } catch (err) {
-      const error = err as AxiosError;
-      Notify.failure('something went wrong ');
-      console.log(error);
-      return thunkApi.rejectWithValue(error.message);
+      const error = err as AxiosError<{ message: string }>;
+      if (!error.response) {
+        return thunkApi.rejectWithValue('Something went wrong');
+      }
+      return thunkApi.rejectWithValue(error.response.data.message);
     }
   }
 );
 
 export const updateUserById = createAsyncThunk<
   IUser,
-  IUser,
+  { password: string | null } & IUser,
   {
     rejectValue: string;
   }
->('users/updateById', async ({ email, name, surname, role, _id }, thunkApi) => {
+>(
+  'users/updateById',
+  async ({ email, name, surname, role, _id, password }, thunkApi) => {
+    try {
+      let requestBody;
+
+      password
+        ? (requestBody = { email, surname, role, name, password })
+        : (requestBody = {
+            email,
+            surname,
+            role,
+            name,
+          });
+
+      const { data } = await axios.patch(`/api/users/${_id}`, requestBody);
+      return data;
+    } catch (err) {
+      const error = err as AxiosError<{ message: string }>;
+      if (!error.response) {
+        return thunkApi.rejectWithValue('Something went wrong');
+      }
+      return thunkApi.rejectWithValue(error.response.data.message);
+    }
+  }
+);
+
+export const getCertainUser = createAsyncThunk<
+  IUser,
+  string,
+  {
+    rejectValue: string;
+  }
+>('users/getCertain', async (_id, thunkApi) => {
   try {
-    const { data } = await axios.patch(`/api/users/${_id}`, {
-      email,
-      name,
-      surname,
-      role,
-    });
+    const { data } = await axios.get(`/api/users/certain/${_id}`);
     return data;
   } catch (err) {
-    const error = err as AxiosError;
-    Notify.failure('something went wrong ');
-    console.log(error);
-    return thunkApi.rejectWithValue(error.message);
+    const error = err as AxiosError<{ message: string }>;
+    if (!error.response) {
+      return thunkApi.rejectWithValue('Something went wrong');
+    }
+    return thunkApi.rejectWithValue(error.response.data.message);
+  }
+});
+
+export const updatePasswordById = createAsyncThunk<
+  string,
+  { oldPassword: string; newPassword: string },
+  {
+    rejectValue: string;
+  }
+>('users/updatePassword', async ({ oldPassword, newPassword }, thunkApi) => {
+  try {
+    let requestBody = { oldPassword, newPassword };
+
+    const { data } = await axios.post(`/api/users/updatePassword`, requestBody);
+    Notify.success(data);
+    return data;
+  } catch (err) {
+    const error = err as AxiosError<{ message: string }>;
+    if (!error.response) {
+      return thunkApi.rejectWithValue('Something went wrong');
+    }
+    return thunkApi.rejectWithValue(error.response.data.message);
   }
 });

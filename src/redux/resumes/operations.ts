@@ -1,16 +1,41 @@
 import axios, { AxiosError } from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import type { IResume } from './slice';
+import type { IResume, IResumeEntity, IResumeResponse } from 'helpers/types';
 import { createFormData } from 'utils';
 
 export const getAllResumes = createAsyncThunk<
-  IResume[],
-  undefined,
+  IResumeResponse,
+  { [x: string]: string },
   { rejectValue: string }
->('resumes/getAllResumes', async (_, thunkApi) => {
+>('resumes/getAllResumes', async (params, thunkApi) => {
   try {
-    const { data } = await axios.get('/api/resume/all');
-    return data;
+    const {
+      data: { resumes, ...pagination },
+    } = await axios.get('/api/resumes/all', {
+      params,
+    });
+    return { resumes, pagination };
+  } catch (err) {
+    const error = err as AxiosError<{ message: string }>;
+    if (!error.response) {
+      return thunkApi.rejectWithValue('Something went wrong');
+    }
+    return thunkApi.rejectWithValue(error.response.data.message);
+  }
+});
+
+export const loadMoreResumes = createAsyncThunk<
+  IResumeResponse,
+  { [x: string]: string | number },
+  { rejectValue: string }
+>('resumes/loadMoreResumes', async (params, thunkApi) => {
+  try {
+    const {
+      data: { resumes, ...pagination },
+    } = await axios.get('/api/resumes/all', {
+      params,
+    });
+    return { resumes, pagination };
   } catch (err) {
     const error = err as AxiosError<{ message: string }>;
     if (!error.response) {
@@ -26,7 +51,7 @@ export const getCertainResume = createAsyncThunk<
   { rejectValue: string }
 >('resumes/getCertainResume', async (_id, thunkApi) => {
   try {
-    const { data } = await axios.get(`/api/resume/certain/${_id}`);
+    const { data } = await axios.get(`/api/resumes/certain/${_id}`);
     return data;
   } catch (err) {
     const error = err as AxiosError<{ message: string }>;
@@ -37,6 +62,7 @@ export const getCertainResume = createAsyncThunk<
   }
 });
 
+// TODO:  Remove creating new resume before production
 interface IResumeData {
   name: string;
   phone: string;
@@ -48,19 +74,43 @@ interface IResumeData {
 }
 
 export const createResume = createAsyncThunk<
-  IResume,
+  IResumeEntity,
   IResumeData,
   { rejectValue: string }
 >('resumes/createResume', async (resumeData, thunkApi) => {
   try {
-    if (!resumeData.resume) {
-      return thunkApi.rejectWithValue('File should be uploaded');
-    }
     const reqBody = createFormData(resumeData);
-    const { data } = await axios.post('/api/resume', reqBody, {
+    const { data } = await axios.post('/api/resumes', reqBody, {
       headers: { 'Content-Type': 'multipart/form-data' },
     });
-    return data;
+
+    const { _id, name, position, comment } = data;
+    return {
+      _id,
+      name,
+      position,
+      comment,
+      isReviewed: false,
+      isFavorite: false,
+    };
+  } catch (err) {
+    const error = err as AxiosError<{ message: string }>;
+    if (!error.response) {
+      return thunkApi.rejectWithValue('Something went wrong');
+    }
+    return thunkApi.rejectWithValue(error.response.data.message);
+  }
+});
+// -------------------------- remove to here -------------------------------------
+
+export const removeResume = createAsyncThunk<
+  string,
+  string,
+  { rejectValue: string }
+>('resumes/removeResume', async (_id, thunkApi) => {
+  try {
+    await axios.delete(`/api/resumes/certain/${_id}`);
+    return _id;
   } catch (err) {
     const error = err as AxiosError<{ message: string }>;
     if (!error.response) {
@@ -70,13 +120,30 @@ export const createResume = createAsyncThunk<
   }
 });
 
-export const removeResume = createAsyncThunk<
+export const updateResumeViews = createAsyncThunk<
   string,
   string,
   { rejectValue: string }
->('resumes/removeResume', async (_id, thunkApi) => {
+>('resumes/updateResumeViews', async (_id, thunkApi) => {
   try {
-    await axios.delete(`/api/resume/certain/${_id}`);
+    await axios.patch(`/api/resumes/certain/views/${_id}`);
+    return _id;
+  } catch (err) {
+    const error = err as AxiosError<{ message: string }>;
+    if (!error.response) {
+      return thunkApi.rejectWithValue('Something went wrong');
+    }
+    return thunkApi.rejectWithValue(error.response.data.message);
+  }
+});
+
+export const updateResumeIsFavorite = createAsyncThunk<
+  string,
+  string,
+  { rejectValue: string }
+>('resumes/updateResumeFavorite', async (_id, thunkApi) => {
+  try {
+    await axios.patch(`/api/resumes/certain/favorite/${_id}`);
     return _id;
   } catch (err) {
     const error = err as AxiosError<{ message: string }>;

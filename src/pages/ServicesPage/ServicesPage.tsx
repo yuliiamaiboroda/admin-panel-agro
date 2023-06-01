@@ -1,34 +1,32 @@
-import { useEffect, useState } from 'react';
-import { useAppDispatch } from 'hooks';
-import { getAllServices } from 'redux/services';
+import { useEffect, Suspense } from 'react';
+import { useAppDispatch, useAppSelector } from 'hooks';
+import { getAllServices, selectError } from 'redux/services';
+import { Outlet } from 'react-router-dom';
+import { Notify } from 'notiflix';
 
 import PageTitle from 'components/PageTitle';
 import ServicesGallery from 'components/ServicesGallery';
-import CreateNewAd from 'components/CreateNewAd';
-import Modal from 'components/Modal';
-import CreateServiceForm from 'components/CreateServiceForm';
+import Loader from 'components/Loader';
 
 export default function ServicesPage() {
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const dispatch = useAppDispatch();
+  const error = useAppSelector(selectError);
 
   useEffect(() => {
     dispatch(getAllServices());
   }, [dispatch]);
 
-  const handleModalClose = () => setIsModalOpen(false);
-  const handleModalOpen = () => setIsModalOpen(true);
+  if (error) {
+    Notify.failure(error);
+  }
 
   return (
     <>
-      <PageTitle title="Company services" />
+      <PageTitle title="Послуги компанії" />
       <ServicesGallery />
-      <CreateNewAd onClick={handleModalOpen} />
-      {isModalOpen && (
-        <Modal onClose={handleModalClose}>
-          <CreateServiceForm onSubmit={handleModalClose} />
-        </Modal>
-      )}
+      <Suspense fallback={<Loader />}>
+        <Outlet />
+      </Suspense>
     </>
   );
 }

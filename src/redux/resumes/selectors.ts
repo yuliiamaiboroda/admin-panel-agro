@@ -8,3 +8,6 @@ export const selectResumeLoading = (state: RootState) =>
   state.resumes.isLoading;
 
 export const selectResumeError = (state: RootState) => state.resumes.error;
+
+export const selectResumePagination = (state: RootState) =>
+  state.resumes.pagination;

@@ -1,6 +1,7 @@
 import { Link, useLocation } from 'react-router-dom';
 import { useAppSelector } from 'hooks';
 import { selectVacancies } from 'redux/vacancies';
+import translateCategory from 'utils/translate-vacancy-category';
 
 export default function VacanciesModalDetails() {
   const { certain } = useAppSelector(selectVacancies);
@@ -30,7 +31,7 @@ export default function VacanciesModalDetails() {
       </p>
       <p>
         Категорія:
-        <span>{category}</span>
+        <span>{translateCategory(category)}</span>
       </p>
       <p>
         Зарплатня:

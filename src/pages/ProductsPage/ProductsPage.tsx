@@ -1,9 +1,11 @@
-import { useEffect } from 'react';
+import { useEffect, Suspense } from 'react';
 import { Outlet } from 'react-router-dom';
 import { Notify } from 'notiflix';
 import { useAppDispatch, useAppSelector } from 'hooks';
 import { getAllProducts, selectProductError } from 'redux/products';
 import ProductsGallery from 'components/ProductsGallery';
+import Loader from 'components/Loader';
+import PageTitle from 'components/PageTitle';
 
 export default function ProductsPage() {
   const dispatch = useAppDispatch();
@@ -15,13 +17,22 @@ export default function ProductsPage() {
 
   if (error) {
     Notify.failure(error);
+    return (
+      <>
+        <h1>Products page</h1>
+        <h2>Ooops... Something went wrong</h2>
+        <h3>It seems like: {error}</h3>
+      </>
+    );
   }
 
   return (
     <div>
-      <h1>Products page</h1>
+      <PageTitle title='Продукти компанії'/>
       <ProductsGallery />
-      <Outlet />
+      <Suspense fallback={<Loader />}>
+        <Outlet />
+      </Suspense>
     </div>
   );
 }

@@ -1,29 +1,35 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import {
   getAllUsers,
+  getCertainUser,
   registerNewUser,
   removeUserById,
+  updatePasswordById,
   updateUserById,
 } from './operations';
+import type { Roles } from 'helpers/constants';
 
 export interface IUser {
   _id: string;
   email: string;
   name: string;
   surname: string;
-  role: string;
+  role: keyof typeof Roles;
+  createdAt?: string;
 }
 
 interface IState {
   entities: IUser[];
   isLoading: boolean;
   error: string | null;
+  certain: IUser | null;
 }
 
 const initialState: IState = {
   entities: [],
   isLoading: false,
   error: null,
+  certain: null,
 };
 
 const usersPendingReducer = (state: IState) => {
@@ -90,18 +96,46 @@ const updateUserByIdFulfilledReducer = (
       }
       return item;
     }),
+    ...(state.certain ? { certain: action.payload } : null),
+  };
+};
+
+const getCertainFulfilledReducer = (
+  state: IState,
+  action: PayloadAction<IUser, string>
+) => {
+  return {
+    ...state,
+    isLoading: false,
+    certain: action.payload,
+  };
+};
+
+const updatePasswordByIdFulfilledReducer = (
+  state: IState,
+) => {
+  return {
+    ...state,
+    isLoading: false,
   };
 };
 
 const usersSlice = createSlice({
   name: 'users',
   initialState,
-  reducers: {},
+  reducers: {
+    removeCertainUser(state) {
+      return { ...state, certain: null };
+    },
+  },
   extraReducers: builder =>
     builder
       .addCase(getAllUsers.pending, usersPendingReducer)
       .addCase(getAllUsers.fulfilled, getAllUsersFulfilledReducer)
       .addCase(getAllUsers.rejected, usersRejectedReducer)
+      .addCase(getCertainUser.pending, usersPendingReducer)
+      .addCase(getCertainUser.fulfilled, getCertainFulfilledReducer)
+      .addCase(getCertainUser.rejected, usersRejectedReducer)
       .addCase(removeUserById.pending, usersPendingReducer)
       .addCase(removeUserById.fulfilled, removeUserByIdFulfilledReducer)
       .addCase(removeUserById.rejected, usersRejectedReducer)
@@ -110,7 +144,11 @@ const usersSlice = createSlice({
       .addCase(registerNewUser.rejected, usersRejectedReducer)
       .addCase(updateUserById.pending, usersPendingReducer)
       .addCase(updateUserById.fulfilled, updateUserByIdFulfilledReducer)
-      .addCase(updateUserById.rejected, usersRejectedReducer),
+      .addCase(updateUserById.rejected, usersRejectedReducer)
+      .addCase(updatePasswordById.pending, usersPendingReducer)
+      .addCase(updatePasswordById.fulfilled, updatePasswordByIdFulfilledReducer)
+      .addCase(updatePasswordById.rejected, usersRejectedReducer),
 });
 
 export const usersReducer = usersSlice.reducer;
+export const { removeCertainUser } = usersSlice.actions;

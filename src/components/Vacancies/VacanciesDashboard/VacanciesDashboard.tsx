@@ -1,63 +1,60 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, Suspense } from 'react';
 import { Outlet, useParams, useNavigate } from 'react-router-dom';
 import VacanciesGallery from '../VacanciesGallery';
 import Modal from 'components/Modal';
-import CreateVacancyForm from '../CreateVacancyForm';
 import { useAppDispatch, useAppSelector, useModal } from 'hooks';
-import { selectUserRole } from 'redux/user';
 import {
-  getAllVacancies,
-  getActualVacancies,
-  getIrrelevantVacancies,
+  createVacancy,
+  getVacanciesByCategories,
+  selectVacancies,
 } from 'redux/vacancies';
+import { Roles } from 'helpers/constants';
 import VacanciesNavigator from 'components/Vacancies/VacanciesNavigator';
-
-enum ROLES {
-  admin = 'admin',
-  applyManager = 'applyManager',
-  servicesManager = 'servicesManager',
-  productsManager = 'productsManager',
-}
+import RestrictedComponent from 'components/RestrictedComponent';
+import Loader from 'components/Loader';
+import VacancyForm from 'components/VacancyForm/VacancyForm';
 
 export default function VacanciesDashboard() {
   const { isModalOpen, openModal, closeModal } = useModal();
   const dispatch = useAppDispatch();
+  const { isListLoading } = useAppSelector(selectVacancies);
   const { categoryName } = useParams();
   const navigate = useNavigate();
-  const role = useAppSelector(selectUserRole);
 
   useEffect(() => {
-    switch (categoryName) {
-      case 'all-vacancies':
-        dispatch(getAllVacancies());
-        break;
-      case 'actual-vacancies':
-        dispatch(getActualVacancies());
-        break;
-      case 'irrelevant-vacancies':
-        dispatch(getIrrelevantVacancies());
-        break;
-      default:
-        navigate('/vacancies');
-    }
+    categoryName
+      ? dispatch(getVacanciesByCategories(categoryName))
+      : navigate('all-vacancies');
   }, [categoryName, dispatch, navigate]);
 
   return (
     <div>
       <VacanciesNavigator />
-      <VacanciesGallery />
-      {role === ROLES.admin || role === ROLES.applyManager ? (
+      {isListLoading ? <Loader /> : <VacanciesGallery />}
+      <RestrictedComponent accessRight={Roles.applyManager}>
         <button type="button" onClick={openModal}>
-          Створити нове оголошення
+          Створити нову вакансію
         </button>
-      ) : null}
+      </RestrictedComponent>
 
       {isModalOpen && (
         <Modal onClose={closeModal}>
-          <CreateVacancyForm onClose={closeModal} />
+          <RestrictedComponent accessRight={Roles.applyManager}>
+            <VacancyForm
+              formName="Створити нову вакансію"
+              buttonName="Створити"
+              onClose={() => closeModal()}
+              onSubmit={vacancyData => {
+                dispatch(createVacancy(vacancyData));
+                closeModal();
+              }}
+            />
+          </RestrictedComponent>
         </Modal>
       )}
-      <Outlet />
+      <Suspense fallback={<Loader />}>
+        <Outlet />
+      </Suspense>
     </div>
   );
 }

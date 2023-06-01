@@ -2,6 +2,15 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios, { AxiosError } from 'axios';
 import type { IService } from './slice';
 
+interface IServiceData {
+  title: string;
+  description: string;
+  image: File | null;
+  price: string;
+  contactMail: string;
+  contactPhone: string;
+}
+
 export const getAllServices = createAsyncThunk<
   IService[],
   undefined,
@@ -19,16 +28,26 @@ export const getAllServices = createAsyncThunk<
   }
 });
 
+export const getCertainService = createAsyncThunk<
+  IService,
+  string,
+  { rejectValue: string }
+>('services/getCertain', async (_id, thunkApi) => {
+  try {
+    const { data } = await axios.get(`/api/services/${_id}`);
+    return data;
+  } catch (err) {
+    const error = err as AxiosError<{ message: string }>;
+    if (!error.response) {
+      return thunkApi.rejectWithValue('Something went wrong');
+    }
+    return thunkApi.rejectWithValue(error.response.data.message);
+  }
+});
+
 export const createService = createAsyncThunk<
   IService,
-  {
-    title: string;
-    description: string;
-    image: File;
-    price: string;
-    contactMail: string;
-    contactPhone: string;
-  },
+  IServiceData,
   { rejectValue: string }
 >(
   'services/create',
@@ -37,6 +56,9 @@ export const createService = createAsyncThunk<
     thunkApi
   ) => {
     try {
+      if (!image) {
+        return thunkApi.rejectWithValue('File should be uploaded');
+      }  
       const reqBody = new FormData();
       reqBody.append('title', title);
       reqBody.append('description', description);
@@ -85,13 +107,7 @@ export const updateService = createAsyncThunk<
   IService,
   {
     _id: string;
-    title?: string;
-    description?: string;
-    image?: File;
-    price?: string;
-    contactMail?: string;
-    contactPhone?: string;
-  },
+  } & IServiceData,
   { rejectValue: string }
 >(
   'services/update',
@@ -101,24 +117,15 @@ export const updateService = createAsyncThunk<
   ) => {
     try {
       const reqBody = new FormData();
-      if (title) {
-        reqBody.append('title', title);
-      }
-      if (description) {
-        reqBody.append('description', description);
-      }
+      reqBody.append('title', title);
+      reqBody.append('description', description);
       if (image) {
         reqBody.append('image', image);
       }
-      if (price) {
-        reqBody.append('price', price);
-      }
-      if (contactMail) {
-        reqBody.append('contactMail', contactMail);
-      }
-      if (contactPhone) {
-        reqBody.append('contactPhone', contactPhone);
-      }
+      reqBody.append('price', price);
+      reqBody.append('contactMail', contactMail);
+      reqBody.append('contactPhone', contactPhone);
+
       const { data } = await axios.patch(`/api/services/${_id}`, reqBody, {
         headers: { 'Content-Type': 'multipart/form-data' },
       });

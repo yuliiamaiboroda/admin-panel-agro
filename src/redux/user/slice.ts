@@ -6,6 +6,7 @@ import {
   logoutUser,
   refreshUser,
 } from './operations';
+import type { Roles } from 'helpers/constants';
 
 interface IUserState {
   accessToken: string | null;
@@ -13,7 +14,7 @@ interface IUserState {
     email: string | null;
     name: string | null;
     surname: string | null;
-    role: string | null;
+    role: keyof typeof Roles | null;
   };
   isAuthorized: boolean;
   isLoading: boolean;

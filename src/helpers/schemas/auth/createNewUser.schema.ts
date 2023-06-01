@@ -1,11 +1,5 @@
 import * as Yup from 'yup';
-
-enum ROLES {
-  admin = 'admin',
-  applyManager = 'applyManager',
-  servicesManager = 'servicesManager',
-  productsManager = 'productsManager',
-}
+import { Roles, USER_ROLES } from 'helpers/constants';
 
 const createNewUserSchema = Yup.object().shape({
   email: Yup.string()
@@ -31,6 +25,10 @@ const createNewUserSchema = Yup.object().shape({
       'Пароль має містити лише: великі літери, маленькі літери та цифри'
     )
     .required("Пароль є обов'язковим полем"),
+  confirmPassword: Yup.string().oneOf(
+    [Yup.ref('password'), ''],
+    'Паролі мають співпадати!'
+  ),
   name: Yup.string()
     .min(2, "Ім'я занадто коротке - має містити мінімум 2 символи")
     .max(30, "Ім'я занадтно довге - має містити максимум 30 символів")
@@ -44,8 +42,8 @@ const createNewUserSchema = Yup.object().shape({
       'Прізвище має містити лише літери'
     )
     .required("Прізвище є обов'язковим полем"),
-  role: Yup.mixed<ROLES>()
-    .oneOf(Object.values(ROLES))
+  role: Yup.mixed<Roles>()
+    .oneOf(USER_ROLES)
     .required("Роль нового користувача є обов'язковим полем"),
 });
 

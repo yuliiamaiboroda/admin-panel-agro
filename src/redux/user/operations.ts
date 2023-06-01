@@ -2,6 +2,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios, { AxiosError } from 'axios';
 import { Notify } from 'notiflix';
 import Cookies from 'universal-cookie';
+import type { Roles } from 'helpers/constants';
 
 interface IUser {
   accessToken: string;
@@ -10,7 +11,7 @@ interface IUser {
     email: string;
     name: string;
     surname: string;
-    role: string;
+    role: keyof typeof Roles;
   };
 }
 
@@ -20,7 +21,7 @@ interface IRefresh {
     email: string;
     name: string;
     surname: string;
-    role: string;
+    role: keyof typeof Roles;
   };
 }
 
