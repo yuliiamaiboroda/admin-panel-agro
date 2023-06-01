@@ -1,7 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios, { AxiosError } from 'axios';
 import { Notify } from 'notiflix';
-import { IFeedback } from './slice';
+import { IFeedback, IFeedbackCertain } from './slice';
 
 export const getAllFeedback = createAsyncThunk<
   IFeedback[],
@@ -45,6 +45,23 @@ export const updateFeedbackViews = createAsyncThunk<
   try {
     await axios.patch(`/api/feedback/${_id}`);
     return _id;
+  } catch (err) {
+    const error = err as AxiosError;
+    Notify.failure(error.message);
+    return thunkApi.rejectWithValue(error.message);
+  }
+});
+
+export const getCertainFeedback = createAsyncThunk<
+  IFeedbackCertain,
+  string,
+  {
+    rejectValue: string;
+  }
+>('feedback/certain', async (_id, thunkApi) => {
+  try {
+    const { data } = await axios.get(`/api/feedback/${_id}`);
+    return data;
   } catch (err) {
     const error = err as AxiosError;
     Notify.failure(error.message);

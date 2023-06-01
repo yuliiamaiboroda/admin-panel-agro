@@ -8,7 +8,7 @@ export interface IFeedback {
   isReviewed: boolean;
   createdAt: string;
 }
-export interface IFeedbackCurrent {
+export interface IFeedbackCertain {
   _id: string;
   name: string;
   contactPhone: string;
