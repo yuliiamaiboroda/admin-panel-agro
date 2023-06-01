@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
+import type { IProduct } from 'helpers/types';
 import {
   getAllProducts,
   getCertainProduct,
@@ -7,14 +8,6 @@ import {
   editProduct,
   removeProduct,
 } from './operations';
-
-export interface IProduct {
-  _id: string;
-  title: string;
-  imageURL: string;
-  description: string;
-  createdAt: string;
-}
 
 interface IState {
   entities: IProduct[];

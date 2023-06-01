@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios, { AxiosError } from 'axios';
-import type { IProduct } from './slice';
+import type { IProduct } from 'helpers/types';
 
 interface IProductData {
   title: string;
