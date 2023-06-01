@@ -1,12 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios, { AxiosError } from 'axios';
-import type { IProduct } from 'helpers/types';
-
-interface IProductData {
-  title: string;
-  description: string;
-  image: File | null;
-}
+import type { IProduct, IProductData } from 'helpers/types';
 
 export const getAllProducts = createAsyncThunk<
   IProduct[],

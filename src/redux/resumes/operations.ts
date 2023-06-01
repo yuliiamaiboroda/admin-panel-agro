@@ -1,10 +1,10 @@
 import axios, { AxiosError } from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import type { IResume, IResumeEntity, IResumePagination } from 'helpers/types';
+import type { IResume, IResumeEntity, IResumeResponse } from 'helpers/types';
 import { createFormData } from 'utils';
 
 export const getAllResumes = createAsyncThunk<
-  { resumes: IResumeEntity[]; pagination: IResumePagination },
+  IResumeResponse,
   { [x: string]: string },
   { rejectValue: string }
 >('resumes/getAllResumes', async (params, thunkApi) => {
@@ -25,7 +25,7 @@ export const getAllResumes = createAsyncThunk<
 });
 
 export const loadMoreResumes = createAsyncThunk<
-  { resumes: IResumeEntity[]; pagination: IResumePagination },
+  IResumeResponse,
   { [x: string]: string | number },
   { rejectValue: string }
 >('resumes/loadMoreResumes', async (params, thunkApi) => {
@@ -62,6 +62,7 @@ export const getCertainResume = createAsyncThunk<
   }
 });
 
+// TODO:  Remove creating new resume before production
 interface IResumeData {
   name: string;
   phone: string;
@@ -100,6 +101,7 @@ export const createResume = createAsyncThunk<
     return thunkApi.rejectWithValue(error.response.data.message);
   }
 });
+// -------------------------- remove to here -------------------------------------
 
 export const removeResume = createAsyncThunk<
   string,
