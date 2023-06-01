@@ -50,8 +50,7 @@ const navigationLinks: ILink[] = [
 export default function Navigation() {
   return (
     <ul>
-      {navigationLinks.map(({ href, title, access, icon }, index) => {
-        const Icon = icon;
+      {navigationLinks.map(({ href, title, access, icon: Icon }, index) => {
         return (
           <RestrictedComponent key={index} accessRight={access}>
             <li>
