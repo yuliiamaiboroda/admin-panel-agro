@@ -7,11 +7,13 @@ import ButtonUp from 'components/ButtonUp';
 
 export default function SharedLayout() {
   return (
-    <Suspense fallback={<Loader />}>
+    <>
       <Header />
       <Navigation />
       <ButtonUp />
-      <Outlet />
-    </Suspense>
+      <Suspense fallback={<Loader />}>
+        <Outlet />
+      </Suspense>
+    </>
   );
 }

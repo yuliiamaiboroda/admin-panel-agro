@@ -9,7 +9,7 @@ import translateRole from 'utils/translate-role';
 import ModalChangePassword from 'components/ModalChangePassword';
 import PageTitle from 'components/PageTitle';
 
-export default function UserPage() {
+export default function ProfilePage() {
   const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
   const [isChangePassModalOpen, setIsChangePassModalOpen] = useState(false);
   const dispatch = useAppDispatch();

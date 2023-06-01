@@ -19,7 +19,7 @@ export default function Header() {
 
   return (
     <header>
-      <NavLink to="/user">
+      <NavLink to="/profile">
         <h2>
           {name} {surname}
         </h2>

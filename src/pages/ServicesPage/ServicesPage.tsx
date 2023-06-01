@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, Suspense } from 'react';
 import { useAppDispatch, useAppSelector } from 'hooks';
 import { getAllServices, selectError } from 'redux/services';
 import { Outlet } from 'react-router-dom';
@@ -6,6 +6,7 @@ import { Notify } from 'notiflix';
 
 import PageTitle from 'components/PageTitle';
 import ServicesGallery from 'components/ServicesGallery';
+import Loader from 'components/Loader';
 
 export default function ServicesPage() {
   const dispatch = useAppDispatch();
@@ -23,7 +24,9 @@ export default function ServicesPage() {
     <>
       <PageTitle title="Послуги компанії" />
       <ServicesGallery />
-      <Outlet />
+      <Suspense fallback={<Loader />}>
+        <Outlet />
+      </Suspense>
     </>
   );
 }
