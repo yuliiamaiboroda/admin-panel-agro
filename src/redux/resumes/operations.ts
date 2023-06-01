@@ -1,6 +1,6 @@
 import axios, { AxiosError } from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import type { IResume, IResumeEntity, IResumePagination } from './slice';
+import type { IResume, IResumeEntity, IResumePagination } from 'helpers/types';
 import { createFormData } from 'utils';
 
 export const getAllResumes = createAsyncThunk<
