@@ -20,7 +20,7 @@ export default function ProductCard({
   return (
     <>
       <li
-        onClick={event => {
+        onClick={() => {
           navigate(`${_id}`);
         }}
       >

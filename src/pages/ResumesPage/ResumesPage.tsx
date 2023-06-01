@@ -1,3 +1,4 @@
+import { Suspense } from 'react';
 import { Outlet } from 'react-router-dom';
 import { Notify } from 'notiflix';
 import { useAppSelector, useModal } from 'hooks';
@@ -6,6 +7,7 @@ import ResumesGallery from 'components/ResumesGallery';
 import Modal from 'components/Modal';
 import ResumeForm from 'components/ResumeForm';
 import ResumesFilter from 'components/ResumesFilter';
+import Loader from 'components/Loader';
 
 export default function ResumesPage() {
   const { isModalOpen, openModal, closeModal } = useModal();
@@ -30,7 +32,9 @@ export default function ResumesPage() {
         Create resume
       </button>
       <ResumesGallery />
-      <Outlet />
+      <Suspense fallback={<Loader />}>
+        <Outlet />
+      </Suspense>
       {isModalOpen && (
         <Modal onClose={closeModal}>
           <ResumeForm onSubmit={closeModal} />

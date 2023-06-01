@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, Suspense } from 'react';
 import { Outlet, useParams, useNavigate } from 'react-router-dom';
 import VacanciesGallery from '../VacanciesGallery';
 import Modal from 'components/Modal';
@@ -52,7 +52,9 @@ export default function VacanciesDashboard() {
           </RestrictedComponent>
         </Modal>
       )}
-      <Outlet />
+      <Suspense fallback={<Loader />}>
+        <Outlet />
+      </Suspense>
     </div>
   );
 }
