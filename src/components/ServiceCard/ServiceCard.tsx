@@ -1,6 +1,7 @@
-import { useNavigate, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { Roles } from 'helpers/constants';
 import RestrictedComponent from 'components/RestrictedComponent';
+import CardMarkup from 'components/CardMarkup';
 
 interface IProps {
   _id: string;
@@ -21,28 +22,21 @@ export default function ServiceCard({
   contactMail,
   contactPhone,
 }: IProps) {
-  const navigate = useNavigate();
-
   return (
-    <li
-      onClick={event => {
-        if (event.target === event.currentTarget) {
-          navigate(`${_id}`);
-        }
-      }}
+    <CardMarkup
+      _id={_id}
+      title={title}
+      description={description}
+      imageURL={imageURL}
+      price={price}
+      contactMail={contactMail}
+      contactPhone={contactPhone}
     >
-      <img src={imageURL} alt={title} width="150" height="auto" />
-      <h2>{title}</h2>
-      <p>{description}</p>
-      <p>{price}</p>
-      <p>{contactPhone}</p>
-      <p>{contactMail}</p>
-
       <RestrictedComponent accessRight={Roles.servicesManager}>
         <Link to={`${_id}/form`}>Змінити</Link>
         <br />
         <Link to={`${_id}/confirm`}>Видалити</Link>
       </RestrictedComponent>
-    </li>
+    </CardMarkup>
   );
 }
