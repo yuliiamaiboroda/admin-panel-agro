@@ -1,7 +1,7 @@
 import { useNavigate, Link } from 'react-router-dom';
 import { useAppDispatch } from 'hooks';
 import { updateResumeViews, updateResumeIsFavorite } from 'redux/resumes';
-import type { IResumeEntity } from 'redux/resumes';
+import type { IResumeEntity } from 'helpers/types';
 export default function ResumeCard({
   _id,
   name,
