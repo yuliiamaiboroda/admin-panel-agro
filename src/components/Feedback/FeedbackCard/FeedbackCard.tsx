@@ -1,14 +1,13 @@
-import Modal from 'components/Modal';
-import ModalDelete from 'components/ModalDelete';
 import { useAppDispatch } from 'hooks';
-import { useState } from 'react';
-import { removeFeedbackById } from 'redux/feedbacks';
+import { Link, useNavigate } from 'react-router-dom';
+import { updateFeedbackViews } from 'redux/feedbacks';
 export interface IFeedback {
   _id: string;
   name: string;
   comment: string;
   isReviewed: boolean;
   createdAt: string;
+  isFavorite: boolean;
 }
 export default function FeedbackCard({
   _id,
@@ -16,17 +15,25 @@ export default function FeedbackCard({
   isReviewed,
   comment,
   createdAt,
+  isFavorite,
 }: IFeedback) {
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
-  const handleDelete = (_id: string) => {
-    dispatch(removeFeedbackById(_id));
+  const handleUpdateViews = () => {
+    if (!isReviewed) {
+      dispatch(updateFeedbackViews(_id));
+    }
   };
 
   return (
-    <li>
-      {isReviewed && <h2>New</h2>}
+    <li
+      onClick={() => {
+        handleUpdateViews();
+        navigate(_id);
+      }}
+    >
+      {!isReviewed ? <h3>New!!!</h3> : null}
       <p>
         Ім'я:
         <span>{name}</span>
@@ -38,23 +45,10 @@ export default function FeedbackCard({
       <p>
         Створений <span>{createdAt}</span>
       </p>
-      <button
-        type="button"
-        onClick={(e: React.MouseEvent<HTMLButtonElement>) =>
-          setIsModalOpen(true)
-        }
-      >
-        Видалити
+      <button type="button">
+        {isFavorite ? 'Remove from fovorites' : 'Add to favorites'}
       </button>
-      {isModalOpen && (
-        <Modal onClose={() => setIsModalOpen(false)}>
-          <ModalDelete
-            onClose={() => setIsModalOpen(false)}
-            handleDelete={() => handleDelete(_id)}
-            title={`відгук від ${name}`}
-          />
-        </Modal>
-      )}
+      <Link to={`${_id}/confirm`}>Видалити</Link>
     </li>
   );
 }
