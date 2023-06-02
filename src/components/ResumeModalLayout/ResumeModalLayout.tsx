@@ -1,5 +1,11 @@
 import { useEffect } from 'react';
-import { Outlet, useNavigate, useParams, Navigate } from 'react-router-dom';
+import {
+  Outlet,
+  useNavigate,
+  useParams,
+  Navigate,
+  useLocation,
+} from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from 'hooks';
 import {
   getCertainResume,
@@ -16,6 +22,7 @@ export default function ResumeModalLayout() {
   const dispatch = useAppDispatch();
   const error = useAppSelector(selectResumeError);
   const isLoading = useAppSelector(selectResumeLoading);
+  const location = useLocation();
 
   useEffect(() => {
     if (resumeId) {
@@ -27,12 +34,14 @@ export default function ResumeModalLayout() {
     };
   }, [dispatch, resumeId]);
 
+  const backLinkHref = location?.state || '/resumes';
+
   if (error) {
-    return <Navigate to="/resumes" replace />;
+    return <Navigate to={backLinkHref} replace />;
   }
 
   return (
-    <Modal onClose={() => navigate('/resumes')}>
+    <Modal onClose={() => navigate(backLinkHref)}>
       {isLoading ? <Loader /> : <Outlet />}
     </Modal>
   );
