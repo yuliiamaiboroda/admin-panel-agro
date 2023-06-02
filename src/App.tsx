@@ -24,6 +24,9 @@ import RestrictedRoute from 'components/RestrictedRoute';
 import UsersModalDetails from 'components/UsersModalDetails';
 import UsersModalUpdateForm from 'components/UsersModalUpdateForm';
 import UsersModalConfirm from 'components/UsersModalConfirm';
+import FeedbackModalLayout from 'components/FeedbackModalLayout';
+import FeedbackModalDetails from 'components/FeedbackModalDetails';
+import FeedbackModalConfirmation from 'components/FeedbackModalConfirmation';
 
 const LoginPage = lazy(() => import('./pages/LoginPage'));
 const ProfilePage = lazy(() => import('./pages/ProfilePage'));
@@ -192,7 +195,13 @@ function App() {
           <Route
             path="feedbacks"
             element={<RestrictedRoute component={<FeedbackPage />} />}
-          />
+          >
+            <Route path=":feedbackId" element={<FeedbackModalLayout />}>
+              <Route index element={<FeedbackModalDetails />} />
+              <Route path="confirm" element={<FeedbackModalConfirmation />} />
+              <Route path="*" element={<Navigate to="/feedbacks" replace />} />
+            </Route>
+          </Route>
         </Route>
         <Route
           path="/login"

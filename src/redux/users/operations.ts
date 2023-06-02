@@ -9,7 +9,7 @@ export const getAllUsers = createAsyncThunk<
   { rejectValue: string }
 >('users/getAll', async (_, thunkApi) => {
   try {
-    const { data } = await axios.get('/api/users/getAllUser');
+    const { data } = await axios.get('/api/users/');
     return data;
   } catch (err) {
     const error = err as AxiosError<{ message: string }>;
@@ -110,7 +110,7 @@ export const getCertainUser = createAsyncThunk<
   }
 >('users/getCertain', async (_id, thunkApi) => {
   try {
-    const { data } = await axios.get(`/api/users/certain/${_id}`);
+    const { data } = await axios.get(`/api/users/${_id}`);
     return data;
   } catch (err) {
     const error = err as AxiosError<{ message: string }>;
