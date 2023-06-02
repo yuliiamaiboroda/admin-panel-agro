@@ -1,18 +1,14 @@
-import { useAppDispatch, useAppSelector } from 'hooks';
-import { useEffect } from 'react';
-import { getAllFeedback, selectFeedbacks } from 'redux/feedbacks';
+import { useAppSelector } from 'hooks';
+import { selectFeedbacks } from 'redux/feedbacks';
 import FeedbackCard from '../FeedbackCard';
+import FeedbackFilter from 'components/FeedbackFilter';
 
 export default function FeedbackGallery() {
-  const dispatch = useAppDispatch();
   const { entities } = useAppSelector(selectFeedbacks);
-
-  useEffect(() => {
-    dispatch(getAllFeedback());
-  }, [dispatch]);
 
   return (
     <section style={{ position: 'relative' }}>
+      <FeedbackFilter />
       {entities.length !== 0 ? (
         <ul>
           {entities.map(item => (

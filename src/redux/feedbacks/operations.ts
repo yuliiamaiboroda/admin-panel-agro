@@ -1,16 +1,18 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios, { AxiosError } from 'axios';
 import { Notify } from 'notiflix';
-import { IFeedback, IFeedbackCertain } from './slice';
+import { IFeedback, IFeedbackCertain, IFeedbackPagination } from './slice';
 
 export const getAllFeedback = createAsyncThunk<
-  IFeedback[],
-  undefined,
+  { feedbacks: IFeedback[]; pagination: IFeedbackPagination },
+  { [x: string]: string },
   { rejectValue: string }
->('feedback/getAll', async (_, thunkApi) => {
+>('feedback/getAll', async (params, thunkApi) => {
   try {
-    const { data } = await axios.get('/api/feedback/all');
-    return data.feedbacks;
+    const {
+      data: { feedbacks, ...pagination },
+    } = await axios.get('/api/feedback/all', { params });
+    return { feedbacks, pagination };
   } catch (err) {
     const error = err as AxiosError;
     Notify.failure(error.message);

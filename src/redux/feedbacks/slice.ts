@@ -62,12 +62,16 @@ const feedbackRejectedReducer = (
 
 const getAllFeedbackFulfiledReducer = (
   state: IState,
-  action: PayloadAction<IFeedback[], string>
+  action: PayloadAction<
+    { feedbacks: IFeedback[]; pagination: IFeedbackPagination },
+    string
+  >
 ) => {
   return {
     ...state,
     isLoading: false,
-    entities: action.payload,
+    entities: action.payload.feedbacks,
+    pagination: action.payload.pagination,
   };
 };
 
