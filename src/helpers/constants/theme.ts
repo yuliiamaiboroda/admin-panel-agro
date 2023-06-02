@@ -2,7 +2,7 @@ import { DefaultTheme } from 'styled-components';
 
 const theme: DefaultTheme = {
   breakpoints: ['768px', '1280px'],
-  spaces: [0, 4, 8, 12, 16, 20, 24, 28, 32, 36, 40],
+  space: [0, 4, 8, 12, 16, 20, 24, 28, 32, 36, 40],
   colors: {
     primaryText: '#8A92A6',
     secondaryText: '#232D42',
@@ -11,6 +11,7 @@ const theme: DefaultTheme = {
     secondaryBackground: '#E5E5E5',
     buttonBackground: '#3A57E8',
     gradientBackground: 'linear-gradient(88deg, #3A57E8 0%, #2E46BB 100%)',
+    backdrop: 'rgb(0, 0, 0, 0.8)',
   },
   fontWeights: {
     normal: '400px',
@@ -34,6 +35,7 @@ const theme: DefaultTheme = {
     activeRoute: '4px',
     card: '8px',
     button: '4px',
+    modal: '16px',
     pageTitle: '0px 0px 16px 16px',
     circle: '50%',
   },

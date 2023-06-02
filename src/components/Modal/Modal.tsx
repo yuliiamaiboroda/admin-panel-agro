@@ -1,5 +1,8 @@
 import React, { useEffect } from 'react';
 import { createPortal } from 'react-dom';
+import { HiX } from 'react-icons/hi';
+import Box from 'components/Box';
+import { CloseModalButton } from './Modal.styled';
 
 const modalEl = document.getElementById('modal-root') as HTMLElement;
 const ESCAPE_KEY = 'Escape';
@@ -33,40 +36,33 @@ export default function Modal({ onClose, children }: IProps) {
   };
 
   return createPortal(
-    <div
+    <Box
       onClick={handleBackdropCloseModal}
-      style={{
-        position: 'fixed',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        top: 0,
-        left: 0,
-        width: '100%',
-        height: '100%',
-        backgroundColor: 'rgb(0, 0, 0, 0.8)',
-      }}
+      position="fixed"
+      display="flex"
+      alignItems="center"
+      justifyContent="center"
+      top={0}
+      left={0}
+      width="100%"
+      height="100%"
+      p={4}
+      bg="backdrop"
     >
-      <div
-        style={{
-          position: 'relative',
-          minWidth: '600px',
-          minHeight: '400px',
-          backgroundColor: '#FFFFFF',
-          padding: '32px',
-          borderRadius: '16px',
-        }}
+      <Box
+        position="relative"
+        minWidth={['300px', '600px']}
+        minHeight={['200px', '400px']}
+        p={8}
+        bg="primaryBackground"
+        borderRadius="modal"
       >
-        <button
-          type="button"
-          onClick={onClose}
-          style={{ position: 'absolute', top: '16px', right: '16px' }}
-        >
-          Close modal
-        </button>
+        <CloseModalButton type="button" onClick={onClose}>
+          <HiX size={24} />
+        </CloseModalButton>
         {children}
-      </div>
-    </div>,
+      </Box>
+    </Box>,
     modalEl
   );
 }
