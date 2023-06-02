@@ -9,8 +9,8 @@ const theme: DefaultTheme = {
     pageTitleText: '#FFFFFF',
     primaryBackground: '#FFFFFF',
     secondaryBackground: '#E5E5E5',
-    buttonBackground: '#3A57E8',
-    gradientBackground: 'linear-gradient(88deg, #3A57E8 0%, #2E46BB 100%)',
+    buttonBackground: '#29392F',
+    gradientBackground: 'linear-gradient(88deg, rgba(57, 78, 45, 0.93) 0%, #29392F 100%)',
   },
   fontWeights: {
     normal: '400px',
