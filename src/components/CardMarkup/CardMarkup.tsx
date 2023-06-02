@@ -52,7 +52,9 @@ export default function CardMarkup({
   return (
     <Li
       onClick={event => {
-        navigate(`${_id}`);
+        if (!(event.target instanceof HTMLAnchorElement)) {
+          navigate(`${_id}`);
+        }
       }}
     >
       <CardWrapper>

@@ -8,6 +8,8 @@ import Modal from 'components/Modal';
 import ResumeForm from 'components/ResumeForm';
 import ResumesFilter from 'components/ResumesFilter';
 import Loader from 'components/Loader';
+import PageTitle from 'components/PageTitle';
+import CreateButton from 'components/CreateButton';
 
 export default function ResumesPage() {
   const { isModalOpen, openModal, closeModal } = useModal();
@@ -26,11 +28,9 @@ export default function ResumesPage() {
 
   return (
     <>
-      <h1>This is ResumesPage!</h1>
+      <PageTitle title="Резюме" />
       <ResumesFilter />
-      <button type="button" onClick={openModal}>
-        Create resume
-      </button>
+      <CreateButton onClick={openModal} />
       <ResumesGallery />
       <Suspense fallback={<Loader />}>
         <Outlet />
