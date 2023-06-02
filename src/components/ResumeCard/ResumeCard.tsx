@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { useAppDispatch } from 'hooks';
 import { updateResumeViews, updateResumeIsFavorite } from 'redux/resumes';
 import type { IResumeEntity } from 'helpers/types';
@@ -15,6 +15,7 @@ export default function ResumeCard({
 }: IResumeEntity) {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
+  const location = useLocation();
 
   const handleUpdateViews = () => {
     if (!isReviewed) {
@@ -27,7 +28,7 @@ export default function ResumeCard({
       style={{ borderWidth: '2px', borderStyle: 'solid', borderColor: 'teal' }}
       onClick={() => {
         handleUpdateViews();
-        navigate(_id);
+        navigate(`${_id}${location.search}`, { state: location });
       }}
     >
       {!isReviewed ? <h3>New!!!</h3> : null}

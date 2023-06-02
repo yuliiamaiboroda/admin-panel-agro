@@ -10,7 +10,7 @@ export const getAllFeedback = createAsyncThunk<
 >('feedback/getAll', async (_, thunkApi) => {
   try {
     const { data } = await axios.get('/api/feedback/all');
-    return data;
+    return data.feedbacks;
   } catch (err) {
     const error = err as AxiosError;
     Notify.failure(error.message);
