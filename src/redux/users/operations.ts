@@ -110,7 +110,7 @@ export const getCertainUser = createAsyncThunk<
   }
 >('users/getCertain', async (_id, thunkApi) => {
   try {
-    const { data } = await axios.get(`/api/users/certain/${_id}`);
+    const { data } = await axios.get(`/api/users/${_id}`);
     return data;
   } catch (err) {
     const error = err as AxiosError<{ message: string }>;

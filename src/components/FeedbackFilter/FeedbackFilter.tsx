@@ -8,8 +8,7 @@ export default function FeedbackFilter() {
 
   useEffect(() => {
     dispatch(getAllFeedback(queryParams));
-    // eslint-disable-next-line
-  }, [dispatch]);
+  }, [dispatch, queryParams]);
   return (
     <>
       {/* <label>
