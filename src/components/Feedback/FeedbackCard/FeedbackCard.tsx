@@ -1,6 +1,6 @@
 import { useAppDispatch } from 'hooks';
 import { Link, useNavigate } from 'react-router-dom';
-import { updateFeedbackViews } from 'redux/feedbacks';
+import { updateFeedbackIsFavorite, updateFeedbackViews } from 'redux/feedbacks';
 export interface IFeedback {
   _id: string;
   name: string;
@@ -45,7 +45,10 @@ export default function FeedbackCard({
       <p>
         Створений <span>{createdAt}</span>
       </p>
-      <button type="button">
+      <button
+        type="button"
+        onClick={() => dispatch(updateFeedbackIsFavorite(_id))}
+      >
         {isFavorite ? 'Remove from fovorites' : 'Add to favorites'}
       </button>
       <Link to={`${_id}/confirm`}>Видалити</Link>

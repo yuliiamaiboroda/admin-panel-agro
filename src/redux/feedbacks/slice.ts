@@ -3,6 +3,7 @@ import {
   getAllFeedback,
   getCertainFeedback,
   removeFeedbackById,
+  updateFeedbackIsFavorite,
   updateFeedbackViews,
 } from './operations';
 
@@ -95,6 +96,29 @@ const updateViewsFulfilledReducer = (
   };
 };
 
+const updateFeedbackFavoriteFulfilledReducer = (
+  state: IState,
+  action: PayloadAction<string, string>
+) => {
+  return {
+    ...state,
+    isLoading: false,
+    entities: state.entities.map(entity =>
+      entity._id === action.payload
+        ? { ...entity, isFavorite: !entity.isFavorite }
+        : entity
+    ),
+    ...(state.certain
+      ? {
+          certain: {
+            ...state.certain,
+            isFavorite: !state.certain.isFavorite,
+          },
+        }
+      : null),
+  };
+};
+
 const removeFeedbackFulfilledReducer = (
   state: IState,
   action: PayloadAction<string, string>
@@ -127,7 +151,13 @@ const feedbacksSlice = createSlice({
       .addCase(getCertainFeedback.rejected, feedbackRejectedReducer)
       .addCase(updateFeedbackViews.pending, feedbackPendingReducer)
       .addCase(updateFeedbackViews.fulfilled, updateViewsFulfilledReducer)
-      .addCase(updateFeedbackViews.rejected, feedbackRejectedReducer),
+      .addCase(updateFeedbackViews.rejected, feedbackRejectedReducer)
+      .addCase(updateFeedbackIsFavorite.pending, feedbackPendingReducer)
+      .addCase(
+        updateFeedbackIsFavorite.fulfilled,
+        updateFeedbackFavoriteFulfilledReducer
+      )
+      .addCase(updateFeedbackIsFavorite.rejected, feedbackRejectedReducer),
 });
 
 export const feedbacksReducer = feedbacksSlice.reducer;

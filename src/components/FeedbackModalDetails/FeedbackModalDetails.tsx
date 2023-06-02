@@ -1,6 +1,6 @@
 import { Link, useLocation } from 'react-router-dom';
 import { useAppSelector, useAppDispatch } from 'hooks';
-import { selectFeedbacks } from 'redux/feedbacks';
+import { selectFeedbacks, updateFeedbackIsFavorite } from 'redux/feedbacks';
 
 export default function FeedbackModalDetails() {
   const { certain } = useAppSelector(selectFeedbacks);
@@ -25,18 +25,19 @@ export default function FeedbackModalDetails() {
     <>
       <h1>Фідбек від {name}</h1>
       <p>
-        {' '}
         контактний телефон:
         <a href={`tel:${contactPhone}`}>{contactPhone}</a>
       </p>
       <p>
-        {' '}
         контактна пошта:
         <a href={`mailto:${contactMail}`}>{contactMail}</a>
       </p>
       <p>коментар: {comment}</p>
       <p>Згодана на обробку даних: {agreement ? 'Надана' : 'Не надана'}</p>
-      <button type="button">
+      <button
+        type="button"
+        onClick={() => dispatch(updateFeedbackIsFavorite(_id))}
+      >
         {isFavorite ? 'Remove from favorites' : 'Add to favorites'}
       </button>
       <Link to="confirm" state={{ from: location }}>
