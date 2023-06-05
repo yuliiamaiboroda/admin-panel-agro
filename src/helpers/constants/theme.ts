@@ -12,6 +12,7 @@ const theme: DefaultTheme = {
     buttonBackground: '#29392F',
     gradientBackground:
       'linear-gradient(88deg, rgba(57, 78, 45, 0.93) 0%, #29392F 100%)',
+    backdrop: 'rgb(0, 0, 0, 0.8)',
   },
   fontWeights: {
     normal: '400px',
