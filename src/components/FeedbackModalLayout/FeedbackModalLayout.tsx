@@ -22,7 +22,7 @@ export default function FeedbackModalLayout() {
     return () => {
       dispatch(removeCertainFeedback());
     };
-  }, []);
+  }, [dispatch, feedbackId]);
 
   if (error) {
     return <Navigate to="/feedbacks" replace />;
