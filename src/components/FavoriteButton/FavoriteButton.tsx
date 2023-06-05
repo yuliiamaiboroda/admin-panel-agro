@@ -9,7 +9,11 @@ interface IProps {
 export default function FavoriteButton({ isFavorite, onClick }: IProps) {
   return (
     <Button type="button" onClick={onClick} isFavorite={isFavorite}>
-      {isFavorite ? <HiHeart size={24} /> : <HiOutlineHeart size={24} />}
+      {isFavorite ? (
+        <HiHeart size={24} style={{ pointerEvents: 'none' }} />
+      ) : (
+        <HiOutlineHeart size={24} style={{ pointerEvents: 'none' }} />
+      )}
     </Button>
   );
 }

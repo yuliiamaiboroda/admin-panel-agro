@@ -27,9 +27,14 @@ export default function ResumeCard({
   return (
     <li
       style={{ borderWidth: '2px', borderStyle: 'solid', borderColor: 'teal' }}
-      onClick={() => {
-        handleUpdateViews();
-        navigate(`${_id}${location.search}`, { state: location });
+      onClick={({ target }) => {
+        if (
+          !(target instanceof HTMLAnchorElement) &&
+          !(target instanceof HTMLButtonElement)
+        ) {
+          handleUpdateViews();
+          navigate(`${_id}${location.search}`, { state: location });
+        }
       }}
     >
       {!isReviewed ? <h3>New!!!</h3> : null}
@@ -39,11 +44,7 @@ export default function ResumeCard({
       <Box display="flex" justifyContent="center" gridGap={2}>
         <FavoriteButton
           isFavorite={isFavorite}
-          onClick={event => {
-            event.stopPropagation();
-            console.log('isFavorite', isFavorite);
-            dispatch(updateResumeIsFavorite(_id));
-          }}
+          onClick={() => dispatch(updateResumeIsFavorite(_id))}
         />
         <CardButton type="remove" navigateTo={`${_id}/confirm`} />
       </Box>
