@@ -1,34 +1,39 @@
-import Modal from 'components/Modal';
-import ModalDelete from 'components/ModalDelete';
 import { useAppDispatch } from 'hooks';
-import { useState } from 'react';
-import { removeFeedbackById } from 'redux/feedbacks';
-
-interface IFeedback {
+import { Link, useNavigate } from 'react-router-dom';
+import { updateFeedbackIsFavorite, updateFeedbackViews } from 'redux/feedbacks';
+export interface IFeedback {
   _id: string;
   name: string;
-  contactPhone: string;
-  contactMail: string;
   comment: string;
-  agreement: boolean;
+  isReviewed: boolean;
+  createdAt: string;
+  isFavorite: boolean;
 }
 export default function FeedbackCard({
   _id,
   name,
-  contactPhone,
-  contactMail,
+  isReviewed,
   comment,
-  agreement,
+  createdAt,
+  isFavorite,
 }: IFeedback) {
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
-  const handleDelete = (_id: string) => {
-    dispatch(removeFeedbackById(_id));
+  const handleUpdateViews = () => {
+    if (!isReviewed) {
+      dispatch(updateFeedbackViews(_id));
+    }
   };
 
   return (
-    <li>
+    <li
+      onClick={() => {
+        handleUpdateViews();
+        navigate(_id);
+      }}
+    >
+      {!isReviewed ? <h3>New!!!</h3> : null}
       <p>
         Ім'я:
         <span>{name}</span>
@@ -38,34 +43,15 @@ export default function FeedbackCard({
         <span>{comment}</span>
       </p>
       <p>
-        Контактний телефон:
-        <a href={`tel:${contactPhone}`}>{contactPhone}</a>
-      </p>
-      <p>
-        Контактна пошта:
-        <a href={`mailto:${contactMail}`}>{contactMail}</a>
-      </p>
-      <p>
-        Згода на обробку даних:
-        <span>{agreement ? 'Надана' : 'Не надана'}</span>
+        Створений <span>{createdAt}</span>
       </p>
       <button
         type="button"
-        onClick={(e: React.MouseEvent<HTMLButtonElement>) =>
-          setIsModalOpen(true)
-        }
+        onClick={() => dispatch(updateFeedbackIsFavorite(_id))}
       >
-        Видалити
+        {isFavorite ? 'Remove from fovorites' : 'Add to favorites'}
       </button>
-      {isModalOpen && (
-        <Modal onClose={() => setIsModalOpen(false)}>
-          <ModalDelete
-            onClose={() => setIsModalOpen(false)}
-            handleDelete={() => handleDelete(_id)}
-            title={`відгук від ${name}`}
-          />
-        </Modal>
-      )}
+      <Link to={`${_id}/confirm`}>Видалити</Link>
     </li>
   );
 }
