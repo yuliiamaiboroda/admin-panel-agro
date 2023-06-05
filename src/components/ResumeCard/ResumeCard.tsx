@@ -4,6 +4,7 @@ import { updateResumeViews, updateResumeIsFavorite } from 'redux/resumes';
 import type { IResumeEntity } from 'helpers/types';
 import CardButton from 'components/CardButton';
 import Box from 'components/Box';
+import FavoriteButton from 'components/FavoriteButton';
 
 export default function ResumeCard({
   _id,
@@ -36,15 +37,14 @@ export default function ResumeCard({
       <h3>{position}</h3>
       <p>{comment}</p>
       <Box display="flex" justifyContent="center" gridGap={2}>
-        <button
-          type="button"
+        <FavoriteButton
+          isFavorite={isFavorite}
           onClick={event => {
             event.stopPropagation();
+            console.log('isFavorite', isFavorite);
             dispatch(updateResumeIsFavorite(_id));
           }}
-        >
-          {isFavorite ? 'Remove from fovorites' : 'Add to favorites'}
-        </button>
+        />
         <CardButton type="remove" navigateTo={`${_id}/confirm`} />
       </Box>
     </li>

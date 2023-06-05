@@ -1,6 +1,7 @@
 import { Link, useLocation } from 'react-router-dom';
 import { useAppSelector, useAppDispatch } from 'hooks';
 import { selectCertainResume, updateResumeIsFavorite } from 'redux/resumes';
+import FavoriteButton from 'components/FavoriteButton';
 
 export default function ResumeModalDetails() {
   const resume = useAppSelector(selectCertainResume);
@@ -35,14 +36,12 @@ export default function ResumeModalDetails() {
         Resume file
       </a>
       <p>{comment}</p>
-      <button
-        type="button"
+      <FavoriteButton
+        isFavorite={isFavorite}
         onClick={() => {
           dispatch(updateResumeIsFavorite(_id));
         }}
-      >
-        {isFavorite ? 'Remove from favorites' : 'Add to favorites'}
-      </button>
+      />
       <Link to="confirm" state={{ from: location }}>
         Remove
       </Link>
