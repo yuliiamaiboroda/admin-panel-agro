@@ -3,7 +3,13 @@ import { createPortal } from 'react-dom';
 import { HiX } from 'react-icons/hi';
 import Box from 'components/Box';
 import { CloseModalButton } from './Modal.styled';
+import {
+  disableBodyScroll,
+  enableBodyScroll,
+  clearAllBodyScrollLocks,
+} from 'body-scroll-lock';
 
+const body = document.getElementById('root') as HTMLElement;
 const modalEl = document.getElementById('modal-root') as HTMLElement;
 const ESCAPE_KEY = 'Escape';
 
@@ -13,6 +19,7 @@ interface IProps {
 }
 export default function Modal({ onClose, children }: IProps) {
   useEffect(() => {
+    disableBodyScroll(body);
     const escapeModal = (event: KeyboardEvent) => {
       if (event.code === ESCAPE_KEY) {
         event.preventDefault();
@@ -22,6 +29,8 @@ export default function Modal({ onClose, children }: IProps) {
 
     window.addEventListener('keydown', escapeModal);
     return () => {
+      enableBodyScroll(body);
+      clearAllBodyScrollLocks();
       window.removeEventListener('keydown', escapeModal);
     };
   }, [onClose]);
@@ -47,6 +56,7 @@ export default function Modal({ onClose, children }: IProps) {
       width="100%"
       height="100%"
       p={4}
+      overflow="auto"
       bg="backdrop"
     >
       <Box
@@ -54,8 +64,10 @@ export default function Modal({ onClose, children }: IProps) {
         minWidth={['300px', '600px']}
         minHeight={['200px', '400px']}
         p={8}
+        m="auto"
         bg="primaryBackground"
         borderRadius="modal"
+        boxShadow="modal"
       >
         <CloseModalButton type="button" onClick={onClose}>
           <HiX size={24} />

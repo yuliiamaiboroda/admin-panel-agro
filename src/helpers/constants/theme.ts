@@ -30,6 +30,8 @@ const theme: DefaultTheme = {
     activeRoute: '0px 10px 30px rgba(17, 38, 146, 0.05)',
     card: '0px 10px 13px rgba(17, 38, 146, 0.05)',
     button: '0px 2px 4px rgba(138, 146, 166, 0.3)',
+    modal:
+      'rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset',
   },
   radii: {
     activeRoute: '4px',
