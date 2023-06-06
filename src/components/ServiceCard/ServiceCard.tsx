@@ -1,5 +1,5 @@
 import { Roles } from 'helpers/constants';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import RestrictedComponent from 'components/RestrictedComponent';
 import CardWrapperMarkup from 'components/CardWrapperMarkup';
 import CardImageMarkup from 'components/CardImageMarkup';
@@ -28,20 +28,13 @@ export default function ServiceCard({
   contactPhone,
 }: IProps) {
   const navigate = useNavigate();
-
-  // const clickHandler = (event: React.MouseEvent) => {
-  //   console.log(event.target);
-  //   console.log(event.target instanceof HTMLAnchorElement);
-
-  //   if (!(event.target instanceof HTMLAnchorElement)) {
-  //     navigate(`${_id}`, { state: { from: routeLocation }  });
-  //   }
-  // };
+  const routeLocation = useLocation();
 
   const clickHandler = (event: React.MouseEvent) => {
     if (!(event.target instanceof HTMLAnchorElement)) {
-      navigate(`${_id}`);
+      navigate(`${_id}`, { state: { from: routeLocation }  });
     }
+    return;
   };
 
   return (

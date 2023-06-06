@@ -1,14 +1,17 @@
 import { Details } from './CardDetailStringMarkup.styled';
 
 interface IProps {
-  title: string;
+  title?: string | null;
   value: string;
 }
 
-export default function CardDetailStringMarkup({ title, value }: IProps) {
+export default function CardDetailStringMarkup({
+  title = null,
+  value,
+}: IProps) {
   return (
     <Details>
-      <b>{title}: </b>
+      {title && <b>{title}: </b>}
       {value}
     </Details>
   );

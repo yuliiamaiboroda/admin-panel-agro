@@ -1,6 +1,10 @@
 import { Roles } from 'helpers/constants';
+import { useNavigate, useLocation } from 'react-router-dom';
+import CardWrapperMarkup from 'components/CardWrapperMarkup';
+import CardImageMarkup from 'components/CardImageMarkup';
+import CardTitleStringMarkup from 'components/CardTitleStringMarkup';
+import CardDetailStringMarkup from 'components/CardDetailStringMarkup';
 import RestrictedComponent from 'components/RestrictedComponent';
-import CardMarkup from 'components/CardMarkup';
 import CardButton from 'components/CardButton';
 import Box from 'components/Box';
 
@@ -17,19 +21,27 @@ export default function ProductCard({
   imageURL,
   description,
 }: IProps) {
+  const navigate = useNavigate();
+  const routeLocation = useLocation();
+
+  const clickHandler = (event: React.MouseEvent) => {
+    if (!(event.target instanceof HTMLAnchorElement)) {
+      navigate(`${_id}`, { state: { from: routeLocation } });
+    }
+    return;
+  };
+
   return (
-    <CardMarkup
-      _id={_id}
-      title={title}
-      imageURL={imageURL}
-      description={description}
-    >
+    <CardWrapperMarkup onClick={() => clickHandler}>
+      <CardImageMarkup src={imageURL} alt={title} />
+      <CardTitleStringMarkup value={title} />
+      <CardDetailStringMarkup title="Опис" value={description} />
       <RestrictedComponent accessRight={Roles.productsManager}>
         <Box display="flex" justifyContent="center" gridGap={2}>
           <CardButton type="edit" navigateTo={`${_id}/form`} />
           <CardButton type="remove" navigateTo={`${_id}/confirm`} />
         </Box>
       </RestrictedComponent>
-    </CardMarkup>
+    </CardWrapperMarkup>
   );
 }
