@@ -8,8 +8,7 @@ export const Li = styled.li`
 
 export const CardWrapper = styled.div`
   width: 366px;
-  padding: ${props => props.theme.space[6] + 'px'}
-    ${props => props.theme.space[2] + 'px'};
+  padding: ${props => props.theme.space[6] + 'px'} ${props => props.theme.space[2] + 'px'};
   border-radius: ${props => props.theme.radii.card};
   box-shadow: ${props => props.theme.shadows.card};
   background-color: ${props => props.theme.colors.primaryBackground};
