@@ -8,14 +8,14 @@ export const CloseModalButton = styled.button`
   justify-content: center;
   align-items: center;
   padding: 0;
-  color: inherit;
+  color: ${p => p.theme.colors.primaryText};
   border: none;
   background-color: transparent;
   cursor: pointer;
-  transition: opacity 250ms linear;
+  transition: color 250ms linear;
 
   :hover,
   :focus {
-    opacity: 0.7;
+    color: ${p => p.theme.colors.buttonBackground};
   }
 `;

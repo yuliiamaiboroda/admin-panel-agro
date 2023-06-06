@@ -61,8 +61,7 @@ export default function Modal({ onClose, children }: IProps) {
     >
       <Box
         position="relative"
-        minWidth={['300px', '600px']}
-        minHeight={['200px', '400px']}
+        width={['300px', '600px']}
         p={8}
         m="auto"
         bg="primaryBackground"
