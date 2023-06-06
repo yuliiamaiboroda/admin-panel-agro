@@ -11,17 +11,14 @@ import {
   getCertainResume,
   removeCertainResume,
   selectResumeError,
-  selectResumeLoading,
 } from 'redux/resumes';
 import Modal from 'components/Modal/Modal';
-import Loader from 'components/Loader';
 
 export default function ResumeModalLayout() {
   const { resumeId } = useParams();
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const error = useAppSelector(selectResumeError);
-  const isLoading = useAppSelector(selectResumeLoading);
   const location = useLocation();
 
   useEffect(() => {
@@ -42,7 +39,7 @@ export default function ResumeModalLayout() {
 
   return (
     <Modal onClose={() => navigate(backLinkHref)}>
-      {isLoading ? <Loader /> : <Outlet />}
+      <Outlet />
     </Modal>
   );
 }
