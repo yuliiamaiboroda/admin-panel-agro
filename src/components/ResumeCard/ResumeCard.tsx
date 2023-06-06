@@ -2,6 +2,9 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { useAppDispatch } from 'hooks';
 import { updateResumeViews, updateResumeIsFavorite } from 'redux/resumes';
 import type { IResumeEntity } from 'helpers/types';
+import CardWrapperMarkup from 'components/CardWrapperMarkup';
+import CardTitleStringMarkup from 'components/CardTitleStringMarkup';
+import CardDetailStringMarkup from 'components/CardDetailStringMarkup';
 import CardButton from 'components/CardButton';
 import Box from 'components/Box';
 import FavoriteButton from 'components/FavoriteButton';
@@ -24,23 +27,23 @@ export default function ResumeCard({
     }
   };
 
+  const clickHandler = (event: React.MouseEvent) => {
+    if (
+      !(event.target instanceof HTMLAnchorElement) &&
+      !(event.target instanceof HTMLButtonElement)
+    ) {
+      handleUpdateViews();
+      navigate(`${_id}${location.search}`, { state: location });
+    }
+    return;
+  };
+
   return (
-    <li
-      style={{ borderWidth: '2px', borderStyle: 'solid', borderColor: 'teal' }}
-      onClick={({ target }) => {
-        if (
-          !(target instanceof HTMLAnchorElement) &&
-          !(target instanceof HTMLButtonElement)
-        ) {
-          handleUpdateViews();
-          navigate(`${_id}${location.search}`, { state: location });
-        }
-      }}
-    >
-      {!isReviewed ? <h3>New!!!</h3> : null}
-      <h2>{name}</h2>
-      <h3>{position}</h3>
-      <p>{comment}</p>
+    <CardWrapperMarkup onClick={() => clickHandler}>
+      {!isReviewed && <CardDetailStringMarkup value="New!!!" />}
+      <CardTitleStringMarkup value={name} />
+      <CardDetailStringMarkup title="Позиція" value={position} />
+      <CardDetailStringMarkup title="Коментар" value={comment} />
       <Box display="flex" justifyContent="center" gridGap={2}>
         <FavoriteButton
           isFavorite={isFavorite}
@@ -48,6 +51,6 @@ export default function ResumeCard({
         />
         <CardButton type="remove" navigateTo={`${_id}/confirm`} />
       </Box>
-    </li>
+    </CardWrapperMarkup>
   );
 }

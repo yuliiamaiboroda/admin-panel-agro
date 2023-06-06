@@ -1,7 +1,12 @@
-import { Link } from 'react-router-dom';
 import { Roles } from 'helpers/constants';
+import { useNavigate, useLocation } from 'react-router-dom';
 import RestrictedComponent from 'components/RestrictedComponent';
-import CardMarkup from 'components/CardMarkup';
+import CardWrapperMarkup from 'components/CardWrapperMarkup';
+import CardImageMarkup from 'components/CardImageMarkup';
+import CardTitleStringMarkup from 'components/CardTitleStringMarkup';
+import CardDetailStringMarkup from 'components/CardDetailStringMarkup';
+import CardButton from 'components/CardButton';
+import Box from 'components/Box';
 
 interface IProps {
   _id: string;
@@ -22,21 +27,35 @@ export default function ServiceCard({
   contactMail,
   contactPhone,
 }: IProps) {
+  const navigate = useNavigate();
+  const routeLocation = useLocation();
+
+  const clickHandler = (event: React.MouseEvent) => {
+    if (!(event.target instanceof HTMLAnchorElement)) {
+      navigate(`${_id}`, { state: { from: routeLocation }  });
+    }
+    return;
+  };
+
   return (
-    <CardMarkup
-      _id={_id}
-      title={title}
-      description={description}
-      imageURL={imageURL}
-      price={price}
-      contactMail={contactMail}
-      contactPhone={contactPhone}
-    >
-      <RestrictedComponent accessRight={Roles.servicesManager}>
-        <Link to={`${_id}/form`}>Змінити</Link>
-        <br />
-        <Link to={`${_id}/confirm`}>Видалити</Link>
-      </RestrictedComponent>
-    </CardMarkup>
+    <>
+      <CardWrapperMarkup onClick={() => clickHandler}>
+        <CardImageMarkup src={imageURL} alt={title} />
+        <CardTitleStringMarkup value={title} />
+        <CardDetailStringMarkup title="Опис" value={description} />
+        <CardDetailStringMarkup title="Ціна" value={price} />
+        <CardDetailStringMarkup
+          title="Контактний телефон"
+          value={contactMail}
+        />
+        <CardDetailStringMarkup title="Контактна пошта" value={contactPhone} />
+        <RestrictedComponent accessRight={Roles.servicesManager}>
+          <Box display="flex" justifyContent="center" gridGap={2}>
+            <CardButton type="edit" navigateTo={`${_id}/form`} />
+            <CardButton type="remove" navigateTo={`${_id}/confirm`} />
+          </Box>
+        </RestrictedComponent>
+      </CardWrapperMarkup>
+    </>
   );
 }
