@@ -7,12 +7,12 @@ export const GalleryCentred = styled.div`
 `;
 
 export const GalleryWrap = styled.ul`
-  width: 346px;
+  width: 300px;
   display: flex;
   align-items: center;
   flex-wrap: wrap;
   gap: ${props => props.theme.space[3]}px;
-  margin-top: ${props => props.theme.space[4]}px;
+  margin-top: ${props => props.theme.space[3]}px;
   
   @media ${devices.tablet} { 
     width: 366px;

@@ -13,6 +13,7 @@ import VacanciesNavigator from 'components/Vacancies/VacanciesNavigator';
 import RestrictedComponent from 'components/RestrictedComponent';
 import Loader from 'components/Loader';
 import VacancyForm from 'components/VacancyForm/VacancyForm';
+import CreateButton from 'components/CreateButton';
 
 export default function VacanciesDashboard() {
   const { isModalOpen, openModal, closeModal } = useModal();
@@ -32,9 +33,10 @@ export default function VacanciesDashboard() {
       <VacanciesNavigator />
       {isListLoading ? <Loader /> : <VacanciesGallery />}
       <RestrictedComponent accessRight={Roles.applyManager}>
-        <button type="button" onClick={openModal}>
+        {/* <button type="button" onClick={openModal}>
           Створити нову вакансію
-        </button>
+        </button> */}
+        <CreateButton onClick={openModal} />
       </RestrictedComponent>
 
       {isModalOpen && (

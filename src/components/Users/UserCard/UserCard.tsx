@@ -26,7 +26,7 @@ export default function UserCard({ _id, email, name, surname, role }: IUser) {
         value={name}
         additionalValue={surname}
       />
-      <CardDetailStringMarkup title="Електронна пошта" value={email} />
+      <CardDetailStringMarkup title="Пошта" value={email} />
       <CardDetailStringMarkup title="Роль" value={translateRole(Roles[role])} />
       <Box display="flex" justifyContent="center" gridGap={2}>
         <CardButton type="edit" navigateTo={`${_id}/form`} state={{ from: routeLocation }} />
