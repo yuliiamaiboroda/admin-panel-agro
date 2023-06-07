@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 
 export const TitleWrapper = styled.div`
+  height: 150px;
   display: flex;
   align-items: center;
   padding: ${p => p.theme.space[6]}px ${p => p.theme.space[8]}px;
