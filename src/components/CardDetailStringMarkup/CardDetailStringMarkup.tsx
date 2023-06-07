@@ -1,4 +1,5 @@
 import { Details } from './CardDetailStringMarkup.styled';
+import stringFormatting from 'utils/string-formatting';
 
 interface IProps {
   title?: string | null;
@@ -12,7 +13,7 @@ export default function CardDetailStringMarkup({
   return (
     <Details>
       {title && <b>{title}: </b>}
-      {value}
+      {stringFormatting(title, value)}
     </Details>
   );
 }
