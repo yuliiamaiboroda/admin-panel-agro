@@ -1,5 +1,5 @@
-import { Link, useLocation } from 'react-router-dom';
-import { HiDocumentText, HiOutlineTrash } from 'react-icons/hi';
+import { useLocation } from 'react-router-dom';
+import { HiDocumentText } from 'react-icons/hi';
 import { useAppSelector, useAppDispatch } from 'hooks';
 import { selectCertainResume, updateResumeIsFavorite } from 'redux/resumes';
 import Box from 'components/Box';
