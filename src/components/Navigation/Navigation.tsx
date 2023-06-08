@@ -5,6 +5,7 @@ import { GrUserWorker } from 'react-icons/gr';
 import { IconType } from 'react-icons';
 import { Roles, USER_ROLES } from 'helpers/constants';
 import RestrictedComponent from 'components/RestrictedComponent';
+import { SidebarDiv, SidebarWrap } from './Navigation.styled';
 
 interface ILink {
   href: string;
@@ -49,19 +50,22 @@ const navigationLinks: ILink[] = [
 
 export default function Navigation() {
   return (
-    <ul>
-      {navigationLinks.map(({ href, title, access, icon: Icon }, index) => {
-        return (
-          <RestrictedComponent key={index} accessRight={access}>
-            <li>
-              <NavLink to={href}>
-                <Icon />
-                {title}
-              </NavLink>
-            </li>
-          </RestrictedComponent>
-        );
-      })}
-    </ul>
+    <SidebarDiv>
+      Pages
+      <SidebarWrap>
+        {navigationLinks.map(({ href, title, access, icon: Icon }, index) => {
+          return (
+            <RestrictedComponent key={index} accessRight={access}>
+              <li>
+                <NavLink to={href}>
+                  <Icon />
+                  {title}
+                </NavLink>
+              </li>
+            </RestrictedComponent>
+          );
+        })}
+      </SidebarWrap>
+    </SidebarDiv>
   );
 }
