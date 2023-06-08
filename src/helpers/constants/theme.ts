@@ -46,7 +46,7 @@ const theme: DefaultTheme = {
     pageTitle: '0px 0px 16px 16px',
     circle: '50%',
   },
-  borderWidths: [0, 1, 2, 3, 4, 5],
+  transitions: { scale: 'scale 250ms linear' },
 };
 
 export { theme };

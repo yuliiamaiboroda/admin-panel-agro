@@ -56,6 +56,7 @@ export default function ResumeModalDetails() {
             dispatch(updateResumeIsFavorite(_id));
           }}
         />
+
         <ControlButton
           variant="remove"
           navigateTo="confirm"

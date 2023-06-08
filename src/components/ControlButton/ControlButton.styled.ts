@@ -8,11 +8,11 @@ export const ControlButtonLink = styled(Link)<{ variant: 'edit' | 'remove' }>`
   align-items: center;
   padding: ${p => p.theme.space[1]}px ${p => p.theme.space[2]}px;
 
-  border-width: ${p => p.theme.borderWidths[2]}px;
-  border-radius: ${p => p.theme.radii.button};
+  border-width: 2px;
   border-style: solid;
+  border-radius: ${p => p.theme.radii.button};
 
-  transition: scale 250ms linear;
+  transition: ${p => p.theme.transitions.scale};
 
   :hover {
     scale: 0.9;
