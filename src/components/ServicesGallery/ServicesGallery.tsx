@@ -1,12 +1,12 @@
 import { useAppSelector, useModal, useAppDispatch } from 'hooks';
 import { createService, selectServices } from 'redux/services';
-
-import CreateNewAd from 'components/CreateNewAd';
 import Modal from 'components/Modal';
 import ServiceCard from 'components/ServiceCard';
 import ServiceForm from 'components/ServiceForm';
 import { Roles } from 'helpers/constants';
 import RestrictedComponent from 'components/RestrictedComponent';
+import GalleryWrapper from 'components/GalleryWrapper';
+import CreateButton from 'components/CreateButton';
 
 export default function ServicesGallery() {
   const services = useAppSelector(selectServices);
@@ -16,13 +16,13 @@ export default function ServicesGallery() {
   return (
     <>
       <RestrictedComponent accessRight={Roles.servicesManager}>
-        <CreateNewAd onClick={openModal} />
+        <CreateButton onClick={openModal} />
       </RestrictedComponent>
-      <ul>
+      <GalleryWrapper>
         {services.map(({ _id, ...rest }) => (
           <ServiceCard key={_id} _id={_id} {...rest} />
         ))}
-      </ul>
+      </GalleryWrapper>
       {isModalOpen && (
         <Modal onClose={closeModal}>
           <ServiceForm

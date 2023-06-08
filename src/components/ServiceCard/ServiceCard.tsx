@@ -32,7 +32,7 @@ export default function ServiceCard({
 
   const clickHandler = (event: React.MouseEvent) => {
     if (!(event.target instanceof HTMLAnchorElement)) {
-      navigate(`${_id}`, { state: { from: routeLocation }  });
+      navigate(`${_id}`, { state: { from: routeLocation } });
     }
     return;
   };
@@ -44,11 +44,8 @@ export default function ServiceCard({
         <CardTitleStringMarkup value={title} />
         <CardDetailStringMarkup title="Опис" value={description} />
         <CardDetailStringMarkup title="Ціна" value={price} />
-        <CardDetailStringMarkup
-          title="Контактний телефон"
-          value={contactMail}
-        />
-        <CardDetailStringMarkup title="Контактна пошта" value={contactPhone} />
+        <CardDetailStringMarkup title="Телефон" value={contactPhone} />
+        <CardDetailStringMarkup title="Пошта" value={contactMail} />
         <RestrictedComponent accessRight={Roles.servicesManager}>
           <Box display="flex" justifyContent="center" gridGap={2}>
             <CardButton type="edit" navigateTo={`${_id}/form`} />

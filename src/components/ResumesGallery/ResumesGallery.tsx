@@ -5,6 +5,7 @@ import {
   loadMoreResumes,
 } from 'redux/resumes';
 import ResumeCard from 'components/ResumeCard';
+import GalleryWrapper from 'components/GalleryWrapper';
 
 export default function ResumesGallery() {
   const [queryParams] = useQueryParams();
@@ -14,17 +15,11 @@ export default function ResumesGallery() {
 
   return (
     <>
-      <ul
-        style={{
-          display: 'flex',
-          flexWrap: 'wrap',
-          gap: '16px',
-        }}
-      >
+      <GalleryWrapper>
         {resumes.map(resume => (
           <ResumeCard key={resume._id} {...resume} />
         ))}
-      </ul>
+      </GalleryWrapper>
       {resumes.length < pagination.total ? (
         <button
           type="button"

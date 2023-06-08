@@ -4,6 +4,8 @@ import FeedbackCard from '../FeedbackCard';
 import { useState } from 'react';
 import Modal from 'components/Modal';
 import FeedbackForm from 'components/FeedbackForm';
+import GalleryWrapper from 'components/GalleryWrapper';
+import CreateButton from 'components/CreateButton';
 
 export default function FeedbackGallery() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -12,17 +14,18 @@ export default function FeedbackGallery() {
   return (
     <section style={{ position: 'relative' }}>
       {entities.length !== 0 ? (
-        <ul>
+        <GalleryWrapper>
           {entities.map(item => (
             <FeedbackCard key={item._id} {...item} />
           ))}
-        </ul>
+        </GalleryWrapper>
       ) : (
         <h2>Наразі немає отриманих відгуків</h2>
       )}
-      <button type="button" onClick={() => setIsModalOpen(true)}>
+      {/* <button type="button" onClick={() => setIsModalOpen(true)}>
         Створити фідбек
-      </button>
+      </button> */}
+      <CreateButton onClick={() => setIsModalOpen(true)} />
       {isModalOpen && (
         <Modal onClose={() => setIsModalOpen(false)}>
           <FeedbackForm />
