@@ -5,7 +5,7 @@ import CardImageMarkup from 'components/CardImageMarkup';
 import CardTitleStringMarkup from 'components/CardTitleStringMarkup';
 import CardDetailStringMarkup from 'components/CardDetailStringMarkup';
 import RestrictedComponent from 'components/RestrictedComponent';
-import CardButton from 'components/CardButton';
+import ControlButton from 'components/ControlButton';
 import Box from 'components/Box';
 
 interface IProps {
@@ -38,8 +38,8 @@ export default function ProductCard({
       <CardDetailStringMarkup title="Опис" value={description} />
       <RestrictedComponent accessRight={Roles.productsManager}>
         <Box display="flex" justifyContent="center" gridGap={2}>
-          <CardButton type="edit" navigateTo={`${_id}/form`} />
-          <CardButton type="remove" navigateTo={`${_id}/confirm`} />
+          <ControlButton type="edit" navigateTo={`${_id}/form`} />
+          <ControlButton type="remove" navigateTo={`${_id}/confirm`} />
         </Box>
       </RestrictedComponent>
     </CardWrapperMarkup>

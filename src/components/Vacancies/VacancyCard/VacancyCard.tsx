@@ -6,7 +6,7 @@ import translateCategory from 'utils/translate-vacancy-category';
 import CardWrapperMarkup from 'components/CardWrapperMarkup';
 import CardTitleStringMarkup from 'components/CardTitleStringMarkup';
 import CardDetailStringMarkup from 'components/CardDetailStringMarkup';
-import CardButton from 'components/CardButton';
+import ControlButton from 'components/ControlButton';
 import Box from 'components/Box';
 
 interface IVacancy {
@@ -48,7 +48,10 @@ export default function VacancyCard({
     <CardWrapperMarkup onClick={() => clickHandler}>
       <CardTitleStringMarkup value={title} />
       <CardDetailStringMarkup title="Опис" value={description} />
-      <CardDetailStringMarkup title="Категорія" value={translateCategory(category)} />
+      <CardDetailStringMarkup
+        title="Категорія"
+        value={translateCategory(category)}
+      />
       <CardDetailStringMarkup title="Зарплатня" value={sallary} />
       <CardDetailStringMarkup title="Освіта" value={education} />
       <CardDetailStringMarkup
@@ -60,12 +63,12 @@ export default function VacancyCard({
       <CardDetailStringMarkup title="Контактна пошта" value={contactMail} />
       <RestrictedComponent accessRight={Roles.applyManager}>
         <Box display="flex" justifyContent="center" gridGap={2}>
-          <CardButton
+          <ControlButton
             type="edit"
             navigateTo={`${_id}/form`}
             state={{ from: routeLocation }}
           />
-          <CardButton
+          <ControlButton
             type="remove"
             navigateTo={`${_id}/confirm`}
             state={{ from: routeLocation }}

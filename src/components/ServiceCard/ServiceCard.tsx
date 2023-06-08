@@ -5,7 +5,7 @@ import CardWrapperMarkup from 'components/CardWrapperMarkup';
 import CardImageMarkup from 'components/CardImageMarkup';
 import CardTitleStringMarkup from 'components/CardTitleStringMarkup';
 import CardDetailStringMarkup from 'components/CardDetailStringMarkup';
-import CardButton from 'components/CardButton';
+import ControlButton from 'components/ControlButton';
 import Box from 'components/Box';
 
 interface IProps {
@@ -48,8 +48,8 @@ export default function ServiceCard({
         <CardDetailStringMarkup title="Пошта" value={contactMail} />
         <RestrictedComponent accessRight={Roles.servicesManager}>
           <Box display="flex" justifyContent="center" gridGap={2}>
-            <CardButton type="edit" navigateTo={`${_id}/form`} />
-            <CardButton type="remove" navigateTo={`${_id}/confirm`} />
+            <ControlButton type="edit" navigateTo={`${_id}/form`} />
+            <ControlButton type="remove" navigateTo={`${_id}/confirm`} />
           </Box>
         </RestrictedComponent>
       </CardWrapperMarkup>

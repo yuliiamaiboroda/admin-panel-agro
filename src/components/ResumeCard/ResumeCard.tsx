@@ -5,7 +5,7 @@ import type { IResumeEntity } from 'helpers/types';
 import CardWrapperMarkup from 'components/CardWrapperMarkup';
 import CardTitleStringMarkup from 'components/CardTitleStringMarkup';
 import CardDetailStringMarkup from 'components/CardDetailStringMarkup';
-import CardButton from 'components/CardButton';
+import ControlButton from 'components/ControlButton';
 import Box from 'components/Box';
 import FavoriteButton from 'components/FavoriteButton';
 
@@ -49,7 +49,7 @@ export default function ResumeCard({
           isFavorite={isFavorite}
           onClick={() => dispatch(updateResumeIsFavorite(_id))}
         />
-        <CardButton type="remove" navigateTo={`${_id}/confirm`} />
+        <ControlButton type="remove" navigateTo={`${_id}/confirm`} />
       </Box>
     </CardWrapperMarkup>
   );

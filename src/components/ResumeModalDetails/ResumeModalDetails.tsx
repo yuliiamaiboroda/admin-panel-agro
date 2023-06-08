@@ -4,7 +4,7 @@ import { useAppSelector, useAppDispatch } from 'hooks';
 import { selectCertainResume, updateResumeIsFavorite } from 'redux/resumes';
 import Box from 'components/Box';
 import FavoriteButton from 'components/FavoriteButton';
-import CardButton from 'components/CardButton/CardButton';
+import ControlButton from 'components/ControlButton/ControlButton';
 import {
   ModalTitle,
   ContactLink,
@@ -56,11 +56,11 @@ export default function ResumeModalDetails() {
             dispatch(updateResumeIsFavorite(_id));
           }}
         />
-        <CardButton
+        <ControlButton
           type="remove"
           navigateTo="confirm"
           state={{ from: location }}
-        ></CardButton>
+        ></ControlButton>
       </Box>
     </>
   );
