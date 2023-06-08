@@ -6,21 +6,20 @@ export const TitleWrapper = styled.div`
   display: flex;
   align-items: center;
   padding: ${p => p.theme.space[6]}px ${p => p.theme.space[8]}px;
-  background: ${props => props.theme.colors.gradientBackground};
+  background: ${props => props.theme.colors.primaryGradient};
   border-radius: ${props => props.theme.radii.pageTitle};
-  
-  @media ${devices.tablet} { 
+
+  @media ${devices.tablet} {
     height: 150px;
   }
-  
-  @media ${devices.desktop} { 
+
+  @media ${devices.desktop} {
     height: 234px;
   }
-
 `;
 
 export const Title = styled.h1`
-  color: ${props => props.theme.colors.pageTitleText};
+  color: ${props => props.theme.colors.accentText};
 <<<<<<< HEAD
   font-size: ${props => props.theme.fontSizes.xxl}px;
 =======

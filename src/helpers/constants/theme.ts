@@ -6,13 +6,15 @@ const theme: DefaultTheme = {
   colors: {
     primaryText: '#8A92A6',
     secondaryText: '#232D42',
-    pageTitleText: '#FFFFFF',
+    accentText: '#FFFFFF',
     primaryBackground: '#FFFFFF',
     secondaryBackground: '#E5E5E5',
-    buttonBackground: '#29392F',
-    gradientBackground:
+    accentBackground: '#29392F',
+    primaryGradient:
       'linear-gradient(88deg, rgba(57, 78, 45, 0.93) 0%, #29392F 100%)',
     backdrop: 'rgb(0, 0, 0, 0.8)',
+    confirmation: '#29392F',
+    warning: '#C03221',
   },
   fontWeights: {
     normal: '400',

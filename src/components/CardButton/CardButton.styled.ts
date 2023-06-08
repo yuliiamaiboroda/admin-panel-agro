@@ -19,11 +19,11 @@ export const CardButtonLink = styled(Link)<{ variant: string }>(
     variants: {
       primary: {
         borderRadius: 'button',
-        borderColor: 'pageTitleText',
-        borderWidth: 5,
+        borderColor: 'accentText',
+        borderWidth: [2, 5, 10],
         borderStyle: 'solid',
         '&:hover': {
-          borderColor: 'buttonBackground',
+          borderColor: 'accentBackground',
         },
       },
       secondary: {
