@@ -10,7 +10,7 @@ interface IProps {
 
 export default function CardButton({ type, navigateTo, state }: IProps) {
   return (
-    <CardButtonLink to={navigateTo} state={state}>
+    <CardButtonLink to={navigateTo} state={state} variant="primary">
       {type === 'edit' ? (
         <HiOutlinePencil
           size={24}
