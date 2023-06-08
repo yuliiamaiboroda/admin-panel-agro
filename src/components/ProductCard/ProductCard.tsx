@@ -38,8 +38,8 @@ export default function ProductCard({
       <CardDetailStringMarkup title="Опис" value={description} />
       <RestrictedComponent accessRight={Roles.productsManager}>
         <Box display="flex" justifyContent="center" gridGap={2}>
-          <ControlButton type="edit" navigateTo={`${_id}/form`} />
-          <ControlButton type="remove" navigateTo={`${_id}/confirm`} />
+          <ControlButton variant="edit" navigateTo={`${_id}/form`} />
+          <ControlButton variant="remove" navigateTo={`${_id}/confirm`} />
         </Box>
       </RestrictedComponent>
     </CardWrapperMarkup>

@@ -49,7 +49,7 @@ export default function ResumeCard({
           isFavorite={isFavorite}
           onClick={() => dispatch(updateResumeIsFavorite(_id))}
         />
-        <ControlButton type="remove" navigateTo={`${_id}/confirm`} />
+        <ControlButton variant="remove" navigateTo={`${_id}/confirm`} />
       </Box>
     </CardWrapperMarkup>
   );

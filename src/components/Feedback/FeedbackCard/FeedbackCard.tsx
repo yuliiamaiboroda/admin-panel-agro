@@ -55,7 +55,7 @@ export default function FeedbackCard({
           isFavorite={isFavorite}
           onClick={() => dispatch(updateFeedbackIsFavorite(_id))}
         />
-        <ControlButton type="remove" navigateTo={`${_id}/confirm`} />
+        <ControlButton variant="remove" navigateTo={`${_id}/confirm`} />
       </Box>
     </CardWrapperMarkup>
   );

@@ -48,8 +48,8 @@ export default function ServiceCard({
         <CardDetailStringMarkup title="Пошта" value={contactMail} />
         <RestrictedComponent accessRight={Roles.servicesManager}>
           <Box display="flex" justifyContent="center" gridGap={2}>
-            <ControlButton type="edit" navigateTo={`${_id}/form`} />
-            <ControlButton type="remove" navigateTo={`${_id}/confirm`} />
+            <ControlButton variant="edit" navigateTo={`${_id}/form`} />
+            <ControlButton variant="remove" navigateTo={`${_id}/confirm`} />
           </Box>
         </RestrictedComponent>
       </CardWrapperMarkup>

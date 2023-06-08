@@ -64,12 +64,12 @@ export default function VacancyCard({
       <RestrictedComponent accessRight={Roles.applyManager}>
         <Box display="flex" justifyContent="center" gridGap={2}>
           <ControlButton
-            type="edit"
+            variant="edit"
             navigateTo={`${_id}/form`}
             state={{ from: routeLocation }}
           />
           <ControlButton
-            type="remove"
+            variant="remove"
             navigateTo={`${_id}/confirm`}
             state={{ from: routeLocation }}
           />

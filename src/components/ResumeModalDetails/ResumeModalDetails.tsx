@@ -57,7 +57,7 @@ export default function ResumeModalDetails() {
           }}
         />
         <ControlButton
-          type="remove"
+          variant="remove"
           navigateTo="confirm"
           state={{ from: location }}
         ></ControlButton>
