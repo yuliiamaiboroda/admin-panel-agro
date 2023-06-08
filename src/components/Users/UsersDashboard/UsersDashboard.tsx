@@ -5,6 +5,7 @@ import { selectUsersList } from 'redux/users';
 import UsersList from 'components/Users/UsersList';
 import Modal from 'components/Modal';
 import CreateUserForm from 'components/Users/CreateUserForm';
+import CreateButton from 'components/CreateButton';
 
 export default function UsersDashboard() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -18,19 +19,20 @@ export default function UsersDashboard() {
   return (
     <section style={{ position: 'relative' }}>
       <>
-        <ul>
+        {/* <ul>
           <li>Користувач</li>
           <li>Роль</li>
           <li>Опціі</li>
-        </ul>
+        </ul> */}
         {entities?.length ? (
           <UsersList usersList={entities} />
         ) : (
           <h2>There arent any users</h2>
         )}
-        <button type="button" onClick={() => setIsModalOpen(true)}>
+        {/* <button type="button" onClick={() => setIsModalOpen(true)}>
           Створити нового користувача
-        </button>
+        </button> */}
+        <CreateButton onClick={() =>setIsModalOpen(true)} />
         {isModalOpen && (
           <Modal onClose={() => setIsModalOpen(false)}>
             <CreateUserForm onClose={() => setIsModalOpen(false)} />

@@ -1,71 +1,62 @@
-import Modal from 'components/Modal';
-import ModalDelete from 'components/ModalDelete';
 import { useAppDispatch } from 'hooks';
-import { useState } from 'react';
-import { removeFeedbackById } from 'redux/feedbacks';
+import { useNavigate, useLocation } from 'react-router-dom';
+import { updateFeedbackIsFavorite, updateFeedbackViews } from 'redux/feedbacks';
+import CardWrapperMarkup from 'components/CardWrapperMarkup';
+import CardDetailStringMarkup from 'components/CardDetailStringMarkup';
+import Box from 'components/Box';
+import CardButton from 'components/CardButton';
+import FavoriteButton from 'components/FavoriteButton';
 
-interface IFeedback {
+export interface IFeedback {
   _id: string;
   name: string;
-  contactPhone: string;
-  contactMail: string;
   comment: string;
-  agreement: boolean;
+  isReviewed: boolean;
+  createdAt: string;
+  isFavorite: boolean;
 }
 export default function FeedbackCard({
   _id,
   name,
-  contactPhone,
-  contactMail,
+  isReviewed,
   comment,
-  agreement,
+  createdAt,
+  isFavorite,
 }: IFeedback) {
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+  const location = useLocation();
 
-  const handleDelete = (_id: string) => {
-    dispatch(removeFeedbackById(_id));
+  const handleUpdateViews = () => {
+    if (!isReviewed) {
+      dispatch(updateFeedbackViews(_id));
+    }
+  };
+
+  const clickHandler = (event: React.MouseEvent) => {
+    if (
+      !(event.target instanceof HTMLAnchorElement) &&
+      !(event.target instanceof HTMLButtonElement)
+    ) {
+      handleUpdateViews();
+      navigate(`${_id}${location.search}`, { state: location });
+    }
+    return;
   };
 
   return (
-    <li>
-      <p>
-        Ім'я:
-        <span>{name}</span>
-      </p>
-      <p>
-        Коментар:
-        <span>{comment}</span>
-      </p>
-      <p>
-        Контактний телефон:
-        <a href={`tel:${contactPhone}`}>{contactPhone}</a>
-      </p>
-      <p>
-        Контактна пошта:
-        <a href={`mailto:${contactMail}`}>{contactMail}</a>
-      </p>
-      <p>
-        Згода на обробку даних:
-        <span>{agreement ? 'Надана' : 'Не надана'}</span>
-      </p>
-      <button
-        type="button"
-        onClick={(e: React.MouseEvent<HTMLButtonElement>) =>
-          setIsModalOpen(true)
-        }
-      >
-        Видалити
-      </button>
-      {isModalOpen && (
-        <Modal onClose={() => setIsModalOpen(false)}>
-          <ModalDelete
-            onClose={() => setIsModalOpen(false)}
-            handleDelete={() => handleDelete(_id)}
-            title={`відгук від ${name}`}
-          />
-        </Modal>
-      )}
-    </li>
+    <CardWrapperMarkup onClick={() => clickHandler}>
+      <CardDetailStringMarkup title="Ім'я" value={name} />
+      <CardDetailStringMarkup title="Коментар" value={comment} />
+      <CardDetailStringMarkup title="Створений" value={createdAt} />
+      {/* TODO: createdAt не приходить на getAll  */}
+      <Box display="flex" justifyContent="center" gridGap={2}>
+        <FavoriteButton
+          isFavorite={isFavorite}
+          onClick={() => dispatch(updateFeedbackIsFavorite(_id))}
+        />
+        <CardButton type="remove" navigateTo={`${_id}/confirm`} />
+      </Box>
+    </CardWrapperMarkup>
   );
 }

@@ -7,6 +7,8 @@ import { useAppDispatch } from 'hooks';
 import { createProduct } from 'redux/products';
 import { Roles } from 'helpers/constants';
 import RestrictedComponent from 'components/RestrictedComponent';
+import CreateButton from 'components/CreateButton';
+import GalleryWrapper from 'components/GalleryWrapper';
 
 export default function ProductsGallery() {
   const products = useAppSelector(selectProducts);
@@ -16,15 +18,13 @@ export default function ProductsGallery() {
   return (
     <>
       <RestrictedComponent accessRight={Roles.productsManager}>
-        <button type="button" onClick={openModal}>
-          Add product
-        </button>
+        <CreateButton onClick={openModal} />
       </RestrictedComponent>
-      <ul>
+      <GalleryWrapper>
         {products.map(product => (
           <ProductCard key={product._id} {...product} />
         ))}
-      </ul>
+      </GalleryWrapper>
       {isModalOpen && (
         <Modal onClose={closeModal}>
           <ProductForm

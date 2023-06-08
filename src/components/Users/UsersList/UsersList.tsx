@@ -1,5 +1,6 @@
 import UserCard from 'components/Users/UserCard';
 import type { IUser } from 'redux/users';
+import GalleryWrapper from 'components/GalleryWrapper';
 
 interface IProps {
   usersList: IUser[];
@@ -7,10 +8,10 @@ interface IProps {
 
 export default function UsersList({ usersList }: IProps) {
   return (
-    <ul>
+    <GalleryWrapper>
       {usersList.map(item => (
         <UserCard key={item._id} {...item} />
       ))}
-    </ul>
+    </GalleryWrapper>
   );
 }

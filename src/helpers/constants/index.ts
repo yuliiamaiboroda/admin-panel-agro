@@ -9,3 +9,5 @@ export { Errors } from './errors';
 export { theme } from './theme';
 
 export { GlobalStyle } from './GlobalStyle';
+
+export { devices } from './devices';

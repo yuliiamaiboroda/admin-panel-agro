@@ -1,6 +1,15 @@
 import React, { useEffect } from 'react';
 import { createPortal } from 'react-dom';
+import { HiX } from 'react-icons/hi';
+import Box from 'components/Box';
+import { CloseModalButton } from './Modal.styled';
+import {
+  disableBodyScroll,
+  enableBodyScroll,
+  clearAllBodyScrollLocks,
+} from 'body-scroll-lock';
 
+const body = document.getElementById('root') as HTMLElement;
 const modalEl = document.getElementById('modal-root') as HTMLElement;
 const ESCAPE_KEY = 'Escape';
 
@@ -10,6 +19,7 @@ interface IProps {
 }
 export default function Modal({ onClose, children }: IProps) {
   useEffect(() => {
+    disableBodyScroll(body);
     const escapeModal = (event: KeyboardEvent) => {
       if (event.code === ESCAPE_KEY) {
         event.preventDefault();
@@ -19,6 +29,8 @@ export default function Modal({ onClose, children }: IProps) {
 
     window.addEventListener('keydown', escapeModal);
     return () => {
+      enableBodyScroll(body);
+      clearAllBodyScrollLocks();
       window.removeEventListener('keydown', escapeModal);
     };
   }, [onClose]);
@@ -33,40 +45,35 @@ export default function Modal({ onClose, children }: IProps) {
   };
 
   return createPortal(
-    <div
+    <Box
       onClick={handleBackdropCloseModal}
-      style={{
-        position: 'fixed',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        top: 0,
-        left: 0,
-        width: '100%',
-        height: '100%',
-        backgroundColor: 'rgb(0, 0, 0, 0.8)',
-      }}
+      position="fixed"
+      display="flex"
+      alignItems="center"
+      justifyContent="center"
+      top={0}
+      left={0}
+      width="100%"
+      height="100%"
+      p={4}
+      overflow="auto"
+      bg="backdrop"
     >
-      <div
-        style={{
-          position: 'relative',
-          minWidth: '600px',
-          minHeight: '400px',
-          backgroundColor: '#FFFFFF',
-          padding: '32px',
-          borderRadius: '16px',
-        }}
+      <Box
+        position="relative"
+        width={['300px', '600px']}
+        p={8}
+        m="auto"
+        bg="primaryBackground"
+        borderRadius="modal"
+        boxShadow="modal"
       >
-        <button
-          type="button"
-          onClick={onClose}
-          style={{ position: 'absolute', top: '16px', right: '16px' }}
-        >
-          Close modal
-        </button>
+        <CloseModalButton type="button" onClick={onClose}>
+          <HiX size={24} />
+        </CloseModalButton>
         {children}
-      </div>
-    </div>,
+      </Box>
+    </Box>,
     modalEl
   );
 }

@@ -1,15 +1,29 @@
+import { devices } from 'helpers/constants';
 import styled from 'styled-components';
 
 export const TitleWrapper = styled.div`
+  height: 100px;
   display: flex;
   align-items: center;
-  height: 111px; //TODO: тимчасове число, щоб займало менше місця
-  padding-left: 34px;
+  padding: ${p => p.theme.space[6]}px ${p => p.theme.space[8]}px;
   background: ${props => props.theme.colors.gradientBackground};
   border-radius: ${props => props.theme.radii.pageTitle};
+  
+  @media ${devices.tablet} { 
+    height: 150px;
+  }
+  
+  @media ${devices.desktop} { 
+    height: 234px;
+  }
+
 `;
 
 export const Title = styled.h1`
   color: ${props => props.theme.colors.pageTitleText};
-  font-size: ${props => props.theme.fontSizes.xxl};
+  font-size: ${props => props.theme.fontSizes.xl}px;
+  
+  @media ${devices.desktop} { 
+    font-size: ${props => props.theme.fontSizes.xxl}px;
+  }
 `;

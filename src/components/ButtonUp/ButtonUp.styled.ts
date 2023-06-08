@@ -16,8 +16,7 @@ export const Button = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
-  border-radius: 50%;
-  z-index: 15;
+  border-radius: ${p => p.theme.radii.circle};
   right: 20px;
   bottom: 20px;
   padding: 0;
