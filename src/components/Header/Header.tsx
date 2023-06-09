@@ -9,14 +9,10 @@ import { AiOutlineLogout, AiOutlineUser, AiOutlineMenu } from 'react-icons/ai';
 import { logoutUser, selectUser } from 'redux/user';
 import { Roles } from 'helpers/constants';
 import { NavLink } from 'react-router-dom';
-import {
-  ElWrapper,
-  HeaderTag,
-  LogoutButtonWrapper,
-  LogoutButton,
-} from './Header.styled';
+import { ElWrapper, HeaderTag } from './Header.styled';
 import CardTitleStringMarkup from 'components/CardTitleStringMarkup';
 import CardDetailStringMarkup from 'components/CardDetailStringMarkup';
+import { Button, ControlLink } from 'helpers/styles';
 
 export default function Header() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -39,18 +35,12 @@ export default function Header() {
             {matches.mobile && (
               <HeaderTag>
                 <ElWrapper>
-                  <NavLink to="/profile">
-                    <LogoutButtonWrapper>
-                      <LogoutButton>
-                        <AiOutlineUser size={24} color="white" />
-                      </LogoutButton>
-                    </LogoutButtonWrapper>
-                  </NavLink>
-                  <LogoutButtonWrapper>
-                    <LogoutButton>
-                      <AiOutlineMenu size={24} color="white" />
-                    </LogoutButton>
-                  </LogoutButtonWrapper>
+                  <ControlLink to="/profile" variant="circlePrimary">
+                    <AiOutlineUser size={24} />
+                  </ControlLink>
+                  <Button type="button" variant="circlePrimary">
+                    <AiOutlineMenu size={24} />
+                  </Button>
                 </ElWrapper>
                 {isModalOpen && (
                   <Modal onClose={() => setIsModalOpen(false)}>
@@ -77,17 +67,15 @@ export default function Header() {
                       />
                     )}
                   </NavLink>
-
-                  <LogoutButtonWrapper>
-                    <LogoutButton
-                      type="button"
-                      onClick={(e: React.MouseEvent<HTMLButtonElement>) =>
-                        setIsModalOpen(true)
-                      }
-                    >
-                      <AiOutlineLogout size={24} color="white" />
-                    </LogoutButton>
-                  </LogoutButtonWrapper>
+                  <Button
+                    variant="content"
+                    type="button"
+                    onClick={(e: React.MouseEvent<HTMLButtonElement>) =>
+                      setIsModalOpen(true)
+                    }
+                  >
+                    <AiOutlineLogout size={24} />
+                  </Button>
                 </ElWrapper>
                 {isModalOpen && (
                   <Modal onClose={() => setIsModalOpen(false)}>

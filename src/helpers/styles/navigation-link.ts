@@ -13,6 +13,7 @@ export const NavigationLink = styled(NavLink)`
   font-size: ${p => p.theme.fontSizes.m}px;
   font-weight: ${p => p.theme.fontWeights.medium};
 
+  background-color: ${p => p.theme.colors.primaryBackground};
   border-radius: ${p => p.theme.radii.button};
   border-width: 2px;
   border-style: solid;
