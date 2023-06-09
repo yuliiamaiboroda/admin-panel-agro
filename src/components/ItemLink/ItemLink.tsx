@@ -1,21 +1,27 @@
 import type { Location } from 'react-router-dom';
 import { HiOutlinePencil, HiOutlineTrash } from 'react-icons/hi';
-import { ControlButtonLink } from './ControlButton.styled';
+// import { ItemLinkLink } from './ItemLink.styled';
+import { ControlLink } from 'helpers/styles';
 
 interface IProps {
-  variant: 'edit' | 'remove';
+  type: 'edit' | 'remove';
   navigateTo: string;
   state?: { from: Location | string };
 }
 
-export default function ControlButton({ variant, navigateTo, state }: IProps) {
+export default function ItemLink({ type, navigateTo, state }: IProps) {
   return (
-    <ControlButtonLink to={navigateTo} state={state} variant={variant}>
-      {variant === 'edit' ? (
+    <ControlLink
+      to={navigateTo}
+      state={state}
+      variant="secondary"
+      warning={type === 'remove'}
+    >
+      {type === 'edit' ? (
         <HiOutlinePencil size={24} style={{ pointerEvents: 'none' }} />
       ) : (
         <HiOutlineTrash size={24} style={{ pointerEvents: 'none' }} />
       )}
-    </ControlButtonLink>
+    </ControlLink>
   );
 }

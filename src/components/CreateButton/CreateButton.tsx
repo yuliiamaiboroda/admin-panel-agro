@@ -9,18 +9,16 @@ interface IProps {
 export default function CreateButton({ onClick }: IProps) {
   return (
     <Button
-      // type="button"
+      type="button"
       onClick={onClick}
       variant="circlePrimary"
-      // borderRadius="circle"
-      // p={0}
       width="45px"
       height="45px"
       position="fixed"
       bottom="20px"
       right="80px"
     >
-      <HiOutlinePlus size={28} />
+      <HiOutlinePlus size={24} />
     </Button>
   );
 }

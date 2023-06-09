@@ -3,7 +3,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import CardWrapperMarkup from 'components/CardWrapperMarkup';
 import CardTitleStringMarkup from 'components/CardTitleStringMarkup';
 import CardDetailStringMarkup from 'components/CardDetailStringMarkup';
-import ControlButton from 'components/ControlButton';
+import ItemLink from 'components/ItemLink';
 import Box from 'components/Box';
 import { Roles } from 'helpers/constants';
 import translateRole from 'utils/translate-role';
@@ -29,13 +29,13 @@ export default function UserCard({ _id, email, name, surname, role }: IUser) {
       <CardDetailStringMarkup title="Пошта" value={email} />
       <CardDetailStringMarkup title="Роль" value={translateRole(Roles[role])} />
       <Box display="flex" justifyContent="center" gridGap={2}>
-        <ControlButton
-          variant="edit"
+        <ItemLink
+          type="edit"
           navigateTo={`${_id}/form`}
           state={{ from: routeLocation }}
         />
-        <ControlButton
-          variant="remove"
+        <ItemLink
+          type="remove"
           navigateTo={`${_id}/confirm`}
           state={{ from: routeLocation }}
         />

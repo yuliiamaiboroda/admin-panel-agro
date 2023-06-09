@@ -24,6 +24,7 @@ import type {
   PositionProps,
   ShadowProps,
 } from 'styled-system';
+import { Link } from 'react-router-dom';
 
 interface IProps
   extends TypographyProps,
@@ -47,7 +48,7 @@ interface IProps
   warning?: boolean;
 }
 
-export const Button = styled.button<IProps>`
+export const ControlLink = styled(Link)<IProps>`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -63,14 +64,6 @@ export const Button = styled.button<IProps>`
 
   :hover {
     scale: 0.9;
-  }
-
-  :disabled {
-    color: ${p => p.theme.colors.primaryText};
-    background-color: ${p => p.theme.colors.secondaryBackground};
-    border-color: transparent;
-    scale: 1;
-    cursor: auto;
   }
 
   ${p => {

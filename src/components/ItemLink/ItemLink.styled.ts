@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { variant } from 'styled-system';
 
-export const ControlButtonLink = styled(Link)<{ variant: 'edit' | 'remove' }>`
+export const ItemLinkLink = styled(Link)<{ variant: 'edit' | 'remove' }>`
   display: flex;
   justify-content: center;
   align-items: center;
