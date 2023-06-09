@@ -44,6 +44,20 @@ const GlobalStyle = createGlobalStyle`
     text-decoration: none; 
     color: currentColor
 }
+   ul.sidebar a.active {
+    display: block;
+    border-radius: 4px;
+    background-color: rgba(57, 78, 45, 0.93);
+    color: #FFFFFF;
+}
+  ::-moz-selection {
+  color: #FFFFFF;
+  background: rgba(57, 78, 45, 0.93);
+}
+  ::selection {
+  color: #FFFFFF;
+  background: rgba(57, 78, 45, 0.93);
+}
 `;
 
 export { GlobalStyle };
