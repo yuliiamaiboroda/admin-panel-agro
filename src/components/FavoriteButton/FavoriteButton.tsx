@@ -1,5 +1,4 @@
 import { HiHeart, HiOutlineHeart } from 'react-icons/hi';
-// import { Button } from './FavoriteButton.styled';
 import Button from 'components/Button';
 
 interface IProps {
