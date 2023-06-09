@@ -9,7 +9,7 @@ const theme: DefaultTheme = {
     pageTitleText: '#FFFFFF',
     primaryBackground: '#FFFFFF',
     secondaryBackground: '#E5E5E5',
-    buttonBackground: '#29392F',
+    buttonBackground: 'rgba(57, 78, 45, 0.93)',
     gradientBackground:
       'linear-gradient(88deg, rgba(57, 78, 45, 0.93) 0%, #29392F 100%)',
     backdrop: 'rgb(0, 0, 0, 0.8)',

@@ -1,3 +1,5 @@
+import { Fragment } from 'react';
+import Media from 'react-media';
 import { NavLink } from 'react-router-dom';
 import { HiUsers, HiOutlineTruck } from 'react-icons/hi';
 import {
@@ -60,41 +62,59 @@ const navigationLinks: ILink[] = [
 
 export default function Navigation() {
   return (
-    <Box
-      className="sidebar"
-      position="fixed"
-      top={0}
-      left={0}
-      bottom={0}
-      width="260px"
-      height="100vh"
-      bg="primaryBackground"
-    >
-      <SidebarDiv>
-        <img
-          src={process.env.PUBLIC_URL + '/Logo.png'}
-          alt="logo"
-          width="218px"
-          height="178px"
-        />
-        <Title>Сторінки</Title>
-        <SidebarWrap className="sidebar">
-          {navigationLinks.map(({ href, title, access, icon: Icon }, index) => {
-            return (
-              <RestrictedComponent key={index} accessRight={access}>
-                <li>
-                  <NavLink to={href}>
-                    <SidebarItem>
-                      <Icon size={20} />
-                      {title}
-                    </SidebarItem>
-                  </NavLink>
-                </li>
-              </RestrictedComponent>
-            );
-          })}
-        </SidebarWrap>
-      </SidebarDiv>
-    </Box>
+    <div>
+      <Media
+        queries={{
+          mobile: '(max-width: 767px)',
+          tabletDesktop: '(min-width: 768px)',
+        }}
+      >
+        {matches => (
+          <Fragment>
+            {matches.mobile && null}
+            {matches.tabletDesktop && (
+              <Box
+                className="sidebar"
+                position="fixed"
+                top={0}
+                left={0}
+                bottom={0}
+                width="260px"
+                height="100vh"
+                bg="primaryBackground"
+              >
+                <SidebarDiv>
+                  <img
+                    src={process.env.PUBLIC_URL + '/Logo.png'}
+                    alt="logo"
+                    width="218px"
+                    height="178px"
+                  />
+                  <Title>Сторінки</Title>
+                  <SidebarWrap className="sidebar">
+                    {navigationLinks.map(
+                      ({ href, title, access, icon: Icon }, index) => {
+                        return (
+                          <RestrictedComponent key={index} accessRight={access}>
+                            <li>
+                              <NavLink to={href}>
+                                <SidebarItem>
+                                  <Icon size={20} />
+                                  {title}
+                                </SidebarItem>
+                              </NavLink>
+                            </li>
+                          </RestrictedComponent>
+                        );
+                      }
+                    )}
+                  </SidebarWrap>
+                </SidebarDiv>
+              </Box>
+            )}
+          </Fragment>
+        )}
+      </Media>
+    </div>
   );
 }

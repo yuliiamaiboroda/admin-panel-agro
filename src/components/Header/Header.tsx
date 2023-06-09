@@ -1,49 +1,107 @@
+import { Fragment } from 'react';
+import Media from 'react-media';
 import Modal from 'components/Modal/Modal';
 import ModalLogout from 'components/ModalLogout/ModalLogout';
 import translateRole from 'utils/translate-role';
 import { useAppDispatch, useAppSelector } from 'hooks';
 import { useState } from 'react';
-import { AiOutlineLogout } from 'react-icons/ai';
+import { AiOutlineLogout, AiOutlineUser, AiOutlineMenu } from 'react-icons/ai';
 import { logoutUser, selectUser } from 'redux/user';
 import { Roles } from 'helpers/constants';
 import { NavLink } from 'react-router-dom';
+import {
+  ElWrapper,
+  HeaderTag,
+  LogoutButtonWrapper,
+  LogoutButton,
+} from './Header.styled';
+import CardTitleStringMarkup from 'components/CardTitleStringMarkup';
+import CardDetailStringMarkup from 'components/CardDetailStringMarkup';
 
 export default function Header() {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const {
-    user: { name, surname, role, email },
+    user: { name, surname, role },
   } = useAppSelector(selectUser);
 
   const dispatch = useAppDispatch();
-
   return (
-    <header>
-      <NavLink to="/profile">
-        <h2>
-          {name} {surname}
-        </h2>
-        {role && <div>{translateRole(Roles[role])}</div>}
-
-        <p>{email}</p>
-      </NavLink>
-
-      <button
-        type="button"
-        onClick={(e: React.MouseEvent<HTMLButtonElement>) =>
-          setIsModalOpen(true)
-        }
+    <div>
+      <Media
+        queries={{
+          mobile: '(max-width: 767px)',
+          tabletDesktop: '(min-width: 768px)',
+        }}
       >
-        <AiOutlineLogout /> Вийти з аккаунту
-      </button>
-      {isModalOpen && (
-        <Modal onClose={() => setIsModalOpen(false)}>
-          <ModalLogout
-            onClose={() => setIsModalOpen(false)}
-            handleLogout={() => dispatch(logoutUser())}
-          />
-        </Modal>
-      )}
-    </header>
+        {matches => (
+          <Fragment>
+            {matches.mobile && (
+              <HeaderTag>
+                <ElWrapper>
+                  <NavLink to="/profile">
+                    <LogoutButtonWrapper>
+                      <LogoutButton>
+                        <AiOutlineUser size={24} color="white" />
+                      </LogoutButton>
+                    </LogoutButtonWrapper>
+                  </NavLink>
+                  <LogoutButtonWrapper>
+                    <LogoutButton>
+                      <AiOutlineMenu size={24} color="white" />
+                    </LogoutButton>
+                  </LogoutButtonWrapper>
+                </ElWrapper>
+                {isModalOpen && (
+                  <Modal onClose={() => setIsModalOpen(false)}>
+                    <ModalLogout
+                      onClose={() => setIsModalOpen(false)}
+                      handleLogout={() => dispatch(logoutUser())}
+                    />
+                  </Modal>
+                )}
+              </HeaderTag>
+            )}
+            {matches.tabletDesktop && (
+              <HeaderTag>
+                <ElWrapper>
+                  <NavLink to="/profile">
+                    <CardTitleStringMarkup
+                      value={name}
+                      additionalValue={surname}
+                    />
+
+                    {role && (
+                      <CardDetailStringMarkup
+                        value={translateRole(Roles[role])}
+                      />
+                    )}
+                  </NavLink>
+
+                  <LogoutButtonWrapper>
+                    <LogoutButton
+                      type="button"
+                      onClick={(e: React.MouseEvent<HTMLButtonElement>) =>
+                        setIsModalOpen(true)
+                      }
+                    >
+                      <AiOutlineLogout size={24} color="white" />
+                    </LogoutButton>
+                  </LogoutButtonWrapper>
+                </ElWrapper>
+                {isModalOpen && (
+                  <Modal onClose={() => setIsModalOpen(false)}>
+                    <ModalLogout
+                      onClose={() => setIsModalOpen(false)}
+                      handleLogout={() => dispatch(logoutUser())}
+                    />
+                  </Modal>
+                )}
+              </HeaderTag>
+            )}
+          </Fragment>
+        )}
+      </Media>
+    </div>
   );
 }
