@@ -53,7 +53,7 @@ export const LogoutButton = styled.button`
   width: 36px;
   height: 36px;
   outline: none;
-  background-color: ${props => props.theme.colors.buttonBackground};
+  background-color: ${props => props.theme.colors.accentBackground};
   border: 1px solid transparent;
   border-radius: ${props => props.theme.radii.circle};
   box-shadow: ${props => props.theme.shadows.button};

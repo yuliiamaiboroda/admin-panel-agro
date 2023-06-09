@@ -20,13 +20,9 @@ export const TitleWrapper = styled.div`
 
 export const Title = styled.h1`
   color: ${props => props.theme.colors.accentText};
-<<<<<<< HEAD
-  font-size: ${props => props.theme.fontSizes.xxl}px;
-=======
   font-size: ${props => props.theme.fontSizes.xl}px;
-  
-  @media ${devices.desktop} { 
+
+  @media ${devices.desktop} {
     font-size: ${props => props.theme.fontSizes.xxl}px;
   }
->>>>>>> dev
 `;

@@ -1,5 +1,6 @@
 import { HiOutlinePlus } from 'react-icons/hi';
-import Button from 'components/Button';
+// import Button from 'components/Button';
+import { Button } from 'helpers/styles';
 
 interface IProps {
   onClick: () => void;
@@ -8,11 +9,11 @@ interface IProps {
 export default function CreateButton({ onClick }: IProps) {
   return (
     <Button
-      type="button"
+      // type="button"
       onClick={onClick}
-      variant="primary"
-      borderRadius="circle"
-      p={0}
+      variant="circlePrimary"
+      // borderRadius="circle"
+      // p={0}
       width="45px"
       height="45px"
       position="fixed"
