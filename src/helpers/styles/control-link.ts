@@ -45,7 +45,7 @@ interface IProps
     | 'circleSecondary'
     | 'circleContent';
   children: React.ReactNode;
-  warning?: boolean;
+  $warning?: boolean;
 }
 
 export const ControlLink = styled(Link)<IProps>`
@@ -67,7 +67,7 @@ export const ControlLink = styled(Link)<IProps>`
   }
 
   ${p => {
-    const accentColor = p.warning ? 'warning' : 'confirmation';
+    const accentColor = p.$warning ? 'warning' : 'confirmation';
     return variant({
       variants: {
         primary: {

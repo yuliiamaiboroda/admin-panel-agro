@@ -15,7 +15,7 @@ export default function ItemLink({ type, navigateTo, state }: IProps) {
       to={navigateTo}
       state={state}
       variant="secondary"
-      warning={type === 'remove'}
+      $warning={type === 'remove'}
     >
       {type === 'edit' ? (
         <HiOutlinePencil size={24} style={{ pointerEvents: 'none' }} />

@@ -1,6 +1,5 @@
 import { Fragment } from 'react';
 import Media from 'react-media';
-import { NavLink } from 'react-router-dom';
 import { HiUsers, HiOutlineTruck } from 'react-icons/hi';
 import {
   MdProductionQuantityLimits,
@@ -11,13 +10,9 @@ import {
 import { IconType } from 'react-icons';
 import { Roles, USER_ROLES } from 'helpers/constants';
 import RestrictedComponent from 'components/RestrictedComponent';
-import {
-  SidebarDiv,
-  SidebarItem,
-  SidebarWrap,
-  Title,
-} from './Navigation.styled';
+import { SidebarDiv, SidebarWrap, Title } from './Navigation.styled';
 import Box from 'components/Box';
+import { NavigationLink } from 'helpers/styles';
 
 interface ILink {
   href: string;
@@ -74,7 +69,6 @@ export default function Navigation() {
             {matches.mobile && null}
             {matches.tabletDesktop && (
               <Box
-                className="sidebar"
                 position="fixed"
                 top={0}
                 left={0}
@@ -91,18 +85,16 @@ export default function Navigation() {
                     height="178px"
                   />
                   <Title>Сторінки</Title>
-                  <SidebarWrap className="sidebar">
+                  <SidebarWrap>
                     {navigationLinks.map(
                       ({ href, title, access, icon: Icon }, index) => {
                         return (
                           <RestrictedComponent key={index} accessRight={access}>
                             <li>
-                              <NavLink to={href}>
-                                <SidebarItem>
-                                  <Icon size={20} />
-                                  {title}
-                                </SidebarItem>
-                              </NavLink>
+                              <NavigationLink to={href}>
+                                <Icon size={20} />
+                                {title}
+                              </NavigationLink>
                             </li>
                           </RestrictedComponent>
                         );

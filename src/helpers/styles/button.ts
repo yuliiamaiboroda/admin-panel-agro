@@ -44,7 +44,7 @@ interface IProps
     | 'circleSecondary'
     | 'circleContent';
   children: React.ReactNode;
-  warning?: boolean;
+  $warning?: boolean;
 }
 
 export const Button = styled.button<IProps>`
@@ -74,7 +74,7 @@ export const Button = styled.button<IProps>`
   }
 
   ${p => {
-    const accentColor = p.warning ? 'warning' : 'confirmation';
+    const accentColor = p.$warning ? 'warning' : 'confirmation';
     return variant({
       variants: {
         primary: {
