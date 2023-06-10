@@ -1,21 +1,23 @@
-import { NavLink } from 'react-router-dom';
+import { NavigationLink } from 'helpers/styles';
 
 export default function VacanciesNavigator() {
   return (
     <nav>
       <ul>
         <li>
-          <NavLink to={'/vacancies/all-vacancies'}>Всі вакансії</NavLink>
+          <NavigationLink to={'/vacancies/all-vacancies'}>
+            Всі вакансії
+          </NavigationLink>
         </li>
         <li>
-          <NavLink to={'/vacancies/actual-vacancies'}>
+          <NavigationLink to={'/vacancies/actual-vacancies'}>
             Актуальні вакансії
-          </NavLink>
+          </NavigationLink>
         </li>
         <li>
-          <NavLink to={'/vacancies/irrelevant-vacancies'}>
+          <NavigationLink to={'/vacancies/irrelevant-vacancies'}>
             Неактуальні вакансії
-          </NavLink>
+          </NavigationLink>
         </li>
       </ul>
     </nav>

@@ -6,6 +6,7 @@ import {
 } from 'redux/resumes';
 import ResumeCard from 'components/ResumeCard';
 import GalleryWrapper from 'components/GalleryWrapper';
+import LoadMoreButton from 'components/LoadMoreButton';
 
 export default function ResumesGallery() {
   const [queryParams] = useQueryParams();
@@ -21,8 +22,7 @@ export default function ResumesGallery() {
         ))}
       </GalleryWrapper>
       {resumes.length < pagination.total ? (
-        <button
-          type="button"
+        <LoadMoreButton
           onClick={() =>
             dispatch(
               loadMoreResumes({
@@ -31,9 +31,7 @@ export default function ResumesGallery() {
               })
             )
           }
-        >
-          Load more
-        </button>
+        />
       ) : null}
     </>
   );

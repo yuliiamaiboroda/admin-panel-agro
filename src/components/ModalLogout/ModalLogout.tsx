@@ -1,4 +1,5 @@
 import React from 'react';
+import ConfirmationModal from 'components/ConfirmationModal';
 
 interface IProps {
   onClose: () => void;
@@ -7,26 +8,10 @@ interface IProps {
 
 export default function ModalLogout({ onClose, handleLogout }: IProps) {
   return (
-    <div>
-      <h2>Ви впевнені, що хочете вийти?</h2>
-      <ul>
-        <li>
-          <button
-            type="button"
-            onClick={(e: React.MouseEvent<HTMLButtonElement>) => handleLogout()}
-          >
-            вихід
-          </button>
-        </li>
-        <li>
-          <button
-            type="button"
-            onClick={(e: React.MouseEvent<HTMLButtonElement>) => onClose()}
-          >
-            скасувати
-          </button>
-        </li>
-      </ul>
-    </div>
+    <ConfirmationModal
+      title={`Ви дійсно хочете вийти?`}
+      onCancel={onClose}
+      onConfirm={handleLogout}
+    />
   );
 }

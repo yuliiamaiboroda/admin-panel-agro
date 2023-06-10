@@ -4,7 +4,7 @@ import { updateFeedbackIsFavorite, updateFeedbackViews } from 'redux/feedbacks';
 import CardWrapperMarkup from 'components/CardWrapperMarkup';
 import CardDetailStringMarkup from 'components/CardDetailStringMarkup';
 import Box from 'components/Box';
-import CardButton from 'components/CardButton';
+import ItemLink from 'components/ItemLink';
 import FavoriteButton from 'components/FavoriteButton';
 
 export interface IFeedback {
@@ -55,7 +55,7 @@ export default function FeedbackCard({
           isFavorite={isFavorite}
           onClick={() => dispatch(updateFeedbackIsFavorite(_id))}
         />
-        <CardButton type="remove" navigateTo={`${_id}/confirm`} />
+        <ItemLink type="remove" navigateTo={`${_id}/confirm`} />
       </Box>
     </CardWrapperMarkup>
   );
