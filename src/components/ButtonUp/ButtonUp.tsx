@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
-import { Button, ArrowUp } from './ButtonUp.styled';
+import { StyledButtonUp } from './ButtonUp.styled';
+import { AiOutlineArrowUp } from 'react-icons/ai';
 
 export default function ButtonUp() {
   const [isShownButton, setIsShownButton] = useState(false);
@@ -25,14 +26,18 @@ export default function ButtonUp() {
   return (
     <>
       {isShownButton && (
-        <Button
+        <StyledButtonUp
           type="button"
           onClick={(e: React.MouseEvent<HTMLButtonElement>) =>
             handleScrollToTop()
           }
+          variant="circleSecondary"
+          // width="45px"
+          // height="45px"
+          // position="fixed"
         >
-          <ArrowUp />
-        </Button>
+          <AiOutlineArrowUp size={24} />
+        </StyledButtonUp>
       )}
     </>
   );

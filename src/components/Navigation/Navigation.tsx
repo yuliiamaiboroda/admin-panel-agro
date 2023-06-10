@@ -1,5 +1,3 @@
-import { Fragment } from 'react';
-import Media from 'react-media';
 import { HiUsers, HiOutlineTruck } from 'react-icons/hi';
 import {
   MdProductionQuantityLimits,
@@ -10,7 +8,6 @@ import {
 import { IconType } from 'react-icons';
 import { Roles, USER_ROLES } from 'helpers/constants';
 import RestrictedComponent from 'components/RestrictedComponent';
-import { SidebarDiv, SidebarWrap, Title } from './Navigation.styled';
 import Box from 'components/Box';
 import { NavigationLink } from 'helpers/styles';
 
@@ -58,34 +55,6 @@ const navigationLinks: ILink[] = [
 export default function Navigation() {
   return (
     <ul>
-      {/* <Media
-        queries={{
-          mobile: '(max-width: 767px)',
-          tabletDesktop: '(min-width: 768px)',
-        }}
-      >
-        {matches => (
-          <Fragment>
-            {matches.mobile && null}
-            {matches.tabletDesktop && (
-              <Box
-                position="fixed"
-                top={0}
-                left={0}
-                bottom={0}
-                width="260px"
-                height="100vh"
-                bg="primaryBackground"
-              >
-                <SidebarDiv>
-                  <img
-                    src={process.env.PUBLIC_URL + '/Logo.png'}
-                    alt="logo"
-                    width="218px"
-                    height="178px"
-                  />
-                  <Title>Сторінки</Title>
-                  <SidebarWrap> */}
       {navigationLinks.map(({ href, title, access, icon: Icon }, index) => {
         return (
           <RestrictedComponent key={index} accessRight={access}>
@@ -98,13 +67,6 @@ export default function Navigation() {
           </RestrictedComponent>
         );
       })}
-      {/* </SidebarWrap>
-                </SidebarDiv>
-              </Box>
-            )}
-          </Fragment>
-        )}
-      </Media> */}
     </ul>
   );
 }

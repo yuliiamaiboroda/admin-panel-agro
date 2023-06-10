@@ -1,18 +1,27 @@
-import { Fragment } from 'react';
-import Media from 'react-media';
+// import { Fragment } from 'react';
+// import Media from 'react-media';
 import Modal from 'components/Modal/Modal';
 import ModalLogout from 'components/ModalLogout/ModalLogout';
 import translateRole from 'utils/translate-role';
 import { useAppDispatch, useAppSelector } from 'hooks';
 import { useState } from 'react';
-import { AiOutlineLogout, AiOutlineUser, AiOutlineMenu } from 'react-icons/ai';
+import {
+  AiOutlineLogout,
+  // AiOutlineUser, AiOutlineMenu
+} from 'react-icons/ai';
 import { logoutUser, selectUser } from 'redux/user';
 import { Roles } from 'helpers/constants';
 import { NavLink } from 'react-router-dom';
-import { ElWrapper, HeaderTag } from './Header.styled';
+import {
+  ElWrapper,
+  // HeaderTag
+} from './Header.styled';
 import CardTitleStringMarkup from 'components/CardTitleStringMarkup';
 import CardDetailStringMarkup from 'components/CardDetailStringMarkup';
-import { Button, ControlLink } from 'helpers/styles';
+import {
+  Button,
+  // ControlLink
+} from 'helpers/styles';
 
 export default function Header() {
   const [isModalOpen, setIsModalOpen] = useState(false);

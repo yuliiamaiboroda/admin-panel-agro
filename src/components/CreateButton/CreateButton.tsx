@@ -16,7 +16,7 @@ export default function CreateButton({ onClick }: IProps) {
       height="45px"
       position="fixed"
       bottom="20px"
-      right="80px"
+      right="20px"
     >
       <HiOutlinePlus size={24} />
     </Button>
