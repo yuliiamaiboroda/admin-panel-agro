@@ -1,6 +1,7 @@
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from 'hooks';
 import { removeResume, selectCertainResume } from 'redux/resumes';
+import ConfirmationModal from 'components/ConfirmationModal';
 
 export default function ResumeModalConfirmation() {
   const resume = useAppSelector(selectCertainResume);
@@ -14,21 +15,18 @@ export default function ResumeModalConfirmation() {
     return null;
   }
 
+  const handleConfirm = () => {
+    dispatch(removeResume(resume._id));
+    navigate('/resumes');
+  };
+
+  const handleCancel = () => navigate(backLinkHref);
+
   return (
-    <>
-      <h1>Are you sure want to delete the {resume.name}`s resume?</h1>
-      <button
-        type="button"
-        onClick={() => {
-          dispatch(removeResume(resume._id));
-          navigate('/resumes');
-        }}
-      >
-        Yes
-      </button>
-      <button type="button" onClick={() => navigate(backLinkHref)}>
-        Cancel
-      </button>
-    </>
+    <ConfirmationModal
+      title={`Ви дійсно хочете видалити резюме "${resume.name}"?`}
+      onConfirm={handleConfirm}
+      onCancel={handleCancel}
+    />
   );
 }

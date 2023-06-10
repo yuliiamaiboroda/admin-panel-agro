@@ -13,9 +13,13 @@ const FadeIn = keyframes`
 
 export const StyledButtonUp = styled(Button)`
   position: fixed;
-  cursor: pointer;
   right: 20px;
   bottom: 75px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
   width: 45px;
   height: 45px;
   padding: 0;

@@ -1,5 +1,5 @@
 import { HiHeart, HiOutlineHeart } from 'react-icons/hi';
-import Button from 'components/Button';
+import { Button } from 'helpers/styles';
 
 interface IProps {
   isFavorite: boolean;
@@ -8,7 +8,7 @@ interface IProps {
 
 export default function FavoriteButton({ isFavorite, onClick }: IProps) {
   return (
-    <Button onClick={onClick} variant="content">
+    <Button type="button" onClick={onClick} variant="content">
       {isFavorite ? (
         <HiHeart size={24} style={{ pointerEvents: 'none' }} />
       ) : (

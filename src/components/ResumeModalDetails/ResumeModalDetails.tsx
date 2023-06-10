@@ -5,14 +5,9 @@ import { selectCertainResume, updateResumeIsFavorite } from 'redux/resumes';
 import Box from 'components/Box';
 import FavoriteButton from 'components/FavoriteButton';
 import ItemLink from 'components/ItemLink/ItemLink';
-import {
-  ModalTitle,
-  ContactLink,
-  PositionTitle,
-  Position,
-  FileLink,
-  Description,
-} from './ResumeModalDetails.styled';
+import ModalTitle from 'components/ModalTitle';
+import ModalDescription from 'components/ModalDescription';
+import ModalLink from 'components/ModalLink';
 
 export default function ResumeModalDetails() {
   const resume = useAppSelector(selectCertainResume);
@@ -34,20 +29,22 @@ export default function ResumeModalDetails() {
     isFavorite,
   } = resume;
   return (
-    <>
-      <ModalTitle>{name}</ModalTitle>
-      <Box display="flex" flexDirection="column" gridGap={1} mb={4}>
-        <ContactLink href={`tel:${phone}`}>{phone}</ContactLink>
-        <ContactLink href={`mailto:${email}`}>{email}</ContactLink>
+    <Box display="flex" flexDirection="column" gridGap={[3, 4]}>
+      <ModalTitle value={name} />
+      <Box display="flex" flexDirection="column" gridGap={1}>
+        <ModalLink href={`tel:${phone}`} label="Телефон">
+          {phone}
+        </ModalLink>
+        <ModalLink href={`mailto:${email}`} label="Пошта">
+          {email}
+        </ModalLink>
       </Box>
-      <Box display="flex" flexDirection="column" gridGap={1} mb={4}>
-        <PositionTitle>
-          Позиція: <Position>{position}</Position>
-        </PositionTitle>
-        <FileLink href={resumeFileURL}>
-          Резюме {resumeFileURL ? <HiDocumentText /> : null}
-        </FileLink>
-        <Description>{comment}</Description>
+      <Box display="flex" flexDirection="column" gridGap={1}>
+        <ModalDescription label="Позиція" value={position} />
+        <ModalLink href={resumeFileURL} label="Резюме">
+          Переглянути <HiDocumentText size={18} />
+        </ModalLink>
+        <ModalDescription label="Опис" value={comment} />
       </Box>
       <Box display="flex" justifyContent="space-around">
         <FavoriteButton
@@ -56,13 +53,12 @@ export default function ResumeModalDetails() {
             dispatch(updateResumeIsFavorite(_id));
           }}
         />
-
         <ItemLink
           type="remove"
           navigateTo="confirm"
           state={{ from: location }}
         ></ItemLink>
       </Box>
-    </>
+    </Box>
   );
 }

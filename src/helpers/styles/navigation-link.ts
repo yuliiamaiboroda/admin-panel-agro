@@ -10,7 +10,7 @@ export const NavigationLink = styled(NavLink)`
   /* width: 100%; */
 
   color: ${p => p.theme.colors.primaryText};
-  font-size: ${p => p.theme.fontSizes.m}px;
+  font-size: ${p => p.theme.fontSizes.m};
   font-weight: ${p => p.theme.fontWeights.medium};
 
   background-color: ${p => p.theme.colors.primaryBackground};

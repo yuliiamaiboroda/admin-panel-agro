@@ -52,7 +52,7 @@ export const Button = styled.button<IProps>`
   justify-content: center;
   align-items: center;
 
-  font-size: ${p => p.theme.fontSizes.m}px;
+  font-size: ${p => p.theme.fontSizes.m};
   font-weight: ${p => p.theme.fontWeights.medium};
 
   border-width: 2px;

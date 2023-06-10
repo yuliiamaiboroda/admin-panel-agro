@@ -22,11 +22,11 @@ const theme: DefaultTheme = {
     bold: '700',
   },
   fontSizes: {
-    s: '13',
-    m: '16',
-    l: '23',
-    xl: '32',
-    xxl: '40',
+    s: '13px',
+    m: '16px',
+    l: '23px',
+    xl: '32px',
+    xxl: '40px',
   },
   lineHeights: [1.12, 1.2, 1.3, 1.75],
   shadows: {

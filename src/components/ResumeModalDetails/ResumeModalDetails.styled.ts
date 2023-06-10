@@ -2,12 +2,12 @@ import styled from 'styled-components';
 
 export const ModalTitle = styled.h2`
   font-weight: ${p => p.theme.fontWeights.bold};
-  font-size: ${p => p.theme.fontSizes.xl}px;
+  font-size: ${p => p.theme.fontSizes.xl};
   margin-bottom: ${p => p.theme.space[4]}px;
 `;
 
 export const ContactLink = styled.a`
-  font-size: ${p => p.theme.fontSizes.m}px;
+  font-size: ${p => p.theme.fontSizes.m};
   font-weight: ${p => p.theme.fontWeights.bold};
 
   :hover {
@@ -16,7 +16,7 @@ export const ContactLink = styled.a`
 `;
 
 export const PositionTitle = styled.h3`
-  font-size: ${p => p.theme.fontSizes.m}px;
+  font-size: ${p => p.theme.fontSizes.m};
   font-weight: ${p => p.theme.fontWeights.normal};
 `;
 
@@ -27,7 +27,7 @@ export const Position = styled.span`
 export const FileLink = styled.a`
   display: flex;
   align-items: center;
-  font-size: ${p => p.theme.fontSizes.m}px;
+  font-size: ${p => p.theme.fontSizes.m};
   font-weight: ${p =>
     p.href ? p.theme.fontWeights.bold : p.theme.fontWeights.normal};
   opacity: ${p => (p.href ? 1 : 0.3)};
@@ -39,5 +39,5 @@ export const FileLink = styled.a`
 `;
 
 export const Description = styled.p`
-  font-size: ${p => p.theme.fontSizes.m}px;
+  font-size: ${p => p.theme.fontSizes.m};
 `;
