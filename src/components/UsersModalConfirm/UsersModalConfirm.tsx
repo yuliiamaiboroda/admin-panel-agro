@@ -1,6 +1,7 @@
 import { useAppDispatch, useAppSelector } from 'hooks';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { removeUserById, selectUsersList } from 'redux/users';
+import ConfirmationModal from 'components/ConfirmationModal';
 
 export default function UsersModalConfirm() {
   const { certain } = useAppSelector(selectUsersList);
@@ -14,35 +15,20 @@ export default function UsersModalConfirm() {
     return null;
   }
 
+  const handleConfirm = () => {
+    dispatch(removeUserById(certain._id));
+    navigate('/users');
+  };
+
+  const handleCancel = () => {
+    navigate(backLinkHref);
+  };
+
   return (
-    <div>
-      <h1>
-        Ви впевнені що хочете видалити користувача {certain.name}{' '}
-        {certain.surname}
-      </h1>
-      <ul>
-        <li>
-          <button
-            type="button"
-            onClick={() => {
-              dispatch(removeUserById(certain._id));
-              navigate('/users');
-            }}
-          >
-            Так
-          </button>
-        </li>
-        <li>
-          <button
-            type="button"
-            onClick={() => {
-              navigate(backLinkHref);
-            }}
-          >
-            Скасувати
-          </button>
-        </li>
-      </ul>
-    </div>
+    <ConfirmationModal
+      title={`Ви дійсно хочете видалити користувача ${certain.name} ${certain.surname}?`}
+      onCancel={handleCancel}
+      onConfirm={handleConfirm}
+    />
   );
 }
