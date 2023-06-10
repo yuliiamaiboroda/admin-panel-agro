@@ -1,27 +1,16 @@
-// import { Fragment } from 'react';
-// import Media from 'react-media';
 import Modal from 'components/Modal/Modal';
 import ModalLogout from 'components/ModalLogout/ModalLogout';
 import translateRole from 'utils/translate-role';
 import { useAppDispatch, useAppSelector } from 'hooks';
 import { useState } from 'react';
-import {
-  AiOutlineLogout,
-  // AiOutlineUser, AiOutlineMenu
-} from 'react-icons/ai';
+import { AiOutlineLogout, AiOutlineUser, AiOutlineMenu } from 'react-icons/ai';
 import { logoutUser, selectUser } from 'redux/user';
 import { Roles } from 'helpers/constants';
-import { NavLink } from 'react-router-dom';
-import {
-  ElWrapper,
-  // HeaderTag
-} from './Header.styled';
+import { Link } from 'react-router-dom';
 import CardTitleStringMarkup from 'components/CardTitleStringMarkup';
 import CardDetailStringMarkup from 'components/CardDetailStringMarkup';
-import {
-  Button,
-  // ControlLink
-} from 'helpers/styles';
+import { Button, ControlLink } from 'helpers/styles';
+import Box from 'components/Box';
 
 export default function Header() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -32,55 +21,51 @@ export default function Header() {
 
   const dispatch = useAppDispatch();
   return (
-    <div>
-      {/* <Media
-        queries={{
-          mobile: '(max-width: 767px)',
-          tabletDesktop: '(min-width: 768px)',
-        }}
+    <>
+      <Box
+        display="flex"
+        flexDirection="row"
+        justifyContent={['space-between', 'end']}
+        width="100%"
+        gridGap={4}
+        px={4}
+        py={2}
+        as="header"
       >
-        {matches => (
-          <Fragment>
-            {matches.mobile && (
-              <HeaderTag>
-                <ElWrapper>
-                  <ControlLink to="/profile" variant="circlePrimary">
-                    <AiOutlineUser size={24} />
-                  </ControlLink>
-                  <Button type="button" variant="circlePrimary">
-                    <AiOutlineMenu size={24} />
-                  </Button>
-                </ElWrapper>
-                {isModalOpen && (
-                  <Modal onClose={() => setIsModalOpen(false)}>
-                    <ModalLogout
-                      onClose={() => setIsModalOpen(false)}
-                      handleLogout={() => dispatch(logoutUser())}
-                    />
-                  </Modal>
-                )}
-              </HeaderTag>
-            )}
-            {matches.tabletDesktop && (
-              <HeaderTag> */}
-      <ElWrapper>
-        <NavLink to="/profile">
-          <CardTitleStringMarkup value={name} additionalValue={surname} />
+        <Box display={['none', 'block']}>
+          <Link to="/profile">
+            <CardTitleStringMarkup value={name} additionalValue={surname} />
 
-          {role && (
-            <CardDetailStringMarkup value={translateRole(Roles[role])} />
-          )}
-        </NavLink>
+            {role && (
+              <CardDetailStringMarkup value={translateRole(Roles[role])} />
+            )}
+          </Link>
+        </Box>
+        <ControlLink
+          to="/profile"
+          variant="circlePrimary"
+          display={['flex', 'none']}
+        >
+          <AiOutlineUser size={24} />
+        </ControlLink>
         <Button
-          variant="content"
           type="button"
           onClick={(e: React.MouseEvent<HTMLButtonElement>) =>
             setIsModalOpen(true)
           }
+          variant="content"
+          display={['none', 'flex']}
         >
           <AiOutlineLogout size={24} />
         </Button>
-      </ElWrapper>
+        <Button
+          type="button"
+          variant="circlePrimary"
+          display={['flex', 'none']}
+        >
+          <AiOutlineMenu size={24} />
+        </Button>
+      </Box>
       {isModalOpen && (
         <Modal onClose={() => setIsModalOpen(false)}>
           <ModalLogout
@@ -89,11 +74,6 @@ export default function Header() {
           />
         </Modal>
       )}
-      {/* </HeaderTag>
-            )}
-          </Fragment>
-        )}
-      </Media> */}
-    </div>
+    </>
   );
 }

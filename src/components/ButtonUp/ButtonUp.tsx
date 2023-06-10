@@ -32,9 +32,6 @@ export default function ButtonUp() {
             handleScrollToTop()
           }
           variant="circleSecondary"
-          // width="45px"
-          // height="45px"
-          // position="fixed"
         >
           <AiOutlineArrowUp size={24} />
         </StyledButtonUp>
