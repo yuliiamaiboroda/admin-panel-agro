@@ -1,13 +1,13 @@
 import React, { useEffect } from 'react';
 import { createPortal } from 'react-dom';
-import { HiX } from 'react-icons/hi';
-import Box from 'components/Box';
-import { CloseModalButton } from './Modal.styled';
 import {
   disableBodyScroll,
   enableBodyScroll,
   clearAllBodyScrollLocks,
 } from 'body-scroll-lock';
+import { HiX } from 'react-icons/hi';
+import Box from 'components/Box';
+import { Button } from 'helpers/styles';
 
 const body = document.getElementById('root') as HTMLElement;
 const modalEl = document.getElementById('modal-root') as HTMLElement;
@@ -68,9 +68,17 @@ export default function Modal({ onClose, children }: IProps) {
         borderRadius="modal"
         boxShadow="modal"
       >
-        <CloseModalButton type="button" onClick={onClose}>
+        <Button
+          type="button"
+          onClick={onClose}
+          variant="content"
+          position="absolute"
+          top={2}
+          right={2}
+          p={0}
+        >
           <HiX size={24} />
-        </CloseModalButton>
+        </Button>
         {children}
       </Box>
     </Box>,
