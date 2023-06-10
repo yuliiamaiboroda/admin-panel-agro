@@ -24,7 +24,7 @@ export default function Header() {
   const dispatch = useAppDispatch();
   return (
     <div>
-      <Media
+      {/* <Media
         queries={{
           mobile: '(max-width: 767px)',
           tabletDesktop: '(min-width: 768px)',
@@ -53,43 +53,38 @@ export default function Header() {
               </HeaderTag>
             )}
             {matches.tabletDesktop && (
-              <HeaderTag>
-                <ElWrapper>
-                  <NavLink to="/profile">
-                    <CardTitleStringMarkup
-                      value={name}
-                      additionalValue={surname}
-                    />
+              <HeaderTag> */}
+      <ElWrapper>
+        <NavLink to="/profile">
+          <CardTitleStringMarkup value={name} additionalValue={surname} />
 
-                    {role && (
-                      <CardDetailStringMarkup
-                        value={translateRole(Roles[role])}
-                      />
-                    )}
-                  </NavLink>
-                  <Button
-                    variant="content"
-                    type="button"
-                    onClick={(e: React.MouseEvent<HTMLButtonElement>) =>
-                      setIsModalOpen(true)
-                    }
-                  >
-                    <AiOutlineLogout size={24} />
-                  </Button>
-                </ElWrapper>
-                {isModalOpen && (
-                  <Modal onClose={() => setIsModalOpen(false)}>
-                    <ModalLogout
-                      onClose={() => setIsModalOpen(false)}
-                      handleLogout={() => dispatch(logoutUser())}
-                    />
-                  </Modal>
-                )}
-              </HeaderTag>
+          {role && (
+            <CardDetailStringMarkup value={translateRole(Roles[role])} />
+          )}
+        </NavLink>
+        <Button
+          variant="content"
+          type="button"
+          onClick={(e: React.MouseEvent<HTMLButtonElement>) =>
+            setIsModalOpen(true)
+          }
+        >
+          <AiOutlineLogout size={24} />
+        </Button>
+      </ElWrapper>
+      {isModalOpen && (
+        <Modal onClose={() => setIsModalOpen(false)}>
+          <ModalLogout
+            onClose={() => setIsModalOpen(false)}
+            handleLogout={() => dispatch(logoutUser())}
+          />
+        </Modal>
+      )}
+      {/* </HeaderTag>
             )}
           </Fragment>
         )}
-      </Media>
+      </Media> */}
     </div>
   );
 }

@@ -1,22 +1,27 @@
 import Header from 'components/Header';
 import Loader from 'components/Loader/Loader';
-import Navigation from 'components/Navigation';
 import { Suspense } from 'react';
 import { Outlet } from 'react-router-dom';
 import ButtonUp from 'components/ButtonUp';
-import { OutletWrapper } from './SharedLayout.styled';
+import Box from 'components/Box';
+import SideBarNavigation from 'components/SideBarNavigation';
 
 export default function SharedLayout() {
   return (
-    <>
-      <Navigation />
-      <Header />
-      <OutletWrapper>
+    <Box
+      display="flex"
+      maxWidth={['480px', '768px', '1200px']}
+      px={4}
+      mx="auto"
+    >
+      <SideBarNavigation />
+      <Box flexGrow={1}>
+        <Header />
         <ButtonUp />
         <Suspense fallback={<Loader />}>
           <Outlet />
         </Suspense>
-      </OutletWrapper>
-    </>
+      </Box>
+    </Box>
   );
 }

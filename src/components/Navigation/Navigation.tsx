@@ -57,8 +57,8 @@ const navigationLinks: ILink[] = [
 
 export default function Navigation() {
   return (
-    <div>
-      <Media
+    <ul>
+      {/* <Media
         queries={{
           mobile: '(max-width: 767px)',
           tabletDesktop: '(min-width: 768px)',
@@ -85,28 +85,26 @@ export default function Navigation() {
                     height="178px"
                   />
                   <Title>Сторінки</Title>
-                  <SidebarWrap>
-                    {navigationLinks.map(
-                      ({ href, title, access, icon: Icon }, index) => {
-                        return (
-                          <RestrictedComponent key={index} accessRight={access}>
-                            <li>
-                              <NavigationLink to={href}>
-                                <Icon size={20} />
-                                {title}
-                              </NavigationLink>
-                            </li>
-                          </RestrictedComponent>
-                        );
-                      }
-                    )}
-                  </SidebarWrap>
+                  <SidebarWrap> */}
+      {navigationLinks.map(({ href, title, access, icon: Icon }, index) => {
+        return (
+          <RestrictedComponent key={index} accessRight={access}>
+            <Box width="100%" as="li">
+              <NavigationLink to={href}>
+                <Icon size={20} />
+                {title}
+              </NavigationLink>
+            </Box>
+          </RestrictedComponent>
+        );
+      })}
+      {/* </SidebarWrap>
                 </SidebarDiv>
               </Box>
             )}
           </Fragment>
         )}
-      </Media>
-    </div>
+      </Media> */}
+    </ul>
   );
 }
