@@ -26,7 +26,7 @@ export default function UsersModalConfirm() {
 
   return (
     <ConfirmationModal
-      title={`Ви дійсно хочете видалити користувача ${certain.name} ${certain.surname}?`}
+      title={`Ви дійсно хочете видалити користувача "${certain.name} ${certain.surname}"?`}
       onCancel={handleCancel}
       onConfirm={handleConfirm}
     />

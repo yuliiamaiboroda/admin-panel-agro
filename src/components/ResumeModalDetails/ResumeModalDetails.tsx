@@ -2,8 +2,8 @@ import { useLocation } from 'react-router-dom';
 import { HiDocumentText } from 'react-icons/hi';
 import { useAppSelector, useAppDispatch } from 'hooks';
 import { selectCertainResume, updateResumeIsFavorite } from 'redux/resumes';
-import Box from 'components/Box';
 import FavoriteButton from 'components/FavoriteButton';
+import Box from 'components/Box';
 import ItemLink from 'components/ItemLink/ItemLink';
 import ModalTitle from 'components/ModalTitle';
 import ModalDescription from 'components/ModalDescription';
@@ -38,8 +38,6 @@ export default function ResumeModalDetails() {
         <ModalLink href={`mailto:${email}`} label="Пошта">
           {email}
         </ModalLink>
-      </Box>
-      <Box display="flex" flexDirection="column" gridGap={1}>
         <ModalDescription label="Позиція" value={position} />
         <ModalLink href={resumeFileURL} label="Резюме">
           Переглянути <HiDocumentText size={18} />

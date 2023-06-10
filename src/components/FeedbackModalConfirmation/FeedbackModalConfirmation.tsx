@@ -1,6 +1,7 @@
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from 'hooks';
 import { removeFeedbackById, selectFeedbacks } from 'redux/feedbacks';
+import ConfirmationModal from 'components/ConfirmationModal';
 
 export default function FeedbackModalConfirmation() {
   const { certain } = useAppSelector(selectFeedbacks);
@@ -13,21 +14,19 @@ export default function FeedbackModalConfirmation() {
   if (!certain) {
     return null;
   }
+
+  const handleConfirm = () => {
+    dispatch(removeFeedbackById(certain._id));
+    navigate('/feedbacks');
+  };
+
+  const handleCancel = () => navigate(backLinkHref);
+
   return (
-    <>
-      <h1>Ви впевнені що хочете видалити фідбек від {certain.name}</h1>
-      <button
-        type="button"
-        onClick={() => {
-          dispatch(removeFeedbackById(certain._id));
-          navigate('/feedbacks');
-        }}
-      >
-        Так
-      </button>
-      <button type="button" onClick={() => navigate(backLinkHref)}>
-        відміна
-      </button>
-    </>
+    <ConfirmationModal
+      title={`Ви дійсно хочете видалити фідбек від "${certain.name}"?`}
+      onCancel={handleCancel}
+      onConfirm={handleConfirm}
+    />
   );
 }

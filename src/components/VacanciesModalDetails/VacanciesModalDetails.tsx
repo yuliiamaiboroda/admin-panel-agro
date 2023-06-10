@@ -1,7 +1,12 @@
-import { Link, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import { useAppSelector } from 'hooks';
 import { selectVacancies } from 'redux/vacancies';
 import translateCategory from 'utils/translate-vacancy-category';
+import Box from 'components/Box';
+import ItemLink from 'components/ItemLink/ItemLink';
+import ModalTitle from 'components/ModalTitle';
+import ModalDescription from 'components/ModalDescription';
+import ModalLink from 'components/ModalLink';
 
 export default function VacanciesModalDetails() {
   const { certain } = useAppSelector(selectVacancies);
@@ -23,46 +28,40 @@ export default function VacanciesModalDetails() {
     workExperienceRequired,
   } = certain;
   return (
-    <div>
-      <h3>{title}</h3>
-      <p>
-        Опис:
-        <span>{description}</span>
-      </p>
-      <p>
-        Категорія:
-        <span>{translateCategory(category)}</span>
-      </p>
-      <p>
-        Зарплатня:
-        <span>{sallary}</span>
-      </p>
-      <p>
-        Освіта:
-        <span>{education}</span>
-      </p>
-      <p>
-        Необхідний досвід роботи:
-        <span>{workExperienceRequired}</span>
-      </p>
-      <p>
-        Локація:
-        <span>{location}</span>
-      </p>
-      <p>
-        Контактний телефон:
-        <a href={`tel:${contactPhone}`}>{contactPhone}</a>
-      </p>
-      <p>
-        Контактна пошта:
-        <a href={`mailto:${contactMail}`}>{contactMail}</a>
-      </p>
-      <Link to="form" state={{ from: routeLocation }}>
-        змінити
-      </Link>
-      <Link to="confirm" state={{ from: routeLocation }}>
-        видалити
-      </Link>
-    </div>
+    <Box display="flex" flexDirection="column" gridGap={[3, 4]}>
+      <ModalTitle value={title} />
+      <Box display="flex" flexDirection="column" gridGap={1}>
+        <ModalDescription label="Опис" value={description} />
+        <ModalDescription
+          label="Категорія"
+          value={translateCategory(category)}
+        />
+        <ModalDescription label="Зарплатня" value={sallary} />
+        <ModalDescription label="Освіта" value={education} />
+        <ModalDescription
+          label="Необхідний досвід роботи"
+          value={workExperienceRequired}
+        />
+        <ModalDescription label="Локація" value={location} />
+        <ModalLink label="Телефон" href={`tel:${contactPhone}`}>
+          {contactPhone}
+        </ModalLink>
+        <ModalLink label="Пошта" href={`mailto:${contactMail}`}>
+          {contactMail}
+        </ModalLink>
+      </Box>
+      <Box display="flex" justifyContent="space-around">
+        <ItemLink
+          type="edit"
+          navigateTo="form"
+          state={{ from: routeLocation }}
+        />
+        <ItemLink
+          type="remove"
+          navigateTo="confirm"
+          state={{ from: routeLocation }}
+        />
+      </Box>
+    </Box>
   );
 }

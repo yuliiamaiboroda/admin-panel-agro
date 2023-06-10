@@ -1,6 +1,7 @@
 import { useAppDispatch, useAppSelector } from 'hooks';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { removeVacancyById, selectVacancies } from 'redux/vacancies';
+import ConfirmationModal from 'components/ConfirmationModal';
 
 export default function VacanciesModalConfirm() {
   const { certain } = useAppSelector(selectVacancies);
@@ -13,27 +14,19 @@ export default function VacanciesModalConfirm() {
   if (!certain) {
     return null;
   }
+
+  const handleConfirm = () => {
+    dispatch(removeVacancyById(certain._id));
+    navigate('/vacancies');
+  };
+
+  const handleCancel = () => navigate(backLinkHref);
+
   return (
-    <div>
-      <h1>Ви впевнені що хочете видалити вакансію {certain.title}</h1>
-      <ul>
-        <li>
-          <button
-            type="button"
-            onClick={() => {
-              dispatch(removeVacancyById(certain._id));
-              navigate('/vacancies');
-            }}
-          >
-            Так
-          </button>
-        </li>
-        <li>
-          <button type="button" onClick={() => navigate(backLinkHref)}>
-            відміна
-          </button>
-        </li>
-      </ul>
-    </div>
+    <ConfirmationModal
+      title={`Ви дійсно хочете видалити вакансію "${certain.title}"?`}
+      onCancel={handleCancel}
+      onConfirm={handleConfirm}
+    />
   );
 }
