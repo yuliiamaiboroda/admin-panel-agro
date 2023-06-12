@@ -11,9 +11,11 @@ import CardTitleStringMarkup from 'components/CardTitleStringMarkup';
 import CardDetailStringMarkup from 'components/CardDetailStringMarkup';
 import { Button, ControlLink } from 'helpers/styles';
 import Box from 'components/Box';
+import ModalMobileMenu from 'components/ModalMobileMenu';
 
 export default function Header() {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const {
     user: { name, surname, role },
@@ -60,6 +62,9 @@ export default function Header() {
         </Button>
         <Button
           type="button"
+          onClick={(e: React.MouseEvent<HTMLButtonElement>) =>
+            setIsMobileMenuOpen(true)
+          }
           variant="circlePrimary"
           display={['flex', 'none']}
         >
@@ -71,6 +76,14 @@ export default function Header() {
           <ModalLogout
             onClose={() => setIsModalOpen(false)}
             handleLogout={() => dispatch(logoutUser())}
+          />
+        </Modal>
+      )}
+      {isMobileMenuOpen && (
+        <Modal onClose={() => setIsMobileMenuOpen(false)}>
+          <ModalMobileMenu
+            title="Меню"
+            onClick={() => setIsMobileMenuOpen(false)}
           />
         </Modal>
       )}

@@ -18,6 +18,10 @@ interface ILink {
   icon: IconType;
 }
 
+interface IProps {
+  onClick?: () => void;
+}
+
 const navigationLinks: ILink[] = [
   { href: '/users', title: 'Користувачі', access: Roles.admin, icon: HiUsers },
   {
@@ -52,14 +56,14 @@ const navigationLinks: ILink[] = [
   },
 ];
 
-export default function Navigation() {
+export default function Navigation({ onClick }: IProps) {
   return (
     <ul>
       {navigationLinks.map(({ href, title, access, icon: Icon }, index) => {
         return (
           <RestrictedComponent key={index} accessRight={access}>
             <Box width="100%" as="li">
-              <NavigationLink to={href}>
+              <NavigationLink to={href} onClick={onClick}>
                 <Icon size={20} />
                 {title}
               </NavigationLink>
