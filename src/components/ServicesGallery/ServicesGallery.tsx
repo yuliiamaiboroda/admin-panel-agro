@@ -7,6 +7,7 @@ import { Roles } from 'helpers/constants';
 import RestrictedComponent from 'components/RestrictedComponent';
 import GalleryWrapper from 'components/GalleryWrapper';
 import CreateButton from 'components/CreateButton';
+import CardPlaceholder from 'components/CardPlaceholder';
 
 export default function ServicesGallery() {
   const services = useAppSelector(selectServices);
@@ -19,9 +20,13 @@ export default function ServicesGallery() {
         <CreateButton onClick={openModal} />
       </RestrictedComponent>
       <GalleryWrapper>
-        {services.map(({ _id, ...rest }) => (
-          <ServiceCard key={_id} _id={_id} {...rest} />
-        ))}
+        {services.length ? (
+          services.map(({ _id, ...rest }) => (
+            <ServiceCard key={_id} _id={_id} {...rest} />
+          ))
+        ) : (
+          <CardPlaceholder />
+        )}
       </GalleryWrapper>
       {isModalOpen && (
         <Modal onClose={closeModal}>
