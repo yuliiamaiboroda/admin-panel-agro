@@ -1,5 +1,6 @@
 import styled, { keyframes } from 'styled-components';
 import { BsArrowUpCircleFill } from 'react-icons/bs';
+import { Button } from 'helpers/styles';
 
 const FadeIn = keyframes`
   from {
@@ -10,15 +11,17 @@ const FadeIn = keyframes`
   }
 `;
 
-export const Button = styled.button`
+export const StyledButtonUp = styled(Button)`
   position: fixed;
-  cursor: pointer;
+  right: 20px;
+  bottom: 75px;
+
   display: flex;
   justify-content: center;
   align-items: center;
-  border-radius: ${p => p.theme.radii.circle};
-  right: 20px;
-  bottom: 20px;
+
+  width: 45px;
+  height: 45px;
   padding: 0;
   animation: ${FadeIn} 350ms ease-in-out;
 `;

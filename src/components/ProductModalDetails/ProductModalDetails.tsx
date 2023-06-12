@@ -1,8 +1,13 @@
-import { Link, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import { useAppSelector } from 'hooks';
 import { selectCertainProduct } from 'redux/products';
 import { Roles } from 'helpers/constants';
 import RestrictedComponent from 'components/RestrictedComponent';
+import Box from 'components/Box';
+import ModalTitle from 'components/ModalTitle';
+import ModalDescription from 'components/ModalDescription';
+import ModalImage from 'components/ModalImage';
+import ItemLink from 'components/ItemLink';
 
 export default function ProductModalDetails() {
   const product = useAppSelector(selectCertainProduct);
@@ -14,20 +19,21 @@ export default function ProductModalDetails() {
 
   const { title, description, imageURL, createdAt } = product;
   return (
-    <div>
-      <h1>{title}</h1>
-      <img src={imageURL} alt={title} width="300" height="auto" />
-      <p>{description}</p>
-      <p>Created at: {createdAt}</p>
+    <Box display="flex" flexDirection="column" gridGap={[3, 4]}>
+      <ModalTitle value={title} />
+      <ModalImage src={imageURL} alt={title} width="300" height="auto" />
+      <ModalDescription label="Опис" value={description} />
+      <ModalDescription label="Створено" value={createdAt} />
       <RestrictedComponent accessRight={Roles.productsManager}>
-        <Link to="form" state={{ from: location }}>
-          Edit
-        </Link>
-        <br />
-        <Link to="confirm" state={{ from: location }}>
-          Remove
-        </Link>
+        <Box display="flex" justifyContent="space-around">
+          <ItemLink type="edit" navigateTo="form" state={{ from: location }} />
+          <ItemLink
+            type="remove"
+            navigateTo="confirm"
+            state={{ from: location }}
+          />
+        </Box>
       </RestrictedComponent>
-    </div>
+    </Box>
   );
 }

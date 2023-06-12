@@ -1,16 +1,25 @@
-import { NavLink } from 'react-router-dom';
 import { HiUsers, HiOutlineTruck } from 'react-icons/hi';
-import { MdProductionQuantityLimits, MdWork, MdFeedback } from 'react-icons/md';
-import { GrUserWorker } from 'react-icons/gr';
+import {
+  MdProductionQuantityLimits,
+  MdWork,
+  MdFeedback,
+  MdOutlineFeed,
+} from 'react-icons/md';
 import { IconType } from 'react-icons';
 import { Roles, USER_ROLES } from 'helpers/constants';
 import RestrictedComponent from 'components/RestrictedComponent';
+import Box from 'components/Box';
+import { NavigationLink } from 'helpers/styles';
 
 interface ILink {
   href: string;
   title: string;
   access: Roles | Roles[];
   icon: IconType;
+}
+
+interface IProps {
+  onClick?: () => void;
 }
 
 const navigationLinks: ILink[] = [
@@ -37,7 +46,7 @@ const navigationLinks: ILink[] = [
     href: '/resumes',
     title: 'Резюме',
     access: Roles.applyManager,
-    icon: GrUserWorker,
+    icon: MdOutlineFeed,
   },
   {
     href: '/feedbacks',
@@ -47,18 +56,18 @@ const navigationLinks: ILink[] = [
   },
 ];
 
-export default function Navigation() {
+export default function Navigation({ onClick }: IProps) {
   return (
     <ul>
       {navigationLinks.map(({ href, title, access, icon: Icon }, index) => {
         return (
           <RestrictedComponent key={index} accessRight={access}>
-            <li>
-              <NavLink to={href}>
-                <Icon />
+            <Box width="100%" as="li">
+              <NavigationLink to={href} onClick={onClick}>
+                <Icon size={20} />
                 {title}
-              </NavLink>
-            </li>
+              </NavigationLink>
+            </Box>
           </RestrictedComponent>
         );
       })}

@@ -6,13 +6,15 @@ const theme: DefaultTheme = {
   colors: {
     primaryText: '#8A92A6',
     secondaryText: '#232D42',
-    pageTitleText: '#FFFFFF',
+    accentText: '#FFFFFF',
     primaryBackground: '#FFFFFF',
     secondaryBackground: '#E5E5E5',
-    buttonBackground: '#29392F',
-    gradientBackground:
+    accentBackground: '#29392F',
+    primaryGradient:
       'linear-gradient(88deg, rgba(57, 78, 45, 0.93) 0%, #29392F 100%)',
     backdrop: 'rgb(0, 0, 0, 0.8)',
+    confirmation: '#29392F',
+    warning: '#C03221',
   },
   fontWeights: {
     normal: '400',
@@ -20,11 +22,11 @@ const theme: DefaultTheme = {
     bold: '700',
   },
   fontSizes: {
-    s: '13',
-    m: '16',
-    l: '23',
-    xl: '32',
-    xxl: '40',
+    s: '13px',
+    m: '16px',
+    l: '23px',
+    xl: '32px',
+    xxl: '40px',
   },
   lineHeights: [1.12, 1.2, 1.3, 1.75],
   shadows: {
@@ -44,6 +46,8 @@ const theme: DefaultTheme = {
     pageTitle: '0px 0px 16px 16px',
     circle: '50%',
   },
+  transitions: { scale: 'scale 250ms linear' },
+  borders: { light: '1px solid #E9ECEF' },
 };
 
 export { theme };

@@ -1,6 +1,7 @@
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useAppSelector, useAppDispatch } from 'hooks';
 import { selectCertainProduct, removeProduct } from 'redux/products';
+import ConfirmationModal from 'components/ConfirmationModal';
 
 export default function ProductModalConfirmation() {
   const product = useAppSelector(selectCertainProduct);
@@ -14,21 +15,18 @@ export default function ProductModalConfirmation() {
     return null;
   }
 
+  const handleConfirm = () => {
+    dispatch(removeProduct(product._id));
+    navigate('/products');
+  };
+
+  const handleCancel = () => navigate(backLinkHref);
+
   return (
-    <div>
-      <h1>Are you sure want to delete "{product.title}"?</h1>
-      <button
-        type="button"
-        onClick={() => {
-          dispatch(removeProduct(product._id));
-          navigate('/products');
-        }}
-      >
-        Yes
-      </button>
-      <button type="button" onClick={() => navigate(backLinkHref)}>
-        Cancel
-      </button>
-    </div>
+    <ConfirmationModal
+      title={`Ви дійсно хочете видалити "${product.title}"?`}
+      onCancel={handleCancel}
+      onConfirm={handleConfirm}
+    />
   );
 }

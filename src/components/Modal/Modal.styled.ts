@@ -16,6 +16,6 @@ export const CloseModalButton = styled.button`
 
   :hover,
   :focus {
-    color: ${p => p.theme.colors.buttonBackground};
+    color: ${p => p.theme.colors.accentBackground};
   }
 `;

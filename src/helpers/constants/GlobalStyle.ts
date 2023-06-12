@@ -42,7 +42,7 @@ const GlobalStyle = createGlobalStyle`
 }
   a {
     text-decoration: none; 
-    color: currentColor
+    color: currentColor;
 }
 `;
 

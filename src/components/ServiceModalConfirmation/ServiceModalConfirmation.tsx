@@ -1,6 +1,7 @@
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useAppSelector, useAppDispatch } from 'hooks';
 import { selectCertainService, deleteService } from 'redux/services';
+import ConfirmationModal from 'components/ConfirmationModal';
 
 export default function ServiceModalConfirmation() {
   const service = useAppSelector(selectCertainService);
@@ -14,21 +15,18 @@ export default function ServiceModalConfirmation() {
     return null;
   }
 
+  const handleConfirm = () => {
+    dispatch(deleteService(service._id));
+    navigate('/services');
+  };
+
+  const handleCancel = () => navigate(backLinkHref);
+
   return (
-    <div>
-      <h1>Ви впевнені що хочете видалити послугу "{service.title}"?</h1>
-      <button
-        type="button"
-        onClick={() => {
-          dispatch(deleteService(service._id));
-          navigate('/services');
-        }}
-      >
-        Так
-      </button>
-      <button type="button" onClick={() => navigate(backLinkHref)}>
-        Назад
-      </button>
-    </div>
+    <ConfirmationModal
+      title={`Ви дійсно хочете видалити послугу "${service.title}"?`}
+      onCancel={handleCancel}
+      onConfirm={handleConfirm}
+    />
   );
 }

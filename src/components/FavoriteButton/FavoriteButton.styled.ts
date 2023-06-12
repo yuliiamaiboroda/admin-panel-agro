@@ -11,7 +11,7 @@ export const Button = styled.button<IProps>`
 
   color: ${p =>
     p.isFavorite
-      ? p.theme.colors.buttonBackground
+      ? p.theme.colors.accentBackground
       : p.theme.colors.primaryText};
 
   border: none;
@@ -23,6 +23,6 @@ export const Button = styled.button<IProps>`
     color: ${p =>
       p.isFavorite
         ? p.theme.colors.primaryText
-        : p.theme.colors.buttonBackground};
+        : p.theme.colors.accentBackground};
   }
 `;
