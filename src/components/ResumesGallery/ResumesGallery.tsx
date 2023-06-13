@@ -7,6 +7,7 @@ import {
 import ResumeCard from 'components/ResumeCard';
 import GalleryWrapper from 'components/GalleryWrapper';
 import LoadMoreButton from 'components/LoadMoreButton';
+import CardPlaceholder from 'components/CardPlaceholder';
 
 export default function ResumesGallery() {
   const [queryParams] = useQueryParams();
@@ -17,9 +18,11 @@ export default function ResumesGallery() {
   return (
     <>
       <GalleryWrapper>
-        {resumes.map(resume => (
-          <ResumeCard key={resume._id} {...resume} />
-        ))}
+        {resumes.length ? (
+          resumes.map(resume => <ResumeCard key={resume._id} {...resume} />)
+        ) : (
+          <CardPlaceholder />
+        )}
       </GalleryWrapper>
       {resumes.length < pagination.total ? (
         <LoadMoreButton
