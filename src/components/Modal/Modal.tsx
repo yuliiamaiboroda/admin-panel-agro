@@ -8,6 +8,7 @@ import {
 import { HiX } from 'react-icons/hi';
 import Box from 'components/Box';
 import { Button } from 'helpers/styles';
+import { Backdrop } from './Modal.styled';
 
 const body = document.getElementById('root') as HTMLElement;
 const modalEl = document.getElementById('modal-root') as HTMLElement;
@@ -45,20 +46,7 @@ export default function Modal({ onClose, children }: IProps) {
   };
 
   return createPortal(
-    <Box
-      onClick={handleBackdropCloseModal}
-      position="fixed"
-      display="flex"
-      alignItems="center"
-      justifyContent="center"
-      top={0}
-      left={0}
-      width="100%"
-      height="100%"
-      p={4}
-      overflow="auto"
-      bg="backdrop"
-    >
+    <Backdrop onClick={handleBackdropCloseModal}>
       <Box
         position="relative"
         width={['300px', '600px']}
@@ -81,7 +69,7 @@ export default function Modal({ onClose, children }: IProps) {
         </Button>
         {children}
       </Box>
-    </Box>,
+    </Backdrop>,
     modalEl
   );
 }
