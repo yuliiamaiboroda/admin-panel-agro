@@ -1,4 +1,23 @@
 import styled from 'styled-components';
+import Box from 'components/Box/Box';
+
+export const Backdrop = styled(Box)`
+  position: fixed;
+  top: ${p => p.theme.space[0]}px;
+  left: ${p => p.theme.space[0]}px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+  height: 100%;
+  padding: ${p => p.theme.space[4]}px;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+
+  background-color: ${p => p.theme.colors.backdrop};
+`;
 
 export const CloseModalButton = styled.button`
   position: absolute;

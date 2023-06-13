@@ -4,7 +4,12 @@ import { StyledModalImage } from './ModalImage.styled';
 
 export default function ModalImage(props: ImgHTMLAttributes<HTMLImageElement>) {
   return (
-    <Box width="300px" height="200px" borderRadius="card" overflow="hidden">
+    <Box
+      width={['200px', '300px']}
+      height={['130px', '200px']}
+      borderRadius="card"
+      overflow="hidden"
+    >
       <StyledModalImage {...props} />
     </Box>
   );
