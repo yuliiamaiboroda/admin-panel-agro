@@ -7,6 +7,7 @@ import Modal from 'components/Modal';
 import CreateUserForm from 'components/Users/CreateUserForm';
 import CreateButton from 'components/CreateButton';
 import CardPlaceholder from 'components/CardPlaceholder';
+import GalleryWrapper from 'components/GalleryWrapper';
 
 export default function UsersDashboard() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -28,12 +29,15 @@ export default function UsersDashboard() {
         {entities?.length ? (
           <UsersList usersList={entities} />
         ) : (
-          <CardPlaceholder/>
+          <GalleryWrapper>
+            <CardPlaceholder />
+          </GalleryWrapper>
         )}
+
         {/* <button type="button" onClick={() => setIsModalOpen(true)}>
           Створити нового користувача
         </button> */}
-        <CreateButton onClick={() =>setIsModalOpen(true)} />
+        <CreateButton onClick={() => setIsModalOpen(true)} />
         {isModalOpen && (
           <Modal onClose={() => setIsModalOpen(false)}>
             <CreateUserForm onClose={() => setIsModalOpen(false)} />

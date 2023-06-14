@@ -10,6 +10,8 @@ import ResumesFilter from 'components/ResumesFilter';
 import Loader from 'components/Loader';
 import PageTitle from 'components/PageTitle';
 import CreateButton from 'components/CreateButton';
+import GalleryWrapper from 'components/GalleryWrapper';
+import CardPlaceholder from 'components/CardPlaceholder';
 
 export default function ResumesPage() {
   const { isModalOpen, openModal, closeModal } = useModal();
@@ -19,9 +21,10 @@ export default function ResumesPage() {
     Notify.failure(error);
     return (
       <>
-        <h1>Resumes page</h1>
-        <h2>Ooops... Something went wrong</h2>
-        <h3>It seems like: {error}</h3>
+        <PageTitle title="Резюме" />
+        <GalleryWrapper>
+          <CardPlaceholder title="It seems like:" description={error} />
+        </GalleryWrapper>
       </>
     );
   }

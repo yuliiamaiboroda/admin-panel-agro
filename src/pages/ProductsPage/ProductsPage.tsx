@@ -6,6 +6,8 @@ import { getAllProducts, selectProductError } from 'redux/products';
 import ProductsGallery from 'components/ProductsGallery';
 import Loader from 'components/Loader';
 import PageTitle from 'components/PageTitle';
+import GalleryWrapper from 'components/GalleryWrapper';
+import CardPlaceholder from 'components/CardPlaceholder';
 
 export default function ProductsPage() {
   const dispatch = useAppDispatch();
@@ -19,16 +21,17 @@ export default function ProductsPage() {
     Notify.failure(error);
     return (
       <>
-        <h1>Products page</h1>
-        <h2>Ooops... Something went wrong</h2>
-        <h3>It seems like: {error}</h3>
+        <PageTitle title="Продукти компанії" />
+        <GalleryWrapper>
+          <CardPlaceholder title="Ooops..." description={`It seems like: ${error}`} />
+        </GalleryWrapper>
       </>
     );
   }
 
   return (
     <div>
-      <PageTitle title='Продукти компанії'/>
+      <PageTitle title="Продукти компанії" />
       <ProductsGallery />
       <Suspense fallback={<Loader />}>
         <Outlet />
