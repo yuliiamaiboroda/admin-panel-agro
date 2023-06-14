@@ -6,6 +6,7 @@ import UsersList from 'components/Users/UsersList';
 import Modal from 'components/Modal';
 import CreateUserForm from 'components/Users/CreateUserForm';
 import CreateButton from 'components/CreateButton';
+import CardPlaceholder from 'components/CardPlaceholder';
 
 export default function UsersDashboard() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -27,7 +28,7 @@ export default function UsersDashboard() {
         {entities?.length ? (
           <UsersList usersList={entities} />
         ) : (
-          <h2>There arent any users</h2>
+          <CardPlaceholder/>
         )}
         {/* <button type="button" onClick={() => setIsModalOpen(true)}>
           Створити нового користувача

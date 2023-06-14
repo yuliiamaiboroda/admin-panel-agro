@@ -9,6 +9,7 @@ import { Roles } from 'helpers/constants';
 import RestrictedComponent from 'components/RestrictedComponent';
 import CreateButton from 'components/CreateButton';
 import GalleryWrapper from 'components/GalleryWrapper';
+import CardPlaceholder from 'components/CardPlaceholder';
 
 export default function ProductsGallery() {
   const products = useAppSelector(selectProducts);
@@ -21,9 +22,13 @@ export default function ProductsGallery() {
         <CreateButton onClick={openModal} />
       </RestrictedComponent>
       <GalleryWrapper>
-        {products.map(product => (
-          <ProductCard key={product._id} {...product} />
-        ))}
+        {products.length ? (
+          products.map(product => (
+            <ProductCard key={product._id} {...product} />
+          ))
+        ) : (
+          <CardPlaceholder />
+        )}
       </GalleryWrapper>
       {isModalOpen && (
         <Modal onClose={closeModal}>
