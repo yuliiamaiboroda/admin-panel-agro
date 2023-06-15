@@ -2,7 +2,7 @@ import { DefaultTheme } from 'styled-components';
 
 const theme: DefaultTheme = {
   breakpoints: ['768px', '1280px'],
-  space: [0, 4, 8, 12, 16, 20, 24, 28, 32, 36, 40],
+  space: [0, 4, 8, 12, 16, 20, 24, 28, 32, 36, 40, 44],
   colors: {
     primaryText: '#8A92A6',
     secondaryText: '#232D42',
@@ -47,7 +47,7 @@ const theme: DefaultTheme = {
     circle: '50%',
   },
   transitions: { scale: 'scale 250ms linear' },
-  borders: { light: '1px solid #E9ECEF' },
+  borders: { light: '1px solid #E9ECEF', warning: '1px solid #C03221' },
 };
 
 export { theme };
