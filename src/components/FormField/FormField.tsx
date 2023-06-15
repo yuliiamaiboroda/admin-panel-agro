@@ -19,7 +19,7 @@ export default function FormField({
   const [field, meta] = useField(fieldName);
 
   return (
-    <Box position="relative">
+    <Box position="relative" width="100%">
       <Label>
         {labelName}
         <Input
