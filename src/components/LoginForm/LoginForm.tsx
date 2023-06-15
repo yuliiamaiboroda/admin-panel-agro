@@ -1,9 +1,14 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useAppDispatch } from 'hooks';
 import { loginUser } from 'redux/user';
-import { Formik, Form, Field, ErrorMessage } from 'formik';
+import { Formik, Form } from 'formik';
 import loginSchema from 'helpers/schemas/auth/login.schema';
 import { RxEyeClosed, RxEyeOpen } from 'react-icons/rx';
+import companyLogo from 'asserts/company-logo.svg';
+import Box from 'components/Box';
+import { Button } from 'helpers/styles';
+import { Title } from './LoginForm.styled';
+import FormField from 'components/FormField';
 
 interface LoginFormValues {
   email: string;
@@ -22,39 +27,72 @@ export default function LoginForm() {
 
   return (
     <div style={{ margin: '20px auto', width: 'fit-content' }}>
-      <Formik
-        initialValues={FORM_INITIAL_STATE}
-        onSubmit={handleSubmitForm}
-        validateOnBlur
-        validationSchema={loginSchema}
+      <Box
+        display="flex"
+        flexDirection="column"
+        justifyContent="center"
+        alignItems="center"
+        gridGap={6}
       >
-        <Form>
-          <label>
-            Електронна пошта:
-            <br />
-            <Field name="email" type="email" placeholder="hello@mail.com" />
-            <ErrorMessage name="email" />
-          </label>
-          <br />
-          <label>
-            Пароль:
-            <br />
-            <Field
-              name="password"
-              type={isVisiblePassword ? 'text' : 'password'}
-            />
-            <button
-              type="button"
-              onClick={() => setIsVisiblePassword(!isVisiblePassword)}
+        <img src={companyLogo} alt="Логотип компанії" />
+        <Title>Вхід в особистий кабінет</Title>
+        <Formik
+          initialValues={FORM_INITIAL_STATE}
+          onSubmit={handleSubmitForm}
+          validateOnBlur
+          validationSchema={loginSchema}
+        >
+          <Form>
+            <Box
+              display="flex"
+              flexDirection="column"
+              justifyContent="center"
+              alignItems="center"
+              gridGap={4}
+              width={['300px', '436px']}
             >
-              {isVisiblePassword ? <RxEyeClosed /> : <RxEyeOpen />}
-            </button>
-            <ErrorMessage name="password" />
-          </label>
-          <br />
-          <button type="submit">Увійти</button>
-        </Form>
-      </Formik>
+              <FormField
+                labelName="Електронна пошта:"
+                fieldName="email"
+                typeName="email"
+                placeholderName="hello@mail.com"
+              />
+              <Box position="relative" width="100%">
+                <FormField
+                  labelName="Пароль:"
+                  fieldName="password"
+                  typeName={isVisiblePassword ? 'text' : 'password'}
+                  placeholderName="Ваш пароль"
+                />
+                <Button
+                  type="button"
+                  position="absolute"
+                  right="0"
+                  bottom="0"
+                  onClick={(e: React.MouseEvent<HTMLButtonElement>) =>
+                    setIsVisiblePassword(!isVisiblePassword)
+                  }
+                  variant="content"
+                >
+                  {isVisiblePassword ? (
+                    <RxEyeClosed size={22} />
+                  ) : (
+                    <RxEyeOpen size={22} />
+                  )}
+                </Button>
+              </Box>
+              <Button
+                type="submit"
+                variant="primary"
+                width={['150px', '188px']}
+                mt={2}
+              >
+                Увійти
+              </Button>
+            </Box>
+          </Form>
+        </Formik>
+      </Box>
     </div>
   );
 }
