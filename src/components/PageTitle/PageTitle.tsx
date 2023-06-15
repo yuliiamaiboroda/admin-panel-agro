@@ -8,7 +8,7 @@ interface IProps {
 export default function PageTitle({ title }: IProps) {
   useEffect(() => {
     document.title = title;
-  }, []);
+  }, [title]);
 
   return (
     <TitleWrapper>
