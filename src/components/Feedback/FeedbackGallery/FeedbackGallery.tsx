@@ -13,7 +13,7 @@ export default function FeedbackGallery() {
   const { entities } = useAppSelector(selectFeedbacks);
 
   return (
-    <section style={{ position: 'relative' }}>
+    <section>
       <GalleryWrapper>
         {entities.length ? (
           entities.map(item => <FeedbackCard key={item._id} {...item} />)
@@ -21,9 +21,6 @@ export default function FeedbackGallery() {
           <CardPlaceholder />
         )}
       </GalleryWrapper>
-      {/* <button type="button" onClick={() => setIsModalOpen(true)}>
-        Створити фідбек
-      </button> */}
       <CreateButton onClick={() => setIsModalOpen(true)} />
       {isModalOpen && (
         <Modal onClose={() => setIsModalOpen(false)}>

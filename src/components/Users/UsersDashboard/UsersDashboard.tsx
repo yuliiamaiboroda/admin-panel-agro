@@ -19,7 +19,7 @@ export default function UsersDashboard() {
   }, [dispatch]);
 
   return (
-    <section style={{ position: 'relative' }}>
+    <section>
       <>
         {/* <ul>
           <li>Користувач</li>

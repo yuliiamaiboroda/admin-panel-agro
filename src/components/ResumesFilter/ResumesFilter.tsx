@@ -3,6 +3,8 @@ import { useAppDispatch, useAppSelector, useQueryParams } from 'hooks';
 import { getAllResumes } from 'redux/resumes';
 import { getAllVacancyTitles, selectVacancyTitles } from 'redux/vacancies';
 
+import Selector from 'components/Selector/Selector';
+
 const LIMIT = [
   { value: '2', label: 2 },
   { value: '5', label: 5 },
@@ -60,7 +62,7 @@ export default function ResumesFilter() {
         <option value="">Спочатку нові</option>
         <option value="asc">Спочатку старі</option>
       </select>
-      <select
+      {/* <select
         onChange={({ target }) => setQueryParams({ limit: target.value })}
         value={queryParams.limit ? queryParams.limit : ''}
       >
@@ -69,7 +71,18 @@ export default function ResumesFilter() {
             {label}
           </option>
         ))}
-      </select>
+      </select> */}
+
+      <Selector
+        options={LIMIT}
+        defaultValue={LIMIT[4]}
+        // onChange={option => console.log('option: ', option?.value)}
+        onChange={option => {
+          if (option?.value || option?.value === '') {
+            setQueryParams({ limit: option.value });
+          }
+        }}
+      />
     </>
   );
 }
