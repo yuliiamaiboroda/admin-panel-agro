@@ -27,7 +27,7 @@ export default function FormField({
           id={fieldName}
           type={typeName ? typeName : 'text'}
           placeholder={placeholderName}
-          isInvalid={meta.touched && meta.error}
+          $isInvalid={meta.touched && meta.error}
         />
         <ErrorMessage name={fieldName}>
           {msg => <Error>{msg}</Error>}

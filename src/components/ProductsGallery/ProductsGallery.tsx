@@ -18,9 +18,6 @@ export default function ProductsGallery() {
 
   return (
     <>
-      <RestrictedComponent accessRight={Roles.productsManager}>
-        <CreateButton onClick={openModal} />
-      </RestrictedComponent>
       <GalleryWrapper>
         {products.length ? (
           products.map(product => (
@@ -30,6 +27,9 @@ export default function ProductsGallery() {
           <CardPlaceholder />
         )}
       </GalleryWrapper>
+      <RestrictedComponent accessRight={Roles.productsManager}>
+        <CreateButton onClick={openModal} />
+      </RestrictedComponent>
       {isModalOpen && (
         <Modal onClose={closeModal}>
           <ProductForm

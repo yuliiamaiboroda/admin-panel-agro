@@ -40,10 +40,10 @@ export const Input = styled(Field)`
   border-radius: ${props => props.theme.radii.button};
   outline: none;
   border-color: ${props =>
-    props.isInvalid
+    props.$isInvalid
       ? props.theme.colors.warning
       : props.theme.colors.confirmation};
-  animation: ${props => props.isInvalid && shakeInput} 0.82s
+  animation: ${props => props.$isInvalid && shakeInput} 0.82s
     cubic-bezier(0.36, 0.07, 0.19, 0.97);
   height: ${props => props.theme.space[11]}px;
 `;

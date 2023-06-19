@@ -31,7 +31,7 @@ export default function ResumesFilter() {
   return (
     <>
       <label>
-        Show favorites
+        Показати обрані
         <input
           type="checkbox"
           name="isFavorite"
@@ -45,7 +45,7 @@ export default function ResumesFilter() {
         onChange={({ target }) => setQueryParams({ position: target.value })}
         value={queryParams.position ? queryParams.position : ''}
       >
-        <option value="">All</option>
+        <option value="">Всі</option>
         {titles.map(({ _id, title }) => (
           <option key={_id} value={title}>
             {title}
@@ -57,8 +57,8 @@ export default function ResumesFilter() {
         onChange={({ target }) => setQueryParams({ sort: target.value })}
         value={queryParams.sort ? queryParams.sort : ''}
       >
-        <option value="">Newer</option>
-        <option value="asc">Older</option>
+        <option value="">Спочатку нові</option>
+        <option value="asc">Спочатку старі</option>
       </select>
       <select
         onChange={({ target }) => setQueryParams({ limit: target.value })}
