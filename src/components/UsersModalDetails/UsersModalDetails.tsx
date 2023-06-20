@@ -8,6 +8,7 @@ import ModalTitle from 'components/ModalTitle';
 import ModalDescription from 'components/ModalDescription';
 import ModalLink from 'components/ModalLink';
 import ItemLink from 'components/ItemLink';
+import transformDate from 'utils/date-formatting';
 
 export default function UsersModalDetails() {
   const { certain } = useAppSelector(selectUsersList);
@@ -29,7 +30,7 @@ export default function UsersModalDetails() {
         <ModalLink label="Пошта" href={`mailto:${email}`}>
           {email}
         </ModalLink>
-        <ModalDescription label="Створений" value={createdAt} />
+        <ModalDescription label="Створений" value={transformDate(createdAt)} />
       </Box>
       <Box display="flex" justifyContent="space-around">
         <ItemLink
