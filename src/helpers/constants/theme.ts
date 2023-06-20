@@ -2,7 +2,7 @@ import { DefaultTheme } from 'styled-components';
 
 const theme: DefaultTheme = {
   breakpoints: ['768px', '1280px'],
-  space: [0, 4, 8, 12, 16, 20, 24, 28, 32, 36, 40, 44],
+  space: [0, 4, 8, 12, 16, 20, 24, 28, 32, 36, 40, 44, 48, 52, 56, 60, 64, 68],
   colors: {
     primaryText: '#8A92A6',
     secondaryText: '#232D42',

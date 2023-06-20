@@ -14,15 +14,15 @@ export const Filter = styled.div`
 
   @media ${devices.tablet} {
     width: 366px;
-    margin-bottom: ${p => p.theme.space[7]}px;
-    transform: ${p => `translateY(${-p.theme.space[4]}px)`};
+    margin-bottom: ${p => p.theme.space[10]}px;
+    margin-top: -${p => p.theme.space[4]}px;
     padding: ${props => props.theme.space[6]}px
       ${props => props.theme.space[2]}px;
   }
 
   @media ${devices.desktop} {
     width: 772px;
-    margin-bottom: ${p => p.theme.space[10]}px;
-    transform: ${p => `translateY(${-p.theme.space[7]}px)`};
+    margin-bottom: ${p => p.theme.space[16]}px;
+    margin-top: -${p => p.theme.space[7]}px;
   }
 `;
