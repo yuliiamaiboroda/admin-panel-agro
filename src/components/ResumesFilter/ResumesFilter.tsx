@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { useAppDispatch, useAppSelector, useQueryParams } from 'hooks';
 import { getAllResumes } from 'redux/resumes';
 import { getAllVacancyTitles, selectVacancyTitles } from 'redux/vacancies';
+import Box from 'components/Box';
 
 import Selector from 'components/Selector/Selector';
 
@@ -31,7 +32,7 @@ export default function ResumesFilter() {
   }, [dispatch, queryParams]);
 
   return (
-    <>
+    <Box display="flex" flexDirection={['column', 'column', 'row']} gridGap={4}>
       <label>
         Показати обрані
         <input
@@ -43,7 +44,7 @@ export default function ResumesFilter() {
           }
         />
       </label>
-      <select
+      {/* <select
         onChange={({ target }) => setQueryParams({ position: target.value })}
         value={queryParams.position ? queryParams.position : ''}
       >
@@ -54,14 +55,14 @@ export default function ResumesFilter() {
           </option>
         ))}
         <option value="other">Other</option>
-      </select>
-      <select
+      </select> */}
+      {/* <select
         onChange={({ target }) => setQueryParams({ sort: target.value })}
         value={queryParams.sort ? queryParams.sort : ''}
       >
         <option value="">Спочатку нові</option>
         <option value="asc">Спочатку старі</option>
-      </select>
+      </select> */}
       {/* <select
         onChange={({ target }) => setQueryParams({ limit: target.value })}
         value={queryParams.limit ? queryParams.limit : ''}
@@ -74,15 +75,39 @@ export default function ResumesFilter() {
       </select> */}
 
       <Selector
+        options={[
+          { value: '', label: 'Всі' },
+          ...titles.map(({ title }) => ({ value: title, label: title })),
+          { value: 'other', label: 'Інші' },
+        ]}
+        defaultValue={{ value: '', label: 'Всі' }}
+        onChange={option => {
+          if (option?.value || option?.value === '') {
+            setQueryParams({ position: option.value });
+          }
+        }}
+      />
+      <Selector
+        options={[
+          { value: '', label: 'Найновіші' },
+          { value: 'asc', label: 'Настаріші' },
+        ]}
+        onChange={option => {
+          if (option?.value || option?.value === '') {
+            setQueryParams({ sort: option.value });
+          }
+        }}
+        defaultValue={{ value: '', label: 'Найновіші' }}
+      />
+      <Selector
         options={LIMIT}
         defaultValue={LIMIT[4]}
-        // onChange={option => console.log('option: ', option?.value)}
         onChange={option => {
           if (option?.value || option?.value === '') {
             setQueryParams({ limit: option.value });
           }
         }}
       />
-    </>
+    </Box>
   );
 }
