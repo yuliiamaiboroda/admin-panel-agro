@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunkadmin_panel_agro=self.webpackChunkadmin_panel_agro||[]).push([[821],{3821:function(a,e,n){n(2791);e.Z=n.p+"static/media/company-logo.d26231fa20bc086e5a542723b5206ddc.svg"}}]);
+//# sourceMappingURL=821.7bff8c3e.chunk.js.map
