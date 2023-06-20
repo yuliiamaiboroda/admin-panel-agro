@@ -4,8 +4,8 @@ const breakpoints = {
 };
 
 const devices = {
-  tablet: `(min-width: ${breakpoints.tablet})`,
-  desktop: `(min-width: ${breakpoints.desktop})`,
+  tablet: `screen and (min-width: ${breakpoints.tablet})`,
+  desktop: `screen and (min-width: ${breakpoints.desktop})`,
 };
 
 export { devices };

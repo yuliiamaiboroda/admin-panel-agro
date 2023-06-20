@@ -12,6 +12,7 @@ import PageTitle from 'components/PageTitle';
 import CreateButton from 'components/CreateButton';
 import GalleryWrapper from 'components/GalleryWrapper';
 import CardPlaceholder from 'components/CardPlaceholder';
+import FilterWrapper from 'components/FilterWrapper';
 
 export default function ResumesPage() {
   const { isModalOpen, openModal, closeModal } = useModal();
@@ -32,12 +33,14 @@ export default function ResumesPage() {
   return (
     <>
       <PageTitle title="Резюме" />
-      <ResumesFilter />
-      <CreateButton onClick={openModal} />
+      <FilterWrapper>
+        <ResumesFilter />
+      </FilterWrapper>
       <ResumesGallery />
       <Suspense fallback={<Loader />}>
         <Outlet />
       </Suspense>
+      <CreateButton onClick={openModal} />
       {isModalOpen && (
         <Modal onClose={closeModal}>
           <ResumeForm onSubmit={closeModal} />
