@@ -1,11 +1,6 @@
 import { devices } from 'helpers/constants';
 import styled from 'styled-components';
 
-export const GalleryCentred = styled.div`
-  display: flex;
-  justify-content: center;
-`;
-
 export const GalleryWrap = styled.ul`
   width: 300px;
   display: flex;
@@ -13,16 +8,23 @@ export const GalleryWrap = styled.ul`
   flex-wrap: wrap;
   gap: ${props => props.theme.space[3]}px;
   margin-top: ${props => props.theme.space[3]}px;
-  
-  @media ${devices.tablet} { 
+  margin-bottom: ${props => props.theme.space[4]}px;
+  margin-left: auto;
+  margin-right: auto;
+
+  @media ${devices.tablet} {
     width: 366px;
     gap: ${props => props.theme.space[6]}px;
-    margin-top: -${props => props.theme.space[4]}px;
+    margin-bottom: ${props => props.theme.space[7]}px;
+    margin-top: -${p => p.theme.space[4]}px;
+    /* transform: ${p => `translateY(${-p.theme.space[4]}px)`}; */
   }
-  
-  @media ${devices.desktop} { 
+
+  @media ${devices.desktop} {
     width: 772px;
     gap: ${props => props.theme.space[10]}px;
-    margin-top: -${props => props.theme.space[7]}px;
+    margin-bottom: ${props => props.theme.space[10]}px;
+    margin-top: -${p => p.theme.space[7]}px;
+    /* transform: ${p => `translateY(${-p.theme.space[7]}px)`}; */
   }
 `;

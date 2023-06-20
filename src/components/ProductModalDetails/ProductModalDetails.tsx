@@ -8,6 +8,7 @@ import ModalTitle from 'components/ModalTitle';
 import ModalDescription from 'components/ModalDescription';
 import ModalImage from 'components/ModalImage';
 import ItemLink from 'components/ItemLink';
+import transformDate from 'utils/date-formatting';
 
 export default function ProductModalDetails() {
   const product = useAppSelector(selectCertainProduct);
@@ -23,7 +24,7 @@ export default function ProductModalDetails() {
       <ModalTitle value={title} />
       <ModalImage src={imageURL} alt={title} width="300" height="auto" />
       <ModalDescription label="Опис" value={description} />
-      <ModalDescription label="Створено" value={createdAt} />
+      <ModalDescription label="Створено" value={transformDate(createdAt)} />
       <RestrictedComponent accessRight={Roles.productsManager}>
         <Box display="flex" justifyContent="space-around">
           <ItemLink type="edit" navigateTo="form" state={{ from: location }} />

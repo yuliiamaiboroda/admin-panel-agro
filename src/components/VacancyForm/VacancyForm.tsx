@@ -1,3 +1,4 @@
+import FormField from 'components/FormField';
 import { Field, Form, Formik, ErrorMessage } from 'formik';
 import { Categories } from 'helpers/constants';
 import createAndUpdateVacancySchema from 'helpers/schemas/vacancies/createAndUpdateVacancy.schema';
@@ -86,86 +87,48 @@ export default function VacancyForm({
         validationSchema={createAndUpdateVacancySchema}
       >
         <Form style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-          <label>
-            Заголовок вакасії
-            <Field
-              name="title"
-              type="text"
-              id="title"
-              placeholder="Заголовок вакасії"
-            />
-            <ErrorMessage name="title" />
-          </label>
-          <label>
-            Опис
-            <Field
-              name="description"
-              id="description"
-              type="text"
-              placeholder="Опис"
-            />
-            <ErrorMessage name="description" />
-          </label>
-          <label>
-            Заробітня плата
-            <Field
-              name="sallary"
-              id="sallary"
-              type="text"
-              placeholder="Заробітня плата"
-            />
-            <ErrorMessage name="sallary" />
-          </label>
-          <label>
-            Освіта
-            <Field
-              name="education"
-              id="education"
-              type="text"
-              placeholder="Освіта"
-            />
-            <ErrorMessage name="education" />
-          </label>
-          <label>
-            Контактна пошта
-            <Field
-              name="contactMail"
-              type="email"
-              id="contactMail"
-              placeholder="Контактна пошта"
-            />
-            <ErrorMessage name="contactMail" />
-          </label>
-          <label>
-            Контактний телефон
-            <Field
-              name="contactPhone"
-              type="tel"
-              id="contactPhone"
-              placeholder="Контактний телефон"
-            />
-            <ErrorMessage name="contactPhone" />
-          </label>
-          <label>
-            Необхідний досвід роботи
-            <Field
-              name="workExperienceRequired"
-              id="workExperienceRequired"
-              type="text"
-              placeholder="Необхідний досвід роботи"
-            />
-            <ErrorMessage name="workExperienceRequired" />
-          </label>
-          <label>
-            Місце розташування
-            <Field
-              name="location"
-              id="location"
-              type="text"
-              placeholder="Місце розташування"
-            />
-            <ErrorMessage name="location" />
-          </label>
+          <FormField
+            fieldName="title"
+            labelName="Заголовок вакасії"
+            placeholderName="Заголовок вакасії"
+          />
+          <FormField
+            fieldName="description"
+            labelName="Опис"
+            placeholderName="Опис"
+          />
+          <FormField
+            fieldName="sallary"
+            labelName="Заробітня плата"
+            placeholderName="Заробітня плата"
+          />
+          <FormField
+            fieldName="education"
+            labelName="Освіта"
+            placeholderName="Освіта"
+          />
+          <FormField
+            fieldName="contactMail"
+            labelName="Контактна пошта"
+            placeholderName="Контактна пошта"
+            typeName="email"
+          />
+          <FormField
+            fieldName="contactPhone"
+            labelName="Контактний телефон"
+            placeholderName="Контактний телефон"
+            typeName="tel"
+          />
+          <FormField
+            fieldName="workExperienceRequired"
+            labelName="Необхідний досвід роботи"
+            placeholderName="Необхідний досвід роботи"
+          />
+          <FormField
+            fieldName="location"
+            labelName="Місце розташування"
+            placeholderName="Місце розташування"
+          />
           <label style={{ display: 'flex', flexDirection: 'column' }}>
             Категорія вакансії
             <label>

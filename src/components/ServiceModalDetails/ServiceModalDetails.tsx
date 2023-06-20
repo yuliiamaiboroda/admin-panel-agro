@@ -9,6 +9,7 @@ import ModalImage from 'components/ModalImage';
 import ModalDescription from 'components/ModalDescription';
 import ModalLink from 'components/ModalLink';
 import ItemLink from 'components/ItemLink';
+import transformDate from 'utils/date-formatting';
 
 export default function ServiceModalDetails() {
   const service = useAppSelector(selectCertainService);
@@ -40,7 +41,7 @@ export default function ServiceModalDetails() {
         <ModalLink label="Пошта" href={`mailto:${contactMail}`}>
           {contactMail}
         </ModalLink>
-        <ModalDescription label="Створено" value={createdAt} />
+        <ModalDescription label="Створено" value={transformDate(createdAt)} />
       </Box>
       <RestrictedComponent accessRight={Roles.servicesManager}>
         <Box display="flex" justifyContent="space-around">
