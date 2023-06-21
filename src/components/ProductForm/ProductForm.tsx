@@ -1,7 +1,8 @@
 import { useRef } from 'react';
-import { Formik, Form, Field, ErrorMessage } from 'formik';
+import { Formik, Form } from 'formik';
 import { productSchema } from 'helpers/schemas/products';
 import UploadFileField from 'components/UploadFileField';
+import FormField from 'components/FormField';
 
 interface IProductState {
   title: string;
@@ -43,19 +44,19 @@ export default function ProductForm({
         actions.resetForm();
       }}
     >
-      <Form>
-        <label>
-          Title: <Field id="title" name="title" type="text" />
-          <ErrorMessage name="title" />
-        </label>
-        <br />
-        <label>
-          Description: <Field id="description" name="description" type="text" />
-          <ErrorMessage name="description" />
-        </label>
-        <br />
+      <Form style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+        <FormField
+          labelName="Заголовок "
+          fieldName="title"
+          placeholderName="Заголовок "
+        />
+
+        <FormField
+          labelName="Опис"
+          fieldName="description"
+          placeholderName="Опис"
+        />
         <UploadFileField name="image" fileRef={fileField} />
-        <br />
         <button type="button" onClick={onCancel}>
           Cancel
         </button>
