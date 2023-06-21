@@ -11,3 +11,7 @@ export { theme } from './theme';
 export { GlobalStyle } from './GlobalStyle';
 
 export { devices } from './devices';
+
+export { listUsersOptions } from './users-options';
+
+export { listVacanciesOptions } from './vacancies-options';

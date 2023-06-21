@@ -2,9 +2,8 @@ import DropDown from 'components/DropDown/DropDown';
 import FormButtons from 'components/FormButtons/FormButtons';
 import FormField from 'components/FormField';
 import { Form, Formik, ErrorMessage } from 'formik';
-import { Categories } from 'helpers/constants';
+import { Categories, listVacanciesOptions } from 'helpers/constants';
 import createAndUpdateVacancySchema from 'helpers/schemas/vacancies/createAndUpdateVacancy.schema';
-import translateCategory from 'utils/translate-vacancy-category';
 
 interface IVacancy {
   category: keyof typeof Categories;
@@ -47,23 +46,6 @@ const VACANCY_DATA: IVacancy = {
   workExperienceRequired: '',
   location: '',
 };
-
-const listVacanciesOptions = [
-  {
-    name: 'category',
-    type: 'radio',
-    id: Categories.actual,
-    value: Categories.actual,
-    shownName: translateCategory(Categories.actual),
-  },
-  {
-    name: 'category',
-    type: 'radio',
-    id: Categories.irrelevant,
-    value: Categories.irrelevant,
-    shownName: translateCategory(Categories.irrelevant),
-  },
-];
 
 export default function VacancyForm({
   vacancyData = VACANCY_DATA,

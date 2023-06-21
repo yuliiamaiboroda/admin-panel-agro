@@ -15,11 +15,11 @@ export default function FormButtons({
   cancelButtonText = 'Відміна',
 }: IProps) {
   return (
-    <Box display="flex">
-      <Button variant="secondary" type="button" onClick={onCancel}>
+    <Box display="flex" gridGap={[4, 5]}>
+      <Button variant="secondary" type="button" onClick={onCancel} flexGrow={1}>
         {cancelButtonText}
       </Button>
-      <Button variant="primary" type="submit" onClick={onSubmit}>
+      <Button variant="primary" type="submit" onClick={onSubmit} flexGrow={1}>
         {submitButtonText}
       </Button>
     </Box>
