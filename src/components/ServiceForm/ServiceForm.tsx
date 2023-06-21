@@ -3,6 +3,7 @@ import { Formik, Form } from 'formik';
 import { serviceSchema } from 'helpers/schemas/services';
 import UploadFileField from 'components/UploadFileField';
 import FormField from 'components/FormField';
+import FormButtons from 'components/FormButtons';
 
 interface IServiceState {
   title: string;
@@ -44,13 +45,12 @@ export default function ServiceForm({
   const { title, description, imageURL, price, contactMail, contactPhone } =
     serviceData;
 
-  const submitBtnTitle =
-    serviceData === SERVICE_DATA ? 'Додати послугу' : 'Змінити послугу';
+  const submitBtnTitle = serviceData === SERVICE_DATA ? 'Створити' : 'Оновити';
 
   return (
     <>
       <h2>
-        {submitBtnTitle} {title ? title : null}
+        {submitBtnTitle} послугу {title ? title : null}
       </h2>
       <Formik
         initialValues={{
@@ -76,45 +76,50 @@ export default function ServiceForm({
           actions.resetForm();
         }}
       >
-        <Form style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-          <FormField
-            labelName="Заголовок:"
-            fieldName="title"
-            placeholderName="Заголовок"
-          />
-          <FormField
-            labelName="Опис:"
-            placeholderName="Опис"
-            fieldName="description"
-          />
-          <UploadFileField
-            label="Завантажити зображення"
-            name="image"
-            fileRef={fileField}
-          />
-          <FormField
-            labelName="Ціна:"
-            placeholderName="Ціна"
-            fieldName="price"
-          />
-          <FormField
-            labelName="Контактна пошта:"
-            fieldName="contactMail"
-            placeholderName="Контактна пошта"
-            typeName="email"
-          />
+        {({ handleSubmit, setFieldValue }) => (
+          <Form
+            style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}
+          >
+            <FormField
+              labelName="Заголовок:"
+              fieldName="title"
+              placeholderName="Заголовок"
+            />
+            <FormField
+              labelName="Опис:"
+              placeholderName="Опис"
+              fieldName="description"
+            />
+            <UploadFileField
+              label="Завантажити зображення"
+              name="image"
+              fileRef={fileField}
+            />
+            <FormField
+              labelName="Ціна:"
+              placeholderName="Ціна"
+              fieldName="price"
+            />
+            <FormField
+              labelName="Контактна пошта:"
+              fieldName="contactMail"
+              placeholderName="Контактна пошта"
+              typeName="email"
+            />
 
-          <FormField
-            labelName="Контактний номер:"
-            placeholderName="Контактний номер"
-            fieldName="contactPhone"
-          />
-
-          <button type="button" onClick={onCancel}>
-            Назад
-          </button>
-          <button type="submit">{submitBtnTitle}</button>
-        </Form>
+            <FormField
+              labelName="Контактний номер:"
+              placeholderName="Контактний номер"
+              fieldName="contactPhone"
+            />
+            <FormButtons
+              onCancel={onCancel}
+              onSubmit={handleSubmit}
+              cancelButtonText="Відмінити"
+              submitButtonText={submitBtnTitle}
+            />
+          </Form>
+        )}
       </Formik>
     </>
   );
