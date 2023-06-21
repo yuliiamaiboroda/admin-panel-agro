@@ -18,15 +18,18 @@ interface IOption {
 }
 interface IProps {
   options: IOption[];
+  initialValue?: IOption;
+  setFieldValue: (field: string, value: any, shouldValidate?: boolean) => void;
 }
 
-export default function DropDown({ options }: IProps) {
+export default function DropDown({ options, setFieldValue }: IProps) {
   const [isActive, setIsActive] = useState(false);
   const [selected, setIsSelected] = useState('Оберіть категорію');
 
-  const handleClick = (shownName: string) => {
-    setIsSelected(shownName);
+  const handleClick = (el: IOption) => {
+    setIsSelected(el.shownName);
     setIsActive(!isActive);
+    setFieldValue(el.name, el.value);
   };
 
   return (
@@ -46,7 +49,7 @@ export default function DropDown({ options }: IProps) {
               key={el.id}
               onClick={e => {
                 if (e.target === e.currentTarget) {
-                  handleClick(el.shownName);
+                  handleClick(el);
                 }
               }}
             >
@@ -56,7 +59,6 @@ export default function DropDown({ options }: IProps) {
                 id={el.id}
                 value={el.value}
                 type={el.type}
-                //   onChange={e => console.log(e)}
               />
             </Item>
           ))}
