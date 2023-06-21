@@ -15,6 +15,7 @@ const theme: DefaultTheme = {
     backdrop: 'rgb(0, 0, 0, 0.8)',
     confirmation: '#29392F',
     warning: '#C03221',
+    light: '#E9ECEF',
   },
   fontWeights: {
     normal: '400',
@@ -47,7 +48,11 @@ const theme: DefaultTheme = {
     circle: '50%',
   },
   transitions: { scale: 'scale 250ms linear' },
-  borders: { light: '1px solid #E9ECEF', warning: '1px solid #C03221' },
+  borders: {
+    light: '1px solid #E9ECEF',
+    warning: '1px solid #C03221',
+    accent: '2px solid #29392F',
+  },
 };
 
 export { theme };

@@ -26,8 +26,8 @@ export const resumeShema = (fileField: React.RefObject<HTMLInputElement>) =>
         /^(?![-' ]+$)[a-zA-Zа-яА-ЯіІїЇєЄ0-9-'‘ʼ,./ ]+$/,
         'Поле позиції повинно містити тільки: латинські літери, цифри, дефіси та апостроф'
       )
-      .min(2)
-      .max(62)
+      .min(5)
+      .max(30)
       .required(),
     resume: Yup.mixed()
       .test(

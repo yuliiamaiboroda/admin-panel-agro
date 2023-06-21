@@ -1,5 +1,6 @@
+import DropDown from 'components/DropDown/DropDown';
 import FormField from 'components/FormField';
-import { Field, Form, Formik, ErrorMessage } from 'formik';
+import { Form, Formik, ErrorMessage } from 'formik';
 import { Categories } from 'helpers/constants';
 import createAndUpdateVacancySchema from 'helpers/schemas/vacancies/createAndUpdateVacancy.schema';
 import translateCategory from 'utils/translate-vacancy-category';
@@ -46,6 +47,23 @@ const VACANCY_DATA: IVacancy = {
   location: '',
 };
 
+const listVacanciesOptions = [
+  {
+    name: 'category',
+    type: 'radio',
+    id: Categories.actual,
+    value: Categories.actual,
+    shownName: translateCategory(Categories.actual),
+  },
+  {
+    name: 'category',
+    type: 'radio',
+    id: Categories.irrelevant,
+    value: Categories.irrelevant,
+    shownName: translateCategory(Categories.irrelevant),
+  },
+];
+
 export default function VacancyForm({
   vacancyData = VACANCY_DATA,
   onClose,
@@ -81,6 +99,7 @@ export default function VacancyForm({
           location,
         }}
         onSubmit={(values, actions) => {
+          console.log(values);
           onSubmit(values);
         }}
         validateOnBlur
@@ -131,7 +150,8 @@ export default function VacancyForm({
           />
           <label style={{ display: 'flex', flexDirection: 'column' }}>
             Категорія вакансії
-            <label>
+            <DropDown options={listVacanciesOptions} />
+            {/* <label>
               {translateCategory(Categories.actual)}
               <Field
                 name="category"
@@ -139,16 +159,16 @@ export default function VacancyForm({
                 id={Categories.actual}
                 value={Categories.actual}
               />
-            </label>
-            <label>
-              {translateCategory(Categories.irrelevant)}
+            </label> */}
+            {/* <label> */}
+            {/* {translateCategory(Categories.irrelevant)}
               <Field
                 name="category"
                 type="radio"
                 id={Categories.irrelevant}
                 value={Categories.irrelevant}
               />
-            </label>
+            </label> */}
             <ErrorMessage name="category" />
           </label>
           <button type="button" onClick={onClose}>
