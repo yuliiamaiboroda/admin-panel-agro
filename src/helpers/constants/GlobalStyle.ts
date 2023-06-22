@@ -44,6 +44,9 @@ const GlobalStyle = createGlobalStyle`
     text-decoration: none; 
     color: currentColor;
 }
+ html {
+      overflow-y: scroll;
+    }
 `;
 
 export { GlobalStyle };

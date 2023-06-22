@@ -1,9 +1,13 @@
 import { useState } from 'react';
 import { useAppDispatch } from 'hooks';
 import { RxEyeClosed, RxEyeOpen } from 'react-icons/rx';
-import { Formik, Form, Field, ErrorMessage } from 'formik';
+import { Formik, Form } from 'formik';
 import { updatePasswordById } from 'redux/users';
 import updatePasswordSchema from 'helpers/schemas/auth/updatePassword.schema';
+import FormField from 'components/FormField';
+import Box from 'components/Box';
+import { Button } from 'helpers/styles';
+import FormButtons from 'components/FormButtons';
 
 interface IProps {
   onClose: () => void;
@@ -23,72 +27,104 @@ export default function ModalChangePassword({ onClose }: IProps) {
   };
 
   return (
-    <Formik
-      initialValues={initialState}
-      validationSchema={updatePasswordSchema}
-      onSubmit={(values, actions) => {
-        const { oldPassword, newPassword } = values;
-        dispatch(updatePasswordById({ oldPassword, newPassword }));
-        actions.resetForm();
-        onClose();
-      }}
-    >
-      <Form>
-        <label>
-          Старий пароль:
-          <Field
-            name="oldPassword"
-            type={isVisibleOldPassword ? 'text' : 'password'}
-            id="oldPassword"
-          />
-          <button
-            type="button"
-            onClick={() => setIsVisibleOldPassword(!isVisibleOldPassword)}
-          >
-            {isVisibleOldPassword ? <RxEyeClosed /> : <RxEyeOpen />}
-          </button>
-          <ErrorMessage name="oldPassword" />
-        </label>
-        <br />
-        <label>
-          Новий пароль:
-          <Field
-            name="newPassword"
-            type={isVisibleNewPassword ? 'text' : 'password'}
-            id="newPassword"
-          />
-          <button
-            type="button"
-            onClick={() => setIsVisibleNewPassword(!isVisibleNewPassword)}
-          >
-            {isVisibleNewPassword ? <RxEyeClosed /> : <RxEyeOpen />}
-          </button>
-          <ErrorMessage name="newPassword" />
-        </label>
-        <br />
-        <label>
-          Підтвердити новий пароль:
-          <Field
-            name="confirmPassword"
-            type={isVisibleConfirmPassword ? 'text' : 'password'}
-            id="confirmPassword"
-          />
-          <button
-            type="button"
-            onClick={() =>
-              setIsVisibleConfirmPassword(!isVisibleConfirmPassword)
-            }
-          >
-            {isVisibleConfirmPassword ? <RxEyeClosed /> : <RxEyeOpen />}
-          </button>
-          <ErrorMessage name="confirmPassword" />
-        </label>
-        <br />
-        <button type="button" onClick={onClose}>
-          Назад
-        </button>
-        <button type="submit">Змінити пароль</button>
-      </Form>
-    </Formik>
+    <>
+      <h2>Змінити пароль</h2>
+      <div style={{ margin: '14px auto' }}>
+        <Formik
+          initialValues={initialState}
+          validationSchema={updatePasswordSchema}
+          onSubmit={(values, actions) => {
+            const { oldPassword, newPassword } = values;
+            dispatch(updatePasswordById({ oldPassword, newPassword }));
+            actions.resetForm();
+            onClose();
+          }}
+        >
+          {({ handleSubmit, setFieldValue }) => (
+            <Form
+              style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}
+            >
+              <Box position="relative" width="100%">
+                <FormField
+                  labelName="Старий пароль:"
+                  placeholderName="Старий пароль"
+                  fieldName="oldPassword"
+                  typeName={isVisibleOldPassword ? 'text' : 'password'}
+                />
+                <Button
+                  type="button"
+                  position="absolute"
+                  right="0"
+                  bottom="0"
+                  onClick={(e: React.MouseEvent<HTMLButtonElement>) =>
+                    setIsVisibleOldPassword(!isVisibleOldPassword)
+                  }
+                  variant="content"
+                >
+                  {isVisibleOldPassword ? (
+                    <RxEyeClosed size={22} />
+                  ) : (
+                    <RxEyeOpen size={22} />
+                  )}
+                </Button>
+              </Box>
+              <Box position="relative" width="100%">
+                <FormField
+                  labelName="Новий пароль:"
+                  placeholderName="Новий пароль:"
+                  fieldName="newPassword"
+                  typeName={isVisibleNewPassword ? 'text' : 'password'}
+                />
+                <Button
+                  type="button"
+                  position="absolute"
+                  right="0"
+                  bottom="0"
+                  onClick={(e: React.MouseEvent<HTMLButtonElement>) =>
+                    setIsVisibleNewPassword(!isVisibleNewPassword)
+                  }
+                  variant="content"
+                >
+                  {isVisibleNewPassword ? (
+                    <RxEyeClosed size={22} />
+                  ) : (
+                    <RxEyeOpen size={22} />
+                  )}
+                </Button>
+              </Box>
+              <Box position="relative" width="100%">
+                <FormField
+                  labelName="Підтвердити новий пароль:"
+                  placeholderName="Підтвердити новий пароль:"
+                  fieldName="confirmPassword"
+                  typeName={isVisibleConfirmPassword ? 'text' : 'password'}
+                />
+                <Button
+                  type="button"
+                  position="absolute"
+                  right="0"
+                  bottom="0"
+                  variant="content"
+                  onClick={(e: React.MouseEvent<HTMLButtonElement>) =>
+                    setIsVisibleConfirmPassword(!isVisibleConfirmPassword)
+                  }
+                >
+                  {isVisibleConfirmPassword ? (
+                    <RxEyeClosed size={22} />
+                  ) : (
+                    <RxEyeOpen size={22} />
+                  )}
+                </Button>
+              </Box>
+              <FormButtons
+                onCancel={onClose}
+                onSubmit={handleSubmit}
+                submitButtonText="Змінити пароль"
+              />
+            </Form>
+          )}
+        </Formik>
+      </div>
+    </>
   );
 }

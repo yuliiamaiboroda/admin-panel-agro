@@ -55,7 +55,7 @@ export default function LoginForm() {
                 labelName="Електронна пошта:"
                 fieldName="email"
                 typeName="email"
-                placeholderName="hello@mail.com"
+                placeholderName="Електронна пошта"
               />
               <Box position="relative" width="100%">
                 <FormField
