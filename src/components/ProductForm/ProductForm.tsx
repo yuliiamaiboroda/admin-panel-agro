@@ -1,7 +1,9 @@
 import { useRef } from 'react';
-import { Formik, Form, Field, ErrorMessage } from 'formik';
+import { Formik, Form } from 'formik';
 import { productSchema } from 'helpers/schemas/products';
 import UploadFileField from 'components/UploadFileField';
+import FormField from 'components/FormField';
+import FormButtons from 'components/FormButtons';
 
 interface IProductState {
   title: string;
@@ -30,37 +32,52 @@ export default function ProductForm({
 
   const { title, description, imageURL } = productData;
 
+  const submitBtnTitle = productData === PRODUCT_DATA ? 'Створити' : 'Оновити';
+
   return (
-    <Formik
-      initialValues={{ title, description, image: '' }}
-      validationSchema={productSchema(fileField, imageURL)}
-      onSubmit={(values, actions) => {
-        onSubmit({
-          title: values.title,
-          description: values.description,
-          image: fileField.current?.files ? fileField.current?.files[0] : null,
-        });
-        actions.resetForm();
-      }}
-    >
-      <Form>
-        <label>
-          Title: <Field id="title" name="title" type="text" />
-          <ErrorMessage name="title" />
-        </label>
-        <br />
-        <label>
-          Description: <Field id="description" name="description" type="text" />
-          <ErrorMessage name="description" />
-        </label>
-        <br />
-        <UploadFileField name="image" fileRef={fileField} />
-        <br />
-        <button type="button" onClick={onCancel}>
-          Cancel
-        </button>
-        <button type="submit">Add product</button>
-      </Form>
-    </Formik>
+    <>
+      <h2>
+        {submitBtnTitle} продукт {title ? title : null}
+      </h2>
+      <Formik
+        initialValues={{ title, description, image: '' }}
+        validationSchema={productSchema(fileField, imageURL)}
+        onSubmit={(values, actions) => {
+          onSubmit({
+            title: values.title,
+            description: values.description,
+            image: fileField.current?.files
+              ? fileField.current?.files[0]
+              : null,
+          });
+          actions.resetForm();
+        }}
+      >
+        {({ handleSubmit, setFieldValue }) => (
+          <Form
+            style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}
+          >
+            <FormField
+              labelName="Заголовок "
+              fieldName="title"
+              placeholderName="Заголовок "
+            />
+
+            <FormField
+              labelName="Опис"
+              fieldName="description"
+              placeholderName="Опис"
+            />
+            <UploadFileField name="image" fileRef={fileField} />
+            <FormButtons
+              onCancel={onCancel}
+              onSubmit={handleSubmit}
+              cancelButtonText="Відмінити"
+              submitButtonText={submitBtnTitle}
+            />
+          </Form>
+        )}
+      </Formik>
+    </>
   );
 }
