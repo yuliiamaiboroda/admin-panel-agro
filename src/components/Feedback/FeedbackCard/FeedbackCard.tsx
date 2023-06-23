@@ -12,7 +12,6 @@ export interface IFeedback {
   name: string;
   comment: string;
   isReviewed: boolean;
-  createdAt: string;
   isFavorite: boolean;
 }
 export default function FeedbackCard({
@@ -20,7 +19,7 @@ export default function FeedbackCard({
   name,
   isReviewed,
   comment,
-  createdAt,
+
   isFavorite,
 }: IFeedback) {
   const dispatch = useAppDispatch();
@@ -48,8 +47,6 @@ export default function FeedbackCard({
     <CardWrapperMarkup onClick={() => clickHandler}>
       <CardDetailStringMarkup title="Ім'я" value={name} />
       <CardDetailStringMarkup title="Коментар" value={comment} />
-      <CardDetailStringMarkup title="Створений" value={createdAt} />
-      {/* TODO: createdAt не приходить на getAll  */}
       <Box display="flex" justifyContent="center" gridGap={2}>
         <FavoriteButton
           isFavorite={isFavorite}

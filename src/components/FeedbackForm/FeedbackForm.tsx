@@ -1,5 +1,7 @@
 import { Field, Form, Formik, ErrorMessage } from 'formik';
 import { feedbackSchema } from 'helpers/schemas/feedbacks';
+import { useAppDispatch } from 'hooks';
+import { createFeedback } from 'redux/feedbacks';
 
 interface IFeedback {
   name: string;
@@ -18,6 +20,7 @@ const INITIAL_STATE: IFeedback = {
 };
 
 export default function FeedbackForm() {
+  const dispatch = useAppDispatch();
   return (
     <>
       <h2>Відгукнутися</h2>
@@ -27,7 +30,7 @@ export default function FeedbackForm() {
         validateOnBlur
         validationSchema={feedbackSchema}
         onSubmit={(values, actions) => {
-          console.log(values);
+          dispatch(createFeedback(values));
         }}
       >
         {({ values }) => (

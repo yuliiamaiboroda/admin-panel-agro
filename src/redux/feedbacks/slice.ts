@@ -1,7 +1,9 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import {
+  createFeedback,
   getAllFeedback,
   getCertainFeedback,
+  loadMoreFeedbacks,
   removeFeedbackById,
   updateFeedbackIsFavorite,
   updateFeedbackViews,
@@ -12,7 +14,6 @@ export interface IFeedback {
   name: string;
   comment: string;
   isReviewed: boolean;
-  createdAt: string;
   isFavorite: boolean;
 }
 export interface IFeedbackCertain {
@@ -28,6 +29,11 @@ export interface IFeedbackPagination {
   skip: number;
   limit: number;
   total: number;
+}
+
+export interface IFeedbackResponse {
+  feedbacks: IFeedback[];
+  pagination: IFeedbackPagination;
 }
 
 interface IState {
@@ -130,6 +136,30 @@ const removeFeedbackFulfilledReducer = (
   };
 };
 
+const loadMoreFeedbacksReducer = (
+  state: IState,
+  action: PayloadAction<IFeedbackResponse, string>
+) => {
+  return {
+    ...state,
+    isLoading: false,
+    entities: [...state.entities, ...action.payload.feedbacks],
+    pagination: action.payload.pagination,
+  };
+};
+
+// TODO: delete extra reducer before production version
+const createFeedbackReducer = (
+  state: IState,
+  action: PayloadAction<IFeedback, string>
+) => {
+  return {
+    ...state,
+    isLoading: false,
+    entities: [action.payload, ...state.entities],
+  };
+};
+
 const feedbacksSlice = createSlice({
   name: 'feedbacks',
   initialState,
@@ -157,7 +187,13 @@ const feedbacksSlice = createSlice({
         updateFeedbackIsFavorite.fulfilled,
         updateFeedbackFavoriteFulfilledReducer
       )
-      .addCase(updateFeedbackIsFavorite.rejected, feedbackRejectedReducer),
+      .addCase(updateFeedbackIsFavorite.rejected, feedbackRejectedReducer)
+      .addCase(loadMoreFeedbacks.pending, feedbackPendingReducer)
+      .addCase(loadMoreFeedbacks.fulfilled, loadMoreFeedbacksReducer)
+      .addCase(loadMoreFeedbacks.rejected, feedbackRejectedReducer)
+      .addCase(createFeedback.pending, feedbackPendingReducer)
+      .addCase(createFeedback.fulfilled, createFeedbackReducer)
+      .addCase(createFeedback.rejected, feedbackRejectedReducer),
 });
 
 export const feedbacksReducer = feedbacksSlice.reducer;
