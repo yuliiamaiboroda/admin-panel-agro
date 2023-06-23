@@ -11,8 +11,8 @@ export default function FeedbackFilter() {
   }, [dispatch, queryParams]);
   return (
     <>
-      {/* <label>
-        Show favorites
+      <label>
+        Показати улюблені
         <input
           type="checkbox"
           name="isFavorite"
@@ -21,13 +21,13 @@ export default function FeedbackFilter() {
             setQueryParams({ isFavorite: target.checked ? 'true' : '' })
           }
         />
-      </label> */}
+      </label>
       <select
         onChange={({ target }) => setQueryParams({ sort: target.value })}
         value={queryParams.sort ? queryParams.sort : ''}
       >
-        <option value="">Newer</option>
-        <option value="asc">Older</option>
+        <option value="">Спочатку нові</option>
+        <option value="asc">Спочатку старі</option>
       </select>
     </>
   );

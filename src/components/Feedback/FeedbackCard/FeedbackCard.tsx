@@ -20,7 +20,6 @@ export default function FeedbackCard({
   name,
   isReviewed,
   comment,
-
   isFavorite,
 }: IFeedback) {
   const dispatch = useAppDispatch();

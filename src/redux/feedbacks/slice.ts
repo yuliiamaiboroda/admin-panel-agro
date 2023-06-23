@@ -24,6 +24,7 @@ export interface IFeedbackCertain {
   comment: string;
   agreement: boolean;
   isFavorite: boolean;
+  createdAt: string;
 }
 export interface IFeedbackPagination {
   skip: number;
