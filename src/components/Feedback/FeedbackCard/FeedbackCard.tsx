@@ -6,6 +6,7 @@ import CardDetailStringMarkup from 'components/CardDetailStringMarkup';
 import Box from 'components/Box';
 import ItemLink from 'components/ItemLink';
 import FavoriteButton from 'components/FavoriteButton';
+import { UnviewComponent } from './FeedbackCard.styled';
 
 export interface IFeedback {
   _id: string;
@@ -45,14 +46,17 @@ export default function FeedbackCard({
 
   return (
     <CardWrapperMarkup onClick={() => clickHandler}>
-      <CardDetailStringMarkup title="Ім'я" value={name} />
-      <CardDetailStringMarkup title="Коментар" value={comment} />
-      <Box display="flex" justifyContent="center" gridGap={2}>
-        <FavoriteButton
-          isFavorite={isFavorite}
-          onClick={() => dispatch(updateFeedbackIsFavorite(_id))}
-        />
-        <ItemLink type="remove" navigateTo={`${_id}/confirm`} />
+      <Box position="relative">
+        {!isReviewed && <UnviewComponent />}
+        <CardDetailStringMarkup title="Ім'я" value={name} />
+        <CardDetailStringMarkup title="Коментар" value={comment} />
+        <Box display="flex" justifyContent="center" gridGap={2}>
+          <FavoriteButton
+            isFavorite={isFavorite}
+            onClick={() => dispatch(updateFeedbackIsFavorite(_id))}
+          />
+          <ItemLink type="remove" navigateTo={`${_id}/confirm`} />
+        </Box>
       </Box>
     </CardWrapperMarkup>
   );

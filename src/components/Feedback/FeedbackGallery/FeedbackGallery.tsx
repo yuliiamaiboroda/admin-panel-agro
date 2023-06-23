@@ -24,7 +24,7 @@ export default function FeedbackGallery() {
       <CreateButton onClick={() => setIsModalOpen(true)} />
       {isModalOpen && (
         <Modal onClose={() => setIsModalOpen(false)}>
-          <FeedbackForm />
+          <FeedbackForm onClose={() => setIsModalOpen(false)} />
         </Modal>
       )}
     </section>

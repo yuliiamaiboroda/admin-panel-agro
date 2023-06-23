@@ -19,7 +19,11 @@ const INITIAL_STATE: IFeedback = {
   agreement: false,
 };
 
-export default function FeedbackForm() {
+interface IProps {
+  onClose: () => void;
+}
+
+export default function FeedbackForm({ onClose }: IProps) {
   const dispatch = useAppDispatch();
   return (
     <>
@@ -31,6 +35,7 @@ export default function FeedbackForm() {
         validationSchema={feedbackSchema}
         onSubmit={(values, actions) => {
           dispatch(createFeedback(values));
+          onClose();
         }}
       >
         {({ values }) => (
