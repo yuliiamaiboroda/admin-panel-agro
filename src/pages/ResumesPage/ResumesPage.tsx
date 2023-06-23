@@ -1,8 +1,16 @@
-import { Suspense } from 'react';
+import { Suspense, useEffect } from 'react';
 import { Outlet } from 'react-router-dom';
 import { Notify } from 'notiflix';
-import { useAppSelector, useModal } from 'hooks';
-import { selectResumeError } from 'redux/resumes';
+import {
+  useAppSelector,
+  useModal,
+  // useQueryParams,
+  // useAppDispatch,
+} from 'hooks';
+import {
+  // getAllResumes,
+  selectResumeError,
+} from 'redux/resumes';
 import ResumesGallery from 'components/ResumesGallery';
 import Modal from 'components/Modal';
 import ResumeForm from 'components/ResumeForm';
@@ -17,6 +25,12 @@ import FilterWrapper from 'components/FilterWrapper';
 export default function ResumesPage() {
   const { isModalOpen, openModal, closeModal } = useModal();
   const error = useAppSelector(selectResumeError);
+  // const [queryParams] = useQueryParams();
+  // const dispatch = useAppDispatch();
+
+  // useEffect(() => {
+  //   dispatch(getAllResumes({}));
+  // }, [dispatch]);
 
   if (error) {
     Notify.failure(error);

@@ -1,35 +1,42 @@
-import { useEffect } from 'react';
-import { useAppDispatch, useAppSelector, useQueryParams } from 'hooks';
+import { useEffect, useState } from 'react';
+import { useAppDispatch } from 'hooks';
 import { getAllResumes } from 'redux/resumes';
-import { getAllVacancyTitles, selectVacancyTitles } from 'redux/vacancies';
 import Box from 'components/Box';
 
-import Selector from 'components/Selector/Selector';
-
-const LIMIT = [
-  { value: '2', label: 2 },
-  { value: '5', label: 5 },
-  { value: '10', label: 10 },
-  { value: '15', label: 15 },
-  { value: '', label: 20 },
-  { value: '25', label: 25 },
-  { value: '30', label: 30 },
-  { value: '40', label: 40 },
-  { value: '50', label: 50 },
-];
+import VacancySelector from 'components/VacancySelector';
+import SortSelector from 'components/SortSelector';
+import LimitSelector from 'components/LimitSelector';
 
 export default function ResumesFilter() {
-  const [queryParams, setQueryParams] = useQueryParams();
-  const titles = useAppSelector(selectVacancyTitles);
+  const [isFavoriteFilter, setIsFavoriteFilter] = useState<{
+    isFavorite: boolean;
+  } | null>(null);
+  const [positionFilter, setPositionFilter] = useState<{
+    position: string;
+  } | null>(null);
+  const [sortFilter, setSortFilter] = useState<{ sort: string } | null>(null);
+  const [paginationFilter, setPaginationFilter] = useState<{
+    limit: string;
+  } | null>(null);
+
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    dispatch(getAllVacancyTitles());
-  }, [dispatch]);
-
-  useEffect(() => {
-    dispatch(getAllResumes(queryParams));
-  }, [dispatch, queryParams]);
+    dispatch(
+      getAllResumes({
+        ...isFavoriteFilter,
+        ...positionFilter,
+        ...sortFilter,
+        ...paginationFilter,
+      })
+    );
+  }, [
+    dispatch,
+    isFavoriteFilter,
+    positionFilter,
+    sortFilter,
+    paginationFilter,
+  ]);
 
   return (
     <Box display="flex" flexDirection={['column', 'column', 'row']} gridGap={4}>
@@ -38,74 +45,25 @@ export default function ResumesFilter() {
         <input
           type="checkbox"
           name="isFavorite"
-          checked={queryParams.isFavorite ? true : false}
+          checked={isFavoriteFilter ? true : false}
           onChange={({ target }) =>
-            setQueryParams({ isFavorite: target.checked ? 'true' : '' })
+            setIsFavoriteFilter(target.checked ? { isFavorite: true } : null)
           }
         />
       </label>
-      {/* <select
-        onChange={({ target }) => setQueryParams({ position: target.value })}
-        value={queryParams.position ? queryParams.position : ''}
-      >
-        <option value="">Всі</option>
-        {titles.map(({ _id, title }) => (
-          <option key={_id} value={title}>
-            {title}
-          </option>
-        ))}
-        <option value="other">Other</option>
-      </select> */}
-      {/* <select
-        onChange={({ target }) => setQueryParams({ sort: target.value })}
-        value={queryParams.sort ? queryParams.sort : ''}
-      >
-        <option value="">Спочатку нові</option>
-        <option value="asc">Спочатку старі</option>
-      </select> */}
-      {/* <select
-        onChange={({ target }) => setQueryParams({ limit: target.value })}
-        value={queryParams.limit ? queryParams.limit : ''}
-      >
-        {LIMIT.map(({ value, label }, index) => (
-          <option key={index} value={value}>
-            {label}
-          </option>
-        ))}
-      </select> */}
-
-      <Selector
-        options={[
-          { value: '', label: 'Всі' },
-          ...titles.map(({ title }) => ({ value: title, label: title })),
-          { value: 'other', label: 'Інші' },
-        ]}
-        defaultValue={{ value: '', label: 'Всі' }}
+      <VacancySelector
         onChange={option => {
-          if (option?.value || option?.value === '') {
-            setQueryParams({ position: option.value });
-          }
+          setPositionFilter(option?.value ? { position: option.value } : null);
         }}
       />
-      <Selector
-        options={[
-          { value: '', label: 'Найновіші' },
-          { value: 'asc', label: 'Настаріші' },
-        ]}
+      <SortSelector
         onChange={option => {
-          if (option?.value || option?.value === '') {
-            setQueryParams({ sort: option.value });
-          }
+          setSortFilter(option?.value ? { sort: option.value } : null);
         }}
-        defaultValue={{ value: '', label: 'Найновіші' }}
       />
-      <Selector
-        options={LIMIT}
-        defaultValue={LIMIT[4]}
+      <LimitSelector
         onChange={option => {
-          if (option?.value || option?.value === '') {
-            setQueryParams({ limit: option.value });
-          }
+          setPaginationFilter(option?.value ? { limit: option.value } : null);
         }}
       />
     </Box>

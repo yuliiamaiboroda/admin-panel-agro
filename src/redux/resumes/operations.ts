@@ -3,9 +3,16 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import type { IResume, IResumeEntity, IResumeResponse } from 'helpers/types';
 import { createFormData } from 'utils';
 
+interface IResumeFilter {
+  isFavorite?: boolean;
+  position?: string;
+  sort?: string;
+  limit?: string;
+}
+
 export const getAllResumes = createAsyncThunk<
   IResumeResponse,
-  { [x: string]: string },
+  IResumeFilter | undefined,
   { rejectValue: string }
 >('resumes/getAllResumes', async (params, thunkApi) => {
   try {
