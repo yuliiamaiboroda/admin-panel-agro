@@ -35,7 +35,7 @@ interface IProps
     BorderProps,
     PositionProps,
     ShadowProps {
-  children: React.ReactNode;
+  children?: React.ReactNode;
 }
 
 const Box = styled.div<IProps>`
