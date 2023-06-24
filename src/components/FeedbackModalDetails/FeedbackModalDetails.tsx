@@ -7,6 +7,7 @@ import ItemLink from 'components/ItemLink/ItemLink';
 import ModalTitle from 'components/ModalTitle';
 import ModalDescription from 'components/ModalDescription';
 import ModalLink from 'components/ModalLink';
+import transformDate from 'utils/date-formatting';
 
 export default function FeedbackModalDetails() {
   const { certain } = useAppSelector(selectFeedbacks);
@@ -25,6 +26,7 @@ export default function FeedbackModalDetails() {
     comment,
     agreement,
     isFavorite,
+    createdAt,
   } = certain;
 
   return (
@@ -42,6 +44,7 @@ export default function FeedbackModalDetails() {
           label="Згода на обробку даних"
           value={agreement ? 'Надана' : 'Не надана'}
         />
+        <ModalDescription label="Створений" value={transformDate(createdAt)} />
       </Box>
       <Box display="flex" justifyContent="space-around">
         <FavoriteButton
