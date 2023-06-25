@@ -25,11 +25,10 @@ import LoadMoreButton from 'components/LoadMoreButton';
 export default function ResumesPage() {
   const { isModalOpen, openModal, closeModal } = useModal();
   const [filterStatus, setFilterStatus] = useState<IResumeFilter>({});
-  const error = useAppSelector(selectResumeError);
-  const dispatch = useAppDispatch();
-
   const resumes = useAppSelector(selectResumes);
   const pagination = useAppSelector(selectResumePagination);
+  const error = useAppSelector(selectResumeError);
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     dispatch(getAllResumes(filterStatus));

@@ -1,34 +1,37 @@
-import { useAppDispatch, useQueryParams } from 'hooks';
-import { useEffect } from 'react';
-import { getAllFeedback } from 'redux/feedbacks';
+import type { IFeedbackFilter } from 'helpers/types';
+import SortSelector from 'components/SortSelector';
+import Box from 'components/Box';
 
-export default function FeedbackFilter() {
-  const dispatch = useAppDispatch();
-  const [queryParams, setQueryParams] = useQueryParams();
+interface IProps {
+  filterStatus: IFeedbackFilter;
+  onSelect: React.Dispatch<React.SetStateAction<IFeedbackFilter>>;
+}
 
-  useEffect(() => {
-    dispatch(getAllFeedback(queryParams));
-  }, [dispatch, queryParams]);
+export default function FeedbackFilter({ filterStatus, onSelect }: IProps) {
   return (
-    <>
+    <Box display="flex" flexDirection={['column', 'column', 'row']} gridGap={4}>
       <label>
         Показати улюблені
         <input
           type="checkbox"
           name="isFavorite"
-          checked={queryParams.isFavorite ? true : false}
+          checked={filterStatus?.isFavorite ? true : false}
           onChange={({ target }) =>
-            setQueryParams({ isFavorite: target.checked ? 'true' : '' })
+            onSelect(({ isFavorite, ...rest }) => ({
+              ...rest,
+              ...(target.checked ? { isFavorite: true } : null),
+            }))
           }
         />
       </label>
-      <select
-        onChange={({ target }) => setQueryParams({ sort: target.value })}
-        value={queryParams.sort ? queryParams.sort : ''}
-      >
-        <option value="">Спочатку нові</option>
-        <option value="asc">Спочатку старі</option>
-      </select>
-    </>
+      <SortSelector
+        onChange={option => {
+          onSelect(({ sort, ...rest }) => ({
+            ...rest,
+            ...(option?.value ? { sort: option.value } : null),
+          }));
+        }}
+      />
+    </Box>
   );
 }
