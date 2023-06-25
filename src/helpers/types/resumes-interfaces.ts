@@ -28,3 +28,11 @@ export interface IResumeResponse {
   resumes: IResumeEntity[];
   pagination: IResumePagination;
 }
+
+export interface IResumeFilter {
+  isFavorite?: boolean;
+  position?: string;
+  sort?: string;
+  limit?: string;
+  skip?: number;
+}

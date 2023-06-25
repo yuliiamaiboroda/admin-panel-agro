@@ -1,14 +1,12 @@
 import axios, { AxiosError } from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import type { IResume, IResumeEntity, IResumeResponse } from 'helpers/types';
+import type {
+  IResume,
+  IResumeEntity,
+  IResumeResponse,
+  IResumeFilter,
+} from 'helpers/types';
 import { createFormData } from 'utils';
-
-interface IResumeFilter {
-  isFavorite?: boolean;
-  position?: string;
-  sort?: string;
-  limit?: string;
-}
 
 export const getAllResumes = createAsyncThunk<
   IResumeResponse,
@@ -33,7 +31,7 @@ export const getAllResumes = createAsyncThunk<
 
 export const loadMoreResumes = createAsyncThunk<
   IResumeResponse,
-  { [x: string]: string | number },
+  IResumeFilter,
   { rejectValue: string }
 >('resumes/loadMoreResumes', async (params, thunkApi) => {
   try {
