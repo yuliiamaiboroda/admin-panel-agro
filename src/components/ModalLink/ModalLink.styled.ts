@@ -3,7 +3,6 @@ import styled from 'styled-components';
 export const StyledModalLink = styled.a`
   display: flex;
   align-items: center;
-  font-size: ${p => p.theme.fontSizes.m};
   font-weight: ${p => p.theme.fontWeights.normal};
   opacity: ${p => (p.href ? 1 : 0.3)};
   text-decoration: underline;
