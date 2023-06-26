@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useAppDispatch } from 'hooks';
+import { useAppDispatch, useAppSelector } from 'hooks';
 import { RxEyeClosed, RxEyeOpen } from 'react-icons/rx';
 import { Formik, Form } from 'formik';
 import { updatePasswordById } from 'redux/users';
@@ -8,6 +8,8 @@ import FormField from 'components/FormField';
 import Box from 'components/Box';
 import { Button } from 'helpers/styles';
 import FormButtons from 'components/FormButtons';
+import ResetPasswordButton from 'components/ResetPasswordButton';
+import { selectUser } from 'redux/user';
 
 interface IProps {
   onClose: () => void;
@@ -19,6 +21,7 @@ export default function ModalChangePassword({ onClose }: IProps) {
   const [isVisibleConfirmPassword, setIsVisibleConfirmPassword] =
     useState(false);
   const dispatch = useAppDispatch();
+  const { user } = useAppSelector(selectUser);
 
   const initialState = {
     oldPassword: '',
@@ -124,6 +127,7 @@ export default function ModalChangePassword({ onClose }: IProps) {
             </Form>
           )}
         </Formik>
+        {user.email ? <ResetPasswordButton email={user.email} /> : null}
       </div>
     </>
   );
