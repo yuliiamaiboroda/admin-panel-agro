@@ -1,88 +1,55 @@
-import { useEffect } from 'react';
-import { useAppDispatch, useAppSelector, useQueryParams } from 'hooks';
-import { getAllResumes } from 'redux/resumes';
-import { getAllVacancyTitles, selectVacancyTitles } from 'redux/vacancies';
+import Box from 'components/Box';
+import VacancySelector from 'components/VacancySelector';
+import SortSelector from 'components/SortSelector';
+import LimitSelector from 'components/LimitSelector';
+import type { IResumeFilter } from 'helpers/types';
 
-import Selector from 'components/Selector/Selector';
+interface IProps {
+  filterStatus: IResumeFilter;
+  onSelect: React.Dispatch<React.SetStateAction<IResumeFilter>>;
+}
 
-const LIMIT = [
-  { value: '2', label: 2 },
-  { value: '5', label: 5 },
-  { value: '10', label: 10 },
-  { value: '15', label: 15 },
-  { value: '', label: 20 },
-  { value: '25', label: 25 },
-  { value: '30', label: 30 },
-  { value: '40', label: 40 },
-  { value: '50', label: 50 },
-];
-
-export default function ResumesFilter() {
-  const [queryParams, setQueryParams] = useQueryParams();
-  const titles = useAppSelector(selectVacancyTitles);
-  const dispatch = useAppDispatch();
-
-  useEffect(() => {
-    dispatch(getAllVacancyTitles());
-  }, [dispatch]);
-
-  useEffect(() => {
-    dispatch(getAllResumes(queryParams));
-  }, [dispatch, queryParams]);
-
+export default function ResumesFilter({ filterStatus, onSelect }: IProps) {
   return (
-    <>
+    <Box display="flex" flexDirection={['column', 'column', 'row']} gridGap={4}>
       <label>
         Показати обрані
         <input
           type="checkbox"
           name="isFavorite"
-          checked={queryParams.isFavorite ? true : false}
+          checked={filterStatus?.isFavorite ? true : false}
           onChange={({ target }) =>
-            setQueryParams({ isFavorite: target.checked ? 'true' : '' })
+            onSelect(({ isFavorite, ...rest }) => ({
+              ...rest,
+              ...(target.checked ? { isFavorite: true } : null),
+            }))
           }
         />
       </label>
-      <select
-        onChange={({ target }) => setQueryParams({ position: target.value })}
-        value={queryParams.position ? queryParams.position : ''}
-      >
-        <option value="">Всі</option>
-        {titles.map(({ _id, title }) => (
-          <option key={_id} value={title}>
-            {title}
-          </option>
-        ))}
-        <option value="other">Other</option>
-      </select>
-      <select
-        onChange={({ target }) => setQueryParams({ sort: target.value })}
-        value={queryParams.sort ? queryParams.sort : ''}
-      >
-        <option value="">Спочатку нові</option>
-        <option value="asc">Спочатку старі</option>
-      </select>
-      {/* <select
-        onChange={({ target }) => setQueryParams({ limit: target.value })}
-        value={queryParams.limit ? queryParams.limit : ''}
-      >
-        {LIMIT.map(({ value, label }, index) => (
-          <option key={index} value={value}>
-            {label}
-          </option>
-        ))}
-      </select> */}
-
-      <Selector
-        options={LIMIT}
-        defaultValue={LIMIT[4]}
-        // onChange={option => console.log('option: ', option?.value)}
+      <VacancySelector
         onChange={option => {
-          if (option?.value || option?.value === '') {
-            setQueryParams({ limit: option.value });
-          }
+          onSelect(({ position, ...rest }) => ({
+            ...rest,
+            ...(option?.value ? { position: option.value } : null),
+          }));
         }}
       />
-    </>
+      <SortSelector
+        onChange={option => {
+          onSelect(({ sort, ...rest }) => ({
+            ...rest,
+            ...(option?.value ? { sort: option.value } : null),
+          }));
+        }}
+      />
+      <LimitSelector
+        onChange={option => {
+          onSelect(({ limit, ...rest }) => ({
+            ...rest,
+            ...(option?.value ? { limit: option.value } : null),
+          }));
+        }}
+      />
+    </Box>
   );
 }

@@ -1,5 +1,5 @@
 import { useAppSelector } from 'hooks';
-import { selectFeedbacks } from 'redux/feedbacks';
+import { selectAllFeedbacks } from 'redux/feedbacks';
 import FeedbackCard from '../FeedbackCard';
 import { useState } from 'react';
 import Modal from 'components/Modal';
@@ -10,13 +10,13 @@ import CardPlaceholder from 'components/CardPlaceholder';
 
 export default function FeedbackGallery() {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const { entities } = useAppSelector(selectFeedbacks);
+  const feedbacks = useAppSelector(selectAllFeedbacks);
 
   return (
     <section>
       <GalleryWrapper>
-        {entities.length ? (
-          entities.map(item => <FeedbackCard key={item._id} {...item} />)
+        {feedbacks.length ? (
+          feedbacks.map(item => <FeedbackCard key={item._id} {...item} />)
         ) : (
           <CardPlaceholder />
         )}
@@ -24,7 +24,7 @@ export default function FeedbackGallery() {
       <CreateButton onClick={() => setIsModalOpen(true)} />
       {isModalOpen && (
         <Modal onClose={() => setIsModalOpen(false)}>
-          <FeedbackForm />
+          <FeedbackForm onClose={() => setIsModalOpen(false)} />
         </Modal>
       )}
     </section>

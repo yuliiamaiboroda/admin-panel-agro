@@ -1,11 +1,15 @@
-import { Field, Form, Formik, ErrorMessage } from 'formik';
+import { Form, Formik, ErrorMessage } from 'formik';
 import createNewUserSchema from 'helpers/schemas/auth/createNewUser.schema';
-import translateRole from 'utils/translate-role';
 import { useAppDispatch } from 'hooks';
 import { registerNewUser } from 'redux/users';
-import { Roles } from 'helpers/constants';
+import { listUsersOptions } from 'helpers/constants';
 import { useState } from 'react';
 import { RxEyeClosed, RxEyeOpen } from 'react-icons/rx';
+import FormField from 'components/FormField';
+import Box from 'components/Box';
+import { Button } from 'helpers/styles';
+import DropDown from 'components/DropDown';
+import FormButtons from 'components/FormButtons/FormButtons';
 
 interface INewUser {
   email: string;
@@ -35,108 +39,103 @@ export default function CreateUserForm({ onClose }: Iprops) {
 
   return (
     <>
-      <h2>Остворити нового користувача</h2>
-      <Formik
-        initialValues={FORM_INITIAL_STATE}
-        onSubmit={(values, actions) => {
-          dispatch(registerNewUser(values));
-          actions.resetForm();
-          onClose();
-        }}
-        validateOnBlur
-        validationSchema={createNewUserSchema}
-      >
-        <Form style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-          <label>
-            Електронна пошта:
-            <Field name="email" type="email" id="email" placeholder="email" />
-            <ErrorMessage name="email" />
-          </label>
-          <label>
-            Пароль:
-            <Field
-              name="password"
-              type={isVisiblePassword ? 'text' : 'password'}
-              id="password"
-            />
-            <button
-              type="button"
-              onClick={() => setIsVisiblePassword(!isVisiblePassword)}
+      <h2>Cтворити нового користувача</h2>
+      <div style={{ margin: '14px auto' }}>
+        <Formik
+          initialValues={FORM_INITIAL_STATE}
+          onSubmit={(values, actions) => {
+            dispatch(registerNewUser(values));
+            actions.resetForm();
+            onClose();
+          }}
+          validateOnBlur
+          validationSchema={createNewUserSchema}
+        >
+          {({ handleSubmit, setFieldValue }) => (
+            <Form
+              style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}
             >
-              {isVisiblePassword ? <RxEyeClosed /> : <RxEyeOpen />}
-            </button>
-            <ErrorMessage name="password" />
-          </label>
-          <label>
-            Підтвердіть пароль:
-            <Field
-              name="confirmPassword"
-              type={isVisibleConfirmPassword ? 'text' : 'password'}
-              id="confirmPassword"
-            />
-            <button
-              type="button"
-              onClick={() =>
-                setIsVisibleConfirmPassword(!isVisibleConfirmPassword)
-              }
-            >
-              {isVisibleConfirmPassword ? <RxEyeClosed /> : <RxEyeOpen />}
-            </button>
-            <ErrorMessage name="confirmPassword" />
-          </label>
-          <label>
-            Ім'я:
-            <Field name="name" type="text" id="name" />
-            <ErrorMessage name="name" />
-          </label>
-          <label>
-            Прізвище:
-            <Field name="surname" type="text" id="surname" />
-            <ErrorMessage name="surname" />
-          </label>
-          <label style={{ display: 'flex', flexDirection: 'column' }}>
-            Роль нового користувача
-            <label>
-              {translateRole(Roles.admin)}
-              <Field
-                name="role"
-                type="radio"
-                id={Roles.admin}
-                value={Roles.admin}
+              <FormField
+                labelName="Електронна пошта:"
+                fieldName="email"
+                placeholderName=" Електронна пошта"
+                typeName="email"
               />
-            </label>
-            <label>
-              {translateRole(Roles.applyManager)}
-              <Field
-                name="role"
-                type="radio"
-                id={Roles.applyManager}
-                value={Roles.applyManager}
+              <Box position="relative" width="100%">
+                <FormField
+                  labelName="Пароль:"
+                  fieldName="password"
+                  placeholderName="Пароль"
+                  typeName={isVisiblePassword ? 'text' : 'password'}
+                />
+                <Button
+                  type="button"
+                  position="absolute"
+                  right="0"
+                  bottom="0"
+                  onClick={(e: React.MouseEvent<HTMLButtonElement>) =>
+                    setIsVisiblePassword(!isVisiblePassword)
+                  }
+                  variant="content"
+                >
+                  {isVisiblePassword ? (
+                    <RxEyeClosed size={22} />
+                  ) : (
+                    <RxEyeOpen size={22} />
+                  )}
+                </Button>
+              </Box>
+              <Box position="relative" width="100%">
+                <FormField
+                  labelName="Підтвердіть пароль:"
+                  fieldName="confirmPassword"
+                  placeholderName="Підтвердіть пароль"
+                  typeName={isVisibleConfirmPassword ? 'text' : 'password'}
+                />
+                <Button
+                  type="button"
+                  position="absolute"
+                  right="0"
+                  bottom="0"
+                  onClick={(e: React.MouseEvent<HTMLButtonElement>) =>
+                    setIsVisibleConfirmPassword(!isVisibleConfirmPassword)
+                  }
+                  variant="content"
+                >
+                  {isVisibleConfirmPassword ? (
+                    <RxEyeClosed size={22} />
+                  ) : (
+                    <RxEyeOpen size={22} />
+                  )}
+                </Button>
+              </Box>
+              <FormField
+                labelName="Ім'я:"
+                fieldName="name"
+                placeholderName="Ім'я"
               />
-            </label>
-            <label>
-              {translateRole(Roles.servicesManager)}
-              <Field
-                name="role"
-                type="radio"
-                id={Roles.servicesManager}
-                value={Roles.servicesManager}
+              <FormField
+                labelName="Прізвище:"
+                fieldName="surname"
+                placeholderName="Прізвище"
               />
-            </label>
-            <label>
-              {translateRole(Roles.productsManager)}
-              <Field
-                name="role"
-                type="radio"
-                id={Roles.productsManager}
-                value={Roles.productsManager}
+              <label>
+                Роль нового користувача
+                <DropDown
+                  options={listUsersOptions}
+                  setFieldValue={setFieldValue}
+                />
+                <ErrorMessage name="role" />
+              </label>
+              <FormButtons
+                onCancel={onClose}
+                onSubmit={handleSubmit}
+                submitButtonText="Створити"
               />
-            </label>
-            <ErrorMessage name="role" />
-          </label>
-          <button type="submit">Створити нового користувача</button>
-        </Form>
-      </Formik>
+            </Form>
+          )}
+        </Formik>
+      </div>
     </>
   );
 }

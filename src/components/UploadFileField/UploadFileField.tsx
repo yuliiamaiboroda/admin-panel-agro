@@ -18,7 +18,7 @@ export default function UploadFileField({
         {label}
         <input type="file" ref={fileRef} {...field} />
       </label>
-      <br />
+      {/* <br /> */}
       <ErrorMessage name={field.name} />
     </>
   );

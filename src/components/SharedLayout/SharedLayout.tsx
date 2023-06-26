@@ -11,7 +11,7 @@ export default function SharedLayout() {
     <Box
       display="flex"
       maxWidth={['480px', '768px', '1200px']}
-      px={4}
+      // px={4}
       mx="auto"
     >
       <SideBarNavigation />

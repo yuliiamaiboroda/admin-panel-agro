@@ -1,8 +1,9 @@
+import DropDown from 'components/DropDown/DropDown';
+import FormButtons from 'components/FormButtons/FormButtons';
 import FormField from 'components/FormField';
-import { Field, Form, Formik, ErrorMessage } from 'formik';
-import { Categories } from 'helpers/constants';
+import { Form, Formik, ErrorMessage } from 'formik';
+import { Categories, listVacanciesOptions } from 'helpers/constants';
 import createAndUpdateVacancySchema from 'helpers/schemas/vacancies/createAndUpdateVacancy.schema';
-import translateCategory from 'utils/translate-vacancy-category';
 
 interface IVacancy {
   category: keyof typeof Categories;
@@ -86,76 +87,68 @@ export default function VacancyForm({
         validateOnBlur
         validationSchema={createAndUpdateVacancySchema}
       >
-        <Form style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-          <FormField
-            fieldName="title"
-            labelName="Заголовок вакасії"
-            placeholderName="Заголовок вакасії"
-          />
-          <FormField
-            fieldName="description"
-            labelName="Опис"
-            placeholderName="Опис"
-          />
-          <FormField
-            fieldName="sallary"
-            labelName="Заробітня плата"
-            placeholderName="Заробітня плата"
-          />
-          <FormField
-            fieldName="education"
-            labelName="Освіта"
-            placeholderName="Освіта"
-          />
-          <FormField
-            fieldName="contactMail"
-            labelName="Контактна пошта"
-            placeholderName="Контактна пошта"
-            typeName="email"
-          />
-          <FormField
-            fieldName="contactPhone"
-            labelName="Контактний телефон"
-            placeholderName="Контактний телефон"
-            typeName="tel"
-          />
-          <FormField
-            fieldName="workExperienceRequired"
-            labelName="Необхідний досвід роботи"
-            placeholderName="Необхідний досвід роботи"
-          />
-          <FormField
-            fieldName="location"
-            labelName="Місце розташування"
-            placeholderName="Місце розташування"
-          />
-          <label style={{ display: 'flex', flexDirection: 'column' }}>
-            Категорія вакансії
-            <label>
-              {translateCategory(Categories.actual)}
-              <Field
-                name="category"
-                type="radio"
-                id={Categories.actual}
-                value={Categories.actual}
+        {({ handleSubmit, setFieldValue }) => (
+          <Form
+            style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}
+          >
+            <FormField
+              fieldName="title"
+              labelName="Заголовок вакасії"
+              placeholderName="Заголовок вакасії"
+            />
+            <FormField
+              fieldName="description"
+              labelName="Опис"
+              placeholderName="Опис"
+            />
+            <FormField
+              fieldName="sallary"
+              labelName="Заробітня плата"
+              placeholderName="Заробітня плата"
+            />
+            <FormField
+              fieldName="education"
+              labelName="Освіта"
+              placeholderName="Освіта"
+            />
+            <FormField
+              fieldName="contactMail"
+              labelName="Контактна пошта"
+              placeholderName="Контактна пошта"
+              typeName="email"
+            />
+            <FormField
+              fieldName="contactPhone"
+              labelName="Контактний телефон"
+              placeholderName="Контактний телефон"
+              typeName="tel"
+            />
+            <FormField
+              fieldName="workExperienceRequired"
+              labelName="Необхідний досвід роботи"
+              placeholderName="Необхідний досвід роботи"
+            />
+            <FormField
+              fieldName="location"
+              labelName="Місце розташування"
+              placeholderName="Місце розташування"
+            />
+            <label style={{ display: 'flex', flexDirection: 'column' }}>
+              Категорія вакансії
+              <DropDown
+                options={listVacanciesOptions}
+                setFieldValue={setFieldValue}
               />
+              <ErrorMessage name="category" />
             </label>
-            <label>
-              {translateCategory(Categories.irrelevant)}
-              <Field
-                name="category"
-                type="radio"
-                id={Categories.irrelevant}
-                value={Categories.irrelevant}
-              />
-            </label>
-            <ErrorMessage name="category" />
-          </label>
-          <button type="button" onClick={onClose}>
-            Відмінити
-          </button>
-          <button type="submit">{buttonName}</button>
-        </Form>
+            <FormButtons
+              onCancel={onClose}
+              onSubmit={handleSubmit}
+              cancelButtonText="Відмінити"
+              submitButtonText={buttonName}
+            />
+          </Form>
+        )}
       </Formik>
     </>
   );

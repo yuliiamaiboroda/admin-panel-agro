@@ -9,6 +9,7 @@ import Box from 'components/Box';
 import { Button } from 'helpers/styles';
 import { Title } from './LoginForm.styled';
 import FormField from 'components/FormField';
+import ResetPasswordButton from 'components/ResetPasswordButton';
 
 interface LoginFormValues {
   email: string;
@@ -42,55 +43,60 @@ export default function LoginForm() {
           validateOnBlur
           validationSchema={loginSchema}
         >
-          <Form>
-            <Box
-              display="flex"
-              flexDirection="column"
-              justifyContent="center"
-              alignItems="center"
-              gridGap={4}
-              width={['300px', '436px']}
-            >
-              <FormField
-                labelName="Електронна пошта:"
-                fieldName="email"
-                typeName="email"
-                placeholderName="hello@mail.com"
-              />
-              <Box position="relative" width="100%">
+          {({ values }) => (
+            <Form>
+              <Box
+                display="flex"
+                flexDirection="column"
+                justifyContent="center"
+                alignItems="center"
+                gridGap={4}
+                width={['300px', '436px']}
+              >
                 <FormField
-                  labelName="Пароль:"
-                  fieldName="password"
-                  typeName={isVisiblePassword ? 'text' : 'password'}
-                  placeholderName="Ваш пароль"
+                  labelName="Електронна пошта:"
+                  fieldName="email"
+                  typeName="email"
+                  placeholderName="Електронна пошта"
                 />
+                <Box position="relative" width="100%">
+                  <FormField
+                    labelName="Пароль:"
+                    fieldName="password"
+                    typeName={isVisiblePassword ? 'text' : 'password'}
+                    placeholderName="Ваш пароль"
+                  />
+                  <Button
+                    type="button"
+                    position="absolute"
+                    right="0"
+                    bottom="0"
+                    onClick={(e: React.MouseEvent<HTMLButtonElement>) =>
+                      setIsVisiblePassword(!isVisiblePassword)
+                    }
+                    variant="content"
+                  >
+                    {isVisiblePassword ? (
+                      <RxEyeClosed size={22} />
+                    ) : (
+                      <RxEyeOpen size={22} />
+                    )}
+                  </Button>
+                </Box>
                 <Button
-                  type="button"
-                  position="absolute"
-                  right="0"
-                  bottom="0"
-                  onClick={(e: React.MouseEvent<HTMLButtonElement>) =>
-                    setIsVisiblePassword(!isVisiblePassword)
-                  }
-                  variant="content"
+                  type="submit"
+                  variant="primary"
+                  width={['150px', '188px']}
+                  mt={2}
                 >
-                  {isVisiblePassword ? (
-                    <RxEyeClosed size={22} />
-                  ) : (
-                    <RxEyeOpen size={22} />
-                  )}
+                  Увійти
                 </Button>
               </Box>
-              <Button
-                type="submit"
-                variant="primary"
-                width={['150px', '188px']}
-                mt={2}
-              >
-                Увійти
-              </Button>
-            </Box>
-          </Form>
+              <Box display="flex" marginTop="12px">
+                <ResetPasswordButton email={values.email} />
+              </Box>
+            </Form>
+          )}
         </Formik>
       </Box>
     </div>
