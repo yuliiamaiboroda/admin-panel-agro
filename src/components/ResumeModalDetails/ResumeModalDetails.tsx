@@ -39,7 +39,12 @@ export default function ResumeModalDetails() {
           {email}
         </ModalLink>
         <ModalDescription label="Позиція" value={position} />
-        <ModalLink href={resumeFileURL} label="Резюме">
+        <ModalLink
+          href={resumeFileURL}
+          label="Резюме"
+          target="_blank"
+          rel="noreferrer noopener"
+        >
           Переглянути <HiDocumentText size={18} />
         </ModalLink>
         <ModalDescription label="Опис" value={comment} />
