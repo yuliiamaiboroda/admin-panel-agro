@@ -15,6 +15,7 @@ import Loader from 'components/Loader';
 import VacancyForm from 'components/VacancyForm/VacancyForm';
 import CreateButton from 'components/CreateButton';
 import FilterWrapper from 'components/FilterWrapper';
+import { VACANCY_CATEGORIES } from 'helpers/constants';
 
 export default function VacanciesDashboard() {
   const { isModalOpen, openModal, closeModal } = useModal();
@@ -24,10 +25,20 @@ export default function VacanciesDashboard() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    categoryName
-      ? dispatch(getVacanciesByCategories(categoryName))
-      : navigate('all-vacancies');
-  }, [categoryName, dispatch, navigate]);
+    console.log('categoryName', categoryName);
+    if (!VACANCY_CATEGORIES.some(category => category === categoryName)) {
+      navigate('/vacancies/' + VACANCY_CATEGORIES[0]);
+    }
+  }, [navigate, categoryName]);
+
+  useEffect(() => {
+    if (
+      categoryName &&
+      VACANCY_CATEGORIES.some(category => category === categoryName)
+    ) {
+      dispatch(getVacanciesByCategories(categoryName));
+    }
+  }, [categoryName, dispatch]);
 
   return (
     <div>
