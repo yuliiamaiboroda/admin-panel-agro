@@ -17,6 +17,7 @@ const GlobalStyle = createGlobalStyle`
 
     color: #8A92A6;
     background-color: #E5E5E5;
+    overflow-y: scroll;
 }
   code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
@@ -44,9 +45,6 @@ const GlobalStyle = createGlobalStyle`
     text-decoration: none; 
     color: currentColor;
 }
- html {
-      overflow-y: scroll;
-    }
 `;
 
 export { GlobalStyle };

@@ -52,7 +52,7 @@ const theme: DefaultTheme = {
     pageTitle: '0px 0px 16px 16px',
     circle: '50%',
   },
-  transitions: { scale: 'scale 250ms linear' },
+  transitions: { scale: 'scale 250ms linear', color: 'color 250ms linear' },
   borders: {
     light: '1px solid #E9ECEF',
     warning: '1px solid #C03221',
