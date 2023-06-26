@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { BsCheckSquareFill, BsCheckSquare } from 'react-icons/bs';
 import { Label, HiddenInput } from './FilterCheckbox.styled';
-import Box from 'components/Box';
 
 interface IProps {
   name: string;
@@ -23,18 +22,11 @@ export default function FilterCheckbox({ name, title, onChange }: IProps) {
           onChange(target.checked);
         }}
       />
-      <Box
-        display={'flex'}
-        justifyContent={'center'}
-        alignItems={'center'}
-        color="confirmation"
-      >
-        {isChecked ? (
-          <BsCheckSquareFill size={24} />
-        ) : (
-          <BsCheckSquare size={24} />
-        )}
-      </Box>
+      {isChecked ? (
+        <BsCheckSquareFill size={24} />
+      ) : (
+        <BsCheckSquare size={24} />
+      )}
       {title}
     </Label>
   );

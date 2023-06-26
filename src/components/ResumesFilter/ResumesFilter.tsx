@@ -18,20 +18,6 @@ export default function ResumesFilter({ filterStatus, onSelect }: IProps) {
       flexWrap="wrap"
       gridGap={4}
     >
-      {/* <label>
-        Показати обрані
-        <input
-          type="checkbox"
-          name="isFavorite"
-          // checked={filterStatus?.isFavorite ? true : false}
-          onChange={({ target }) =>
-            onSelect(({ isFavorite, ...rest }) => ({
-              ...rest,
-              ...(target.checked ? { isFavorite: true } : null),
-            }))
-          }
-        />
-      </label> */}
       <FilterCheckbox
         name="isFavorite"
         title="Показати обрані"

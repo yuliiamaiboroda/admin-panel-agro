@@ -1,4 +1,13 @@
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
+
+const FadeIn = keyframes`
+  from {
+    opacity: 0.5;
+  }
+  to {
+    opacity: 1;
+  }
+`;
 
 export const Label = styled.label`
   position: relative;
@@ -11,7 +20,23 @@ export const Label = styled.label`
   font-size: ${p => p.theme.fontSizes.m};
   font-weight: ${p => p.theme.fontWeights.medium};
 
+  transition: ${p => p.theme.transitions.color};
+
   cursor: pointer;
+
+  & svg {
+    color: ${p => p.theme.colors.confirmation};
+    animation: ${FadeIn} 250ms linear;
+    transition: ${p => p.theme.transitions.color};
+  }
+
+  :hover {
+    color: ${p => p.theme.colors.primaryText};
+  }
+
+  :hover svg {
+    color: ${p => p.theme.colors.confirmationMedium};
+  }
 `;
 
 export const HiddenInput = styled.input`
