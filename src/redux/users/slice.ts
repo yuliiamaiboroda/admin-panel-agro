@@ -4,6 +4,7 @@ import {
   getCertainUser,
   registerNewUser,
   removeUserById,
+  restorePasswordViaEmail,
   updatePasswordById,
   updateUserById,
 } from './operations';
@@ -111,9 +112,7 @@ const getCertainFulfilledReducer = (
   };
 };
 
-const updatePasswordByIdFulfilledReducer = (
-  state: IState,
-) => {
+const updatePasswordByIdFulfilledReducer = (state: IState) => {
   return {
     ...state,
     isLoading: false,
@@ -147,7 +146,13 @@ const usersSlice = createSlice({
       .addCase(updateUserById.rejected, usersRejectedReducer)
       .addCase(updatePasswordById.pending, usersPendingReducer)
       .addCase(updatePasswordById.fulfilled, updatePasswordByIdFulfilledReducer)
-      .addCase(updatePasswordById.rejected, usersRejectedReducer),
+      .addCase(updatePasswordById.rejected, usersRejectedReducer)
+      .addCase(restorePasswordViaEmail.pending, usersPendingReducer)
+      .addCase(
+        restorePasswordViaEmail.fulfilled,
+        updatePasswordByIdFulfilledReducer
+      )
+      .addCase(restorePasswordViaEmail.rejected, usersRejectedReducer),
 });
 
 export const usersReducer = usersSlice.reducer;

@@ -55,7 +55,13 @@ function App() {
   const { isLoading } = useAppSelector(selectUser);
 
   useEffect(() => {
-    dispatch(refreshUser());
+    const intervalId = setInterval(() => {
+      dispatch(refreshUser());
+    }, 3600000);
+
+    return () => {
+      clearInterval(intervalId);
+    };
   }, [dispatch]);
 
   if (isLoading) {
