@@ -27,8 +27,7 @@ interface IRefresh {
 
 const cookies = new Cookies();
 
-// axios.defaults.baseURL = 'https://ahrokhimpromtsentr.cyclic.app';
-axios.defaults.baseURL = 'http://localhost:3001';
+axios.defaults.baseURL = 'https://ahrokhimpromtsentr.cyclic.app';
 axios.defaults.withCredentials = true;
 
 const setCookie = (cookie: string) => {
