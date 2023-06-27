@@ -1,6 +1,6 @@
 import FormButtons from 'components/FormButtons';
 import FormField from 'components/FormField';
-import { Field, Form, Formik, ErrorMessage } from 'formik';
+import { Field, Form, Formik } from 'formik';
 import { feedbackSchema } from 'helpers/schemas/feedbacks';
 import { useAppDispatch } from 'hooks';
 import { createFeedback } from 'redux/feedbacks';
