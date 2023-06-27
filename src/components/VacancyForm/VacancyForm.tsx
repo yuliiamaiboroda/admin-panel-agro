@@ -4,6 +4,7 @@ import FormField from 'components/FormField';
 import { Form, Formik, ErrorMessage } from 'formik';
 import { Categories, listVacanciesOptions } from 'helpers/constants';
 import createAndUpdateVacancySchema from 'helpers/schemas/vacancies/createAndUpdateVacancy.schema';
+import translateCategory from 'utils/translate-vacancy-category';
 
 interface IVacancy {
   category: keyof typeof Categories;
@@ -138,6 +139,15 @@ export default function VacancyForm({
               <DropDown
                 options={listVacanciesOptions}
                 setFieldValue={setFieldValue}
+                initialValue={
+                  vacancyData === VACANCY_DATA
+                    ? null
+                    : {
+                        name: 'category',
+                        value: vacancyData.category,
+                        shownName: translateCategory(vacancyData.category),
+                      }
+                }
               />
               <ErrorMessage name="category" />
             </label>
