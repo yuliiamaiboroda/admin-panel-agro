@@ -6,6 +6,7 @@ interface IProps {
   onCancel: () => void;
   submitButtonText?: string;
   cancelButtonText?: string;
+  isDisabled?: boolean;
 }
 
 export default function FormButtons({
@@ -13,13 +14,20 @@ export default function FormButtons({
   onCancel,
   submitButtonText = 'Створити',
   cancelButtonText = 'Відміна',
+  isDisabled = false,
 }: IProps) {
   return (
     <Box display="flex" gridGap={[4, 5]}>
       <Button variant="secondary" type="button" onClick={onCancel} flexGrow={1}>
         {cancelButtonText}
       </Button>
-      <Button variant="primary" type="submit" onClick={onSubmit} flexGrow={1}>
+      <Button
+        variant="primary"
+        type="submit"
+        onClick={onSubmit}
+        flexGrow={1}
+        disabled={isDisabled}
+      >
         {submitButtonText}
       </Button>
     </Box>
