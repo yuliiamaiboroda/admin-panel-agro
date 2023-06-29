@@ -4,13 +4,14 @@ import {
   disableBodyScroll,
   enableBodyScroll,
   clearAllBodyScrollLocks,
-} from 'body-scroll-lock';
+} from 'body-scroll-lock-upgrade';
 import { HiX } from 'react-icons/hi';
 import Box from 'components/Box';
 import { Button } from 'helpers/styles';
 import { Backdrop } from './Modal.styled';
 
-const body = document.getElementById('root') as HTMLElement;
+// const body = document.getElementById('root') as HTMLElement;
+const body = document.body;
 const modalEl = document.getElementById('modal-root') as HTMLElement;
 const ESCAPE_KEY = 'Escape';
 
@@ -20,7 +21,9 @@ interface IProps {
 }
 export default function Modal({ onClose, children }: IProps) {
   useEffect(() => {
-    disableBodyScroll(body);
+    disableBodyScroll(body, {
+      allowTouchMove: () => true,
+    });
     const escapeModal = (event: KeyboardEvent) => {
       if (event.code === ESCAPE_KEY) {
         event.preventDefault();
@@ -49,12 +52,13 @@ export default function Modal({ onClose, children }: IProps) {
     <Backdrop onClick={handleBackdropCloseModal}>
       <Box
         position="relative"
-        width={['300px', '600px']}
+        minWidth={['300px', '600px']}
         p={8}
         m="auto"
         bg="primaryBackground"
         borderRadius="modal"
         boxShadow="modal"
+        overflowX="auto"
       >
         <Button
           type="button"

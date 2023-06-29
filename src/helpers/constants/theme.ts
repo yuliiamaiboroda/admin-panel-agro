@@ -14,7 +14,7 @@ const theme: DefaultTheme = {
     accentBackground: '#29392F',
     primaryGradient:
       'linear-gradient(88deg, rgba(57, 78, 45, 0.93) 0%, #29392F 100%)',
-    backdrop: 'rgb(0, 0, 0, 0.8)',
+    backdrop: 'rgb(0, 0, 0, 0.5)',
     confirmation: '#29392F',
     confirmationLight: '#EAEBEA',
     confirmationMedium: '#668E75',
