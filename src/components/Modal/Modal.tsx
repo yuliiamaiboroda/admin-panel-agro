@@ -10,19 +10,20 @@ import Box from 'components/Box';
 import { Button } from 'helpers/styles';
 import { Backdrop } from './Modal.styled';
 
-// const body = document.getElementById('root') as HTMLElement;
-const body = document.body;
+const { body } = document;
 const modalEl = document.getElementById('modal-root') as HTMLElement;
 const ESCAPE_KEY = 'Escape';
 
 interface IProps {
   onClose: () => void;
   children: React.ReactNode;
+  innerRef?: React.MutableRefObject<null>;
 }
-export default function Modal({ onClose, children }: IProps) {
+export default function Modal({ onClose, children, innerRef }: IProps) {
   useEffect(() => {
     disableBodyScroll(body, {
       allowTouchMove: () => true,
+      reserveScrollBarGap: true,
     });
     const escapeModal = (event: KeyboardEvent) => {
       if (event.code === ESCAPE_KEY) {
@@ -49,31 +50,35 @@ export default function Modal({ onClose, children }: IProps) {
   };
 
   return createPortal(
-    <Backdrop onClick={handleBackdropCloseModal}>
-      <Box
-        position="relative"
-        minWidth={['300px', '600px']}
-        p={8}
-        m="auto"
-        bg="primaryBackground"
-        borderRadius="modal"
-        boxShadow="modal"
-        overflowX="auto"
-      >
-        <Button
-          type="button"
-          onClick={onClose}
-          variant="content"
-          position="absolute"
-          top={2}
-          right={2}
-          p={0}
+    <div ref={innerRef}>
+      <Backdrop onClick={handleBackdropCloseModal}>
+        <Box
+          position="relative"
+          minWidth={['300px', '600px']}
+          minHeight={['200px', '400px']}
+          p={8}
+          m="auto"
+          bg="primaryBackground"
+          borderRadius="modal"
+          boxShadow="modal"
+          overflowX="auto"
+          style={{}}
         >
-          <HiX size={24} />
-        </Button>
-        {children}
-      </Box>
-    </Backdrop>,
+          <Button
+            type="button"
+            onClick={onClose}
+            variant="content"
+            position="absolute"
+            top={2}
+            right={2}
+            p={0}
+          >
+            <HiX size={24} />
+          </Button>
+          {children}
+        </Box>
+      </Backdrop>
+    </div>,
     modalEl
   );
 }

@@ -51,6 +51,40 @@ const GlobalStyle = createGlobalStyle`
     text-decoration: none; 
     color: currentColor;
 }
+
+.my-node-enter {
+  opacity: 0;
+}
+.my-node-enter-active {
+  opacity: 1;
+  transition: opacity 200ms;
+}
+.my-node-exit {
+  opacity: 1;
+}
+.my-node-exit-active {
+  opacity: 0;
+  transition: opacity 200ms;
+}
+
+.my-node-appear {
+  opacity: 0;
+}
+
+.my-node-appear-active {
+  opacity: 1;
+  transition: opacity 1200ms;
+}
+
+.appear {
+  opacity: 0;
+}
+
+.appear-active {
+  opacity: 1;
+  transition: opacity 1200ms;
+}
+
 `;
 
 export { GlobalStyle };
