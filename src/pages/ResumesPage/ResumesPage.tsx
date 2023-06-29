@@ -1,4 +1,4 @@
-import { Suspense, useState, useEffect, useRef } from 'react';
+import { Suspense, useState, useEffect } from 'react';
 import { Outlet } from 'react-router-dom';
 import { Notify } from 'notiflix';
 import { useAppSelector, useModal, useAppDispatch } from 'hooks';
@@ -22,8 +22,6 @@ import CardPlaceholder from 'components/CardPlaceholder';
 import FilterWrapper from 'components/FilterWrapper';
 import LoadMoreButton from 'components/LoadMoreButton';
 
-import { CSSTransition } from 'react-transition-group';
-
 export default function ResumesPage() {
   const { isModalOpen, openModal, closeModal } = useModal();
   const [filterStatus, setFilterStatus] = useState<IResumeFilter>({});
@@ -31,7 +29,6 @@ export default function ResumesPage() {
   const pagination = useAppSelector(selectResumePagination);
   const error = useAppSelector(selectResumeError);
   const dispatch = useAppDispatch();
-  const nodeRef = useRef(null);
 
   useEffect(() => {
     dispatch(getAllResumes(filterStatus));
@@ -72,18 +69,10 @@ export default function ResumesPage() {
         <Outlet />
       </Suspense>
       <CreateButton onClick={openModal} />
-      <CSSTransition
-        nodeRef={nodeRef}
-        timeout={500}
-        classNames="my-node"
-        in={isModalOpen}
-        appear
-        unmountOnExit
-      >
-        <Modal innerRef={nodeRef} onClose={closeModal}>
-          <ResumeForm onSubmit={closeModal} />
-        </Modal>
-      </CSSTransition>
+
+      <Modal isModalOpen={isModalOpen} onClose={closeModal}>
+        <ResumeForm onSubmit={closeModal} />
+      </Modal>
     </>
   );
 }
