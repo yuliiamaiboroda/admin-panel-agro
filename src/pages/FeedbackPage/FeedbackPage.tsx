@@ -72,11 +72,9 @@ export default function FeedbackPage() {
         <Outlet />
       </Suspense>
       <CreateButton onClick={openModal} />
-      {isModalOpen && (
-        <Modal onClose={closeModal}>
-          <FeedbackForm onClose={closeModal} />
-        </Modal>
-      )}
+      <Modal isModalOpen={isModalOpen} onClose={closeModal}>
+        <FeedbackForm onClose={closeModal} />
+      </Modal>
     </>
   );
 }

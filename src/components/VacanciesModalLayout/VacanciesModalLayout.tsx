@@ -9,12 +9,14 @@ import {
 import { useEffect } from 'react';
 import Loader from 'components/Loader/Loader';
 import { Notify } from 'notiflix';
+import { useModal } from 'hooks';
 
 export default function VacanciesModalLayout() {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const { error, isLoading } = useAppSelector(selectVacancies);
   const { categoryName, vacanciesId } = useParams();
+  const { isModalOpen, closeModal } = useModal(true);
 
   useEffect(() => {
     if (vacanciesId) {
@@ -31,10 +33,16 @@ export default function VacanciesModalLayout() {
   }
 
   return (
-    <>
-      <Modal onClose={() => navigate(`/vacancies/${categoryName || ''}`)}>
-        {isLoading ? <Loader /> : <Outlet />}
-      </Modal>
-    </>
+    <Modal
+      isModalOpen={isModalOpen}
+      onClose={() => {
+        closeModal();
+        setTimeout(() => {
+          navigate(`/vacancies/${categoryName || ''}`);
+        }, 250);
+      }}
+    >
+      {isLoading ? <Loader /> : <Outlet />}
+    </Modal>
   );
 }
