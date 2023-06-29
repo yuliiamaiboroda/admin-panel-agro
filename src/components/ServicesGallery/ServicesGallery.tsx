@@ -28,17 +28,15 @@ export default function ServicesGallery() {
           <CardPlaceholder />
         )}
       </GalleryWrapper>
-      {isModalOpen && (
-        <Modal onClose={closeModal}>
-          <ServiceForm
-            onSubmit={serviceData => {
-              dispatch(createService(serviceData));
-              closeModal();
-            }}
-            onCancel={() => closeModal()}
-          />
-        </Modal>
-      )}
+      <Modal isModalOpen={isModalOpen} onClose={closeModal}>
+        <ServiceForm
+          onSubmit={serviceData => {
+            dispatch(createService(serviceData));
+            closeModal();
+          }}
+          onCancel={() => closeModal()}
+        />
+      </Modal>
     </>
   );
 }

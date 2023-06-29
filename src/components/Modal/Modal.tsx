@@ -18,17 +18,13 @@ const ESCAPE_KEY = 'Escape';
 interface IProps {
   onClose: () => void;
   children: React.ReactNode;
-  isModalOpen?: boolean;
+  isModalOpen: boolean;
 }
 export default function Modal({ onClose, children, isModalOpen }: IProps) {
-  const nodeRef = useRef(null);
+  const backdrop = useRef(null);
   const modal = useRef(null);
 
   useEffect(() => {
-    disableBodyScroll(body, {
-      allowTouchMove: () => true,
-      reserveScrollBarGap: true,
-    });
     const escapeModal = (event: KeyboardEvent) => {
       if (event.code === ESCAPE_KEY) {
         event.preventDefault();
@@ -36,13 +32,19 @@ export default function Modal({ onClose, children, isModalOpen }: IProps) {
       }
     };
 
-    window.addEventListener('keydown', escapeModal);
-    return () => {
+    if (isModalOpen) {
+      disableBodyScroll(body, {
+        allowTouchMove: () => true,
+        reserveScrollBarGap: true,
+      });
+
+      window.addEventListener('keydown', escapeModal);
+    } else {
       enableBodyScroll(body);
       clearAllBodyScrollLocks();
       window.removeEventListener('keydown', escapeModal);
-    };
-  }, [onClose]);
+    }
+  }, [onClose, isModalOpen]);
 
   const handleBackdropCloseModal = ({
     target,
@@ -55,14 +57,14 @@ export default function Modal({ onClose, children, isModalOpen }: IProps) {
 
   return createPortal(
     <CSSTransition
-      nodeRef={nodeRef}
+      nodeRef={backdrop}
       timeout={250}
       classNames="backdrop"
       appear
       in={isModalOpen}
       unmountOnExit
     >
-      <Backdrop ref={nodeRef} onClick={handleBackdropCloseModal}>
+      <Backdrop ref={backdrop} onClick={handleBackdropCloseModal}>
         <CSSTransition
           nodeRef={modal}
           timeout={250}
@@ -75,7 +77,6 @@ export default function Modal({ onClose, children, isModalOpen }: IProps) {
             ref={modal}
             position="relative"
             minWidth={['300px', '600px']}
-            minHeight={['200px', '400px']}
             p={8}
             m="auto"
             bg="primaryBackground"

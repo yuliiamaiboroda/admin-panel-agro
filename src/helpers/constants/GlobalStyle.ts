@@ -52,6 +52,15 @@ a {
   color: currentColor;
 }
 
+.backdrop-appear {
+  opacity: 0;
+}
+
+.backdrop-appear-active {
+  opacity: 1;
+  transition: opacity 250ms;
+}
+
 .backdrop-enter {
   opacity: 0;
 }
@@ -76,6 +85,17 @@ a {
 }
   
 .modal-appear-active {
+  opacity: 1;
+  scale: 1;
+  transition: opacity 250ms, scale 250ms;
+}
+
+.modal-enter {
+  opacity: 0;
+  scale: 0.8;
+}
+  
+.modal-enter-active {
   opacity: 1;
   scale: 1;
   transition: opacity 250ms, scale 250ms;

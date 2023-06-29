@@ -10,6 +10,7 @@ import {
 } from 'redux/products';
 import Modal from 'components/Modal/';
 import Loader from 'components/Loader';
+import { useModal } from 'hooks';
 
 export default function ProductModalLayout() {
   const { productId } = useParams();
@@ -17,6 +18,7 @@ export default function ProductModalLayout() {
   const dispatch = useAppDispatch();
   const error = useAppSelector(selectProductError);
   const isLoading = useAppSelector(selectIsProductLoading);
+  const { isModalOpen, closeModal } = useModal(true);
 
   useEffect(() => {
     if (productId) {
@@ -34,7 +36,15 @@ export default function ProductModalLayout() {
   }
 
   return (
-    <Modal onClose={() => navigate('/products')}>
+    <Modal
+      isModalOpen={isModalOpen}
+      onClose={() => {
+        closeModal();
+        setTimeout(() => {
+          navigate('/products');
+        }, 250);
+      }}
+    >
       {isLoading ? <Loader /> : <Outlet />}
     </Modal>
   );

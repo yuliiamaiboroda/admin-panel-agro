@@ -13,6 +13,7 @@ import {
   selectResumeError,
 } from 'redux/resumes';
 import Modal from 'components/Modal/Modal';
+import { useModal } from 'hooks';
 
 export default function ResumeModalLayout() {
   const { resumeId } = useParams();
@@ -20,6 +21,7 @@ export default function ResumeModalLayout() {
   const dispatch = useAppDispatch();
   const error = useAppSelector(selectResumeError);
   const location = useLocation();
+  const { isModalOpen, closeModal } = useModal(true);
 
   useEffect(() => {
     if (resumeId) {
@@ -38,7 +40,15 @@ export default function ResumeModalLayout() {
   }
 
   return (
-    <Modal onClose={() => navigate(backLinkHref)}>
+    <Modal
+      isModalOpen={isModalOpen}
+      onClose={() => {
+        closeModal();
+        setTimeout(() => {
+          navigate(backLinkHref);
+        }, 250);
+      }}
+    >
       <Outlet />
     </Modal>
   );
