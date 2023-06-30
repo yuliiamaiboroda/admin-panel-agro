@@ -1,7 +1,7 @@
 import { useEffect, lazy, Suspense } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from 'hooks';
-import { refreshUser, selectUser, fetchCurrentUser } from 'redux/user';
+import { selectUser, fetchCurrentUser } from 'redux/user';
 import { Roles } from 'helpers/constants';
 
 import PrivateRoute from 'components/PrivateRoute';
@@ -56,13 +56,6 @@ function App() {
 
   useEffect(() => {
     dispatch(fetchCurrentUser());
-    const intervalId = setInterval(() => {
-      dispatch(refreshUser());
-    }, 3600000);
-
-    return () => {
-      clearInterval(intervalId);
-    };
   }, [dispatch]);
 
   if (isLoading) {

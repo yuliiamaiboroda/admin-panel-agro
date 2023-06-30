@@ -38,8 +38,11 @@ const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
-    addUser: (state, action: PayloadAction<string>) => {
+    refreshToken: (state, action: PayloadAction<string>) => {
       return { ...state, accessToken: action.payload };
+    },
+    refreshTokenError: () => {
+      return initialState;
     },
   },
   extraReducers: builder => {
@@ -118,5 +121,5 @@ const userSlice = createSlice({
   },
 });
 
-export const { addUser } = userSlice.actions;
+export const { refreshToken, refreshTokenError } = userSlice.actions;
 export const userReducer = userSlice.reducer;
