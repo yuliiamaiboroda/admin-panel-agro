@@ -3,6 +3,7 @@ import axios, { AxiosError } from 'axios';
 import { Notify } from 'notiflix';
 import Cookies from 'universal-cookie';
 import type { Roles } from 'helpers/constants';
+import type { RootState } from 'redux/store';
 
 interface IUser {
   accessToken: string;
@@ -27,7 +28,8 @@ interface IRefresh {
 
 const cookies = new Cookies();
 
-axios.defaults.baseURL = 'https://ahrokhimpromtsentr.cyclic.app';
+// axios.defaults.baseURL = 'https://ahrokhimpromtsentr.cyclic.app';
+axios.defaults.baseURL = 'http://localhost:3001';
 axios.defaults.withCredentials = true;
 
 const setCookie = (cookie: string) => {
@@ -83,21 +85,24 @@ export const logoutUser = createAsyncThunk<
   }
 });
 
-// export const fetchCurrentUser = createAsyncThunk<
-//   IUser['user'],
-//   undefined,
-//   { rejectValue: string }
-// >('users/current', async (_, thunkApi) => {
-//   try {
-//     const { data } = await axios.get('/api/users/current');
-//     console.log(data);
+export const fetchCurrentUser = createAsyncThunk<
+  IUser['user'],
+  undefined,
+  { rejectValue: string; state: RootState }
+>('users/current', async (_, thunkApi) => {
+  try {
+    const { accessToken } = thunkApi.getState().userData;
+    if (accessToken) {
+      setToken(accessToken);
+    }
+    const { data } = await axios.get('/api/users/current');
 
-//     return data;
-//   } catch (err) {
-//     const error = err as AxiosError;
-//     return thunkApi.rejectWithValue(error.message);
-//   }
-// });
+    return data;
+  } catch (err) {
+    const error = err as AxiosError;
+    return thunkApi.rejectWithValue(error.message);
+  }
+});
 
 export const refreshUser = createAsyncThunk<
   IRefresh,

@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import {
-  // fetchCurrentUser,
+  fetchCurrentUser,
   loginUser,
   logoutUser,
   refreshUser,
@@ -96,24 +96,25 @@ const userSlice = createSlice({
           isLoading: false,
           ...(action.payload ? { error: action.payload } : null),
         };
+      })
+      .addCase(fetchCurrentUser.pending, state => {
+        return { ...state, isLoading: true, error: null };
+      })
+      .addCase(fetchCurrentUser.fulfilled, (state, action) => {
+        return {
+          ...state,
+          isLoading: false,
+          isAuthorized: true,
+          user: action.payload,
+        };
+      })
+      .addCase(fetchCurrentUser.rejected, (state, action) => {
+        return {
+          ...state,
+          isLoading: false,
+          ...(action.payload ? { error: action.payload } : null),
+        };
       });
-    // .addCase(fetchCurrentUser.pending, state => {
-    //   return { ...state, isLoading: true, error: null };
-    // })
-    // .addCase(fetchCurrentUser.fulfilled, (state, action) => {
-    //   return {
-    //     ...state,
-    //     isLoading: false,
-    //     user: action.payload,
-    //   };
-    // })
-    // .addCase(fetchCurrentUser.rejected, (state, action) => {
-    //   return {
-    //     ...state,
-    //     isLoading: false,
-    //     ...(action.payload ? { error: action.payload } : null),
-    //   };
-    // });
   },
 });
 
