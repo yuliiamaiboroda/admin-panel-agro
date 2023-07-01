@@ -21,7 +21,6 @@ export const getAllResumes = createAsyncThunk<
     });
     return { resumes, pagination };
   } catch (err) {
-    console.log('get all err', err);
     const error = err as AxiosError<{ message: string }>;
     if (!error.response) {
       return thunkApi.rejectWithValue('Something went wrong');
@@ -60,13 +59,9 @@ export const getCertainResume = createAsyncThunk<
     const { data } = await axios.get(`/api/resumes/certain/${_id}`);
     return data;
   } catch (err) {
-    console.log('get certain err', err);
     const error = err as AxiosError<{ message: string }>;
     if (!error.response) {
       return thunkApi.rejectWithValue('Something went wrong');
-    }
-    if (error.response.status === 401) {
-      return thunkApi.rejectWithValue('');
     }
     return thunkApi.rejectWithValue(error.response.data.message);
   }

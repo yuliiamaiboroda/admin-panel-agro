@@ -1,10 +1,10 @@
 import { Suspense, useState, useEffect } from 'react';
 import { Outlet } from 'react-router-dom';
-// import { Notify } from 'notiflix';
+import { Notify } from 'notiflix';
 import { useAppSelector, useModal, useAppDispatch } from 'hooks';
 import {
   getAllResumes,
-  // selectResumeError,
+  selectResumeError,
   selectResumes,
   selectResumePagination,
   loadMoreResumes,
@@ -17,8 +17,8 @@ import ResumesFilter from 'components/ResumesFilter';
 import Loader from 'components/Loader';
 import PageTitle from 'components/PageTitle';
 import CreateButton from 'components/CreateButton';
-// import GalleryWrapper from 'components/GalleryWrapper';
-// import CardPlaceholder from 'components/CardPlaceholder';
+import GalleryWrapper from 'components/GalleryWrapper';
+import CardPlaceholder from 'components/CardPlaceholder';
 import FilterWrapper from 'components/FilterWrapper';
 import LoadMoreButton from 'components/LoadMoreButton';
 
@@ -27,24 +27,24 @@ export default function ResumesPage() {
   const [filterStatus, setFilterStatus] = useState<IResumeFilter>({});
   const resumes = useAppSelector(selectResumes);
   const pagination = useAppSelector(selectResumePagination);
-  // const error = useAppSelector(selectResumeError);
+  const error = useAppSelector(selectResumeError);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
     dispatch(getAllResumes(filterStatus));
   }, [dispatch, filterStatus]);
 
-  // if (error) {
-  //   Notify.failure(error);
-  //   return (
-  //     <>
-  //       <PageTitle title="Резюме" />
-  //       <GalleryWrapper>
-  //         <CardPlaceholder title="It seems like:" description={error} />
-  //       </GalleryWrapper>
-  //     </>
-  //   );
-  // }
+  if (error) {
+    Notify.failure(error);
+    return (
+      <>
+        <PageTitle title="Резюме" />
+        <GalleryWrapper>
+          <CardPlaceholder title="It seems like:" description={error} />
+        </GalleryWrapper>
+      </>
+    );
+  }
 
   return (
     <>

@@ -60,33 +60,12 @@ const userSlice = createSlice({
         };
       })
       .addCase(loginUser.rejected, (state, action) => {
-        console.log(action.payload);
         return {
           ...state,
           isLoading: false,
           ...(action.payload ? { error: action.payload } : null),
         };
       })
-      // .addCase(refreshUser.pending, state => {
-      //   return { ...state, isLoading: true, error: null };
-      // })
-      // .addCase(refreshUser.fulfilled, (state, action) => {
-      //   return {
-      //     ...state,
-      //     isLoading: false,
-      //     isAuthorized: true,
-      //     accessToken: action.payload.accessToken,
-      //     user: action.payload.user,
-      //   };
-      // })
-      // .addCase(refreshUser.rejected, (state, action) => {
-      //   console.log(action.payload);
-      //   return {
-      //     ...state,
-      //     isLoading: false,
-      //     ...(action.payload ? { error: action.payload } : null),
-      //   };
-      // })
       .addCase(logoutUser.pending, state => {
         return { ...state, isLoading: true, error: null };
       })

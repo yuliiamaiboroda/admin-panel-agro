@@ -76,7 +76,7 @@ export default function Modal({ onClose, children, isModalOpen }: IProps) {
           <Box
             ref={modal}
             position="relative"
-            minWidth={['300px', '600px']}
+            width={['300px', '600px']}
             p={8}
             m="auto"
             bg="primaryBackground"

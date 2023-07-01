@@ -33,8 +33,6 @@ export const loginUser = createAsyncThunk<
   }
 });
 
-// TODO:  Create extra fields on backend or new route to fetch user
-
 export const logoutUser = createAsyncThunk<
   undefined,
   undefined,
@@ -55,7 +53,6 @@ export const fetchCurrentUser = createAsyncThunk<
 >('users/current', async (_, thunkApi) => {
   try {
     const { data } = await axios.get('/api/users/current');
-    console.log('data', data);
 
     return data;
   } catch (err) {
@@ -63,30 +60,3 @@ export const fetchCurrentUser = createAsyncThunk<
     return thunkApi.rejectWithValue(error.message);
   }
 });
-
-// export const refreshUser = createAsyncThunk<
-//   IRefresh,
-//   undefined,
-//   { rejectValue: string }
-// >('user/refreshUser', async (_, thunkApi) => {
-//   if (!cookies.get('jwt')) {
-//     return thunkApi.rejectWithValue('Unable to refresh user');
-//   }
-
-//   try {
-//     const { data } = await axios.post<IUser>('/api/users/refresh');
-//     // setToken(data.accessToken);
-//     setCookie(document.cookie);
-//     try {
-//       const { data: userData } = await axios.get('/api/users/current');
-//       return { accessToken: data.accessToken, user: userData };
-//     } catch (err) {
-//       const error = err as AxiosError;
-//       return thunkApi.rejectWithValue(error.message);
-//     }
-//   } catch (err) {
-//     const error = err as AxiosError;
-//     removeCookie();
-//     return thunkApi.rejectWithValue(error.message);
-//   }
-// });
