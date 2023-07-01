@@ -1,17 +1,6 @@
 import axios from 'axios';
 import { store } from 'redux/store';
-import Cookies from 'universal-cookie';
 import { refreshToken, refreshTokenError } from 'redux/user';
-
-const cookies = new Cookies();
-
-const setCookie = (cookie: string) => {
-  cookies.set('jwt', cookie);
-};
-
-const removeCookie = () => {
-  cookies.remove('jwt');
-};
 
 // axios.defaults.baseURL = 'https://ahrokhimpromtsentr.cyclic.app';
 axios.defaults.baseURL = 'http://localhost:3001';
@@ -48,13 +37,11 @@ axios.interceptors.response.use(
             '/api/users/refresh'
           );
           originalConfig.headers.Authorization = `Bearer ${data.accessToken}`;
-          setCookie(document.cookie);
           store.dispatch(refreshToken(data.accessToken));
           return axios(originalConfig);
         } catch (err) {
-          removeCookie();
           store.dispatch(refreshTokenError());
-          // return Promise.reject(err);
+          return Promise.reject(err);
         }
       }
     }
