@@ -1,11 +1,5 @@
 import { useEffect } from 'react';
-import {
-  Outlet,
-  useNavigate,
-  useParams,
-  Navigate,
-  useLocation,
-} from 'react-router-dom';
+import { Outlet, useNavigate, useParams, Navigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from 'hooks';
 import {
   getCertainResume,
@@ -20,7 +14,6 @@ export default function ResumeModalLayout() {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const error = useAppSelector(selectResumeError);
-  const location = useLocation();
   const { isModalOpen, closeModal } = useModal(true);
 
   useEffect(() => {
@@ -33,7 +26,7 @@ export default function ResumeModalLayout() {
     };
   }, [dispatch, resumeId]);
 
-  const backLinkHref = location?.state || '/resumes';
+  const backLinkHref = '/resumes';
 
   if (error) {
     return <Navigate to={backLinkHref} replace />;

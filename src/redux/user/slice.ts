@@ -1,10 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import {
-  // fetchCurrentUser,
+  fetchCurrentUser,
   loginUser,
   logoutUser,
-  refreshUser,
+  // refreshUser,
 } from './operations';
 import type { Roles } from 'helpers/constants';
 
@@ -38,8 +38,11 @@ const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
-    addUser: (state, action: PayloadAction<string>) => {
+    refreshToken: (state, action: PayloadAction<string>) => {
       return { ...state, accessToken: action.payload };
+    },
+    refreshTokenError: () => {
+      return initialState;
     },
   },
   extraReducers: builder => {
@@ -57,27 +60,6 @@ const userSlice = createSlice({
         };
       })
       .addCase(loginUser.rejected, (state, action) => {
-        console.log(action.payload);
-        return {
-          ...state,
-          isLoading: false,
-          ...(action.payload ? { error: action.payload } : null),
-        };
-      })
-      .addCase(refreshUser.pending, state => {
-        return { ...state, isLoading: true, error: null };
-      })
-      .addCase(refreshUser.fulfilled, (state, action) => {
-        return {
-          ...state,
-          isLoading: false,
-          isAuthorized: true,
-          accessToken: action.payload.accessToken,
-          user: action.payload.user,
-        };
-      })
-      .addCase(refreshUser.rejected, (state, action) => {
-        console.log(action.payload);
         return {
           ...state,
           isLoading: false,
@@ -96,26 +78,27 @@ const userSlice = createSlice({
           isLoading: false,
           ...(action.payload ? { error: action.payload } : null),
         };
+      })
+      .addCase(fetchCurrentUser.pending, state => {
+        return { ...state, isLoading: true, error: null };
+      })
+      .addCase(fetchCurrentUser.fulfilled, (state, action) => {
+        return {
+          ...state,
+          isLoading: false,
+          isAuthorized: true,
+          user: action.payload,
+        };
+      })
+      .addCase(fetchCurrentUser.rejected, (state, action) => {
+        return {
+          ...state,
+          isLoading: false,
+          ...(action.payload ? { error: action.payload } : null),
+        };
       });
-    // .addCase(fetchCurrentUser.pending, state => {
-    //   return { ...state, isLoading: true, error: null };
-    // })
-    // .addCase(fetchCurrentUser.fulfilled, (state, action) => {
-    //   return {
-    //     ...state,
-    //     isLoading: false,
-    //     user: action.payload,
-    //   };
-    // })
-    // .addCase(fetchCurrentUser.rejected, (state, action) => {
-    //   return {
-    //     ...state,
-    //     isLoading: false,
-    //     ...(action.payload ? { error: action.payload } : null),
-    //   };
-    // });
   },
 });
 
-export const { addUser } = userSlice.actions;
+export const { refreshToken, refreshTokenError } = userSlice.actions;
 export const userReducer = userSlice.reducer;
