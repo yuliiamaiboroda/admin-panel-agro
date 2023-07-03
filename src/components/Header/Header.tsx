@@ -71,22 +71,21 @@ export default function Header() {
           <AiOutlineMenu size={24} />
         </Button>
       </Box>
-      {isModalOpen && (
-        <Modal onClose={() => setIsModalOpen(false)}>
-          <ModalLogout
-            onClose={() => setIsModalOpen(false)}
-            handleLogout={() => dispatch(logoutUser())}
-          />
-        </Modal>
-      )}
-      {isMobileMenuOpen && (
-        <Modal onClose={() => setIsMobileMenuOpen(false)}>
-          <ModalMobileMenu
-            title="Меню"
-            onClick={() => setIsMobileMenuOpen(false)}
-          />
-        </Modal>
-      )}
+      <Modal isModalOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
+        <ModalLogout
+          onClose={() => setIsModalOpen(false)}
+          handleLogout={() => dispatch(logoutUser())}
+        />
+      </Modal>
+      <Modal
+        isModalOpen={isMobileMenuOpen}
+        onClose={() => setIsMobileMenuOpen(false)}
+      >
+        <ModalMobileMenu
+          title="Меню"
+          onClick={() => setIsMobileMenuOpen(false)}
+        />
+      </Modal>
     </>
   );
 }

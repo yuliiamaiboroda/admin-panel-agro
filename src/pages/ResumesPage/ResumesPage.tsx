@@ -69,11 +69,10 @@ export default function ResumesPage() {
         <Outlet />
       </Suspense>
       <CreateButton onClick={openModal} />
-      {isModalOpen && (
-        <Modal onClose={closeModal}>
-          <ResumeForm onSubmit={closeModal} />
-        </Modal>
-      )}
+
+      <Modal isModalOpen={isModalOpen} onClose={closeModal}>
+        <ResumeForm onSubmit={closeModal} />
+      </Modal>
     </>
   );
 }

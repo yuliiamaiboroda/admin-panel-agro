@@ -4,3 +4,4 @@ export * from './translate-role';
 export * from './translate-error';
 export * from './string-formatting';
 export * from './date-formatting';
+export * from './axios-instance';

@@ -64,21 +64,21 @@ export default function ProfilePage() {
         </CardWrapper>
       </CardCentred>
 
-      {isChangePassModalOpen && (
-        <Modal onClose={() => setIsChangePassModalOpen(false)}>
-          <ModalChangePassword
-            onClose={() => setIsChangePassModalOpen(false)}
-          />
-        </Modal>
-      )}
-      {isLogoutModalOpen && (
-        <Modal onClose={() => setIsLogoutModalOpen(false)}>
-          <ModalLogout
-            onClose={() => setIsLogoutModalOpen(false)}
-            handleLogout={() => dispatch(logoutUser())}
-          />
-        </Modal>
-      )}
+      <Modal
+        isModalOpen={isChangePassModalOpen}
+        onClose={() => setIsChangePassModalOpen(false)}
+      >
+        <ModalChangePassword onClose={() => setIsChangePassModalOpen(false)} />
+      </Modal>
+      <Modal
+        isModalOpen={isLogoutModalOpen}
+        onClose={() => setIsLogoutModalOpen(false)}
+      >
+        <ModalLogout
+          onClose={() => setIsLogoutModalOpen(false)}
+          handleLogout={() => dispatch(logoutUser())}
+        />
+      </Modal>
     </>
   );
 }

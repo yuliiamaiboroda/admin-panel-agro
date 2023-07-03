@@ -25,7 +25,6 @@ export default function VacanciesDashboard() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    console.log('categoryName', categoryName);
     if (!VACANCY_CATEGORIES.some(category => category === categoryName)) {
       navigate('/vacancies/' + VACANCY_CATEGORIES[0]);
     }
@@ -50,21 +49,19 @@ export default function VacanciesDashboard() {
         <CreateButton onClick={openModal} />
       </RestrictedComponent>
 
-      {isModalOpen && (
-        <Modal onClose={closeModal}>
-          <RestrictedComponent accessRight={Roles.applyManager}>
-            <VacancyForm
-              formName="Створити нову вакансію"
-              buttonName="Створити"
-              onClose={() => closeModal()}
-              onSubmit={vacancyData => {
-                dispatch(createVacancy(vacancyData));
-                closeModal();
-              }}
-            />
-          </RestrictedComponent>
-        </Modal>
-      )}
+      <Modal isModalOpen={isModalOpen} onClose={closeModal}>
+        <RestrictedComponent accessRight={Roles.applyManager}>
+          <VacancyForm
+            formName="Створити нову вакансію"
+            buttonName="Створити"
+            onClose={() => closeModal()}
+            onSubmit={vacancyData => {
+              dispatch(createVacancy(vacancyData));
+              closeModal();
+            }}
+          />
+        </RestrictedComponent>
+      </Modal>
       <Suspense fallback={<Loader />}>
         <Outlet />
       </Suspense>

@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { Outlet, useNavigate, useParams, Navigate } from 'react-router-dom';
-import { useAppDispatch, useAppSelector } from 'hooks';
+import { useAppDispatch, useAppSelector, useModal } from 'hooks';
 import Modal from 'components/Modal';
 import Loader from 'components/Loader';
 import {
@@ -14,6 +14,7 @@ export default function FeedbackModalLayout() {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const { isLoading, error } = useAppSelector(selectFeedbacks);
+  const { isModalOpen, closeModal } = useModal(true);
 
   useEffect(() => {
     if (feedbackId) {
@@ -29,7 +30,15 @@ export default function FeedbackModalLayout() {
   }
 
   return (
-    <Modal onClose={() => navigate('/feedbacks')}>
+    <Modal
+      isModalOpen={isModalOpen}
+      onClose={() => {
+        closeModal();
+        setTimeout(() => {
+          navigate('/feedbacks');
+        }, 250);
+      }}
+    >
       {isLoading ? <Loader /> : <Outlet />}
     </Modal>
   );

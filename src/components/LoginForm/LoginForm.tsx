@@ -92,7 +92,7 @@ export default function LoginForm() {
                   Увійти
                 </Button>
               </Box>
-              <Box display="flex" marginTop="12px">
+              <Box display="flex" justifyContent="center" marginTop="12px">
                 <ResetPasswordButton email={values.email} />
               </Box>
             </Form>
