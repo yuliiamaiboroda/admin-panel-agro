@@ -9,7 +9,7 @@ import {
   selectVacancies,
 } from 'redux/vacancies';
 import { Roles } from 'helpers/constants';
-import VacanciesNavigator from 'components/Vacancies/VacanciesNavigator';
+import VacanciesNavigator from 'components/VacanciesNavigator';
 import RestrictedComponent from 'components/RestrictedComponent';
 import Loader from 'components/Loader';
 import VacancyForm from 'components/VacancyForm/VacancyForm';

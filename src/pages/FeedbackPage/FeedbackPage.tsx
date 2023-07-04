@@ -10,7 +10,7 @@ import {
   selectFeedbackError,
 } from 'redux/feedbacks';
 import type { IFeedbackFilter } from 'helpers/types';
-import FeedbackGallery from 'components/Feedback/FeedbackGallery';
+import FeedbackGallery from 'components/FeedbackGallery';
 import FeedbackFilter from 'components/FeedbackFilter';
 import Loader from 'components/Loader';
 import PageTitle from 'components/PageTitle';
