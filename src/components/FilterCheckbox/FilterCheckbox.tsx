@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { BsCheckSquareFill, BsCheckSquare } from 'react-icons/bs';
+import { GrCheckboxSelected, GrCheckbox } from 'react-icons/gr';
 import { Label, HiddenInput } from './FilterCheckbox.styled';
 
 interface IProps {
@@ -23,9 +23,9 @@ export default function FilterCheckbox({ name, title, onChange }: IProps) {
         }}
       />
       {isChecked ? (
-        <BsCheckSquareFill size={24} />
+        <GrCheckboxSelected size={20} />
       ) : (
-        <BsCheckSquare size={24} />
+        <GrCheckbox size={20} />
       )}
       {title}
     </Label>
