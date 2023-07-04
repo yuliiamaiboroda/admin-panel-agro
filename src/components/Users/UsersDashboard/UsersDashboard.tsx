@@ -38,11 +38,9 @@ export default function UsersDashboard() {
           Створити нового користувача
         </button> */}
         <CreateButton onClick={() => setIsModalOpen(true)} />
-        {isModalOpen && (
-          <Modal onClose={() => setIsModalOpen(false)}>
-            <CreateUserForm onClose={() => setIsModalOpen(false)} />
-          </Modal>
-        )}
+        <Modal isModalOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
+          <CreateUserForm onClose={() => setIsModalOpen(false)} />
+        </Modal>
       </>
     </section>
   );

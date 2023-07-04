@@ -14,7 +14,7 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <ThemeProvider theme={theme}>
-      <GlobalStyle/>
+      <GlobalStyle />
       <PersistGate loading={null} persistor={persistor}>
         <Provider store={store}>
           <BrowserRouter basename="/admin-panel-agro">

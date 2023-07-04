@@ -13,8 +13,10 @@ export const Backdrop = styled(Box)`
   width: 100%;
   height: 100%;
   padding: ${p => p.theme.space[4]}px;
+  padding-bottom: 100px;
+
   overflow-y: auto;
-  -webkit-overflow-scrolling: touch;
+  -webkit-overflow-scrolling: none;
 
   background-color: ${p => p.theme.colors.backdrop};
 `;
