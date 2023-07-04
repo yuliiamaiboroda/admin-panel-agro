@@ -11,6 +11,7 @@ import Box from 'components/Box';
 import { Button } from 'helpers/styles';
 import DropDown from 'components/DropDown';
 import FormButtons from 'components/FormButtons';
+import translateRole from 'utils/translate-role';
 interface IProps extends IUser {
   onClose: () => void;
 }
@@ -82,11 +83,18 @@ export default function UpdateUserForm({
                 placeholderName="Прізвище"
               />
 
-              <label>
+              <label
+                style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}
+              >
                 Роль нового користувача
                 <DropDown
                   options={listUsersOptions}
                   setFieldValue={setFieldValue}
+                  initialValue={{
+                    shownName: translateRole(FORM_INITIAL_STATE.role),
+                    value: FORM_INITIAL_STATE.role,
+                    name: 'role',
+                  }}
                 />
                 <ErrorMessage name="role" />
               </label>

@@ -1,4 +1,6 @@
-import { Field, Form, Formik, ErrorMessage } from 'formik';
+import FormButtons from 'components/FormButtons';
+import FormField from 'components/FormField';
+import { Field, Form, Formik } from 'formik';
 import { feedbackSchema } from 'helpers/schemas/feedbacks';
 import { useAppDispatch } from 'hooks';
 import { createFeedback } from 'redux/feedbacks';
@@ -27,8 +29,10 @@ export default function FeedbackForm({ onClose }: IProps) {
   const dispatch = useAppDispatch();
   return (
     <>
-      <h2>Відгукнутися</h2>
-      <h3>Вкажіть свої контактні дані і ми надамо зворотній зв’язок</h3>
+      <h2 style={{ marginBottom: '10px' }}>Відгукнутися</h2>
+      <h3 style={{ marginBottom: '10px' }}>
+        Вкажіть свої контактні дані і ми надамо зворотній зв’язок
+      </h3>
       <Formik
         initialValues={INITIAL_STATE}
         validateOnBlur
@@ -38,49 +42,43 @@ export default function FeedbackForm({ onClose }: IProps) {
           onClose();
         }}
       >
-        {({ values }) => (
+        {({ values, handleSubmit }) => (
           <Form
             style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}
           >
-            <label>
-              <Field name="name" type="text" id="name" placeholder="Ім’я" />
-              <ErrorMessage name="name" />
-            </label>
-            <label>
-              <Field
-                name="contactPhone"
-                type="tel"
-                id="contactPhone"
-                placeholder="Номер телефону"
-              />
-              <ErrorMessage name="contactPhone" />
-            </label>
-            <label>
-              <Field
-                name="contactMail"
-                type="email"
-                id="contactMail"
-                placeholder="Email"
-              />
-              <ErrorMessage name="contactMail" />
-            </label>
-            <label>
-              <Field
-                name="comment"
-                type="text"
-                id="comment"
-                placeholder="Коментар"
-              />
-              <ErrorMessage name="comment" />
-            </label>
-            <label>
+            <FormField
+              fieldName="name"
+              labelName="Ім’я"
+              placeholderName="Ім’я"
+            />
+            <FormField
+              fieldName="contactPhone"
+              labelName="Номер телефону"
+              placeholderName="Номер телефону"
+              typeName="tel"
+            />
+            <FormField
+              fieldName="contactMail"
+              labelName="Email"
+              placeholderName="Email"
+              typeName="email"
+            />
+            <FormField
+              fieldName="comment"
+              placeholderName="Коментар"
+              labelName="Коментар"
+            />
+            <label
+              style={{ display: 'flex', gap: '10px', position: 'relative' }}
+            >
               <Field id="agreement" name="agreement" type="checkbox" /> Я даю
               згоду на обробку персональних даних
-              <ErrorMessage name="agreement" />
             </label>
-            <button type="submit" disabled={!values.agreement}>
-              Надіслати
-            </button>
+            <FormButtons
+              onCancel={onClose}
+              onSubmit={handleSubmit}
+              isDisabled={!values.agreement}
+            />
           </Form>
         )}
       </Formik>
