@@ -29,22 +29,23 @@ export const serviceSchema = (
     image: Yup.mixed()
       .test(
         'is-file-exist',
-        'File should be uploaded',
+        "Зображення - обов'язкове поле",
         fileConditional(fileField, condition)
       )
       .test(
         'is-correct-format',
-        'Image should be one of the next formats: jpg, jpeg, png',
+        'Зображення повинне бути в одному з форматів: jpg, jpeg, png',
         fileFormat(fileField, ['jpeg', 'png'])
       )
       .test(
         'is-correct-size',
-        'Image should not be more than 5Mb',
+        'Зображення не повинне бути більшим ніж 5Mb',
         fileSize(fileField, 5)
       ),
-    price: Yup.number()
-      .typeError('Поле ціни може містити тільки числа')
-      .positive('Поле ціни може містити тільки позитивні числа')
+    price: Yup.string()
+      .trim()
+      .min(2, 'Поле ціни занадто коротке - має містити мінімум 2 символів ')
+      .max(32, 'Поле ціни занадто довге - має містити максимум 32 символів ')
       .required("Ціна є обов'язковим полем"),
     contactMail: Yup.string()
       .min(
