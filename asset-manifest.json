@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.js": "/admin-panel-agro/static/js/main.53c72bbc.js",
+    "main.js": "/admin-panel-agro/static/js/main.5fefe254.js",
     "static/js/377.b28769ca.chunk.js": "/admin-panel-agro/static/js/377.b28769ca.chunk.js",
     "static/js/124.d9078121.chunk.js": "/admin-panel-agro/static/js/124.d9078121.chunk.js",
     "static/js/996.b5d10e7a.chunk.js": "/admin-panel-agro/static/js/996.b5d10e7a.chunk.js",
@@ -21,7 +21,7 @@
     "static/js/821.7bff8c3e.chunk.js": "/admin-panel-agro/static/js/821.7bff8c3e.chunk.js",
     "static/media/company-logo.svg": "/admin-panel-agro/static/media/company-logo.d26231fa20bc086e5a542723b5206ddc.svg",
     "index.html": "/admin-panel-agro/index.html",
-    "main.53c72bbc.js.map": "/admin-panel-agro/static/js/main.53c72bbc.js.map",
+    "main.5fefe254.js.map": "/admin-panel-agro/static/js/main.5fefe254.js.map",
     "377.b28769ca.chunk.js.map": "/admin-panel-agro/static/js/377.b28769ca.chunk.js.map",
     "124.d9078121.chunk.js.map": "/admin-panel-agro/static/js/124.d9078121.chunk.js.map",
     "996.b5d10e7a.chunk.js.map": "/admin-panel-agro/static/js/996.b5d10e7a.chunk.js.map",
@@ -42,6 +42,6 @@
     "821.7bff8c3e.chunk.js.map": "/admin-panel-agro/static/js/821.7bff8c3e.chunk.js.map"
   },
   "entrypoints": [
-    "static/js/main.53c72bbc.js"
+    "static/js/main.5fefe254.js"
   ]
 }
