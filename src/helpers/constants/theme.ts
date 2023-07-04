@@ -57,6 +57,7 @@ const theme: DefaultTheme = {
     light: '1px solid #E9ECEF',
     warning: '1px solid #C03221',
     accent: '2px solid #29392F',
+    accentThin: '1px solid #29392F',
   },
 };
 

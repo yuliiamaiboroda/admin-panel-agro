@@ -43,23 +43,29 @@ export const DropdownList = styled.div`
   background-color: ${props => props.theme.colors.primaryBackground};
   display: flex;
   flex-direction: column;
-  padding: 0 ${props => props.theme.space[2]}px;
-  border: ${props => props.theme.borders.light};
+  border: ${props => props.theme.borders.accentThin};
 `;
 
 export const Item = styled.label`
-  padding: ${props => props.theme.space[3]}px 0;
+  padding: ${props => props.theme.space[3]}px ${props => props.theme.space[2]}px;
   position: relative;
+  color: ${props => props.theme.colors.accentBackground};
   :after {
     content: '';
     display: block;
     width: calc(100%+${props => props.theme.space[3]}px);
     height: 1px;
-    background: ${props => props.theme.colors.light};
+    background: ${props => props.theme.colors.accentBackground};
 
-    left: -${props => props.theme.space[2]}px;
-    right: -${props => props.theme.space[2]}px;
+    left: ${props => props.theme.space[0]}px;
+    right: ${props => props.theme.space[0]}px;
     bottom: ${props => props.theme.space[0]};
     position: absolute;
   }
+  &:hover,
+  :focus {
+    background-color: ${props => props.theme.colors.accentBackground};
+    color: ${props => props.theme.colors.accentText};
+  }
+  transition: ${props => props.theme.transitions.color};
 `;

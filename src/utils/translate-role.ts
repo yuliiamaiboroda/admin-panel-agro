@@ -1,6 +1,6 @@
 import { Roles } from 'helpers/constants';
 
-export default function translateRole(role: Roles): string {
+export default function translateRole(role: Roles | string): string {
   let translatedRole = '';
 
   switch (role) {

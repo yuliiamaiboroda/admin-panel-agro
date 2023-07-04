@@ -8,14 +8,9 @@ import SideBarNavigation from 'components/SideBarNavigation';
 
 export default function SharedLayout() {
   return (
-    <Box
-      display="flex"
-      maxWidth={['480px', '768px', '1200px']}
-      // px={4}
-      mx="auto"
-    >
+    <Box display="flex" maxWidth={['480px', '768px', '1200px']} mx="auto">
       <SideBarNavigation />
-      <Box flexGrow={1}>
+      <Box flexGrow={1} pb={5}>
         <Header />
         <ButtonUp />
         <Suspense fallback={<Loader />}>

@@ -28,7 +28,9 @@ export const loginUser = createAsyncThunk<
     return data;
   } catch (err) {
     const error = err as AxiosError;
-    Notify.failure('Please change your email or name and try again');
+    Notify.failure(
+      "Змініть адресу електронної пошти або ім'я та повторіть спробу"
+    );
     return thunkApi.rejectWithValue(error.message);
   }
 });
