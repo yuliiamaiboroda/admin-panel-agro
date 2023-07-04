@@ -1,4 +1,4 @@
-import UpdateUserForm from 'components/Users/UpdateUserForm';
+import UpdateUserForm from 'components/UserUpdateForm';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { selectUsersList } from 'redux/users';
 import { useAppSelector, useModalOutlet } from 'hooks';
