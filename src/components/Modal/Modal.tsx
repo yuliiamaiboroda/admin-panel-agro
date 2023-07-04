@@ -82,7 +82,6 @@ export default function Modal({ onClose, children, isModalOpen }: IProps) {
             bg="primaryBackground"
             borderRadius="modal"
             boxShadow="modal"
-            overflow="hidden"
           >
             <Button
               type="button"
