@@ -20,6 +20,13 @@ export default function ProductModalLayout() {
   const isLoading = useAppSelector(selectIsProductLoading);
   const { isModalOpen, closeModal } = useModal(true);
 
+  const handleCloseModal = (navigateTo: any) => {
+    closeModal();
+    setTimeout(() => {
+      navigate(navigateTo);
+    }, 250);
+  };
+
   useEffect(() => {
     if (productId) {
       dispatch(getCertainProduct(productId));
@@ -38,14 +45,9 @@ export default function ProductModalLayout() {
   return (
     <Modal
       isModalOpen={isModalOpen}
-      onClose={() => {
-        closeModal();
-        setTimeout(() => {
-          navigate('/products');
-        }, 250);
-      }}
+      onClose={() => handleCloseModal('/products')}
     >
-      {isLoading ? <Loader /> : <Outlet />}
+      {isLoading ? <Loader /> : <Outlet context={{ handleCloseModal }} />}
     </Modal>
   );
 }
