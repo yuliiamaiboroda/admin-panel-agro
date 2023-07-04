@@ -28,10 +28,15 @@ export default function Header() {
         display="flex"
         flexDirection="row"
         justifyContent={['space-between', 'end']}
-        width="100%"
+        width="90%"
         gridGap={4}
+        mx="auto"
         px={4}
         py={2}
+        bg="primaryBackground"
+        borderTopLeftRadius="card"
+        borderTopRightRadius="card"
+        boxShadow="card"
         as="header"
       >
         <Box display={['none', 'block']}>
