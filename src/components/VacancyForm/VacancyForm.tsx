@@ -134,7 +134,9 @@ export default function VacancyForm({
               labelName="Місце розташування"
               placeholderName="Місце розташування"
             />
-            <label style={{ display: 'flex', flexDirection: 'column' }}>
+            <label
+              style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}
+            >
               Категорія вакансії
               <DropDown
                 options={listVacanciesOptions}

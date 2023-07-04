@@ -119,7 +119,9 @@ export default function CreateUserForm({ onClose }: Iprops) {
                 fieldName="surname"
                 placeholderName="Прізвище"
               />
-              <label>
+              <label
+                style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}
+              >
                 Роль нового користувача
                 <DropDown
                   options={listUsersOptions}
