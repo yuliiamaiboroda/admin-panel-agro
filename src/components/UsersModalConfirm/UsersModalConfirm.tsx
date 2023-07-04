@@ -1,6 +1,6 @@
-import { useAppDispatch, useAppSelector } from 'hooks';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { removeUserById, selectUsersList } from 'redux/users';
+import { useAppDispatch, useAppSelector, useModalOutlet } from 'hooks';
 import ConfirmationModal from 'components/ConfirmationModal';
 
 export default function UsersModalConfirm() {
@@ -8,6 +8,7 @@ export default function UsersModalConfirm() {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const routeLocation = useLocation();
+  const { handleCloseModal } = useModalOutlet();
 
   const backLinkHref = routeLocation.state?.from ?? '/users';
 
@@ -17,11 +18,15 @@ export default function UsersModalConfirm() {
 
   const handleConfirm = () => {
     dispatch(removeUserById(certain._id));
-    navigate('/users');
+    handleCloseModal('/users');
   };
 
   const handleCancel = () => {
-    navigate(backLinkHref);
+    if (backLinkHref === '/users') {
+      handleCloseModal(backLinkHref);
+    } else {
+      navigate(backLinkHref);
+    }
   };
 
   return (

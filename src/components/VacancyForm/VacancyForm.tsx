@@ -43,7 +43,7 @@ const VACANCY_DATA: IVacancy = {
   sallary: '',
   education: '',
   contactMail: '',
-  contactPhone: '',
+  contactPhone: '+380',
   workExperienceRequired: '',
   location: '',
 };

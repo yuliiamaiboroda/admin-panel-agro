@@ -17,7 +17,7 @@ const INITIAL_STATE: IFeedback = {
   name: '',
   comment: '',
   contactMail: '',
-  contactPhone: '',
+  contactPhone: '+380',
   agreement: false,
 };
 

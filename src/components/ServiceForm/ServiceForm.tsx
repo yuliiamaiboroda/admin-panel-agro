@@ -32,7 +32,7 @@ const SERVICE_DATA = {
   description: '',
   price: '',
   contactMail: '',
-  contactPhone: '',
+  contactPhone: '+380',
 };
 
 export default function ServiceForm({

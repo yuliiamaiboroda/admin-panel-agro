@@ -1,7 +1,7 @@
 import { Suspense } from 'react';
 import { Outlet } from 'react-router-dom';
 import PageTitle from 'components/PageTitle';
-import UsersDashboard from 'components/Users/UsersDashboard';
+import UsersDashboard from 'components/UsersDashboard';
 import Loader from 'components/Loader';
 
 export default function UsersPage() {

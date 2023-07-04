@@ -20,6 +20,13 @@ export default function ServiceModalLayout() {
   const isLoading = useAppSelector(selectIsLoading);
   const { isModalOpen, closeModal } = useModal(true);
 
+  const handleCloseModal = (navigateTo: any) => {
+    closeModal();
+    setTimeout(() => {
+      navigate(navigateTo);
+    }, 250);
+  };
+
   useEffect(() => {
     if (serviceId) {
       dispatch(getCertainService(serviceId));
@@ -39,13 +46,10 @@ export default function ServiceModalLayout() {
     <Modal
       isModalOpen={isModalOpen}
       onClose={() => {
-        closeModal();
-        setTimeout(() => {
-          navigate('/services');
-        }, 250);
+        handleCloseModal('/services');
       }}
     >
-      {isLoading ? <Loader /> : <Outlet />}
+      {isLoading ? <Loader /> : <Outlet context={{ handleCloseModal }} />}
     </Modal>
   );
 }

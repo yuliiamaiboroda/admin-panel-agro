@@ -1,5 +1,5 @@
 import { useNavigate, useLocation } from 'react-router-dom';
-import { useAppSelector, useAppDispatch } from 'hooks';
+import { useAppSelector, useAppDispatch, useModalOutlet } from 'hooks';
 import { selectCertainProduct, editProduct } from 'redux/products';
 import ProductForm from 'components/ProductForm';
 
@@ -8,6 +8,7 @@ export default function ProductModalEditForm() {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const location = useLocation();
+  const { handleCloseModal } = useModalOutlet();
 
   const backLinkHref = location.state?.from ?? '/products';
 
@@ -20,9 +21,19 @@ export default function ProductModalEditForm() {
       productData={product}
       onSubmit={productData => {
         dispatch(editProduct({ ...productData, _id: product._id }));
-        navigate(backLinkHref);
+        if (backLinkHref === '/products') {
+          handleCloseModal(backLinkHref);
+        } else {
+          navigate(backLinkHref);
+        }
       }}
-      onCancel={() => navigate(backLinkHref)}
+      onCancel={() => {
+        if (backLinkHref === '/products') {
+          handleCloseModal(backLinkHref);
+        } else {
+          navigate(backLinkHref);
+        }
+      }}
     />
   );
 }

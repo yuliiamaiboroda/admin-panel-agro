@@ -1,6 +1,6 @@
 import { useNavigate, useLocation } from 'react-router-dom';
-import { useAppSelector, useAppDispatch } from 'hooks';
 import { selectCertainService, deleteService } from 'redux/services';
+import { useAppSelector, useAppDispatch, useModalOutlet } from 'hooks';
 import ConfirmationModal from 'components/ConfirmationModal';
 
 export default function ServiceModalConfirmation() {
@@ -8,6 +8,7 @@ export default function ServiceModalConfirmation() {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const location = useLocation();
+  const { handleCloseModal } = useModalOutlet();
 
   const backLinkHref = location.state?.from ?? '/services';
 
@@ -17,10 +18,16 @@ export default function ServiceModalConfirmation() {
 
   const handleConfirm = () => {
     dispatch(deleteService(service._id));
-    navigate('/services');
+    handleCloseModal('/services');
   };
 
-  const handleCancel = () => navigate(backLinkHref);
+  const handleCancel = () => {
+    if (backLinkHref === '/services') {
+      handleCloseModal(backLinkHref);
+    } else {
+      navigate(backLinkHref);
+    }
+  };
 
   return (
     <ConfirmationModal

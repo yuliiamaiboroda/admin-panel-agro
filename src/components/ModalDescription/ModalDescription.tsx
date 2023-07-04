@@ -1,4 +1,5 @@
 import Box from 'components/Box';
+import { Description } from './ModalDescription.styled';
 
 interface IProps {
   label: string;
@@ -7,11 +8,11 @@ interface IProps {
 
 export default function ModalDescription({ label, value }: IProps) {
   return (
-    <Box fontSize={['s', 'm']} as="p">
+    <Description fontSize={['s', 'm']} as="p">
       <Box fontWeight="bold" as="span">
         {label}:
       </Box>{' '}
       {value}
-    </Box>
+    </Description>
   );
 }

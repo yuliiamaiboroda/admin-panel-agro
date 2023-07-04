@@ -9,7 +9,7 @@ export const getAllUsers = createAsyncThunk<
   { rejectValue: string }
 >('users/getAll', async (_, thunkApi) => {
   try {
-    const { data } = await axios.get('/api/users/');
+    const { data } = await axios.get('/api/users');
     return data;
   } catch (err) {
     const error = err as AxiosError<{ message: string }>;

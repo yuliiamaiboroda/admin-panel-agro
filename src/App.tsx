@@ -12,7 +12,7 @@ import ProductModalEditForm from 'components/ProductModalEditForm';
 import ProductModalConfirmation from 'components/ProductModalConfirmation';
 import ResumeModalDetails from 'components/ResumeModalDetails';
 import ResumeModalConfirmation from 'components/ResumeModalConfirmation';
-import VacanciesDashboard from 'components/Vacancies/VacanciesDashboard';
+import VacanciesDashboard from 'components/VacanciesDashboard';
 import VacanciesModalDetails from 'components/VacanciesModalDetails';
 import VacanciesModalUpdateForm from 'components/VacanciesModalUpdateForm';
 import VacanciesModalConfirm from 'components/VacanciesModalConfirm';
