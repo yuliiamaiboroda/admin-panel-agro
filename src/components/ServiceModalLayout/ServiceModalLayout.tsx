@@ -10,6 +10,7 @@ import {
 } from 'redux/services';
 import Modal from 'components/Modal/';
 import Loader from 'components/Loader';
+import { useModal } from 'hooks';
 
 export default function ServiceModalLayout() {
   const { serviceId } = useParams();
@@ -17,6 +18,7 @@ export default function ServiceModalLayout() {
   const dispatch = useAppDispatch();
   const error = useAppSelector(selectError);
   const isLoading = useAppSelector(selectIsLoading);
+  const { isModalOpen, closeModal } = useModal(true);
 
   useEffect(() => {
     if (serviceId) {
@@ -34,7 +36,15 @@ export default function ServiceModalLayout() {
   }
 
   return (
-    <Modal onClose={() => navigate('/services')}>
+    <Modal
+      isModalOpen={isModalOpen}
+      onClose={() => {
+        closeModal();
+        setTimeout(() => {
+          navigate('/services');
+        }, 250);
+      }}
+    >
       {isLoading ? <Loader /> : <Outlet />}
     </Modal>
   );

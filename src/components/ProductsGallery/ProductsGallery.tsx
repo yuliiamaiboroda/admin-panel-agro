@@ -30,17 +30,15 @@ export default function ProductsGallery() {
       <RestrictedComponent accessRight={Roles.productsManager}>
         <CreateButton onClick={openModal} />
       </RestrictedComponent>
-      {isModalOpen && (
-        <Modal onClose={closeModal}>
-          <ProductForm
-            onSubmit={productData => {
-              dispatch(createProduct(productData));
-              closeModal();
-            }}
-            onCancel={() => closeModal()}
-          />
-        </Modal>
-      )}
+      <Modal isModalOpen={isModalOpen} onClose={closeModal}>
+        <ProductForm
+          onSubmit={productData => {
+            dispatch(createProduct(productData));
+            closeModal();
+          }}
+          onCancel={() => closeModal()}
+        />
+      </Modal>
     </>
   );
 }

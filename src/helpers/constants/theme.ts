@@ -14,7 +14,7 @@ const theme: DefaultTheme = {
     accentBackground: '#29392F',
     primaryGradient:
       'linear-gradient(88deg, rgba(57, 78, 45, 0.93) 0%, #29392F 100%)',
-    backdrop: 'rgb(0, 0, 0, 0.8)',
+    backdrop: 'rgb(0, 0, 0, 0.7)',
     confirmation: '#29392F',
     confirmationLight: '#EAEBEA',
     confirmationMedium: '#668E75',
@@ -52,7 +52,7 @@ const theme: DefaultTheme = {
     pageTitle: '0px 0px 16px 16px',
     circle: '50%',
   },
-  transitions: { scale: 'scale 250ms linear' },
+  transitions: { scale: 'scale 250ms linear', color: 'color 250ms linear' },
   borders: {
     light: '1px solid #E9ECEF',
     warning: '1px solid #C03221',

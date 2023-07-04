@@ -67,6 +67,7 @@ export const getCertainResume = createAsyncThunk<
   }
 });
 
+// -------------------------- remove from here -------------------------------------
 // TODO:  Remove creating new resume before production
 interface IResumeData {
   name: string;

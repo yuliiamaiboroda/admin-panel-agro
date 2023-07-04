@@ -3,6 +3,7 @@ import VacancySelector from 'components/VacancySelector';
 import SortSelector from 'components/SortSelector';
 import LimitSelector from 'components/LimitSelector';
 import type { IResumeFilter } from 'helpers/types';
+import FilterCheckbox from 'components/FilterCheckbox';
 
 interface IProps {
   filterStatus: IResumeFilter;
@@ -11,21 +12,22 @@ interface IProps {
 
 export default function ResumesFilter({ filterStatus, onSelect }: IProps) {
   return (
-    <Box display="flex" flexDirection={['column', 'column', 'row']} gridGap={4}>
-      <label>
-        Показати обрані
-        <input
-          type="checkbox"
-          name="isFavorite"
-          checked={filterStatus?.isFavorite ? true : false}
-          onChange={({ target }) =>
-            onSelect(({ isFavorite, ...rest }) => ({
-              ...rest,
-              ...(target.checked ? { isFavorite: true } : null),
-            }))
-          }
-        />
-      </label>
+    <Box
+      display="flex"
+      flexDirection={['column', 'column', 'row']}
+      flexWrap="wrap"
+      gridGap={4}
+    >
+      <FilterCheckbox
+        name="isFavorite"
+        title="Показати обрані"
+        onChange={isChecked => {
+          onSelect(({ isFavorite, ...rest }) => ({
+            ...rest,
+            ...(isChecked ? { isFavorite: true } : null),
+          }));
+        }}
+      />
       <VacancySelector
         onChange={option => {
           onSelect(({ position, ...rest }) => ({

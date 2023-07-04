@@ -1,4 +1,5 @@
 export enum Categories {
+  all = 'all-vacancies',
   irrelevant = 'irrelevant-vacancies',
   actual = 'actual-vacancies',
 }
