@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
   Dropdown,
   SelectedItem,
@@ -16,21 +16,40 @@ interface IOption {
   value: string;
   shownName: string;
 }
+interface IInitial {
+  value: string;
+  shownName: string;
+  name: string;
+}
 interface IProps {
   options: IOption[];
-  initialValue?: IOption;
+  initialValue?: IInitial | null;
   setFieldValue: (field: string, value: any, shouldValidate?: boolean) => void;
 }
 
-export default function DropDown({ options, setFieldValue }: IProps) {
+export default function DropDown({
+  options,
+  setFieldValue,
+  initialValue = null,
+}: IProps) {
   const [isActive, setIsActive] = useState(false);
-  const [selected, setIsSelected] = useState('Оберіть категорію');
+  const isInitialValue = initialValue
+    ? initialValue.shownName
+    : 'Оберіть категорію';
+  const [selected, setIsSelected] = useState(isInitialValue);
 
   const handleClick = (el: IOption) => {
     setIsSelected(el.shownName);
     setIsActive(!isActive);
     setFieldValue(el.name, el.value);
   };
+
+  useEffect(() => {
+    if (initialValue) {
+      setFieldValue(initialValue.name, initialValue.value);
+    }
+    // eslint-disable-next-line
+  }, []);
 
   return (
     <Dropdown>
