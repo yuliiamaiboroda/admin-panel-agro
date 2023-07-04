@@ -5,6 +5,22 @@ export const feedbackSchema = Yup.object({
     .trim()
     .min(2, 'Коментар занадтно короткий - має містити мінімум 10 символів.')
     .max(2000, 'Коментар занадтно довга ий має містити максимум 63 символів.')
+    .test(
+      'word-length',
+      'Одне або кілька слів перевищують максимальну довжину в 20 символів',
+      value => {
+        if (!value) return true;
+        const words = value.split(' ');
+
+        for (const word of words) {
+          if (word.length > 20) {
+            return false;
+          }
+        }
+
+        return true;
+      }
+    )
     .required("Коментар є обов'язковим полем"),
   contactMail: Yup.string()
     .min(
