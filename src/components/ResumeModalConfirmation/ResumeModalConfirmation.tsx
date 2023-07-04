@@ -1,6 +1,6 @@
 import { useNavigate, useLocation } from 'react-router-dom';
-import { useAppDispatch, useAppSelector } from 'hooks';
 import { removeResume, selectCertainResume } from 'redux/resumes';
+import { useAppDispatch, useAppSelector, useModalOutlet } from 'hooks';
 import ConfirmationModal from 'components/ConfirmationModal';
 
 export default function ResumeModalConfirmation() {
@@ -8,6 +8,7 @@ export default function ResumeModalConfirmation() {
   const dispatch = useAppDispatch();
   const location = useLocation();
   const navigate = useNavigate();
+  const { handleCloseModal } = useModalOutlet();
 
   const backLinkHref = location.state?.from ?? '/resumes';
 
@@ -17,10 +18,16 @@ export default function ResumeModalConfirmation() {
 
   const handleConfirm = () => {
     dispatch(removeResume(resume._id));
-    navigate('/resumes');
+    handleCloseModal('/resumes');
   };
 
-  const handleCancel = () => navigate(backLinkHref);
+  const handleCancel = () => {
+    if (backLinkHref === '/resumes') {
+      handleCloseModal(backLinkHref);
+    } else {
+      navigate(backLinkHref);
+    }
+  };
 
   return (
     <ConfirmationModal

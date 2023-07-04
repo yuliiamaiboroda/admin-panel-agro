@@ -1,6 +1,6 @@
 import { useNavigate, useLocation } from 'react-router-dom';
-import { useAppDispatch, useAppSelector } from 'hooks';
 import { removeFeedbackById, selectFeedbacks } from 'redux/feedbacks';
+import { useAppDispatch, useAppSelector, useModalOutlet } from 'hooks';
 import ConfirmationModal from 'components/ConfirmationModal';
 
 export default function FeedbackModalConfirmation() {
@@ -8,6 +8,7 @@ export default function FeedbackModalConfirmation() {
   const dispatch = useAppDispatch();
   const location = useLocation();
   const navigate = useNavigate();
+  const { handleCloseModal } = useModalOutlet();
 
   const backLinkHref = location.state?.from ?? '/feedbacks';
 
@@ -17,10 +18,16 @@ export default function FeedbackModalConfirmation() {
 
   const handleConfirm = () => {
     dispatch(removeFeedbackById(certain._id));
-    navigate('/feedbacks');
+    handleCloseModal('/feedbacks');
   };
 
-  const handleCancel = () => navigate(backLinkHref);
+  const handleCancel = () => {
+    if (backLinkHref === '/feedbacks') {
+      handleCloseModal(backLinkHref);
+    } else {
+      navigate(backLinkHref);
+    }
+  };
 
   return (
     <ConfirmationModal

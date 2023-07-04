@@ -1,6 +1,6 @@
-import { useAppDispatch, useAppSelector } from 'hooks';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { removeVacancyById, selectVacancies } from 'redux/vacancies';
+import { useAppDispatch, useAppSelector, useModalOutlet } from 'hooks';
 import ConfirmationModal from 'components/ConfirmationModal';
 
 export default function VacanciesModalConfirm() {
@@ -8,6 +8,7 @@ export default function VacanciesModalConfirm() {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const routeLocation = useLocation();
+  const { handleCloseModal } = useModalOutlet();
 
   const backLinkHref = routeLocation.state?.from ?? '/vacancies';
 
@@ -17,10 +18,16 @@ export default function VacanciesModalConfirm() {
 
   const handleConfirm = () => {
     dispatch(removeVacancyById(certain._id));
-    navigate('/vacancies');
+    handleCloseModal('/vacancies');
   };
 
-  const handleCancel = () => navigate(backLinkHref);
+  const handleCancel = () => {
+    if (backLinkHref === '/vacancies') {
+      handleCloseModal(backLinkHref);
+    } else {
+      navigate(backLinkHref);
+    }
+  };
 
   return (
     <ConfirmationModal

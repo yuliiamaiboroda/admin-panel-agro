@@ -27,7 +27,13 @@ export default function ProductModalEditForm() {
           navigate(backLinkHref);
         }
       }}
-      onCancel={() => navigate(backLinkHref)}
+      onCancel={() => {
+        if (backLinkHref === '/products') {
+          handleCloseModal(backLinkHref);
+        } else {
+          navigate(backLinkHref);
+        }
+      }}
     />
   );
 }

@@ -18,7 +18,7 @@ export default function UsersModalConfirm() {
 
   const handleConfirm = () => {
     dispatch(removeUserById(certain._id));
-    handleCloseModal(backLinkHref);
+    handleCloseModal('/users');
   };
 
   const handleCancel = () => {

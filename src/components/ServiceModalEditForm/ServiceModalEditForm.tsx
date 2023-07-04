@@ -1,6 +1,6 @@
 import { useNavigate, useLocation } from 'react-router-dom';
-import { useAppSelector, useAppDispatch } from 'hooks';
 import { selectCertainService, updateService } from 'redux/services';
+import { useAppSelector, useAppDispatch, useModalOutlet } from 'hooks';
 import ServiceForm from 'components/ServiceForm';
 
 export default function ServiceModalEditForm() {
@@ -8,6 +8,7 @@ export default function ServiceModalEditForm() {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const location = useLocation();
+  const { handleCloseModal } = useModalOutlet();
 
   const backLinkHref = location.state?.from ?? '/services';
 
@@ -20,9 +21,19 @@ export default function ServiceModalEditForm() {
       serviceData={service}
       onSubmit={serviceData => {
         dispatch(updateService({ ...serviceData, _id: service._id }));
-        navigate(backLinkHref);
+        if (backLinkHref === '/services') {
+          handleCloseModal(backLinkHref);
+        } else {
+          navigate(backLinkHref);
+        }
       }}
-      onCancel={() => navigate(backLinkHref)}
+      onCancel={() => {
+        if (backLinkHref === '/services') {
+          handleCloseModal(backLinkHref);
+        } else {
+          navigate(backLinkHref);
+        }
+      }}
     />
   );
 }

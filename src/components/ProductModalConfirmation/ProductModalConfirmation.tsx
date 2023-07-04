@@ -19,7 +19,7 @@ export default function ProductModalConfirmation() {
 
   const handleConfirm = () => {
     dispatch(removeProduct(product._id));
-    handleCloseModal(backLinkHref);
+    handleCloseModal('/products');
   };
 
   const handleCancel = () => {

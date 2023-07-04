@@ -16,6 +16,13 @@ export default function ResumeModalLayout() {
   const error = useAppSelector(selectResumeError);
   const { isModalOpen, closeModal } = useModal(true);
 
+  const handleCloseModal = (navigateTo: any) => {
+    closeModal();
+    setTimeout(() => {
+      navigate(navigateTo);
+    }, 250);
+  };
+
   useEffect(() => {
     if (resumeId) {
       dispatch(getCertainResume(resumeId));
@@ -36,13 +43,10 @@ export default function ResumeModalLayout() {
     <Modal
       isModalOpen={isModalOpen}
       onClose={() => {
-        closeModal();
-        setTimeout(() => {
-          navigate(backLinkHref);
-        }, 250);
+        handleCloseModal(backLinkHref);
       }}
     >
-      <Outlet />
+      <Outlet context={{ handleCloseModal }} />
     </Modal>
   );
 }
