@@ -2,12 +2,14 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { useAppSelector, useAppDispatch } from 'hooks';
 import { selectCertainProduct, removeProduct } from 'redux/products';
 import ConfirmationModal from 'components/ConfirmationModal';
+import { useModalOutlet } from 'hooks';
 
 export default function ProductModalConfirmation() {
   const product = useAppSelector(selectCertainProduct);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const location = useLocation();
+  const { handleCloseModal } = useModalOutlet();
 
   const backLinkHref = location.state?.from ?? '/products';
 
@@ -17,10 +19,16 @@ export default function ProductModalConfirmation() {
 
   const handleConfirm = () => {
     dispatch(removeProduct(product._id));
-    navigate('/products');
+    handleCloseModal('/products');
   };
 
-  const handleCancel = () => navigate(backLinkHref);
+  const handleCancel = () => {
+    if (backLinkHref === '/products') {
+      handleCloseModal(backLinkHref);
+    } else {
+      navigate(backLinkHref);
+    }
+  };
 
   return (
     <ConfirmationModal

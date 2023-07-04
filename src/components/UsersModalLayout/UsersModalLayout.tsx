@@ -18,6 +18,13 @@ export default function UsersModalLayout() {
   const { isLoading, error } = useAppSelector(selectUsersList);
   const { isModalOpen, closeModal } = useModal(true);
 
+  const handleCloseModal = (navigateTo: any) => {
+    closeModal();
+    setTimeout(() => {
+      navigate(navigateTo);
+    }, 250);
+  };
+
   useEffect(() => {
     if (userId) {
       dispatch(getCertainUser(userId));
@@ -36,13 +43,10 @@ export default function UsersModalLayout() {
     <Modal
       isModalOpen={isModalOpen}
       onClose={() => {
-        closeModal();
-        setTimeout(() => {
-          navigate('/users');
-        }, 250);
+        handleCloseModal('/users');
       }}
     >
-      {isLoading ? <Loader /> : <Outlet />}
+      {isLoading ? <Loader /> : <Outlet context={{ handleCloseModal }} />}
     </Modal>
   );
 }

@@ -16,6 +16,13 @@ export default function FeedbackModalLayout() {
   const { isLoading, error } = useAppSelector(selectFeedbacks);
   const { isModalOpen, closeModal } = useModal(true);
 
+  const handleCloseModal = (navigateTo: any) => {
+    closeModal();
+    setTimeout(() => {
+      navigate(navigateTo);
+    }, 250);
+  };
+
   useEffect(() => {
     if (feedbackId) {
       dispatch(getCertainFeedback(feedbackId));
@@ -33,13 +40,10 @@ export default function FeedbackModalLayout() {
     <Modal
       isModalOpen={isModalOpen}
       onClose={() => {
-        closeModal();
-        setTimeout(() => {
-          navigate('/feedbacks');
-        }, 250);
+        handleCloseModal('/feedbacks');
       }}
     >
-      {isLoading ? <Loader /> : <Outlet />}
+      {isLoading ? <Loader /> : <Outlet context={{ handleCloseModal }} />}
     </Modal>
   );
 }

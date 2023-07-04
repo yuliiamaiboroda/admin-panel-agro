@@ -1,4 +1,4 @@
-import Box from 'components/Box';
+import { Title } from './ModalTitle.styled';
 
 interface IProps {
   value: string;
@@ -6,8 +6,13 @@ interface IProps {
 
 export default function ModalTitle({ value }: IProps) {
   return (
-    <Box color="secondaryText" fontWeight="bold" fontSize={['l', 'xl']} as="h2">
+    <Title
+      color="secondaryText"
+      fontWeight="bold"
+      fontSize={['l', 'xl']}
+      as="h2"
+    >
       {value}
-    </Box>
+    </Title>
   );
 }

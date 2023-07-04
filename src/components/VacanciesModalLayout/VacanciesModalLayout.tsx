@@ -18,6 +18,13 @@ export default function VacanciesModalLayout() {
   const { categoryName, vacanciesId } = useParams();
   const { isModalOpen, closeModal } = useModal(true);
 
+  const handleCloseModal = (navigateTo: any) => {
+    closeModal();
+    setTimeout(() => {
+      navigate(navigateTo);
+    }, 250);
+  };
+
   useEffect(() => {
     if (vacanciesId) {
       dispatch(getCertainVacancy(vacanciesId));
@@ -36,13 +43,10 @@ export default function VacanciesModalLayout() {
     <Modal
       isModalOpen={isModalOpen}
       onClose={() => {
-        closeModal();
-        setTimeout(() => {
-          navigate(`/vacancies/${categoryName || ''}`);
-        }, 250);
+        handleCloseModal(`/vacancies/${categoryName || ''}`);
       }}
     >
-      {isLoading ? <Loader /> : <Outlet />}
+      {isLoading ? <Loader /> : <Outlet context={{ handleCloseModal }} />}
     </Modal>
   );
 }
