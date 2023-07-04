@@ -1,4 +1,4 @@
-import UserCard from 'components/Users/UserCard';
+import UserCard from 'components/UserCard';
 import type { IUser } from 'redux/users';
 import GalleryWrapper from 'components/GalleryWrapper';
 

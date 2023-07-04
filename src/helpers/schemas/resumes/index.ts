@@ -40,7 +40,27 @@ export const resumeShema = (fileField: React.RefObject<HTMLInputElement>) =>
         'Розмір файлу не повинен перевищувати 5Mb',
         fileSize(fileField, 5)
       ),
-    comment: Yup.string().trim().min(2).max(2000).required(),
+    comment: Yup.string()
+      .trim()
+      .min(2)
+      .max(2000)
+      .test(
+        'word-length',
+        'Одне або кілька слів перевищують максимальну довжину в 20 символів',
+        value => {
+          if (!value) return true;
+          const words = value.split(' ');
+
+          for (const word of words) {
+            if (word.length > 20) {
+              return false;
+            }
+          }
+
+          return true;
+        }
+      )
+      .required(),
     agreement: Yup.bool()
       .oneOf([true], 'Agreement should be checked')
       .required(),

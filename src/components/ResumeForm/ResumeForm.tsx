@@ -5,6 +5,8 @@ import { createResume } from 'redux/resumes';
 import { getAllVacancyTitles, selectVacancyTitles } from 'redux/vacancies';
 import { resumeShema } from 'helpers/schemas/resumes';
 import UploadFileField from 'components/UploadFileField';
+import FormField from 'components/FormField';
+import Selector from 'components/Selector';
 
 interface IProps {
   onSubmit?: () => void;
@@ -55,53 +57,46 @@ export default function ResumeForm({ onSubmit }: IProps) {
       }}
     >
       {({ values, setFieldValue }) => (
-        <Form>
-          <label>
-            Name: <Field id="name" name="name" type="text" />
-            <ErrorMessage name="name" />
-          </label>
-          <br />
-          <label>
-            Phone: <Field id="phone" name="phone" type="text" />
-            <ErrorMessage name="phone" />
-          </label>
-          <br />
-          <label>
-            Email: <Field id="email" name="email" type="email" />
-            <ErrorMessage name="email" />
-          </label>
-          <br />
-          <label>
-            Position:
-            <select
-              name="position"
-              id="position"
-              value={values.position}
-              onChange={event => setFieldValue('position', event.target.value)}
-            >
-              <option value="">Оберіть вакансію</option>
-              {vacancies.map(({ _id, title }) => (
-                <option key={_id} value={title}>
-                  {title}
-                </option>
-              ))}
-              <option value="other">Інше</option>
-            </select>
+        <Form style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+          <FormField labelName="Ім’я" fieldName="name" placeholderName="Ім’я" />
+          <FormField
+            fieldName="phone"
+            labelName="Номер телефону"
+            placeholderName="Номер телефону"
+            typeName="tel"
+          />
+          <FormField
+            fieldName="email"
+            labelName="Email"
+            placeholderName="Email"
+            typeName="email"
+          />
+          <label
+            style={{ display: 'flex', gap: '5px', flexDirection: 'column' }}
+          >
+            Вакансія
+            <Selector
+              options={[
+                ...vacancies.map(el => {
+                  return { value: el.title, label: el.title };
+                }),
+                { value: 'other', label: 'Інше' },
+              ]}
+              onChange={option => setFieldValue('position', option?.value)}
+              defaultValue={{ value: '', label: 'Оберіть вакансію' }}
+            />
             <ErrorMessage name="position" />
           </label>
-          <br />
           <UploadFileField name="resume" fileRef={fileField} />
-          <br />
-          <label>
-            Comment: <Field id="comment" name="comment" type="text" />
-            <ErrorMessage name="comment" />
+          <FormField
+            fieldName="comment"
+            placeholderName="Коментар"
+            labelName="Коментар"
+          />
+          <label style={{ display: 'flex', gap: '10px' }}>
+            <Field id="agreement" name="agreement" type="checkbox" /> Я даю
+            згоду на обробку персональних даних
           </label>
-          <br />
-          <label>
-            Agreement: <Field id="agreement" name="agreement" type="checkbox" />
-            <ErrorMessage name="agreement" />
-          </label>
-          <br />
           <button type="submit" disabled={!values.agreement}>
             Add resume
           </button>
