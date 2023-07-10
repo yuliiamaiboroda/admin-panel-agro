@@ -63,6 +63,7 @@ export const removeResumeFulfilledReducer = (
   ...state,
   isLoading: false,
   entities: state.entities.filter(resume => resume._id !== payload),
+  pagination: { ...state.pagination, skip: state.pagination.skip - 1 },
 });
 
 export const updateResumeViewsFulfilledReducer = (
