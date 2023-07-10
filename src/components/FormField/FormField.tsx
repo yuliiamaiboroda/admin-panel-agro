@@ -15,8 +15,9 @@ export default function FormField({
   placeholderName,
   typeName,
 }: IProps) {
-  // eslint-disable-next-line
-  const [field, meta] = useField(fieldName);
+  const [, meta] = useField(fieldName);
+
+  // TODO:  what's role of position relative for Box component? and what's role of Box component?
 
   return (
     <Box position="relative" width="100%">
