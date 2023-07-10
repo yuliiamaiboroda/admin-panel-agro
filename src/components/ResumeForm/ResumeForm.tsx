@@ -7,6 +7,7 @@ import { resumeShema } from 'helpers/schemas/resumes';
 import UploadFileField from 'components/UploadFileField';
 import FormField from 'components/FormField';
 import Selector from 'components/Selector';
+import { Button } from 'helpers/styles';
 
 interface IProps {
   onSubmit?: () => void;
@@ -87,7 +88,12 @@ export default function ResumeForm({ onSubmit }: IProps) {
             />
             <ErrorMessage name="position" />
           </label>
-          <UploadFileField name="resume" fileRef={fileField} />
+          <UploadFileField
+            name="resume"
+            fileRef={fileField}
+            label="Резюме"
+            placeholder="Завантажте резюме"
+          />
           <FormField
             fieldName="comment"
             placeholderName="Коментар"
@@ -97,9 +103,14 @@ export default function ResumeForm({ onSubmit }: IProps) {
             <Field id="agreement" name="agreement" type="checkbox" /> Я даю
             згоду на обробку персональних даних
           </label>
-          <button type="submit" disabled={!values.agreement}>
+          <Button
+            variant="primary"
+            type="submit"
+            disabled={!values.agreement}
+            mx="auto"
+          >
             Add resume
-          </button>
+          </Button>
         </Form>
       )}
     </Formik>
