@@ -21,10 +21,9 @@ export const resumeShema = (fileField: React.RefObject<HTMLInputElement>) =>
       .required(),
     position: Yup.string()
       .trim()
-      // TODO:  discus about validation of position field
       .matches(
         /^(?![-' ]+$)[a-zA-Zа-яА-ЯіІїЇєЄ0-9-'‘ʼ,./ ]+$/,
-        'Поле позиції повинно містити тільки: латинські літери, цифри, дефіси та апостроф'
+        'Поле позиції повинно містити тільки: літери, цифри, дефіси та апостроф'
       )
       .min(5)
       .max(30)
