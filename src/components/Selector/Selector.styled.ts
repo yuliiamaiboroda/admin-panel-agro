@@ -20,6 +20,10 @@ export const StyledSelector = styled(Select)<any>`
     }
   }
 
+  .selector__placeholder {
+    font-weight: ${p => p.theme.fontWeights.normal};
+  }
+
   .selector__indicator-separator {
     width: 2px;
     background-color: ${p => p.theme.colors.accentBackground};

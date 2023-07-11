@@ -50,7 +50,11 @@ export const getCertainResumeFulfilledReducer = (
 export const createResumeFulfilledReducer = (
   state: IState,
   { payload }: PayloadAction<IResumeEntity>
-) => ({ ...state, isLoading: false, entities: [payload, ...state.entities] });
+) => ({
+  ...state,
+  isLoading: false,
+  entities: [payload, ...state.entities.slice(0, state.entities.length - 1)],
+});
 
 export const removeResumeFulfilledReducer = (
   state: IState,
@@ -59,6 +63,7 @@ export const removeResumeFulfilledReducer = (
   ...state,
   isLoading: false,
   entities: state.entities.filter(resume => resume._id !== payload),
+  pagination: { ...state.pagination, skip: state.pagination.skip - 1 },
 });
 
 export const updateResumeViewsFulfilledReducer = (

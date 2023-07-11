@@ -8,7 +8,7 @@ import CardDetailStringMarkup from 'components/CardDetailStringMarkup';
 import ItemLink from 'components/ItemLink';
 import Box from 'components/Box';
 import FavoriteButton from 'components/FavoriteButton';
-import { UnviewComponent } from './ResumeCard.styled';
+import UnviewedMark from 'components/UnviewedMark';
 
 export default function ResumeCard({
   _id,
@@ -42,7 +42,7 @@ export default function ResumeCard({
   return (
     <CardWrapperMarkup onClick={() => clickHandler}>
       <Box position="relative">
-        {!isReviewed && <UnviewComponent />}
+        <UnviewedMark isShown={!isReviewed} />
         <CardTitleStringMarkup value={name} />
         <CardDetailStringMarkup title="Позиція" value={position} />
         <CardDetailStringMarkup title="Коментар" value={comment} />

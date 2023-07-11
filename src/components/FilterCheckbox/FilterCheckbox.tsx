@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { GrCheckboxSelected, GrCheckbox } from 'react-icons/gr';
+import { MdCheckBoxOutlineBlank, MdCheckBox } from 'react-icons/md';
 import { Label, HiddenInput } from './FilterCheckbox.styled';
 
 interface IProps {
@@ -23,9 +23,9 @@ export default function FilterCheckbox({ name, title, onChange }: IProps) {
         }}
       />
       {isChecked ? (
-        <GrCheckboxSelected size={20} />
+        <MdCheckBox size={24} />
       ) : (
-        <GrCheckbox size={20} />
+        <MdCheckBoxOutlineBlank size={24} />
       )}
       {title}
     </Label>
