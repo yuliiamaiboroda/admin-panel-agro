@@ -7,10 +7,12 @@ export default function UploadFileField({
   fileRef,
   label = 'Зображення',
   name,
+  placeholder = 'Оберіть зображення',
 }: {
   fileRef: React.RefObject<HTMLInputElement>;
   label?: string;
   name: string;
+  placeholder?: string;
 }) {
   const [field, meta] = useField(name);
   const [selectedFile, setSelectedFile] = useState<string>('');
@@ -43,7 +45,7 @@ export default function UploadFileField({
           $isInvalidMsg={meta.error}
           $isFileSelected={false}
         >
-          Оберіть зображення
+          {placeholder}
         </Input>
       )}
       <ErrorMessage name={field.name}>

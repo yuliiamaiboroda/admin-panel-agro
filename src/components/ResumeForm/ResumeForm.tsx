@@ -1,5 +1,5 @@
 import { useRef, useEffect } from 'react';
-import { Formik, Form, Field, ErrorMessage } from 'formik';
+import { Formik, Form, ErrorMessage } from 'formik';
 import { useAppDispatch, useAppSelector } from 'hooks';
 import { createResume } from 'redux/resumes';
 import { getAllVacancyTitles, selectVacancyTitles } from 'redux/vacancies';
@@ -7,6 +7,8 @@ import { resumeShema } from 'helpers/schemas/resumes';
 import UploadFileField from 'components/UploadFileField';
 import FormField from 'components/FormField';
 import Selector from 'components/Selector';
+import { Button } from 'helpers/styles';
+import FormCheckbox from 'components/FormCheckbox';
 
 interface IProps {
   onSubmit?: () => void;
@@ -83,23 +85,33 @@ export default function ResumeForm({ onSubmit }: IProps) {
                 { value: 'other', label: 'Інше' },
               ]}
               onChange={option => setFieldValue('position', option?.value)}
-              defaultValue={{ value: '', label: 'Оберіть вакансію' }}
+              placeholder="Оберіть вакансію"
             />
             <ErrorMessage name="position" />
           </label>
-          <UploadFileField name="resume" fileRef={fileField} />
+          <UploadFileField
+            name="resume"
+            fileRef={fileField}
+            label="Резюме"
+            placeholder="Завантажте резюме"
+          />
           <FormField
             fieldName="comment"
             placeholderName="Коментар"
             labelName="Коментар"
           />
-          <label style={{ display: 'flex', gap: '10px' }}>
-            <Field id="agreement" name="agreement" type="checkbox" /> Я даю
-            згоду на обробку персональних даних
-          </label>
-          <button type="submit" disabled={!values.agreement}>
+          <FormCheckbox
+            fieldName="agreement"
+            label="Я даю згоду на обробку персональних даних"
+          />
+          <Button
+            variant="primary"
+            type="submit"
+            disabled={!values.agreement}
+            mx="auto"
+          >
             Add resume
-          </button>
+          </Button>
         </Form>
       )}
     </Formik>
