@@ -2,7 +2,6 @@
   "name": "admin-panel-agro",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://yuliiamaiboroda.github.io/admin-panel-agro/",
   "dependencies": {
     "@reduxjs/toolkit": "^1.9.5",
     "@testing-library/jest-dom": "^5.16.5",
@@ -17,6 +16,7 @@
     "@types/styled-system": "^5.1.16",
     "axios": "^1.4.0",
     "body-scroll-lock-upgrade": "^1.0.3",
+    "express": "^4.18.2",
     "formik": "^2.2.9",
     "notiflix": "^3.2.6",
     "react": "^18.2.0",

@@ -2,13 +2,13 @@ import axios from 'axios';
 import { store } from 'redux/store';
 import { refreshToken, refreshTokenError } from 'redux/user';
 
-axios.defaults.baseURL = 'https://ahrokhimpromtsentr.cyclic.app';
-// axios.defaults.baseURL = 'http://localhost:3001';
+const { REACT_APP_BASE_URL = 'http://localhost:5050' } = process.env;
+
+axios.defaults.baseURL = REACT_APP_BASE_URL;
 axios.defaults.withCredentials = true;
 
 export const privateAxios = axios.create({
-  baseURL: 'https://ahrokhimpromtsentr.cyclic.app',
-  // baseURL: 'http://localhost:3001',
+  baseURL: REACT_APP_BASE_URL,
   withCredentials: true,
 });
 

@@ -17,7 +17,7 @@ root.render(
       <GlobalStyle />
       <PersistGate loading={null} persistor={persistor}>
         <Provider store={store}>
-          <BrowserRouter basename="/admin-panel-agro">
+          <BrowserRouter>
             <App />
           </BrowserRouter>
         </Provider>

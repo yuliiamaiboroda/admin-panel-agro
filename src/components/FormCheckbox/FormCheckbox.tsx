@@ -8,9 +8,8 @@ interface IProps {
 }
 
 export default function FormCheckbox({ fieldName, label }: IProps) {
-  const [field, meta] = useField(fieldName);
-  console.log('meta', meta);
-  console.log('field', field);
+  const [field] = useField(fieldName);
+
   return (
     <Label>
       <HiddenInput {...field} type="checkbox" />
