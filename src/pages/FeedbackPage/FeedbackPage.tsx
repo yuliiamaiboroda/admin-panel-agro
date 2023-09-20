@@ -1,4 +1,4 @@
-import { Suspense, useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Outlet } from 'react-router-dom';
 import { Notify } from 'notiflix';
 import { useAppDispatch, useAppSelector } from 'hooks';
@@ -12,7 +12,6 @@ import {
 import type { IFeedbackFilter } from 'helpers/types';
 import FeedbackGallery from 'components/FeedbackGallery';
 import FeedbackFilter from 'components/FeedbackFilter';
-import Loader from 'components/Loader';
 import PageTitle from 'components/PageTitle';
 import FilterWrapper from 'components/FilterWrapper';
 import GalleryWrapper from 'components/GalleryWrapper';
@@ -64,9 +63,7 @@ export default function FeedbackPage() {
           }
         />
       ) : null}
-      <Suspense fallback={<Loader />}>
-        <Outlet />
-      </Suspense>
+      <Outlet />
     </>
   );
 }

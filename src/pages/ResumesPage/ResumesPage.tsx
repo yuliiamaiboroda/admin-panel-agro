@@ -1,4 +1,4 @@
-import { Suspense, useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Outlet } from 'react-router-dom';
 import { Notify } from 'notiflix';
 import { useAppSelector, useAppDispatch } from 'hooks';
@@ -12,7 +12,6 @@ import {
 import type { IResumeFilter } from 'helpers/types';
 import ResumesGallery from 'components/ResumesGallery';
 import ResumesFilter from 'components/ResumesFilter';
-import Loader from 'components/Loader';
 import PageTitle from 'components/PageTitle';
 import GalleryWrapper from 'components/GalleryWrapper';
 import CardPlaceholder from 'components/CardPlaceholder';
@@ -61,9 +60,7 @@ export default function ResumesPage() {
           }
         />
       ) : null}
-      <Suspense fallback={<Loader />}>
-        <Outlet />
-      </Suspense>
+      <Outlet />
     </>
   );
 }

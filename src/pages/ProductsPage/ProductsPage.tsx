@@ -1,10 +1,9 @@
-import { useEffect, Suspense } from 'react';
+import { useEffect } from 'react';
 import { Outlet } from 'react-router-dom';
 import { Notify } from 'notiflix';
 import { useAppDispatch, useAppSelector } from 'hooks';
 import { getAllProducts, selectProductError } from 'redux/products';
 import ProductsGallery from 'components/ProductsGallery';
-import Loader from 'components/Loader';
 import PageTitle from 'components/PageTitle';
 import GalleryWrapper from 'components/GalleryWrapper';
 import CardPlaceholder from 'components/CardPlaceholder';
@@ -23,7 +22,10 @@ export default function ProductsPage() {
       <>
         <PageTitle title="Продукти компанії" />
         <GalleryWrapper>
-          <CardPlaceholder title="Ooops..." description={`It seems like: ${error}`} />
+          <CardPlaceholder
+            title="Ooops..."
+            description={`It seems like: ${error}`}
+          />
         </GalleryWrapper>
       </>
     );
@@ -33,9 +35,7 @@ export default function ProductsPage() {
     <div>
       <PageTitle title="Продукти компанії" />
       <ProductsGallery />
-      <Suspense fallback={<Loader />}>
-        <Outlet />
-      </Suspense>
+      <Outlet />
     </div>
   );
 }
