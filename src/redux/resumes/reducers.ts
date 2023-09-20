@@ -1,6 +1,6 @@
 import type { PayloadAction } from '@reduxjs/toolkit';
 import type { IState } from './slice';
-import type { IResume, IResumeEntity, IResumeResponse } from 'helpers/types';
+import type { IResume, IResumeResponse } from 'helpers/types';
 
 export const removeCertainResumeReducer = (state: IState) => ({
   ...state,
@@ -45,15 +45,6 @@ export const getCertainResumeFulfilledReducer = (
   ...state,
   isLoading: false,
   certain: payload,
-});
-
-export const createResumeFulfilledReducer = (
-  state: IState,
-  { payload }: PayloadAction<IResumeEntity>
-) => ({
-  ...state,
-  isLoading: false,
-  entities: [payload, ...state.entities.slice(0, state.entities.length - 1)],
 });
 
 export const removeResumeFulfilledReducer = (

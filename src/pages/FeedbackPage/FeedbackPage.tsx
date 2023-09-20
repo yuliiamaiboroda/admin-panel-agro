@@ -1,7 +1,7 @@
 import { Suspense, useState, useEffect } from 'react';
 import { Outlet } from 'react-router-dom';
 import { Notify } from 'notiflix';
-import { useAppDispatch, useAppSelector, useModal } from 'hooks';
+import { useAppDispatch, useAppSelector } from 'hooks';
 import {
   getAllFeedback,
   loadMoreFeedbacks,
@@ -15,15 +15,11 @@ import FeedbackFilter from 'components/FeedbackFilter';
 import Loader from 'components/Loader';
 import PageTitle from 'components/PageTitle';
 import FilterWrapper from 'components/FilterWrapper';
-import CreateButton from 'components/CreateButton';
-import Modal from 'components/Modal/Modal';
-import FeedbackForm from 'components/FeedbackForm';
 import GalleryWrapper from 'components/GalleryWrapper';
 import CardPlaceholder from 'components/CardPlaceholder';
 import LoadMoreButton from 'components/LoadMoreButton';
 
 export default function FeedbackPage() {
-  const { isModalOpen, openModal, closeModal } = useModal();
   const [filterStatus, setFilterStatus] = useState<IFeedbackFilter>({});
   const feedbacks = useAppSelector(selectAllFeedbacks);
   const pagination = useAppSelector(selectFeedbackPagination);
@@ -71,10 +67,6 @@ export default function FeedbackPage() {
       <Suspense fallback={<Loader />}>
         <Outlet />
       </Suspense>
-      <CreateButton onClick={openModal} />
-      <Modal isModalOpen={isModalOpen} onClose={closeModal}>
-        <FeedbackForm onClose={closeModal} />
-      </Modal>
     </>
   );
 }

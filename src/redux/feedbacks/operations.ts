@@ -116,29 +116,3 @@ export const loadMoreFeedbacks = createAsyncThunk<
     return thunkApi.rejectWithValue(error.response.data.message);
   }
 });
-
-// TODO: Remove this operation before production
-interface INewFeedback {
-  name: string;
-  contactPhone: string;
-  contactMail: string;
-  comment: string;
-  agreement: boolean;
-}
-
-export const createFeedback = createAsyncThunk<
-  IFeedback,
-  INewFeedback,
-  { rejectValue: string }
->('feedback/createFeedback', async (feedback, thunkApi) => {
-  try {
-    const { data } = await axios.post('/api/feedback/', feedback);
-    return data;
-  } catch (err) {
-    const error = err as AxiosError<{ message: string }>;
-    if (!error.response) {
-      return thunkApi.rejectWithValue('Something went wrong');
-    }
-    return thunkApi.rejectWithValue(error.response.data.message);
-  }
-});

@@ -1,6 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import {
-  createFeedback,
   getAllFeedback,
   getCertainFeedback,
   loadMoreFeedbacks,
@@ -149,18 +148,6 @@ const loadMoreFeedbacksReducer = (
   };
 };
 
-// TODO: delete extra reducer before production version
-const createFeedbackReducer = (
-  state: IState,
-  action: PayloadAction<IFeedback, string>
-) => {
-  return {
-    ...state,
-    isLoading: false,
-    entities: [action.payload, ...state.entities],
-  };
-};
-
 const feedbacksSlice = createSlice({
   name: 'feedbacks',
   initialState,
@@ -191,10 +178,7 @@ const feedbacksSlice = createSlice({
       .addCase(updateFeedbackIsFavorite.rejected, feedbackRejectedReducer)
       .addCase(loadMoreFeedbacks.pending, feedbackPendingReducer)
       .addCase(loadMoreFeedbacks.fulfilled, loadMoreFeedbacksReducer)
-      .addCase(loadMoreFeedbacks.rejected, feedbackRejectedReducer)
-      .addCase(createFeedback.pending, feedbackPendingReducer)
-      .addCase(createFeedback.fulfilled, createFeedbackReducer)
-      .addCase(createFeedback.rejected, feedbackRejectedReducer),
+      .addCase(loadMoreFeedbacks.rejected, feedbackRejectedReducer),
 });
 
 export const feedbacksReducer = feedbacksSlice.reducer;
