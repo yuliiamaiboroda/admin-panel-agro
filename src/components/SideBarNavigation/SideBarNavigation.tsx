@@ -1,6 +1,6 @@
 import Navigation from 'components/Navigation';
 import Box from 'components/Box';
-import companyLogo from 'asserts/company-logo.svg';
+import companyLogo from 'assets/company-logo.svg';
 
 export default function SideBarNavigation() {
   return (

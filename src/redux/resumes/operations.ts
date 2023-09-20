@@ -1,12 +1,6 @@
 import axios, { AxiosError } from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import type {
-  IResume,
-  IResumeEntity,
-  IResumeResponse,
-  IResumeFilter,
-} from 'helpers/types';
-import { createFormData } from 'utils';
+import type { IResume, IResumeResponse, IResumeFilter } from 'helpers/types';
 
 export const getAllResumes = createAsyncThunk<
   IResumeResponse,
@@ -66,48 +60,6 @@ export const getCertainResume = createAsyncThunk<
     return thunkApi.rejectWithValue(error.response.data.message);
   }
 });
-
-// -------------------------- remove from here -------------------------------------
-// TODO:  Remove creating new resume before production
-interface IResumeData {
-  name: string;
-  phone: string;
-  email: string;
-  position: string;
-  resume: File | null;
-  comment: string;
-  agreement: boolean;
-}
-
-export const createResume = createAsyncThunk<
-  IResumeEntity,
-  IResumeData,
-  { rejectValue: string }
->('resumes/createResume', async (resumeData, thunkApi) => {
-  try {
-    const reqBody = createFormData(resumeData);
-    const { data } = await axios.post('/api/resumes', reqBody, {
-      headers: { 'Content-Type': 'multipart/form-data' },
-    });
-
-    const { _id, name, position, comment } = data;
-    return {
-      _id,
-      name,
-      position,
-      comment,
-      isReviewed: false,
-      isFavorite: false,
-    };
-  } catch (err) {
-    const error = err as AxiosError<{ message: string }>;
-    if (!error.response) {
-      return thunkApi.rejectWithValue('Something went wrong');
-    }
-    return thunkApi.rejectWithValue(error.response.data.message);
-  }
-});
-// -------------------------- remove to here -------------------------------------
 
 export const removeResume = createAsyncThunk<
   string,
