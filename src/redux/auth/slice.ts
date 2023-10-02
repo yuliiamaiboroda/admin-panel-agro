@@ -2,6 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { fetchCurrentUser, loginUser, logoutUser } from './operations';
 import type { IUserState } from 'helpers/types/auth-interface';
+import { authPendingReducer, authRejectedReducer } from './reducers';
 
 const initialState: IUserState = {
   accessToken: null,
@@ -29,9 +30,7 @@ const authSlice = createSlice({
   },
   extraReducers: builder => {
     builder
-      .addCase(loginUser.pending, state => {
-        return { ...state, isLoading: true, error: null };
-      })
+      .addCase(loginUser.pending, authPendingReducer)
       .addCase(loginUser.fulfilled, (state, action) => {
         return {
           ...state,
@@ -41,29 +40,13 @@ const authSlice = createSlice({
           user: action.payload.user,
         };
       })
-      .addCase(loginUser.rejected, (state, action) => {
-        return {
-          ...state,
-          isLoading: false,
-          ...(action.payload ? { error: action.payload } : null),
-        };
-      })
-      .addCase(logoutUser.pending, state => {
-        return { ...state, isLoading: true, error: null };
-      })
+      .addCase(loginUser.rejected, authRejectedReducer)
+      .addCase(logoutUser.pending, authPendingReducer)
       .addCase(logoutUser.fulfilled, state => {
         return (state = initialState);
       })
-      .addCase(logoutUser.rejected, (state, action) => {
-        return {
-          ...state,
-          isLoading: false,
-          ...(action.payload ? { error: action.payload } : null),
-        };
-      })
-      .addCase(fetchCurrentUser.pending, state => {
-        return { ...state, isLoading: true, error: null };
-      })
+      .addCase(logoutUser.rejected, authRejectedReducer)
+      .addCase(fetchCurrentUser.pending, authPendingReducer)
       .addCase(fetchCurrentUser.fulfilled, (state, action) => {
         return {
           ...state,
@@ -72,13 +55,7 @@ const authSlice = createSlice({
           user: action.payload,
         };
       })
-      .addCase(fetchCurrentUser.rejected, (state, action) => {
-        return {
-          ...state,
-          isLoading: false,
-          ...(action.payload ? { error: action.payload } : null),
-        };
-      });
+      .addCase(fetchCurrentUser.rejected, authRejectedReducer);
   },
 });
 
