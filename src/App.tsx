@@ -1,7 +1,7 @@
-import { useEffect, lazy } from 'react';
+import { useEffect, lazy, Suspense } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from 'hooks';
-import { selectUser, fetchCurrentUser } from 'redux/user';
+import { selectUser, fetchCurrentUser } from 'redux/auth';
 import { Roles } from 'helpers/constants';
 
 import PrivateRoute from 'components/PrivateRoute';
@@ -63,92 +63,46 @@ function App() {
   }
 
   return (
-    <Routes>
-      <Route
-        path="/"
-        element={
-          <PrivateRoute component={<SharedLayout />} auth redirectTo="/login" />
-        }
-      >
-        <Route index element={<Navigate to="/products" />} />
-        <Route path="profile" element={<ProfilePage />} />
+    <Suspense fallback={<Loader />}>
+      <Routes>
         <Route
-          path="users"
+          path="/"
           element={
-            <RestrictedRoute component={<UsersPage />} redirectTo="/products" />
+            <PrivateRoute
+              component={<SharedLayout />}
+              auth
+              redirectTo="/login"
+            />
           }
         >
-          <Route path=":userId" element={<UsersModalLayout />}>
-            <Route index element={<UsersModalDetails />} />
-            <Route path="form" element={<UsersModalUpdateForm />} />
-            <Route path="confirm" element={<UsersModalConfirm />} />
-            <Route path="*" element={<Navigate to="/users" replace />} />
+          <Route index element={<Navigate to="/products" />} />
+          <Route path="profile" element={<ProfilePage />} />
+          <Route
+            path="users"
+            element={
+              <RestrictedRoute
+                component={<UsersPage />}
+                redirectTo="/products"
+              />
+            }
+          >
+            <Route path=":userId" element={<UsersModalLayout />}>
+              <Route index element={<UsersModalDetails />} />
+              <Route path="form" element={<UsersModalUpdateForm />} />
+              <Route path="confirm" element={<UsersModalConfirm />} />
+              <Route path="*" element={<Navigate to="/users" replace />} />
+            </Route>
           </Route>
-        </Route>
-        <Route path="products" element={<ProductsPage />}>
-          <Route path=":productId" element={<ProductModalLayout />}>
-            <Route index element={<ProductModalDetails />} />
-            <Route
-              path="form"
-              element={
-                <RestrictedRoute
-                  component={<ProductModalEditForm />}
-                  accessRight={Roles.productsManager}
-                  redirectTo="/products"
-                />
-              }
-            />
-            <Route
-              path="confirm"
-              element={
-                <RestrictedRoute
-                  component={<ProductModalConfirmation />}
-                  accessRight={Roles.productsManager}
-                  redirectTo="/products"
-                />
-              }
-            />
-            <Route path="*" element={<Navigate to="/products" replace />} />
-          </Route>
-        </Route>
-        <Route path="services" element={<ServicesPage />}>
-          <Route path=":serviceId" element={<ServiceModalLayout />}>
-            <Route index element={<ServiceModalDetails />} />
-            <Route
-              path="form"
-              element={
-                <RestrictedRoute
-                  component={<ServiceModalEditForm />}
-                  accessRight={Roles.servicesManager}
-                  redirectTo="/services"
-                />
-              }
-            />
-            <Route
-              path="confirm"
-              element={
-                <RestrictedRoute
-                  component={<ServiceModalConfirmation />}
-                  accessRight={Roles.servicesManager}
-                  redirectTo="/services"
-                />
-              }
-            />
-            <Route path="*" element={<Navigate to="/services" replace />} />
-          </Route>
-        </Route>
-        <Route path="vacancies" element={<VacanciesPage />}>
-          <Route index element={<Navigate to="all-vacancies" replace />} />
-          <Route path=":categoryName" element={<VacanciesDashboard />}>
-            <Route path=":vacanciesId" element={<VacanciesModalLayout />}>
-              <Route index element={<VacanciesModalDetails />} />
+          <Route path="products" element={<ProductsPage />}>
+            <Route path=":productId" element={<ProductModalLayout />}>
+              <Route index element={<ProductModalDetails />} />
               <Route
                 path="form"
                 element={
                   <RestrictedRoute
-                    component={<VacanciesModalUpdateForm />}
-                    accessRight={Roles.applyManager}
-                    redirectTo="/vacancies"
+                    component={<ProductModalEditForm />}
+                    accessRight={Roles.productsManager}
+                    redirectTo="/products"
                   />
                 }
               />
@@ -156,48 +110,106 @@ function App() {
                 path="confirm"
                 element={
                   <RestrictedRoute
-                    component={<VacanciesModalConfirm />}
-                    accessRight={Roles.applyManager}
-                    redirectTo="/vacancies"
+                    component={<ProductModalConfirmation />}
+                    accessRight={Roles.productsManager}
+                    redirectTo="/products"
                   />
                 }
               />
-              <Route path="*" element={<Navigate to="/vacancies" replace />} />
+              <Route path="*" element={<Navigate to="/products" replace />} />
+            </Route>
+          </Route>
+          <Route path="services" element={<ServicesPage />}>
+            <Route path=":serviceId" element={<ServiceModalLayout />}>
+              <Route index element={<ServiceModalDetails />} />
+              <Route
+                path="form"
+                element={
+                  <RestrictedRoute
+                    component={<ServiceModalEditForm />}
+                    accessRight={Roles.servicesManager}
+                    redirectTo="/services"
+                  />
+                }
+              />
+              <Route
+                path="confirm"
+                element={
+                  <RestrictedRoute
+                    component={<ServiceModalConfirmation />}
+                    accessRight={Roles.servicesManager}
+                    redirectTo="/services"
+                  />
+                }
+              />
+              <Route path="*" element={<Navigate to="/services" replace />} />
+            </Route>
+          </Route>
+          <Route path="vacancies" element={<VacanciesPage />}>
+            <Route index element={<Navigate to="all-vacancies" replace />} />
+            <Route path=":categoryName" element={<VacanciesDashboard />}>
+              <Route path=":vacanciesId" element={<VacanciesModalLayout />}>
+                <Route index element={<VacanciesModalDetails />} />
+                <Route
+                  path="form"
+                  element={
+                    <RestrictedRoute
+                      component={<VacanciesModalUpdateForm />}
+                      accessRight={Roles.applyManager}
+                      redirectTo="/vacancies"
+                    />
+                  }
+                />
+                <Route
+                  path="confirm"
+                  element={
+                    <RestrictedRoute
+                      component={<VacanciesModalConfirm />}
+                      accessRight={Roles.applyManager}
+                      redirectTo="/vacancies"
+                    />
+                  }
+                />
+                <Route
+                  path="*"
+                  element={<Navigate to="/vacancies" replace />}
+                />
+              </Route>
+            </Route>
+          </Route>
+          <Route
+            path="resumes"
+            element={
+              <RestrictedRoute
+                component={<ResumesPage />}
+                accessRight={Roles.applyManager}
+              />
+            }
+          >
+            <Route path=":resumeId" element={<ResumeModalLayout />}>
+              <Route index element={<ResumeModalDetails />} />
+              <Route path="confirm" element={<ResumeModalConfirmation />} />
+              <Route path="*" element={<Navigate to="/resumes" replace />} />
+            </Route>
+          </Route>
+          <Route
+            path="feedbacks"
+            element={<RestrictedRoute component={<FeedbackPage />} />}
+          >
+            <Route path=":feedbackId" element={<FeedbackModalLayout />}>
+              <Route index element={<FeedbackModalDetails />} />
+              <Route path="confirm" element={<FeedbackModalConfirmation />} />
+              <Route path="*" element={<Navigate to="/feedbacks" replace />} />
             </Route>
           </Route>
         </Route>
         <Route
-          path="resumes"
-          element={
-            <RestrictedRoute
-              component={<ResumesPage />}
-              accessRight={Roles.applyManager}
-            />
-          }
-        >
-          <Route path=":resumeId" element={<ResumeModalLayout />}>
-            <Route index element={<ResumeModalDetails />} />
-            <Route path="confirm" element={<ResumeModalConfirmation />} />
-            <Route path="*" element={<Navigate to="/resumes" replace />} />
-          </Route>
-        </Route>
-        <Route
-          path="feedbacks"
-          element={<RestrictedRoute component={<FeedbackPage />} />}
-        >
-          <Route path=":feedbackId" element={<FeedbackModalLayout />}>
-            <Route index element={<FeedbackModalDetails />} />
-            <Route path="confirm" element={<FeedbackModalConfirmation />} />
-            <Route path="*" element={<Navigate to="/feedbacks" replace />} />
-          </Route>
-        </Route>
-      </Route>
-      <Route
-        path="/login"
-        element={<PrivateRoute component={<LoginPage />} redirectTo="/" />}
-      />
-      <Route path="*" element={<Navigate to="/" replace />} />
-    </Routes>
+          path="/login"
+          element={<PrivateRoute component={<LoginPage />} redirectTo="/" />}
+        />
+        <Route path="*" element={<Navigate to="/" replace />} />
+      </Routes>
+    </Suspense>
   );
 }
 

@@ -1,19 +1,8 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios, { AxiosError } from 'axios';
 import { Notify } from 'notiflix';
-import type { Roles } from 'helpers/constants';
-import type { RootState } from 'redux/store';
-
-interface IUser {
-  accessToken: string;
-  refreshToken: string;
-  user: {
-    email: string;
-    name: string;
-    surname: string;
-    role: keyof typeof Roles;
-  };
-}
+import type { IUser } from 'helpers/types/auth-interface';
+import { RootState } from 'redux/store';
 
 export const loginUser = createAsyncThunk<
   IUser,
@@ -22,7 +11,7 @@ export const loginUser = createAsyncThunk<
 >('user/loginUser', async (userCredentials, thunkApi) => {
   try {
     const { data } = await axios.post<IUser>(
-      '/api/users/login',
+      '/api/auth/login',
       userCredentials
     );
     return data;
@@ -41,7 +30,7 @@ export const logoutUser = createAsyncThunk<
   { rejectValue: string }
 >('users/logoutUser', async (_, thunkApi) => {
   try {
-    await axios.post('/api/users/logout');
+    await axios.post('/api/auth/logout');
   } catch (err) {
     const error = err as AxiosError;
     return thunkApi.rejectWithValue(error.message);
@@ -54,7 +43,7 @@ export const fetchCurrentUser = createAsyncThunk<
   { rejectValue: string; state: RootState }
 >('users/current', async (_, thunkApi) => {
   try {
-    const { data } = await axios.get('/api/users/current');
+    const { data } = await axios.get('/api/auth/current-user');
 
     return data;
   } catch (err) {

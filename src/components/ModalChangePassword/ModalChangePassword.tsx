@@ -9,7 +9,7 @@ import Box from 'components/Box';
 import { Button } from 'helpers/styles';
 import FormButtons from 'components/FormButtons';
 import ResetPasswordButton from 'components/ResetPasswordButton';
-import { selectUser } from 'redux/user';
+import { selectUser } from 'redux/auth';
 
 interface IProps {
   onClose: () => void;

@@ -1,6 +1,6 @@
 import { NavLink, Outlet } from 'react-router-dom';
 import { useAppSelector } from 'hooks';
-import { selectUser } from 'redux/user';
+import { selectUser } from 'redux/auth';
 
 const navigationLinks = [
   { href: '/users', title: 'Users' },

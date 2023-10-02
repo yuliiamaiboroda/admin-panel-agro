@@ -1,25 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
-import {
-  fetchCurrentUser,
-  loginUser,
-  logoutUser,
-  // refreshUser,
-} from './operations';
-import type { Roles } from 'helpers/constants';
-
-interface IUserState {
-  accessToken: string | null;
-  user: {
-    email: string | null;
-    name: string | null;
-    surname: string | null;
-    role: keyof typeof Roles | null;
-  };
-  isAuthorized: boolean;
-  isLoading: boolean;
-  error: string | null;
-}
+import { fetchCurrentUser, loginUser, logoutUser } from './operations';
+import type { IUserState } from 'helpers/types/auth-interface';
 
 const initialState: IUserState = {
   accessToken: null,
@@ -34,8 +16,8 @@ const initialState: IUserState = {
   error: null,
 };
 
-const userSlice = createSlice({
-  name: 'user',
+const authSlice = createSlice({
+  name: 'auth',
   initialState,
   reducers: {
     refreshToken: (state, action: PayloadAction<string>) => {
@@ -100,5 +82,5 @@ const userSlice = createSlice({
   },
 });
 
-export const { refreshToken, refreshTokenError } = userSlice.actions;
-export const userReducer = userSlice.reducer;
+export const { refreshToken, refreshTokenError } = authSlice.actions;
+export const authReducer = authSlice.reducer;

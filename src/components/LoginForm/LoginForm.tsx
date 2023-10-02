@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useAppDispatch } from 'hooks';
-import { loginUser } from 'redux/user';
+import { loginUser } from 'redux/auth';
 import { Formik, Form } from 'formik';
 import loginSchema from 'helpers/schemas/auth/login.schema';
 import { RxEyeClosed, RxEyeOpen } from 'react-icons/rx';
