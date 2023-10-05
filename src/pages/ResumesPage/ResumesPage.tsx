@@ -1,7 +1,7 @@
-import { Suspense, useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Outlet } from 'react-router-dom';
 import { Notify } from 'notiflix';
-import { useAppSelector, useModal, useAppDispatch } from 'hooks';
+import { useAppSelector, useAppDispatch } from 'hooks';
 import {
   getAllResumes,
   selectResumeError,
@@ -11,19 +11,14 @@ import {
 } from 'redux/resumes';
 import type { IResumeFilter } from 'helpers/types';
 import ResumesGallery from 'components/ResumesGallery';
-import Modal from 'components/Modal';
-import ResumeForm from 'components/ResumeForm';
 import ResumesFilter from 'components/ResumesFilter';
-import Loader from 'components/Loader';
 import PageTitle from 'components/PageTitle';
-import CreateButton from 'components/CreateButton';
 import GalleryWrapper from 'components/GalleryWrapper';
 import CardPlaceholder from 'components/CardPlaceholder';
 import FilterWrapper from 'components/FilterWrapper';
 import LoadMoreButton from 'components/LoadMoreButton';
 
 export default function ResumesPage() {
-  const { isModalOpen, openModal, closeModal } = useModal();
   const [filterStatus, setFilterStatus] = useState<IResumeFilter>({});
   const resumes = useAppSelector(selectResumes);
   const pagination = useAppSelector(selectResumePagination);
@@ -65,13 +60,7 @@ export default function ResumesPage() {
           }
         />
       ) : null}
-      <Suspense fallback={<Loader />}>
-        <Outlet />
-      </Suspense>
-      <CreateButton onClick={openModal} />
-      <Modal isModalOpen={isModalOpen} onClose={closeModal}>
-        <ResumeForm onSubmit={closeModal} />
-      </Modal>
+      <Outlet />
     </>
   );
 }

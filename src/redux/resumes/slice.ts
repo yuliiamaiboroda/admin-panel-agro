@@ -2,7 +2,6 @@ import { createSlice } from '@reduxjs/toolkit';
 import {
   getAllResumes,
   getCertainResume,
-  createResume,
   removeResume,
   updateResumeViews,
   loadMoreResumes,
@@ -15,7 +14,6 @@ import {
   getAllResumesFulfilledReducer,
   loadMoreResumesFulfilledReducer,
   getCertainResumeFulfilledReducer,
-  createResumeFulfilledReducer,
   removeResumeFulfilledReducer,
   updateResumeViewsFulfilledReducer,
   updateResumeIsFavoriteFulfilledReducer,
@@ -55,9 +53,6 @@ const resumesSlice = createSlice({
       .addCase(getCertainResume.pending, pendingResumeReducer)
       .addCase(getCertainResume.fulfilled, getCertainResumeFulfilledReducer)
       .addCase(getCertainResume.rejected, rejectedResumeReducer)
-      .addCase(createResume.pending, pendingResumeReducer)
-      .addCase(createResume.fulfilled, createResumeFulfilledReducer)
-      .addCase(createResume.rejected, rejectedResumeReducer)
       .addCase(removeResume.pending, pendingResumeReducer)
       .addCase(removeResume.fulfilled, removeResumeFulfilledReducer)
       .addCase(removeResume.rejected, rejectedResumeReducer)

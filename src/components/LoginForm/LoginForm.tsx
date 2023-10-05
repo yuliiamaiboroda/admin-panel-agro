@@ -4,7 +4,7 @@ import { loginUser } from 'redux/user';
 import { Formik, Form } from 'formik';
 import loginSchema from 'helpers/schemas/auth/login.schema';
 import { RxEyeClosed, RxEyeOpen } from 'react-icons/rx';
-import companyLogo from 'asserts/company-logo.svg';
+import companyLogo from 'assets/company-logo.svg';
 import Box from 'components/Box';
 import { Button } from 'helpers/styles';
 import { Title } from './LoginForm.styled';

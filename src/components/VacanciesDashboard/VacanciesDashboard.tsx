@@ -1,4 +1,4 @@
-import React, { useEffect, Suspense } from 'react';
+import React, { useEffect } from 'react';
 import { Outlet, useParams, useNavigate } from 'react-router-dom';
 import VacanciesGallery from '../VacanciesGallery';
 import Modal from 'components/Modal';
@@ -11,7 +11,6 @@ import {
 import { Roles } from 'helpers/constants';
 import VacanciesNavigator from 'components/VacanciesNavigator';
 import RestrictedComponent from 'components/RestrictedComponent';
-import Loader from 'components/Loader';
 import VacancyForm from 'components/VacancyForm/VacancyForm';
 import CreateButton from 'components/CreateButton';
 import FilterWrapper from 'components/FilterWrapper';
@@ -44,7 +43,7 @@ export default function VacanciesDashboard() {
       <FilterWrapper>
         <VacanciesNavigator />
       </FilterWrapper>
-      {isListLoading ? <Loader /> : <VacanciesGallery />}
+      {!isListLoading && <VacanciesGallery />}
       <RestrictedComponent accessRight={Roles.applyManager}>
         <CreateButton onClick={openModal} />
       </RestrictedComponent>
@@ -62,9 +61,7 @@ export default function VacanciesDashboard() {
           />
         </RestrictedComponent>
       </Modal>
-      <Suspense fallback={<Loader />}>
-        <Outlet />
-      </Suspense>
+      <Outlet />
     </div>
   );
 }
