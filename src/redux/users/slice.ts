@@ -4,8 +4,6 @@ import {
   getCertainUser,
   registerNewUser,
   removeUserById,
-  restorePasswordViaEmail,
-  updatePasswordById,
   updateUserById,
 } from './operations';
 import type { IUserState } from 'helpers/types';
@@ -40,16 +38,7 @@ const usersSlice = createSlice({
       .addCase(registerNewUser.rejected, users.rejectedReducer)
       .addCase(updateUserById.pending, users.pendingReducer)
       .addCase(updateUserById.fulfilled, users.updateUserByIdReducer)
-      .addCase(updateUserById.rejected, users.rejectedReducer)
-      .addCase(updatePasswordById.pending, users.pendingReducer)
-      .addCase(updatePasswordById.fulfilled, users.updatePasswordByIdReducer)
-      .addCase(updatePasswordById.rejected, users.rejectedReducer)
-      .addCase(restorePasswordViaEmail.pending, users.pendingReducer)
-      .addCase(
-        restorePasswordViaEmail.fulfilled,
-        users.updatePasswordByIdReducer
-      )
-      .addCase(restorePasswordViaEmail.rejected, users.rejectedReducer),
+      .addCase(updateUserById.rejected, users.rejectedReducer),
 });
 
 export const usersReducer = usersSlice.reducer;

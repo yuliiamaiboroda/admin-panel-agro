@@ -1,7 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios, { AxiosError } from 'axios';
 import type { IUser } from 'helpers/types';
-import { Notify } from 'notiflix';
 
 export const getAllUsers = createAsyncThunk<
   IUser[],
@@ -51,7 +50,7 @@ export const registerNewUser = createAsyncThunk<
   'users/register',
   async ({ email, name, surname, role, password }, thunkApi) => {
     try {
-      const { data } = await axios.post('/api/users/register', {
+      const { data } = await axios.put('/api/users', {
         email,
         name,
         surname,
@@ -90,7 +89,7 @@ export const updateUserById = createAsyncThunk<
             name,
           });
 
-      const { data } = await axios.patch(`/api/users/${_id}`, requestBody);
+      const { data } = await axios.post(`/api/users/${_id}`, requestBody);
       return data;
     } catch (err) {
       const error = err as AxiosError<{ message: string }>;
@@ -117,50 +116,6 @@ export const getCertainUser = createAsyncThunk<
     if (!error.response) {
       return thunkApi.rejectWithValue('Something went wrong');
     }
-    return thunkApi.rejectWithValue(error.response.data.message);
-  }
-});
-
-export const updatePasswordById = createAsyncThunk<
-  string,
-  { oldPassword: string; newPassword: string },
-  {
-    rejectValue: string;
-  }
->('users/updatePassword', async ({ oldPassword, newPassword }, thunkApi) => {
-  try {
-    let requestBody = { oldPassword, newPassword };
-
-    const { data } = await axios.post(`/api/users/updatePassword`, requestBody);
-    Notify.success(data);
-    return data;
-  } catch (err) {
-    const error = err as AxiosError<{ message: string }>;
-    if (!error.response) {
-      return thunkApi.rejectWithValue('Something went wrong');
-    }
-    return thunkApi.rejectWithValue(error.response.data.message);
-  }
-});
-
-export const restorePasswordViaEmail = createAsyncThunk<
-  undefined,
-  string,
-  {
-    rejectValue: string;
-  }
->('user/restore', async (email, thunkApi) => {
-  try {
-    await axios.patch('/api/users/restore', { email });
-
-    Notify.success('Пароль успішно надіслано по пошті');
-  } catch (err) {
-    const error = err as AxiosError<{ message: string }>;
-
-    if (!error.response) {
-      return thunkApi.rejectWithValue('Something went wrong');
-    }
-    Notify.failure(error.response.data.message);
     return thunkApi.rejectWithValue(error.response.data.message);
   }
 });

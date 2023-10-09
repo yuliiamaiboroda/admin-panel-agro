@@ -51,3 +51,47 @@ export const fetchCurrentUser = createAsyncThunk<
     return thunkApi.rejectWithValue(error.message);
   }
 });
+
+export const updatePasswordById = createAsyncThunk<
+  string,
+  { oldPassword: string; newPassword: string },
+  {
+    rejectValue: string;
+  }
+>('users/updatePassword', async ({ oldPassword, newPassword }, thunkApi) => {
+  try {
+    let requestBody = { oldPassword, newPassword };
+
+    const { data } = await axios.post(`/api/auth/update-password`, requestBody);
+    Notify.success(data);
+    return data;
+  } catch (err) {
+    const error = err as AxiosError<{ message: string }>;
+    if (!error.response) {
+      return thunkApi.rejectWithValue('Something went wrong');
+    }
+    return thunkApi.rejectWithValue(error.response.data.message);
+  }
+});
+
+export const restorePasswordViaEmail = createAsyncThunk<
+  undefined,
+  string,
+  {
+    rejectValue: string;
+  }
+>('user/restore', async (email, thunkApi) => {
+  try {
+    await axios.post('/api/auth/restore-password', { email });
+
+    Notify.success('Пароль успішно надіслано по пошті');
+  } catch (err) {
+    const error = err as AxiosError<{ message: string }>;
+
+    if (!error.response) {
+      return thunkApi.rejectWithValue('Something went wrong');
+    }
+    Notify.failure(error.response.data.message);
+    return thunkApi.rejectWithValue(error.response.data.message);
+  }
+});

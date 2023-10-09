@@ -47,3 +47,10 @@ export const fetchCurrentUser = (
   isAuthorized: true,
   user: payload,
 });
+
+export const updatePasswordByIdReducer = (state: IAuthState) => {
+  return {
+    ...state,
+    isLoading: false,
+  };
+};

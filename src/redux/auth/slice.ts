@@ -1,5 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { fetchCurrentUser, loginUser, logoutUser } from './operations';
+import {
+  fetchCurrentUser,
+  loginUser,
+  logoutUser,
+  updatePasswordById,
+  restorePasswordViaEmail,
+} from './operations';
 import type { IAuthState } from 'helpers/types/auth-interface';
 import * as auth from './reducers';
 
@@ -33,7 +39,16 @@ const authSlice = createSlice({
       .addCase(logoutUser.rejected, auth.rejectedReducer)
       .addCase(fetchCurrentUser.pending, auth.pendingReducer)
       .addCase(fetchCurrentUser.fulfilled, auth.fetchCurrentUser)
-      .addCase(fetchCurrentUser.rejected, auth.rejectedReducer);
+      .addCase(fetchCurrentUser.rejected, auth.rejectedReducer)
+      .addCase(updatePasswordById.pending, auth.pendingReducer)
+      .addCase(updatePasswordById.fulfilled, auth.updatePasswordByIdReducer)
+      .addCase(updatePasswordById.rejected, auth.rejectedReducer)
+      .addCase(restorePasswordViaEmail.pending, auth.pendingReducer)
+      .addCase(
+        restorePasswordViaEmail.fulfilled,
+        auth.updatePasswordByIdReducer
+      )
+      .addCase(restorePasswordViaEmail.rejected, auth.rejectedReducer);
   },
 });
 

@@ -80,13 +80,6 @@ export const getCertainUserReducer = (
   };
 };
 
-export const updatePasswordByIdReducer = (state: IUserState) => {
-  return {
-    ...state,
-    isLoading: false,
-  };
-};
-
 export const removeCertainUserReducer = (state: IUserState) => ({
   ...state,
   certain: null,

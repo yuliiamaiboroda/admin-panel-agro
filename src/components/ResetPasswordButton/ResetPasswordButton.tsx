@@ -1,5 +1,5 @@
 import { useAppDispatch } from 'hooks';
-import { restorePasswordViaEmail } from 'redux/users';
+import { restorePasswordViaEmail } from 'redux/auth';
 import { MdUpdate } from 'react-icons/md';
 import { Button } from 'helpers/styles';
 
