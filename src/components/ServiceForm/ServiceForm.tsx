@@ -4,6 +4,7 @@ import { serviceSchema } from 'helpers/schemas/services';
 import UploadFileField from 'components/UploadFileField';
 import FormField from 'components/FormField';
 import FormButtons from 'components/FormButtons';
+import TextareaField from 'components/TextareaField';
 
 interface IServiceState {
   title: string;
@@ -85,7 +86,7 @@ export default function ServiceForm({
               fieldName="title"
               placeholderName="Заголовок"
             />
-            <FormField
+            <TextareaField
               labelName="Опис:"
               placeholderName="Опис"
               fieldName="description"
