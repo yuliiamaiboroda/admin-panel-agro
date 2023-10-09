@@ -8,7 +8,7 @@ export const getAllProducts = createAsyncThunk<
   { rejectValue: string }
 >('products/getAll', async (_, thunkApi) => {
   try {
-    const { data } = await axios.get('/api/products/all');
+    const { data } = await axios.get('/api/products');
     return data;
   } catch (err) {
     const error = err as AxiosError<{ message: string }>;
@@ -25,7 +25,7 @@ export const getCertainProduct = createAsyncThunk<
   { rejectValue: string }
 >('products/getCertainProduct', async (id, thunkApi) => {
   try {
-    const { data } = await axios.get(`/api/products/certain/${id}`);
+    const { data } = await axios.get(`/api/products/${id}`);
     return data;
   } catch (err) {
     const error = err as AxiosError<{ message: string }>;
@@ -49,7 +49,7 @@ export const createProduct = createAsyncThunk<
     reqBody.append('title', title);
     reqBody.append('description', description);
     reqBody.append('image', image);
-    const { data } = await axios.post('/api/products/certain', reqBody, {
+    const { data } = await axios.put('/api/products', reqBody, {
       headers: { 'Content-Type': 'multipart/form-data' },
     });
     if (!data) {
@@ -82,11 +82,9 @@ export const editProduct = createAsyncThunk<
         reqBody.append('image', image);
       }
 
-      const { data } = await axios.patch(
-        `/api/products/certain/${id}`,
-        reqBody,
-        { headers: { 'Content-Type': 'multipart/form-data' } }
-      );
+      const { data } = await axios.post(`/api/products/${id}`, reqBody, {
+        headers: { 'Content-Type': 'multipart/form-data' },
+      });
       return data;
     } catch (err) {
       const error = err as AxiosError<{ message: string }>;
@@ -104,7 +102,7 @@ export const removeProduct = createAsyncThunk<
   { rejectValue: string }
 >('products/removeProduct', async (id, thunkApi) => {
   try {
-    await axios.delete(`/api/products/certain/${id}`);
+    await axios.delete(`/api/products/${id}`);
     return id;
   } catch (err) {
     const error = err as AxiosError<{ message: string }>;
