@@ -10,7 +10,7 @@ export default function ResumesGallery() {
   return (
     <GalleryWrapper>
       {resumes.length ? (
-        resumes.map(resume => <ResumeCard key={resume._id} {...resume} />)
+        resumes.map(resume => <ResumeCard key={resume.id} {...resume} />)
       ) : (
         <CardPlaceholder />
       )}

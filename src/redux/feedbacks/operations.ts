@@ -1,9 +1,13 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios, { AxiosError } from 'axios';
-import { IFeedback, IFeedbackCertain, IFeedbackPagination } from './slice';
+import {
+  IFeedback,
+  IFeedbackCertain,
+  IFeedbackPagination,
+} from 'helpers/types';
 import type { IFeedbackFilter } from 'helpers/types';
 
-export const getAllFeedback = createAsyncThunk<
+export const getAllFeedbacks = createAsyncThunk<
   { feedbacks: IFeedback[]; pagination: IFeedbackPagination },
   IFeedbackFilter,
   { rejectValue: string }
@@ -11,7 +15,7 @@ export const getAllFeedback = createAsyncThunk<
   try {
     const {
       data: { feedbacks, ...pagination },
-    } = await axios.get('/api/feedback/all', { params });
+    } = await axios.get('/api/feedback', { params });
     return { feedbacks, pagination };
   } catch (err) {
     const error = err as AxiosError<{ message: string }>;
@@ -28,10 +32,10 @@ export const removeFeedbackById = createAsyncThunk<
   {
     rejectValue: string;
   }
->('feedback/removeById', async (_id, thunkApi) => {
+>('feedback/removeById', async (id, thunkApi) => {
   try {
-    await axios.delete(`/api/feedback/${_id}`);
-    return _id;
+    await axios.delete(`/api/feedback/${id}`);
+    return id;
   } catch (err) {
     const error = err as AxiosError<{ message: string }>;
     if (!error.response) {
@@ -47,10 +51,10 @@ export const updateFeedbackViews = createAsyncThunk<
   {
     rejectValue: string;
   }
->('feedback/updateViews', async (_id, thunkApi) => {
+>('feedback/updateViews', async (id, thunkApi) => {
   try {
-    await axios.patch(`/api/feedback/${_id}`);
-    return _id;
+    await axios.post(`/api/feedback/${id}/views`);
+    return id;
   } catch (err) {
     const error = err as AxiosError<{ message: string }>;
     if (!error.response) {
@@ -66,9 +70,9 @@ export const getCertainFeedback = createAsyncThunk<
   {
     rejectValue: string;
   }
->('feedback/certain', async (_id, thunkApi) => {
+>('feedback/certain', async (id, thunkApi) => {
   try {
-    const { data } = await axios.get(`/api/feedback/${_id}`);
+    const { data } = await axios.get(`/api/feedback/${id}`);
     return data;
   } catch (err) {
     const error = err as AxiosError<{ message: string }>;
@@ -85,10 +89,10 @@ export const updateFeedbackIsFavorite = createAsyncThunk<
   {
     rejectValue: string;
   }
->('feedback/updateFeedbackFavorite', async (_id, thunkApi) => {
+>('feedback/updateFeedbackFavorite', async (id, thunkApi) => {
   try {
-    await axios.patch(`/api/feedback/favorite/${_id}`);
-    return _id;
+    await axios.post(`/api/feedback/${id}/favorite`);
+    return id;
   } catch (err) {
     const error = err as AxiosError<{ message: string }>;
     if (!error.response) {
@@ -106,7 +110,7 @@ export const loadMoreFeedbacks = createAsyncThunk<
   try {
     const {
       data: { feedbacks, ...pagination },
-    } = await axios.get('/api/feedback/all', { params });
+    } = await axios.get('/api/feedback', { params });
     return { feedbacks, pagination };
   } catch (err) {
     const error = err as AxiosError<{ message: string }>;

@@ -9,14 +9,14 @@ import FavoriteButton from 'components/FavoriteButton';
 import UnviewedMark from 'components/UnviewedMark';
 
 export interface IFeedback {
-  _id: string;
+  id: string;
   name: string;
   comment: string;
   isReviewed: boolean;
   isFavorite: boolean;
 }
 export default function FeedbackCard({
-  _id,
+  id,
   name,
   isReviewed,
   comment,
@@ -28,7 +28,7 @@ export default function FeedbackCard({
 
   const handleUpdateViews = () => {
     if (!isReviewed) {
-      dispatch(updateFeedbackViews(_id));
+      dispatch(updateFeedbackViews(id));
     }
   };
 
@@ -38,7 +38,7 @@ export default function FeedbackCard({
       !(event.target instanceof HTMLButtonElement)
     ) {
       handleUpdateViews();
-      navigate(`${_id}${location.search}`, { state: location });
+      navigate(`${id}${location.search}`, { state: location });
     }
     return;
   };
@@ -52,9 +52,9 @@ export default function FeedbackCard({
         <Box display="flex" justifyContent="center" gridGap={2}>
           <FavoriteButton
             isFavorite={isFavorite}
-            onClick={() => dispatch(updateFeedbackIsFavorite(_id))}
+            onClick={() => dispatch(updateFeedbackIsFavorite(id))}
           />
-          <ItemLink type="remove" navigateTo={`${_id}/confirm`} />
+          <ItemLink type="remove" navigateTo={`${id}/confirm`} />
         </Box>
       </Box>
     </CardWrapperMarkup>

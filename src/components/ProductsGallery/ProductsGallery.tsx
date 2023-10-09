@@ -20,9 +20,7 @@ export default function ProductsGallery() {
     <>
       <GalleryWrapper>
         {products.length ? (
-          products.map(product => (
-            <ProductCard key={product._id} {...product} />
-          ))
+          products.map(product => <ProductCard key={product.id} {...product} />)
         ) : (
           <CardPlaceholder />
         )}

@@ -1,7 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios, { AxiosError } from 'axios';
-import { IUser } from './slice';
-import { Notify } from 'notiflix';
+import type { IUser } from 'helpers/types';
 
 export const getAllUsers = createAsyncThunk<
   IUser[],
@@ -24,10 +23,10 @@ export const removeUserById = createAsyncThunk<
   string,
   string,
   { rejectValue: string }
->('users/removeById', async (_id, thunkApi) => {
+>('users/removeById', async (id, thunkApi) => {
   try {
-    await axios.delete(`/api/users/${_id}`);
-    return _id;
+    await axios.delete(`/api/users/${id}`);
+    return id;
   } catch (err) {
     const error = err as AxiosError<{ message: string }>;
     if (!error.response) {
@@ -51,7 +50,7 @@ export const registerNewUser = createAsyncThunk<
   'users/register',
   async ({ email, name, surname, role, password }, thunkApi) => {
     try {
-      const { data } = await axios.post('/api/users/register', {
+      const { data } = await axios.put('/api/users', {
         email,
         name,
         surname,
@@ -77,7 +76,7 @@ export const updateUserById = createAsyncThunk<
   }
 >(
   'users/updateById',
-  async ({ email, name, surname, role, _id, password }, thunkApi) => {
+  async ({ email, name, surname, role, id, password }, thunkApi) => {
     try {
       let requestBody;
 
@@ -90,7 +89,7 @@ export const updateUserById = createAsyncThunk<
             name,
           });
 
-      const { data } = await axios.patch(`/api/users/${_id}`, requestBody);
+      const { data } = await axios.post(`/api/users/${id}`, requestBody);
       return data;
     } catch (err) {
       const error = err as AxiosError<{ message: string }>;
@@ -108,59 +107,15 @@ export const getCertainUser = createAsyncThunk<
   {
     rejectValue: string;
   }
->('users/getCertain', async (_id, thunkApi) => {
+>('users/getCertain', async (id, thunkApi) => {
   try {
-    const { data } = await axios.get(`/api/users/${_id}`);
+    const { data } = await axios.get(`/api/users/${id}`);
     return data;
   } catch (err) {
     const error = err as AxiosError<{ message: string }>;
     if (!error.response) {
       return thunkApi.rejectWithValue('Something went wrong');
     }
-    return thunkApi.rejectWithValue(error.response.data.message);
-  }
-});
-
-export const updatePasswordById = createAsyncThunk<
-  string,
-  { oldPassword: string; newPassword: string },
-  {
-    rejectValue: string;
-  }
->('users/updatePassword', async ({ oldPassword, newPassword }, thunkApi) => {
-  try {
-    let requestBody = { oldPassword, newPassword };
-
-    const { data } = await axios.post(`/api/users/updatePassword`, requestBody);
-    Notify.success(data);
-    return data;
-  } catch (err) {
-    const error = err as AxiosError<{ message: string }>;
-    if (!error.response) {
-      return thunkApi.rejectWithValue('Something went wrong');
-    }
-    return thunkApi.rejectWithValue(error.response.data.message);
-  }
-});
-
-export const restorePasswordViaEmail = createAsyncThunk<
-  undefined,
-  string,
-  {
-    rejectValue: string;
-  }
->('user/restore', async (email, thunkApi) => {
-  try {
-    await axios.patch('/api/users/restore', { email });
-
-    Notify.success('Пароль успішно надіслано по пошті');
-  } catch (err) {
-    const error = err as AxiosError<{ message: string }>;
-
-    if (!error.response) {
-      return thunkApi.rejectWithValue('Something went wrong');
-    }
-    Notify.failure(error.response.data.message);
     return thunkApi.rejectWithValue(error.response.data.message);
   }
 });

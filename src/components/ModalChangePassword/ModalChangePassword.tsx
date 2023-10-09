@@ -2,14 +2,14 @@ import { useState } from 'react';
 import { useAppDispatch, useAppSelector } from 'hooks';
 import { RxEyeClosed, RxEyeOpen } from 'react-icons/rx';
 import { Formik, Form } from 'formik';
-import { updatePasswordById } from 'redux/users';
+import { updatePasswordById } from 'redux/auth';
 import updatePasswordSchema from 'helpers/schemas/auth/updatePassword.schema';
 import FormField from 'components/FormField';
 import Box from 'components/Box';
 import { Button } from 'helpers/styles';
 import FormButtons from 'components/FormButtons';
 import ResetPasswordButton from 'components/ResetPasswordButton';
-import { selectUser } from 'redux/user';
+import { selectUser } from 'redux/auth';
 
 interface IProps {
   onClose: () => void;

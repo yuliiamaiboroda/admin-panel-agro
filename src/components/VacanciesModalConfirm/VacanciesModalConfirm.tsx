@@ -17,7 +17,7 @@ export default function VacanciesModalConfirm() {
   }
 
   const handleConfirm = () => {
-    dispatch(removeVacancyById(certain._id));
+    dispatch(removeVacancyById(certain.id));
     handleCloseModal('/vacancies');
   };
 

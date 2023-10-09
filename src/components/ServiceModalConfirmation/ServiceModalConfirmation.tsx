@@ -17,7 +17,7 @@ export default function ServiceModalConfirmation() {
   }
 
   const handleConfirm = () => {
-    dispatch(deleteService(service._id));
+    dispatch(deleteService(service.id));
     handleCloseModal('/services');
   };
 

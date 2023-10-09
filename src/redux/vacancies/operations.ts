@@ -36,10 +36,10 @@ export const removeVacancyById = createAsyncThunk<
   string,
   string,
   { rejectValue: string }
->('vacancies/removeById', async (_id, thunkApi) => {
+>('vacancies/removeById', async (id, thunkApi) => {
   try {
-    await axios.delete(`api/vacancies/${_id}`);
-    return _id;
+    await axios.delete(`api/vacancies/${id}`);
+    return id;
   } catch (err) {
     const error = err as AxiosError<{ message: string }>;
     if (!error.response) {
@@ -111,12 +111,12 @@ export const updateVacancyById = createAsyncThunk<
       contactPhone,
       workExperienceRequired,
       location,
-      _id,
+      id,
     },
     thunkApi
   ) => {
     try {
-      const { data } = await axios.put(`/api/vacancies/${_id}`, {
+      const { data } = await axios.put(`/api/vacancies/${id}`, {
         category,
         title,
         description,
@@ -144,9 +144,9 @@ export const getCertainVacancy = createAsyncThunk<
   {
     rejectValue: string;
   }
->('vacancies/getCertain', async (_id, thunkApi) => {
+>('vacancies/getCertain', async (id, thunkApi) => {
   try {
-    const { data } = await axios.get(`/api/vacancies/certain/${_id}`);
+    const { data } = await axios.get(`/api/vacancies/certain/${id}`);
     return data;
   } catch (err) {
     const error = err as AxiosError<{ message: string }>;

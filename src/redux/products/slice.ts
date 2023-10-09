@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import type { IProduct } from 'helpers/types';
+import type { IProductState } from 'helpers/types';
 import {
   getAllProducts,
   getCertainProduct,
@@ -7,25 +7,9 @@ import {
   editProduct,
   removeProduct,
 } from './operations';
-import {
-  removeCertainProductReducer,
-  pendingProductReducer,
-  rejectedProductReducer,
-  getAllProductsFulfilledReducer,
-  getCertainProductFulfilledReducer,
-  createProductFulfilledReducer,
-  editProductFulfilledReducer,
-  removeProductFulfilledReducer,
-} from './reducers';
+import * as products from './reducers';
 
-export interface IState {
-  entities: IProduct[];
-  certain: IProduct | null;
-  isLoading: boolean;
-  error: string | null;
-}
-
-const initialState: IState = {
+export const initialState: IProductState = {
   entities: [],
   certain: null,
   isLoading: false,
@@ -36,25 +20,25 @@ const productsSlice = createSlice({
   name: 'products',
   initialState,
   reducers: {
-    removeCertainProduct: removeCertainProductReducer,
+    removeCertainProduct: products.removeCertainProductReducer,
   },
   extraReducers: builder =>
     builder
-      .addCase(getAllProducts.pending, pendingProductReducer)
-      .addCase(getAllProducts.fulfilled, getAllProductsFulfilledReducer)
-      .addCase(getAllProducts.rejected, rejectedProductReducer)
-      .addCase(getCertainProduct.pending, pendingProductReducer)
-      .addCase(getCertainProduct.fulfilled, getCertainProductFulfilledReducer)
-      .addCase(getCertainProduct.rejected, rejectedProductReducer)
-      .addCase(createProduct.pending, pendingProductReducer)
-      .addCase(createProduct.fulfilled, createProductFulfilledReducer)
-      .addCase(createProduct.rejected, rejectedProductReducer)
-      .addCase(editProduct.pending, pendingProductReducer)
-      .addCase(editProduct.fulfilled, editProductFulfilledReducer)
-      .addCase(editProduct.rejected, rejectedProductReducer)
-      .addCase(removeProduct.pending, pendingProductReducer)
-      .addCase(removeProduct.fulfilled, removeProductFulfilledReducer)
-      .addCase(removeProduct.rejected, rejectedProductReducer),
+      .addCase(getAllProducts.pending, products.pendingReducer)
+      .addCase(getAllProducts.fulfilled, products.getAllProductsReducer)
+      .addCase(getAllProducts.rejected, products.rejectedReducer)
+      .addCase(getCertainProduct.pending, products.pendingReducer)
+      .addCase(getCertainProduct.fulfilled, products.getCertainProductReducer)
+      .addCase(getCertainProduct.rejected, products.rejectedReducer)
+      .addCase(createProduct.pending, products.pendingReducer)
+      .addCase(createProduct.fulfilled, products.createProductReducer)
+      .addCase(createProduct.rejected, products.rejectedReducer)
+      .addCase(editProduct.pending, products.pendingReducer)
+      .addCase(editProduct.fulfilled, products.editProductReducer)
+      .addCase(editProduct.rejected, products.rejectedReducer)
+      .addCase(removeProduct.pending, products.pendingReducer)
+      .addCase(removeProduct.fulfilled, products.removeProductReducer)
+      .addCase(removeProduct.rejected, products.rejectedReducer),
 });
 
 export const productsReducer = productsSlice.reducer;

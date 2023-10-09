@@ -1,30 +1,30 @@
 import type { PayloadAction } from '@reduxjs/toolkit';
-import type { IState } from './slice';
+import type { IProductState } from 'helpers/types';
 import type { IProduct } from 'helpers/types';
 
-export const removeCertainProductReducer = (state: IState) => ({
+export const removeCertainProductReducer = (state: IProductState) => ({
   ...state,
   certain: null,
 });
 
-export const pendingProductReducer = (state: IState) => ({
+export const pendingReducer = (state: IProductState) => ({
   ...state,
   isLoading: true,
   error: null,
 });
 
-export const rejectedProductReducer = (
-  state: IState,
+export const rejectedReducer = (
+  state: IProductState,
   { payload }: PayloadAction<string | undefined>
 ) => ({ ...state, isLoading: false, ...(payload ? { error: payload } : null) });
 
-export const getAllProductsFulfilledReducer = (
-  state: IState,
+export const getAllProductsReducer = (
+  state: IProductState,
   { payload }: PayloadAction<IProduct[]>
 ) => ({ ...state, isLoading: false, entities: payload });
 
-export const getCertainProductFulfilledReducer = (
-  state: IState,
+export const getCertainProductReducer = (
+  state: IProductState,
   { payload }: PayloadAction<IProduct>
 ) => ({
   ...state,
@@ -32,28 +32,28 @@ export const getCertainProductFulfilledReducer = (
   certain: payload,
 });
 
-export const createProductFulfilledReducer = (
-  state: IState,
+export const createProductReducer = (
+  state: IProductState,
   { payload }: PayloadAction<IProduct>
 ) => ({ ...state, isLoading: false, entities: [...state.entities, payload] });
 
-export const editProductFulfilledReducer = (
-  state: IState,
+export const editProductReducer = (
+  state: IProductState,
   { payload }: PayloadAction<IProduct>
 ) => ({
   ...state,
   isLoading: false,
   entities: state.entities.map(product =>
-    product._id === payload._id ? { ...product, ...payload } : product
+    product.id === payload.id ? { ...product, ...payload } : product
   ),
   ...(state.certain ? { certain: payload } : null),
 });
 
-export const removeProductFulfilledReducer = (
-  state: IState,
+export const removeProductReducer = (
+  state: IProductState,
   { payload }: PayloadAction<string>
 ) => ({
   ...state,
   isLoading: false,
-  entities: state.entities.filter(product => product._id !== payload),
+  entities: state.entities.filter(product => product.id !== payload),
 });

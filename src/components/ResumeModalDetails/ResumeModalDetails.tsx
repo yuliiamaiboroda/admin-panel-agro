@@ -19,7 +19,7 @@ export default function ResumeModalDetails() {
   }
 
   const {
-    _id,
+    id,
     name,
     phone,
     email,
@@ -53,7 +53,7 @@ export default function ResumeModalDetails() {
         <FavoriteButton
           isFavorite={isFavorite}
           onClick={() => {
-            dispatch(updateResumeIsFavorite(_id));
+            dispatch(updateResumeIsFavorite(id));
           }}
         />
         <ItemLink

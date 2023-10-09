@@ -10,7 +10,7 @@ import ItemLink from 'components/ItemLink';
 import Box from 'components/Box';
 
 interface IVacancy {
-  _id: string;
+  id: string;
   category: keyof typeof Categories;
   title: string;
   description: string;
@@ -23,7 +23,7 @@ interface IVacancy {
 }
 
 export default function VacancyCard({
-  _id,
+  id,
   category,
   title,
   description,
@@ -39,7 +39,7 @@ export default function VacancyCard({
 
   const clickHandler = (event: React.MouseEvent) => {
     if (!(event.target instanceof HTMLAnchorElement)) {
-      navigate(`${_id}`, { state: { from: routeLocation } });
+      navigate(`${id}`, { state: { from: routeLocation } });
     }
     return;
   };
@@ -65,12 +65,12 @@ export default function VacancyCard({
         <Box display="flex" justifyContent="center" gridGap={2}>
           <ItemLink
             type="edit"
-            navigateTo={`${_id}/form`}
+            navigateTo={`${id}/form`}
             state={{ from: routeLocation }}
           />
           <ItemLink
             type="remove"
-            navigateTo={`${_id}/confirm`}
+            navigateTo={`${id}/confirm`}
             state={{ from: routeLocation }}
           />
         </Box>

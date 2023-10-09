@@ -1,5 +1,5 @@
 export interface IResume {
-  _id: string;
+  id: string;
   name: string;
   phone: string;
   email: string;
@@ -10,7 +10,7 @@ export interface IResume {
 }
 
 export interface IResumeEntity {
-  _id: string;
+  id: string;
   name: string;
   position: string;
   comment: string;

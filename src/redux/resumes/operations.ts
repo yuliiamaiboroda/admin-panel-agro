@@ -48,9 +48,9 @@ export const getCertainResume = createAsyncThunk<
   IResume,
   string,
   { rejectValue: string }
->('resumes/getCertainResume', async (_id, thunkApi) => {
+>('resumes/getCertainResume', async (id, thunkApi) => {
   try {
-    const { data } = await axios.get(`/api/resumes/certain/${_id}`);
+    const { data } = await axios.get(`/api/resumes/certain/${id}`);
     return data;
   } catch (err) {
     const error = err as AxiosError<{ message: string }>;
@@ -65,10 +65,10 @@ export const removeResume = createAsyncThunk<
   string,
   string,
   { rejectValue: string }
->('resumes/removeResume', async (_id, thunkApi) => {
+>('resumes/removeResume', async (id, thunkApi) => {
   try {
-    await axios.delete(`/api/resumes/certain/${_id}`);
-    return _id;
+    await axios.delete(`/api/resumes/certain/${id}`);
+    return id;
   } catch (err) {
     const error = err as AxiosError<{ message: string }>;
     if (!error.response) {
@@ -82,10 +82,10 @@ export const updateResumeViews = createAsyncThunk<
   string,
   string,
   { rejectValue: string }
->('resumes/updateResumeViews', async (_id, thunkApi) => {
+>('resumes/updateResumeViews', async (id, thunkApi) => {
   try {
-    await axios.patch(`/api/resumes/certain/views/${_id}`);
-    return _id;
+    await axios.patch(`/api/resumes/certain/views/${id}`);
+    return id;
   } catch (err) {
     const error = err as AxiosError<{ message: string }>;
     if (!error.response) {
@@ -99,10 +99,10 @@ export const updateResumeIsFavorite = createAsyncThunk<
   string,
   string,
   { rejectValue: string }
->('resumes/updateResumeFavorite', async (_id, thunkApi) => {
+>('resumes/updateResumeFavorite', async (id, thunkApi) => {
   try {
-    await axios.patch(`/api/resumes/certain/favorite/${_id}`);
-    return _id;
+    await axios.patch(`/api/resumes/certain/favorite/${id}`);
+    return id;
   } catch (err) {
     const error = err as AxiosError<{ message: string }>;
     if (!error.response) {

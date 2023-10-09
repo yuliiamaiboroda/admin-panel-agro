@@ -3,7 +3,7 @@ import updateUserSchema from 'helpers/schemas/auth/updateUser.schema';
 import { useAppDispatch } from 'hooks';
 import { updateUserById } from 'redux/users';
 import { listUsersOptions } from 'helpers/constants';
-import type { IUser } from 'redux/users';
+import type { IUser } from 'helpers/types';
 import { useState } from 'react';
 import { RxEyeClosed, RxEyeOpen } from 'react-icons/rx';
 import FormField from 'components/FormField';
@@ -21,7 +21,7 @@ export default function UpdateUserForm({
   name,
   surname,
   role,
-  _id,
+  id,
   onClose,
 }: IProps) {
   const FORM_INITIAL_STATE = {
@@ -29,7 +29,7 @@ export default function UpdateUserForm({
     name,
     surname,
     role,
-    _id,
+    id,
     password: '',
   };
   const [isVisiblePassword, setIsVisiblePassword] = useState(false);
@@ -52,7 +52,7 @@ export default function UpdateUserForm({
                 name: values.name,
                 surname: values.surname,
                 role: values.role,
-                _id,
+                id,
                 password: values.password ? values.password : null,
               })
             );

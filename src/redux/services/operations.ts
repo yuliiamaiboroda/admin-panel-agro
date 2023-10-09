@@ -32,9 +32,9 @@ export const getCertainService = createAsyncThunk<
   IService,
   string,
   { rejectValue: string }
->('services/getCertain', async (_id, thunkApi) => {
+>('services/getCertain', async (id, thunkApi) => {
   try {
-    const { data } = await axios.get(`/api/services/${_id}`);
+    const { data } = await axios.get(`/api/services/${id}`);
     return data;
   } catch (err) {
     const error = err as AxiosError<{ message: string }>;
@@ -58,7 +58,7 @@ export const createService = createAsyncThunk<
     try {
       if (!image) {
         return thunkApi.rejectWithValue('File should be uploaded');
-      }  
+      }
       const reqBody = new FormData();
       reqBody.append('title', title);
       reqBody.append('description', description);
@@ -90,10 +90,10 @@ export const deleteService = createAsyncThunk<
   string,
   string,
   { rejectValue: string }
->('services/delete', async (_id, thunkApi) => {
+>('services/delete', async (id, thunkApi) => {
   try {
-    await axios.delete(`/api/services/${_id}`);
-    return _id;
+    await axios.delete(`/api/services/${id}`);
+    return id;
   } catch (err) {
     const error = err as AxiosError<{ message: string }>;
     if (!error.response) {
@@ -106,13 +106,13 @@ export const deleteService = createAsyncThunk<
 export const updateService = createAsyncThunk<
   IService,
   {
-    _id: string;
+    id: string;
   } & IServiceData,
   { rejectValue: string }
 >(
   'services/update',
   async (
-    { _id, title, description, image, price, contactMail, contactPhone },
+    { id, title, description, image, price, contactMail, contactPhone },
     thunkApi
   ) => {
     try {
@@ -126,7 +126,7 @@ export const updateService = createAsyncThunk<
       reqBody.append('contactMail', contactMail);
       reqBody.append('contactPhone', contactPhone);
 
-      const { data } = await axios.patch(`/api/services/${_id}`, reqBody, {
+      const { data } = await axios.patch(`/api/services/${id}`, reqBody, {
         headers: { 'Content-Type': 'multipart/form-data' },
       });
       if (!data) {

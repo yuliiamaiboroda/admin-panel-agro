@@ -1,5 +1,5 @@
 import { useAppSelector, useAppDispatch } from 'hooks';
-import { logoutUser, selectUser } from 'redux/user';
+import { logoutUser, selectUser } from 'redux/auth';
 import { AiOutlineLogout, AiOutlineSetting } from 'react-icons/ai';
 import { useState } from 'react';
 import { Roles } from 'helpers/constants';

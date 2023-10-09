@@ -9,14 +9,14 @@ import ItemLink from 'components/ItemLink';
 import Box from 'components/Box';
 
 interface IProps {
-  _id: string;
+  id: string;
   title: string;
   imageURL: string;
   description: string;
 }
 
 export default function ProductCard({
-  _id,
+  id,
   title,
   imageURL,
   description,
@@ -26,7 +26,7 @@ export default function ProductCard({
 
   const clickHandler = (event: React.MouseEvent) => {
     if (!(event.target instanceof HTMLAnchorElement)) {
-      navigate(`${_id}`, { state: { from: routeLocation } });
+      navigate(`${id}`, { state: { from: routeLocation } });
     }
     return;
   };
@@ -38,8 +38,8 @@ export default function ProductCard({
       <CardDetailStringMarkup title="Опис" value={description} />
       <RestrictedComponent accessRight={Roles.productsManager}>
         <Box display="flex" justifyContent="center" gridGap={2}>
-          <ItemLink type="edit" navigateTo={`${_id}/form`} />
-          <ItemLink type="remove" navigateTo={`${_id}/confirm`} />
+          <ItemLink type="edit" navigateTo={`${id}/form`} />
+          <ItemLink type="remove" navigateTo={`${id}/confirm`} />
         </Box>
       </RestrictedComponent>
     </CardWrapperMarkup>

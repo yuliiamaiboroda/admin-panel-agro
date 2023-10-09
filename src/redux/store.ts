@@ -10,7 +10,7 @@ import {
   REGISTER,
 } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
-import { userReducer } from './user';
+import { authReducer } from './auth';
 import { productsReducer } from './products';
 import { usersReducer } from './users';
 import { servicesReducer } from './services';
@@ -24,7 +24,7 @@ const persistConfig = {
   whitelist: ['accessToken'],
 };
 
-const credentialsPersistReducer = persistReducer(persistConfig, userReducer);
+const credentialsPersistReducer = persistReducer(persistConfig, authReducer);
 
 export const store = configureStore({
   reducer: {

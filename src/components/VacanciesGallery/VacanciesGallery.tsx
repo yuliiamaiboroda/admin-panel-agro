@@ -10,7 +10,7 @@ export default function VacanciesGallery() {
   return (
     <GalleryWrapper>
       {entities.length ? (
-        entities.map(item => <VacancyCard key={item._id} {...item} />)
+        entities.map(item => <VacancyCard key={item.id} {...item} />)
       ) : (
         <CardPlaceholder />
       )}

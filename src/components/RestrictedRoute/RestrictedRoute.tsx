@@ -1,6 +1,6 @@
 import { Navigate, useLocation } from 'react-router-dom';
 import { useAppSelector } from 'hooks';
-import { selectUserRole } from 'redux/user';
+import { selectUserRole } from 'redux/auth';
 import { Roles } from 'helpers/constants';
 
 interface IProps {
