@@ -11,3 +11,10 @@ export interface IProductData {
   description: string;
   image: File | null;
 }
+
+export interface IProductState {
+  entities: IProduct[];
+  certain: IProduct | null;
+  isLoading: boolean;
+  error: string | null;
+}
