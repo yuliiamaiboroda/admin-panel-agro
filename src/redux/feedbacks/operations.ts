@@ -1,6 +1,10 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios, { AxiosError } from 'axios';
-import { IFeedback, IFeedbackCertain, IFeedbackPagination } from './slice';
+import {
+  IFeedback,
+  IFeedbackCertain,
+  IFeedbackPagination,
+} from 'helpers/types';
 import type { IFeedbackFilter } from 'helpers/types';
 
 export const getAllFeedback = createAsyncThunk<
