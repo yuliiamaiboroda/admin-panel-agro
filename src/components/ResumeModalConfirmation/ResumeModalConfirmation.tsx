@@ -17,7 +17,7 @@ export default function ResumeModalConfirmation() {
   }
 
   const handleConfirm = () => {
-    dispatch(removeResume(resume._id));
+    dispatch(removeResume(resume.id));
     handleCloseModal('/resumes');
   };
 

@@ -44,7 +44,7 @@ export const editProductFulfilledReducer = (
   ...state,
   isLoading: false,
   entities: state.entities.map(product =>
-    product._id === payload._id ? { ...product, ...payload } : product
+    product.id === payload.id ? { ...product, ...payload } : product
   ),
   ...(state.certain ? { certain: payload } : null),
 });
@@ -55,5 +55,5 @@ export const removeProductFulfilledReducer = (
 ) => ({
   ...state,
   isLoading: false,
-  entities: state.entities.filter(product => product._id !== payload),
+  entities: state.entities.filter(product => product.id !== payload),
 });

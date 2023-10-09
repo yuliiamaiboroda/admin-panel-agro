@@ -21,8 +21,8 @@ export default function ServicesGallery() {
       </RestrictedComponent>
       <GalleryWrapper>
         {services.length ? (
-          services.map(({ _id, ...rest }) => (
-            <ServiceCard key={_id} _id={_id} {...rest} />
+          services.map(({ id, ...rest }) => (
+            <ServiceCard key={id} id={id} {...rest} />
           ))
         ) : (
           <CardPlaceholder />

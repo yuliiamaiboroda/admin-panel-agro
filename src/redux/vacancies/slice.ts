@@ -10,7 +10,7 @@ import {
 import { Categories } from 'helpers/constants';
 
 export interface IVacancy {
-  _id: string;
+  id: string;
   category: keyof typeof Categories;
   title: string;
   description: string;
@@ -23,7 +23,7 @@ export interface IVacancy {
 }
 
 export interface IVacancyTitle {
-  _id: string;
+  id: string;
   title: string;
 }
 
@@ -85,7 +85,7 @@ const removeVacancyByIdFulfilledReducer = (
     ...state,
     isLoading: false,
     isListLoading: false,
-    entities: state.entities.filter(item => item._id !== action.payload),
+    entities: state.entities.filter(item => item.id !== action.payload),
   };
 };
 
@@ -110,10 +110,10 @@ const updateVacancyFulfilledReducer = (
     isLoading: false,
     isListLoading: false,
     entities: state.entities.map(item => {
-      if (item._id === action.payload._id) {
+      if (item.id === action.payload.id) {
         return {
           ...item,
-          _id: action.payload._id,
+          id: action.payload.id,
           category: action.payload.category,
           title: action.payload.title,
           description: action.payload.description,

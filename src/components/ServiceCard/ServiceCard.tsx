@@ -9,7 +9,7 @@ import ItemLink from 'components/ItemLink';
 import Box from 'components/Box';
 
 interface IProps {
-  _id: string;
+  id: string;
   title: string;
   description: string;
   imageURL: string;
@@ -19,7 +19,7 @@ interface IProps {
 }
 
 export default function ServiceCard({
-  _id,
+  id,
   title,
   description,
   imageURL,
@@ -32,7 +32,7 @@ export default function ServiceCard({
 
   const clickHandler = (event: React.MouseEvent) => {
     if (!(event.target instanceof HTMLAnchorElement)) {
-      navigate(`${_id}`, { state: { from: routeLocation } });
+      navigate(`${id}`, { state: { from: routeLocation } });
     }
     return;
   };
@@ -48,8 +48,8 @@ export default function ServiceCard({
         <CardDetailStringMarkup title="Пошта" value={contactMail} />
         <RestrictedComponent accessRight={Roles.servicesManager}>
           <Box display="flex" justifyContent="center" gridGap={2}>
-            <ItemLink type="edit" navigateTo={`${_id}/form`} />
-            <ItemLink type="remove" navigateTo={`${_id}/confirm`} />
+            <ItemLink type="edit" navigateTo={`${id}/form`} />
+            <ItemLink type="remove" navigateTo={`${id}/confirm`} />
           </Box>
         </RestrictedComponent>
       </CardWrapperMarkup>

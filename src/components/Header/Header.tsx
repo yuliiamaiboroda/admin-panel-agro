@@ -4,7 +4,7 @@ import translateRole from 'utils/translate-role';
 import { useAppDispatch, useAppSelector } from 'hooks';
 import { useState } from 'react';
 import { AiOutlineLogout, AiOutlineUser, AiOutlineMenu } from 'react-icons/ai';
-import { logoutUser, selectUser } from 'redux/user';
+import { logoutUser, selectUser } from 'redux/auth';
 import { Roles } from 'helpers/constants';
 import { Link } from 'react-router-dom';
 import CardTitleStringMarkup from 'components/CardTitleStringMarkup';

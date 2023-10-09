@@ -1,6 +1,6 @@
 import { Navigate, useLocation } from 'react-router-dom';
 import { useAppSelector } from 'hooks';
-import { selectUser } from 'redux/user';
+import { selectUser } from 'redux/auth';
 
 interface IProps {
   component: JSX.Element;

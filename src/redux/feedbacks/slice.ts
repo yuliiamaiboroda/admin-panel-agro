@@ -9,14 +9,14 @@ import {
 } from './operations';
 
 export interface IFeedback {
-  _id: string;
+  id: string;
   name: string;
   comment: string;
   isReviewed: boolean;
   isFavorite: boolean;
 }
 export interface IFeedbackCertain {
-  _id: string;
+  id: string;
   name: string;
   contactPhone: string;
   contactMail: string;
@@ -97,7 +97,7 @@ const updateViewsFulfilledReducer = (
     ...state,
     isLoading: false,
     entities: state.entities.map(entity =>
-      entity._id === action.payload ? { ...entity, isReviewed: true } : entity
+      entity.id === action.payload ? { ...entity, isReviewed: true } : entity
     ),
   };
 };
@@ -110,7 +110,7 @@ const updateFeedbackFavoriteFulfilledReducer = (
     ...state,
     isLoading: false,
     entities: state.entities.map(entity =>
-      entity._id === action.payload
+      entity.id === action.payload
         ? { ...entity, isFavorite: !entity.isFavorite }
         : entity
     ),
@@ -132,7 +132,7 @@ const removeFeedbackFulfilledReducer = (
   return {
     ...state,
     isLoading: false,
-    entities: state.entities.filter(item => item._id !== action.payload),
+    entities: state.entities.filter(item => item.id !== action.payload),
   };
 };
 

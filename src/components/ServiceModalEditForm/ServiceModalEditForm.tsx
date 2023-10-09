@@ -20,7 +20,7 @@ export default function ServiceModalEditForm() {
     <ServiceForm
       serviceData={service}
       onSubmit={serviceData => {
-        dispatch(updateService({ ...serviceData, _id: service._id }));
+        dispatch(updateService({ ...serviceData, id: service.id }));
         if (backLinkHref === '/services') {
           handleCloseModal(backLinkHref);
         } else {

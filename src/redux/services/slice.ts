@@ -9,7 +9,7 @@ import {
 import translateError from 'utils/translate-error';
 
 export interface IService {
-  _id: string;
+  id: string;
   title: string;
   description: string;
   imageURL: string;
@@ -88,7 +88,7 @@ const deleteServiceFulfilledReducer = (
   return {
     ...state,
     isLoading: false,
-    entities: state.entities.filter(item => item._id !== action.payload),
+    entities: state.entities.filter(item => item.id !== action.payload),
   };
 };
 
@@ -100,7 +100,7 @@ const updateServiceFulfilledReducer = (
     ...state,
     isLoading: false,
     entities: state.entities.map(item => {
-      if (item._id === action.payload._id) {
+      if (item.id === action.payload.id) {
         return {
           ...item,
           title: action.payload.title,

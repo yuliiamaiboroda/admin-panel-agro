@@ -18,7 +18,7 @@ export default function ProductModalConfirmation() {
   }
 
   const handleConfirm = () => {
-    dispatch(removeProduct(product._id));
+    dispatch(removeProduct(product.id));
     handleCloseModal('/products');
   };
 

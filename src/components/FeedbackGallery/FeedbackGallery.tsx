@@ -11,7 +11,7 @@ export default function FeedbackGallery() {
     <section>
       <GalleryWrapper>
         {feedbacks.length ? (
-          feedbacks.map(item => <FeedbackCard key={item._id} {...item} />)
+          feedbacks.map(item => <FeedbackCard key={item.id} {...item} />)
         ) : (
           <CardPlaceholder />
         )}

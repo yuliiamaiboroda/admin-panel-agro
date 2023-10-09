@@ -17,6 +17,7 @@ export default function SideBarNavigation() {
         flexDirection="column"
         gridGap={4}
         height="100vh"
+        overflowY={'auto'}
         px={2}
         py={4}
       >
