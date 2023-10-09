@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import {
-  getAllFeedback,
+  getAllFeedbacks,
   getCertainFeedback,
   loadMoreFeedbacks,
   removeFeedbackById,
@@ -28,9 +28,9 @@ const feedbacksSlice = createSlice({
   },
   extraReducers: builder =>
     builder
-      .addCase(getAllFeedback.pending, feedbacks.pendingReducer)
-      .addCase(getAllFeedback.fulfilled, feedbacks.getAllFeedbackReducer)
-      .addCase(getAllFeedback.rejected, feedbacks.rejectedReducer)
+      .addCase(getAllFeedbacks.pending, feedbacks.pendingReducer)
+      .addCase(getAllFeedbacks.fulfilled, feedbacks.getAllFeedbackssReducer)
+      .addCase(getAllFeedbacks.rejected, feedbacks.rejectedReducer)
       .addCase(removeFeedbackById.pending, feedbacks.pendingReducer)
       .addCase(removeFeedbackById.fulfilled, feedbacks.removeFeedbackReducer)
       .addCase(removeFeedbackById.rejected, feedbacks.rejectedReducer)

@@ -22,7 +22,7 @@ export const rejectedReducer = (
   };
 };
 
-export const getAllFeedbackReducer = (
+export const getAllFeedbackssReducer = (
   state: IFeedbackState,
   {
     payload,

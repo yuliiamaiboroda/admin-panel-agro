@@ -3,7 +3,7 @@ import { Outlet } from 'react-router-dom';
 import { Notify } from 'notiflix';
 import { useAppDispatch, useAppSelector } from 'hooks';
 import {
-  getAllFeedback,
+  getAllFeedbacks,
   loadMoreFeedbacks,
   selectAllFeedbacks,
   selectFeedbackPagination,
@@ -26,7 +26,7 @@ export default function FeedbackPage() {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    dispatch(getAllFeedback(filterStatus));
+    dispatch(getAllFeedbacks(filterStatus));
   }, [dispatch, filterStatus]);
 
   if (error) {

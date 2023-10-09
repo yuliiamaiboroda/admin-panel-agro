@@ -7,7 +7,7 @@ import {
 } from 'helpers/types';
 import type { IFeedbackFilter } from 'helpers/types';
 
-export const getAllFeedback = createAsyncThunk<
+export const getAllFeedbacks = createAsyncThunk<
   { feedbacks: IFeedback[]; pagination: IFeedbackPagination },
   IFeedbackFilter,
   { rejectValue: string }
@@ -15,7 +15,7 @@ export const getAllFeedback = createAsyncThunk<
   try {
     const {
       data: { feedbacks, ...pagination },
-    } = await axios.get('/api/feedback/all', { params });
+    } = await axios.get('/api/feedback', { params });
     return { feedbacks, pagination };
   } catch (err) {
     const error = err as AxiosError<{ message: string }>;
@@ -53,7 +53,7 @@ export const updateFeedbackViews = createAsyncThunk<
   }
 >('feedback/updateViews', async (id, thunkApi) => {
   try {
-    await axios.patch(`/api/feedback/${id}`);
+    await axios.post(`/api/feedback/${id}/views`);
     return id;
   } catch (err) {
     const error = err as AxiosError<{ message: string }>;
@@ -91,7 +91,7 @@ export const updateFeedbackIsFavorite = createAsyncThunk<
   }
 >('feedback/updateFeedbackFavorite', async (id, thunkApi) => {
   try {
-    await axios.patch(`/api/feedback/favorite/${id}`);
+    await axios.post(`/api/feedback/${id}/favorite`);
     return id;
   } catch (err) {
     const error = err as AxiosError<{ message: string }>;
@@ -110,7 +110,7 @@ export const loadMoreFeedbacks = createAsyncThunk<
   try {
     const {
       data: { feedbacks, ...pagination },
-    } = await axios.get('/api/feedback/all', { params });
+    } = await axios.get('/api/feedback', { params });
     return { feedbacks, pagination };
   } catch (err) {
     const error = err as AxiosError<{ message: string }>;
