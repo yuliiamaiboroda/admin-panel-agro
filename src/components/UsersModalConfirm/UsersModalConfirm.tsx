@@ -17,7 +17,7 @@ export default function UsersModalConfirm() {
   }
 
   const handleConfirm = () => {
-    dispatch(removeUserById(certain._id));
+    dispatch(removeUserById(certain.id));
     handleCloseModal('/users');
   };
 

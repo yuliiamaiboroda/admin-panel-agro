@@ -17,7 +17,7 @@ export default function FeedbackModalConfirmation() {
   }
 
   const handleConfirm = () => {
-    dispatch(removeFeedbackById(certain._id));
+    dispatch(removeFeedbackById(certain.id));
     handleCloseModal('/feedbacks');
   };
 

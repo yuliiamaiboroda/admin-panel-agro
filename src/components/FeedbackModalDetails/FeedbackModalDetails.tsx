@@ -19,7 +19,7 @@ export default function FeedbackModalDetails() {
   }
 
   const {
-    _id,
+    id,
     name,
     contactPhone,
     contactMail,
@@ -49,7 +49,7 @@ export default function FeedbackModalDetails() {
       <Box display="flex" justifyContent="space-around">
         <FavoriteButton
           isFavorite={isFavorite}
-          onClick={() => dispatch(updateFeedbackIsFavorite(_id))}
+          onClick={() => dispatch(updateFeedbackIsFavorite(id))}
         />
         <ItemLink
           type="remove"

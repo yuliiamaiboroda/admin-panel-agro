@@ -30,7 +30,7 @@ export const removeUserByIdReducer = (
   return {
     ...state,
     isLoading: false,
-    entities: state.entities.filter(item => item._id !== payload),
+    entities: state.entities.filter(item => item.id !== payload),
   };
 };
 
@@ -53,10 +53,10 @@ export const updateUserByIdReducer = (
     ...state,
     isLoading: false,
     entities: state.entities.map(item => {
-      if (item._id === payload._id) {
+      if (item.id === payload.id) {
         return {
           ...item,
-          _id: payload._id,
+          id: payload.id,
           email: payload.email,
           name: payload.name,
           surname: payload.surname,

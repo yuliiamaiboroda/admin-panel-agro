@@ -11,7 +11,7 @@ import FavoriteButton from 'components/FavoriteButton';
 import UnviewedMark from 'components/UnviewedMark';
 
 export default function ResumeCard({
-  _id,
+  id,
   name,
   position,
   comment,
@@ -24,7 +24,7 @@ export default function ResumeCard({
 
   const handleUpdateViews = () => {
     if (!isReviewed) {
-      dispatch(updateResumeViews(_id));
+      dispatch(updateResumeViews(id));
     }
   };
 
@@ -34,7 +34,7 @@ export default function ResumeCard({
       !(event.target instanceof HTMLButtonElement)
     ) {
       handleUpdateViews();
-      navigate(`${_id}${location.search}`, { state: location });
+      navigate(`${id}${location.search}`, { state: location });
     }
     return;
   };
@@ -49,9 +49,9 @@ export default function ResumeCard({
         <Box display="flex" justifyContent="center" gridGap={2}>
           <FavoriteButton
             isFavorite={isFavorite}
-            onClick={() => dispatch(updateResumeIsFavorite(_id))}
+            onClick={() => dispatch(updateResumeIsFavorite(id))}
           />
-          <ItemLink type="remove" navigateTo={`${_id}/confirm`} />
+          <ItemLink type="remove" navigateTo={`${id}/confirm`} />
         </Box>
       </Box>
     </CardWrapperMarkup>

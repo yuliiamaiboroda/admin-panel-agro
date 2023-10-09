@@ -23,10 +23,10 @@ export const removeUserById = createAsyncThunk<
   string,
   string,
   { rejectValue: string }
->('users/removeById', async (_id, thunkApi) => {
+>('users/removeById', async (id, thunkApi) => {
   try {
-    await axios.delete(`/api/users/${_id}`);
-    return _id;
+    await axios.delete(`/api/users/${id}`);
+    return id;
   } catch (err) {
     const error = err as AxiosError<{ message: string }>;
     if (!error.response) {
@@ -76,7 +76,7 @@ export const updateUserById = createAsyncThunk<
   }
 >(
   'users/updateById',
-  async ({ email, name, surname, role, _id, password }, thunkApi) => {
+  async ({ email, name, surname, role, id, password }, thunkApi) => {
     try {
       let requestBody;
 
@@ -89,7 +89,7 @@ export const updateUserById = createAsyncThunk<
             name,
           });
 
-      const { data } = await axios.post(`/api/users/${_id}`, requestBody);
+      const { data } = await axios.post(`/api/users/${id}`, requestBody);
       return data;
     } catch (err) {
       const error = err as AxiosError<{ message: string }>;
@@ -107,9 +107,9 @@ export const getCertainUser = createAsyncThunk<
   {
     rejectValue: string;
   }
->('users/getCertain', async (_id, thunkApi) => {
+>('users/getCertain', async (id, thunkApi) => {
   try {
-    const { data } = await axios.get(`/api/users/${_id}`);
+    const { data } = await axios.get(`/api/users/${id}`);
     return data;
   } catch (err) {
     const error = err as AxiosError<{ message: string }>;

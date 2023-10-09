@@ -8,13 +8,13 @@ import Box from 'components/Box';
 import { Roles } from 'helpers/constants';
 import translateRole from 'utils/translate-role';
 
-export default function UserCard({ _id, email, name, surname, role }: IUser) {
+export default function UserCard({ id, email, name, surname, role }: IUser) {
   const navigate = useNavigate();
   const routeLocation = useLocation();
 
   const clickHandler = (event: React.MouseEvent) => {
     if (!(event.target instanceof HTMLAnchorElement)) {
-      navigate(`${_id}`, { state: { from: routeLocation } });
+      navigate(`${id}`, { state: { from: routeLocation } });
     }
     return;
   };
@@ -31,12 +31,12 @@ export default function UserCard({ _id, email, name, surname, role }: IUser) {
       <Box display="flex" justifyContent="center" gridGap={2}>
         <ItemLink
           type="edit"
-          navigateTo={`${_id}/form`}
+          navigateTo={`${id}/form`}
           state={{ from: routeLocation }}
         />
         <ItemLink
           type="remove"
-          navigateTo={`${_id}/confirm`}
+          navigateTo={`${id}/confirm`}
           state={{ from: routeLocation }}
         />
       </Box>

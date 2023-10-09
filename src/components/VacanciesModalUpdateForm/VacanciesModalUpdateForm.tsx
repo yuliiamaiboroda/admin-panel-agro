@@ -29,7 +29,7 @@ export default function VacanciesModalUpdateForm() {
       buttonName="Оновити"
       formName={`Оновити вакансію ${certain.title}`}
       onSubmit={vacancyData => {
-        dispatch(updateVacancyById({ ...vacancyData, _id: certain._id }));
+        dispatch(updateVacancyById({ ...vacancyData, id: certain.id }));
         if (backLinkHref === '/vacancies') {
           handleCloseModal(backLinkHref);
         } else {

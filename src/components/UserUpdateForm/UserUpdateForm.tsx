@@ -21,7 +21,7 @@ export default function UpdateUserForm({
   name,
   surname,
   role,
-  _id,
+  id,
   onClose,
 }: IProps) {
   const FORM_INITIAL_STATE = {
@@ -29,7 +29,7 @@ export default function UpdateUserForm({
     name,
     surname,
     role,
-    _id,
+    id,
     password: '',
   };
   const [isVisiblePassword, setIsVisiblePassword] = useState(false);
@@ -52,7 +52,7 @@ export default function UpdateUserForm({
                 name: values.name,
                 surname: values.surname,
                 role: values.role,
-                _id,
+                id,
                 password: values.password ? values.password : null,
               })
             );

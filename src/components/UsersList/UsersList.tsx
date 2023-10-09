@@ -10,7 +10,7 @@ export default function UsersList({ usersList }: IProps) {
   return (
     <GalleryWrapper>
       {usersList.map(item => (
-        <UserCard key={item._id} {...item} />
+        <UserCard key={item.id} {...item} />
       ))}
     </GalleryWrapper>
   );

@@ -20,7 +20,7 @@ export default function ProductModalEditForm() {
     <ProductForm
       productData={product}
       onSubmit={productData => {
-        dispatch(editProduct({ ...productData, _id: product._id }));
+        dispatch(editProduct({ ...productData, id: product.id }));
         if (backLinkHref === '/products') {
           handleCloseModal(backLinkHref);
         } else {

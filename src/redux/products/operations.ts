@@ -23,9 +23,9 @@ export const getCertainProduct = createAsyncThunk<
   IProduct,
   string,
   { rejectValue: string }
->('products/getCertainProduct', async (_id, thunkApi) => {
+>('products/getCertainProduct', async (id, thunkApi) => {
   try {
-    const { data } = await axios.get(`/api/products/certain/${_id}`);
+    const { data } = await axios.get(`/api/products/certain/${id}`);
     return data;
   } catch (err) {
     const error = err as AxiosError<{ message: string }>;
@@ -69,11 +69,11 @@ export const createProduct = createAsyncThunk<
 
 export const editProduct = createAsyncThunk<
   IProduct,
-  { _id: string } & IProductData,
+  { id: string } & IProductData,
   { rejectValue: string }
 >(
   'products/editProduct',
-  async ({ _id, title, description, image }, thunkApi) => {
+  async ({ id, title, description, image }, thunkApi) => {
     try {
       const reqBody = new FormData();
       reqBody.append('title', title);
@@ -83,7 +83,7 @@ export const editProduct = createAsyncThunk<
       }
 
       const { data } = await axios.patch(
-        `/api/products/certain/${_id}`,
+        `/api/products/certain/${id}`,
         reqBody,
         { headers: { 'Content-Type': 'multipart/form-data' } }
       );
@@ -102,10 +102,10 @@ export const removeProduct = createAsyncThunk<
   string,
   string,
   { rejectValue: string }
->('products/removeProduct', async (_id, thunkApi) => {
+>('products/removeProduct', async (id, thunkApi) => {
   try {
-    await axios.delete(`/api/products/certain/${_id}`);
-    return _id;
+    await axios.delete(`/api/products/certain/${id}`);
+    return id;
   } catch (err) {
     const error = err as AxiosError<{ message: string }>;
     if (!error.response) {

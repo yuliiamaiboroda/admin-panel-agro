@@ -53,7 +53,7 @@ export const removeResumeFulfilledReducer = (
 ) => ({
   ...state,
   isLoading: false,
-  entities: state.entities.filter(resume => resume._id !== payload),
+  entities: state.entities.filter(resume => resume.id !== payload),
   pagination: { ...state.pagination, skip: state.pagination.skip - 1 },
 });
 
@@ -64,7 +64,7 @@ export const updateResumeViewsFulfilledReducer = (
   ...state,
   isLoading: false,
   entities: state.entities.map(resume =>
-    resume._id === payload ? { ...resume, isReviewed: true } : resume
+    resume.id === payload ? { ...resume, isReviewed: true } : resume
   ),
 });
 
@@ -75,11 +75,11 @@ export const updateResumeIsFavoriteFulfilledReducer = (
   ...state,
   isLoading: false,
   entities: state.entities.map(resume =>
-    resume._id === payload
+    resume.id === payload
       ? { ...resume, isFavorite: !resume.isFavorite }
       : resume
   ),
-  ...(state.certain?._id
+  ...(state.certain?.id
     ? { certain: { ...state.certain, isFavorite: !state.certain.isFavorite } }
     : null),
 });

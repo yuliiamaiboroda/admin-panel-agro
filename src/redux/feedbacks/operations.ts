@@ -28,10 +28,10 @@ export const removeFeedbackById = createAsyncThunk<
   {
     rejectValue: string;
   }
->('feedback/removeById', async (_id, thunkApi) => {
+>('feedback/removeById', async (id, thunkApi) => {
   try {
-    await axios.delete(`/api/feedback/${_id}`);
-    return _id;
+    await axios.delete(`/api/feedback/${id}`);
+    return id;
   } catch (err) {
     const error = err as AxiosError<{ message: string }>;
     if (!error.response) {
@@ -47,10 +47,10 @@ export const updateFeedbackViews = createAsyncThunk<
   {
     rejectValue: string;
   }
->('feedback/updateViews', async (_id, thunkApi) => {
+>('feedback/updateViews', async (id, thunkApi) => {
   try {
-    await axios.patch(`/api/feedback/${_id}`);
-    return _id;
+    await axios.patch(`/api/feedback/${id}`);
+    return id;
   } catch (err) {
     const error = err as AxiosError<{ message: string }>;
     if (!error.response) {
@@ -66,9 +66,9 @@ export const getCertainFeedback = createAsyncThunk<
   {
     rejectValue: string;
   }
->('feedback/certain', async (_id, thunkApi) => {
+>('feedback/certain', async (id, thunkApi) => {
   try {
-    const { data } = await axios.get(`/api/feedback/${_id}`);
+    const { data } = await axios.get(`/api/feedback/${id}`);
     return data;
   } catch (err) {
     const error = err as AxiosError<{ message: string }>;
@@ -85,10 +85,10 @@ export const updateFeedbackIsFavorite = createAsyncThunk<
   {
     rejectValue: string;
   }
->('feedback/updateFeedbackFavorite', async (_id, thunkApi) => {
+>('feedback/updateFeedbackFavorite', async (id, thunkApi) => {
   try {
-    await axios.patch(`/api/feedback/favorite/${_id}`);
-    return _id;
+    await axios.patch(`/api/feedback/favorite/${id}`);
+    return id;
   } catch (err) {
     const error = err as AxiosError<{ message: string }>;
     if (!error.response) {
