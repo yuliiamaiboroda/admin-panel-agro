@@ -1,6 +1,7 @@
 import DropDown from 'components/DropDown/DropDown';
 import FormButtons from 'components/FormButtons/FormButtons';
 import FormField from 'components/FormField';
+import TextareaField from 'components/TextareaField';
 import { Form, Formik, ErrorMessage } from 'formik';
 import { Categories, listVacanciesOptions } from 'helpers/constants';
 import createAndUpdateVacancySchema from 'helpers/schemas/vacancies/createAndUpdateVacancy.schema';
@@ -97,7 +98,7 @@ export default function VacancyForm({
               labelName="Заголовок вакасії"
               placeholderName="Заголовок вакасії"
             />
-            <FormField
+            <TextareaField
               fieldName="description"
               labelName="Опис"
               placeholderName="Опис"

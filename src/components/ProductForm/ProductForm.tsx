@@ -4,6 +4,7 @@ import { productSchema } from 'helpers/schemas/products';
 import UploadFileField from 'components/UploadFileField';
 import FormField from 'components/FormField';
 import FormButtons from 'components/FormButtons';
+import TextareaField from 'components/TextareaField';
 
 interface IProductState {
   title: string;
@@ -63,7 +64,7 @@ export default function ProductForm({
               placeholderName="Заголовок "
             />
 
-            <FormField
+            <TextareaField
               labelName="Опис"
               fieldName="description"
               placeholderName="Опис"
