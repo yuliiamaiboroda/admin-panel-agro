@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios, { AxiosError } from 'axios';
-import { IUser } from './slice';
+import type { IUser } from 'helpers/types';
 import { Notify } from 'notiflix';
 
 export const getAllUsers = createAsyncThunk<

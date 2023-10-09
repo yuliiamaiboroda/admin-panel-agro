@@ -1,9 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { fetchCurrentUser, loginUser, logoutUser } from './operations';
-import type { IUserState } from 'helpers/types/auth-interface';
+import type { IAuthState } from 'helpers/types/auth-interface';
 import * as auth from './reducers';
 
-export const initialState: IUserState = {
+export const initialState: IAuthState = {
   accessToken: null,
   user: {
     email: null,

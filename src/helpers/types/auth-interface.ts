@@ -1,6 +1,6 @@
 import { Roles } from 'helpers/constants';
 
-export interface IUser {
+export interface IAuth {
   accessToken: string;
   refreshToken: string;
   user: {
@@ -11,7 +11,7 @@ export interface IUser {
   };
 }
 
-export interface IUserState {
+export interface IAuthState {
   accessToken: string | null;
   user: {
     email: string | null;

@@ -1,4 +1,4 @@
-import type { IUser } from 'redux/users';
+import type { IUser } from 'helpers/types';
 import { useLocation, useNavigate } from 'react-router-dom';
 import CardWrapperMarkup from 'components/CardWrapperMarkup';
 import CardTitleStringMarkup from 'components/CardTitleStringMarkup';

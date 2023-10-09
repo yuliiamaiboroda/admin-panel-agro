@@ -1,5 +1,5 @@
 import UserCard from 'components/UserCard';
-import type { IUser } from 'redux/users';
+import type { IUser } from 'helpers/types';
 import GalleryWrapper from 'components/GalleryWrapper';
 
 interface IProps {

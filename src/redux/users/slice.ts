@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 import {
   getAllUsers,
   getCertainUser,
@@ -8,151 +8,48 @@ import {
   updatePasswordById,
   updateUserById,
 } from './operations';
-import type { Roles } from 'helpers/constants';
+import type { IUserState } from 'helpers/types';
+import * as users from './reducers';
 
-export interface IUser {
-  _id: string;
-  email: string;
-  name: string;
-  surname: string;
-  role: keyof typeof Roles;
-  createdAt?: string;
-}
-
-interface IState {
-  entities: IUser[];
-  isLoading: boolean;
-  error: string | null;
-  certain: IUser | null;
-}
-
-const initialState: IState = {
+export const initialState: IUserState = {
   entities: [],
   isLoading: false,
   error: null,
   certain: null,
 };
 
-const usersPendingReducer = (state: IState) => {
-  return { ...state, isLoading: true, error: null };
-};
-
-const usersRejectedReducer = (
-  state: IState,
-  action: PayloadAction<string | undefined>
-) => {
-  return {
-    ...state,
-    isLoading: false,
-    ...(action.payload ? { error: action.payload } : null),
-  };
-};
-
-const getAllUsersFulfilledReducer = (
-  state: IState,
-  action: PayloadAction<IUser[], string>
-) => {
-  return { ...state, isLoading: false, entities: action.payload };
-};
-
-const removeUserByIdFulfilledReducer = (
-  state: IState,
-  action: PayloadAction<string, string>
-) => {
-  return {
-    ...state,
-    isLoading: false,
-    entities: state.entities.filter(item => item._id !== action.payload),
-  };
-};
-
-const registerNewUserFulfilledReducer = (
-  state: IState,
-  action: PayloadAction<IUser, string>
-) => {
-  return {
-    ...state,
-    isLoading: false,
-    entities: [...state.entities, action.payload],
-  };
-};
-
-const updateUserByIdFulfilledReducer = (
-  state: IState,
-  action: PayloadAction<IUser, string>
-) => {
-  return {
-    ...state,
-    isLoading: false,
-    entities: state.entities.map(item => {
-      if (item._id === action.payload._id) {
-        return {
-          ...item,
-          _id: action.payload._id,
-          email: action.payload.email,
-          name: action.payload.name,
-          surname: action.payload.surname,
-          role: action.payload.role,
-        };
-      }
-      return item;
-    }),
-    ...(state.certain ? { certain: action.payload } : null),
-  };
-};
-
-const getCertainFulfilledReducer = (
-  state: IState,
-  action: PayloadAction<IUser, string>
-) => {
-  return {
-    ...state,
-    isLoading: false,
-    certain: action.payload,
-  };
-};
-
-const updatePasswordByIdFulfilledReducer = (state: IState) => {
-  return {
-    ...state,
-    isLoading: false,
-  };
-};
-
 const usersSlice = createSlice({
   name: 'users',
   initialState,
   reducers: {
-    removeCertainUser(state) {
-      return { ...state, certain: null };
-    },
+    removeCertainUser: users.removeCertainUserReducer,
   },
   extraReducers: builder =>
     builder
-      .addCase(getAllUsers.pending, usersPendingReducer)
-      .addCase(getAllUsers.fulfilled, getAllUsersFulfilledReducer)
-      .addCase(getAllUsers.rejected, usersRejectedReducer)
-      .addCase(getCertainUser.pending, usersPendingReducer)
-      .addCase(getCertainUser.fulfilled, getCertainFulfilledReducer)
-      .addCase(getCertainUser.rejected, usersRejectedReducer)
-      .addCase(removeUserById.pending, usersPendingReducer)
-      .addCase(removeUserById.fulfilled, removeUserByIdFulfilledReducer)
-      .addCase(removeUserById.rejected, usersRejectedReducer)
-      .addCase(registerNewUser.pending, usersPendingReducer)
-      .addCase(registerNewUser.fulfilled, registerNewUserFulfilledReducer)
-      .addCase(registerNewUser.rejected, usersRejectedReducer)
-      .addCase(updateUserById.pending, usersPendingReducer)
-      .addCase(updateUserById.fulfilled, updateUserByIdFulfilledReducer)
-      .addCase(updateUserById.rejected, usersRejectedReducer)
-      .addCase(updatePasswordById.pending, usersPendingReducer)
-      .addCase(updatePasswordById.fulfilled, updatePasswordByIdFulfilledReducer)
-      .addCase(updatePasswordById.rejected, usersRejectedReducer)
-      .addCase(restorePasswordViaEmail.pending, usersPendingReducer)
+      .addCase(getAllUsers.pending, users.pendingReducer)
+      .addCase(getAllUsers.fulfilled, users.getAllUsersReducer)
+      .addCase(getAllUsers.rejected, users.rejectedReducer)
+      .addCase(getCertainUser.pending, users.pendingReducer)
+      .addCase(getCertainUser.fulfilled, users.getCertainUserReducer)
+      .addCase(getCertainUser.rejected, users.rejectedReducer)
+      .addCase(removeUserById.pending, users.pendingReducer)
+      .addCase(removeUserById.fulfilled, users.removeUserByIdReducer)
+      .addCase(removeUserById.rejected, users.rejectedReducer)
+      .addCase(registerNewUser.pending, users.pendingReducer)
+      .addCase(registerNewUser.fulfilled, users.registerNewUserReducer)
+      .addCase(registerNewUser.rejected, users.rejectedReducer)
+      .addCase(updateUserById.pending, users.pendingReducer)
+      .addCase(updateUserById.fulfilled, users.updateUserByIdReducer)
+      .addCase(updateUserById.rejected, users.rejectedReducer)
+      .addCase(updatePasswordById.pending, users.pendingReducer)
+      .addCase(updatePasswordById.fulfilled, users.updatePasswordByIdReducer)
+      .addCase(updatePasswordById.rejected, users.rejectedReducer)
+      .addCase(restorePasswordViaEmail.pending, users.pendingReducer)
       .addCase(
         restorePasswordViaEmail.fulfilled,
-        updatePasswordByIdFulfilledReducer
+        users.updatePasswordByIdReducer
       )
-      .addCase(restorePasswordViaEmail.rejected, usersRejectedReducer),
+      .addCase(restorePasswordViaEmail.rejected, users.rejectedReducer),
 });
 
 export const usersReducer = usersSlice.reducer;

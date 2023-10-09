@@ -3,7 +3,7 @@ import updateUserSchema from 'helpers/schemas/auth/updateUser.schema';
 import { useAppDispatch } from 'hooks';
 import { updateUserById } from 'redux/users';
 import { listUsersOptions } from 'helpers/constants';
-import type { IUser } from 'redux/users';
+import type { IUser } from 'helpers/types';
 import { useState } from 'react';
 import { RxEyeClosed, RxEyeOpen } from 'react-icons/rx';
 import FormField from 'components/FormField';

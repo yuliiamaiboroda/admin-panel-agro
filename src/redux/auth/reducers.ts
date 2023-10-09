@@ -1,15 +1,15 @@
 import type { PayloadAction } from '@reduxjs/toolkit';
-import type { IUser, IUserState } from 'helpers/types/auth-interface';
+import type { IAuth, IAuthState } from 'helpers/types/auth-interface';
 import { initialState } from './slice';
 
-export const pendingReducer = (state: IUserState) => ({
+export const pendingReducer = (state: IAuthState) => ({
   ...state,
   isLoading: true,
   error: null,
 });
 
 export const rejectedReducer = (
-  state: IUserState,
+  state: IAuthState,
   { payload }: PayloadAction<string | undefined>
 ) => ({
   ...state,
@@ -18,7 +18,7 @@ export const rejectedReducer = (
 });
 
 export const refreshToken = (
-  state: IUserState,
+  state: IAuthState,
   { payload }: PayloadAction<string>
 ) => ({
   ...state,
@@ -26,8 +26,8 @@ export const refreshToken = (
 });
 
 export const loginUser = (
-  state: IUserState,
-  { payload }: PayloadAction<IUser>
+  state: IAuthState,
+  { payload }: PayloadAction<IAuth>
 ) => ({
   ...state,
   isLoading: false,
@@ -39,8 +39,8 @@ export const loginUser = (
 export const loguotUser = () => initialState;
 
 export const fetchCurrentUser = (
-  state: IUserState,
-  { payload }: PayloadAction<IUser['user']>
+  state: IAuthState,
+  { payload }: PayloadAction<IAuth['user']>
 ) => ({
   ...state,
   isLoading: false,

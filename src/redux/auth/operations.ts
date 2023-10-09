@@ -1,16 +1,16 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios, { AxiosError } from 'axios';
 import { Notify } from 'notiflix';
-import type { IUser } from 'helpers/types/auth-interface';
+import type { IAuth } from 'helpers/types';
 import { RootState } from 'redux/store';
 
 export const loginUser = createAsyncThunk<
-  IUser,
+  IAuth,
   { email: string; password: string },
   { rejectValue: string }
 >('user/loginUser', async (userCredentials, thunkApi) => {
   try {
-    const { data } = await axios.post<IUser>(
+    const { data } = await axios.post<IAuth>(
       '/api/auth/login',
       userCredentials
     );
@@ -38,7 +38,7 @@ export const logoutUser = createAsyncThunk<
 });
 
 export const fetchCurrentUser = createAsyncThunk<
-  IUser['user'],
+  IAuth['user'],
   undefined,
   { rejectValue: string; state: RootState }
 >('users/current', async (_, thunkApi) => {
