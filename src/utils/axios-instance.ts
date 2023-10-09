@@ -2,8 +2,8 @@ import axios from 'axios';
 import { store } from 'redux/store';
 import { refreshToken, refreshTokenError } from 'redux/auth';
 
-// axios.defaults.baseURL = 'https://ahrokhimpromtsentr.cyclic.app';
-axios.defaults.baseURL = 'http://localhost:5050';
+axios.defaults.baseURL = 'https://ahrokhimpromtsentr.cyclic.app';
+// axios.defaults.baseURL = 'http://localhost:5050';
 axios.defaults.withCredentials = true;
 
 export const privateAxios = axios.create({
