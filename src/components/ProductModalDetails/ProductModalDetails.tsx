@@ -8,7 +8,7 @@ import ModalTitle from 'components/ModalTitle';
 import ModalDescription from 'components/ModalDescription';
 import ModalImage from 'components/ModalImage';
 import ItemLink from 'components/ItemLink';
-import transformDate from 'utils/date-formatting';
+import { transformDate } from 'utils';
 
 export default function ProductModalDetails() {
   const product = useAppSelector(selectCertainProduct);

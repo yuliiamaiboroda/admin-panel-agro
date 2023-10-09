@@ -1,19 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios, { AxiosError } from 'axios';
-import { IVacancy, IVacancyTitle } from './slice';
-import { Categories } from 'helpers/constants';
-
-interface INewVacancy {
-  category: keyof typeof Categories;
-  title: string;
-  description: string;
-  sallary: string;
-  education: string;
-  contactMail: string;
-  contactPhone: string;
-  workExperienceRequired: string;
-  location: string;
-}
+import { IVacancy, IVacancyTitle, IVacancyData } from 'helpers/types';
 
 export const getVacanciesByCategories = createAsyncThunk<
   IVacancy[],
@@ -51,7 +38,7 @@ export const removeVacancyById = createAsyncThunk<
 
 export const createVacancy = createAsyncThunk<
   IVacancy,
-  INewVacancy,
+  IVacancyData,
   { rejectValue: string }
 >(
   'vacancies/create',

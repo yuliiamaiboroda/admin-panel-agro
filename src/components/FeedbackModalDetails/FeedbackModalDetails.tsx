@@ -7,7 +7,7 @@ import ItemLink from 'components/ItemLink/ItemLink';
 import ModalTitle from 'components/ModalTitle';
 import ModalDescription from 'components/ModalDescription';
 import ModalLink from 'components/ModalLink';
-import transformDate from 'utils/date-formatting';
+import { transformDate } from 'utils';
 
 export default function FeedbackModalDetails() {
   const { certain } = useAppSelector(selectFeedbacks);

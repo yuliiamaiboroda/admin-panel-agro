@@ -1,4 +1,4 @@
-import translateCategory from 'utils/translate-vacancy-category';
+import { translateCategory } from 'utils';
 import { Categories } from './vacancy-categories';
 
 export const listVacanciesOptions = [

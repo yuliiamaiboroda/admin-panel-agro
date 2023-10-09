@@ -1,6 +1,6 @@
 import Modal from 'components/Modal/Modal';
 import ModalLogout from 'components/ModalLogout/ModalLogout';
-import translateRole from 'utils/translate-role';
+import { translateRole } from 'utils';
 import { useAppDispatch, useAppSelector } from 'hooks';
 import { useState } from 'react';
 import { AiOutlineLogout, AiOutlineUser, AiOutlineMenu } from 'react-icons/ai';
