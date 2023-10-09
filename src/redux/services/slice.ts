@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 import {
   createService,
   deleteService,
@@ -6,142 +6,39 @@ import {
   updateService,
   getCertainService,
 } from './operations';
-import translateError from 'utils/translate-error';
+import type { IServiceState } from 'helpers/types';
+import * as services from './reducers';
 
-export interface IService {
-  id: string;
-  title: string;
-  description: string;
-  imageURL: string;
-  price: string;
-  contactMail: string;
-  contactPhone: string;
-  createdAt?: string;
-}
-
-interface IState {
-  entities: IService[];
-  certain: IService | null;
-  isLoading: boolean;
-  error: string | null;
-}
-
-const initialState: IState = {
+export const initialState: IServiceState = {
   entities: [],
   certain: null,
   isLoading: false,
   error: null,
 };
 
-const servicesPendingReducer = (state: IState) => {
-  return { ...state, isLoading: true, error: null };
-};
-
-const servicesRejectedReducer = (
-  state: IState,
-  action: PayloadAction<string | undefined>
-) => {
-  return {
-    ...state,
-    isLoading: false,
-    ...(action.payload ? { error: translateError(action.payload) } : null),
-  };
-};
-
-const getAllServicesFulfilledReducer = (
-  state: IState,
-  action: PayloadAction<IService[], string>
-) => {
-  return {
-    ...state,
-    isLoading: false,
-    entities: action.payload,
-  };
-};
-
-const getCertainServiceFulfilledReducer = (
-  state: IState,
-  action: PayloadAction<IService, string>
-) => {
-  return {
-    ...state,
-    isLoading: false,
-    certain: action.payload,
-  };
-};
-
-const createServiceFulfilledReducer = (
-  state: IState,
-  action: PayloadAction<IService, string>
-) => {
-  return {
-    ...state,
-    isLoading: false,
-    entities: [...state.entities, action.payload],
-  };
-};
-
-const deleteServiceFulfilledReducer = (
-  state: IState,
-  action: PayloadAction<string, string>
-) => {
-  return {
-    ...state,
-    isLoading: false,
-    entities: state.entities.filter(item => item.id !== action.payload),
-  };
-};
-
-const updateServiceFulfilledReducer = (
-  state: IState,
-  action: PayloadAction<IService, string>
-) => {
-  return {
-    ...state,
-    isLoading: false,
-    entities: state.entities.map(item => {
-      if (item.id === action.payload.id) {
-        return {
-          ...item,
-          title: action.payload.title,
-          description: action.payload.description,
-          imageURL: action.payload.imageURL,
-          price: action.payload.price,
-          contactMail: action.payload.contactMail,
-          contactPhone: action.payload.contactPhone,
-        };
-      }
-      return item;
-    }),
-    ...(state.certain ? { certain: action.payload } : null),
-  };
-};
-
 const servicesSlice = createSlice({
   name: 'services',
   initialState,
   reducers: {
-    removeCertainService(state) {
-      return { ...state, certain: null };
-    },
+    removeCertainService: services.removeCertainServiceReducer,
   },
   extraReducers: builder =>
     builder
-      .addCase(getAllServices.pending, servicesPendingReducer)
-      .addCase(getAllServices.fulfilled, getAllServicesFulfilledReducer)
-      .addCase(getAllServices.rejected, servicesRejectedReducer)
-      .addCase(getCertainService.pending, servicesPendingReducer)
-      .addCase(getCertainService.fulfilled, getCertainServiceFulfilledReducer)
-      .addCase(getCertainService.rejected, servicesRejectedReducer)
-      .addCase(createService.pending, servicesPendingReducer)
-      .addCase(createService.fulfilled, createServiceFulfilledReducer)
-      .addCase(createService.rejected, servicesRejectedReducer)
-      .addCase(deleteService.pending, servicesPendingReducer)
-      .addCase(deleteService.fulfilled, deleteServiceFulfilledReducer)
-      .addCase(deleteService.rejected, servicesRejectedReducer)
-      .addCase(updateService.pending, servicesPendingReducer)
-      .addCase(updateService.fulfilled, updateServiceFulfilledReducer)
-      .addCase(updateService.rejected, servicesRejectedReducer),
+      .addCase(getAllServices.pending, services.pendingReducer)
+      .addCase(getAllServices.fulfilled, services.getAllServicesReducer)
+      .addCase(getAllServices.rejected, services.rejectedReducer)
+      .addCase(getCertainService.pending, services.pendingReducer)
+      .addCase(getCertainService.fulfilled, services.getCertainServiceReducer)
+      .addCase(getCertainService.rejected, services.rejectedReducer)
+      .addCase(createService.pending, services.pendingReducer)
+      .addCase(createService.fulfilled, services.createServiceReducer)
+      .addCase(createService.rejected, services.rejectedReducer)
+      .addCase(deleteService.pending, services.pendingReducer)
+      .addCase(deleteService.fulfilled, services.deleteServiceReducer)
+      .addCase(deleteService.rejected, services.rejectedReducer)
+      .addCase(updateService.pending, services.pendingReducer)
+      .addCase(updateService.fulfilled, services.updateServiceReducer)
+      .addCase(updateService.rejected, services.rejectedReducer),
 });
 
 export const servicesReducer = servicesSlice.reducer;

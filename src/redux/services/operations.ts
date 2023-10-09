@@ -1,15 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios, { AxiosError } from 'axios';
-import type { IService } from './slice';
-
-interface IServiceData {
-  title: string;
-  description: string;
-  image: File | null;
-  price: string;
-  contactMail: string;
-  contactPhone: string;
-}
+import type { IService, IServiceData } from 'helpers/types';
 
 export const getAllServices = createAsyncThunk<
   IService[],
