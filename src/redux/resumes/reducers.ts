@@ -1,25 +1,24 @@
 import type { PayloadAction } from '@reduxjs/toolkit';
-import type { IState } from './slice';
-import type { IResume, IResumeResponse } from 'helpers/types';
+import type { IResume, IResumeResponse, IResumeState } from 'helpers/types';
 
-export const removeCertainResumeReducer = (state: IState) => ({
+export const removeCertainResumeReducer = (state: IResumeState) => ({
   ...state,
   certain: null,
 });
 
-export const pendingResumeReducer = (state: IState) => ({
+export const pendingReducer = (state: IResumeState) => ({
   ...state,
   isLoading: true,
   error: null,
 });
 
-export const rejectedResumeReducer = (
-  state: IState,
+export const rejectedReducer = (
+  state: IResumeState,
   { payload }: PayloadAction<string | undefined>
 ) => ({ ...state, isLoading: false, ...(payload ? { error: payload } : null) });
 
-export const getAllResumesFulfilledReducer = (
-  state: IState,
+export const getAllResumesReducer = (
+  state: IResumeState,
   { payload }: PayloadAction<IResumeResponse>
 ) => ({
   ...state,
@@ -28,8 +27,8 @@ export const getAllResumesFulfilledReducer = (
   pagination: payload.pagination,
 });
 
-export const loadMoreResumesFulfilledReducer = (
-  state: IState,
+export const loadMoreResumesReducer = (
+  state: IResumeState,
   { payload }: PayloadAction<IResumeResponse>
 ) => ({
   ...state,
@@ -38,8 +37,8 @@ export const loadMoreResumesFulfilledReducer = (
   pagination: payload.pagination,
 });
 
-export const getCertainResumeFulfilledReducer = (
-  state: IState,
+export const getCertainResumeReducer = (
+  state: IResumeState,
   { payload }: PayloadAction<IResume>
 ) => ({
   ...state,
@@ -47,8 +46,8 @@ export const getCertainResumeFulfilledReducer = (
   certain: payload,
 });
 
-export const removeResumeFulfilledReducer = (
-  state: IState,
+export const removeResumeReducer = (
+  state: IResumeState,
   { payload }: PayloadAction<string>
 ) => ({
   ...state,
@@ -57,8 +56,8 @@ export const removeResumeFulfilledReducer = (
   pagination: { ...state.pagination, skip: state.pagination.skip - 1 },
 });
 
-export const updateResumeViewsFulfilledReducer = (
-  state: IState,
+export const updateResumeViewsReducer = (
+  state: IResumeState,
   { payload }: PayloadAction<string>
 ) => ({
   ...state,
@@ -68,8 +67,8 @@ export const updateResumeViewsFulfilledReducer = (
   ),
 });
 
-export const updateResumeIsFavoriteFulfilledReducer = (
-  state: IState,
+export const updateResumeIsFavoriteReducer = (
+  state: IResumeState,
   { payload }: PayloadAction<string>
 ) => ({
   ...state,

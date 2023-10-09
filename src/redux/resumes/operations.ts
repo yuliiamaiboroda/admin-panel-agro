@@ -10,7 +10,7 @@ export const getAllResumes = createAsyncThunk<
   try {
     const {
       data: { resumes, ...pagination },
-    } = await axios.get('/api/resumes/all', {
+    } = await axios.get('/api/resumes', {
       params,
     });
     return { resumes, pagination };
@@ -31,7 +31,7 @@ export const loadMoreResumes = createAsyncThunk<
   try {
     const {
       data: { resumes, ...pagination },
-    } = await axios.get('/api/resumes/all', {
+    } = await axios.get('/api/resumes', {
       params,
     });
     return { resumes, pagination };
@@ -50,7 +50,7 @@ export const getCertainResume = createAsyncThunk<
   { rejectValue: string }
 >('resumes/getCertainResume', async (id, thunkApi) => {
   try {
-    const { data } = await axios.get(`/api/resumes/certain/${id}`);
+    const { data } = await axios.get(`/api/resumes/${id}`);
     return data;
   } catch (err) {
     const error = err as AxiosError<{ message: string }>;
@@ -67,7 +67,7 @@ export const removeResume = createAsyncThunk<
   { rejectValue: string }
 >('resumes/removeResume', async (id, thunkApi) => {
   try {
-    await axios.delete(`/api/resumes/certain/${id}`);
+    await axios.delete(`/api/resumes/${id}`);
     return id;
   } catch (err) {
     const error = err as AxiosError<{ message: string }>;
@@ -84,7 +84,7 @@ export const updateResumeViews = createAsyncThunk<
   { rejectValue: string }
 >('resumes/updateResumeViews', async (id, thunkApi) => {
   try {
-    await axios.patch(`/api/resumes/certain/views/${id}`);
+    await axios.post(`/api/resumes/certain/views/${id}`);
     return id;
   } catch (err) {
     const error = err as AxiosError<{ message: string }>;
@@ -101,7 +101,7 @@ export const updateResumeIsFavorite = createAsyncThunk<
   { rejectValue: string }
 >('resumes/updateResumeFavorite', async (id, thunkApi) => {
   try {
-    await axios.patch(`/api/resumes/certain/favorite/${id}`);
+    await axios.post(`/api/resumes/certain/favorite/${id}`);
     return id;
   } catch (err) {
     const error = err as AxiosError<{ message: string }>;
