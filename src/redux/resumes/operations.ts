@@ -31,7 +31,7 @@ export const loadMoreResumes = createAsyncThunk<
   try {
     const {
       data: { resumes, ...pagination },
-    } = await axios.get('/api/resumes', {
+    } = await axios.get('/api/resumes/', {
       params,
     });
     return { resumes, pagination };
