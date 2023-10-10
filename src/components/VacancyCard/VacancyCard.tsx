@@ -2,7 +2,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { Roles } from 'helpers/constants';
 import RestrictedComponent from 'components/RestrictedComponent';
 import { Categories } from 'helpers/constants';
-import translateCategory from 'utils/translate-vacancy-category';
+import { translateCategory } from 'utils';
 import CardWrapperMarkup from 'components/CardWrapperMarkup';
 import CardTitleStringMarkup from 'components/CardTitleStringMarkup';
 import CardDetailStringMarkup from 'components/CardDetailStringMarkup';

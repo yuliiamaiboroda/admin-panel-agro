@@ -1,8 +1,6 @@
 import { Categories } from 'helpers/constants';
 
-export default function translateCategory(
-  category: Categories | string
-): string {
+export function translateCategory(category: Categories | string): string {
   let translatedCategory = '';
 
   switch (category) {

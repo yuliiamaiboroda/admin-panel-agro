@@ -9,7 +9,7 @@ import ModalImage from 'components/ModalImage';
 import ModalDescription from 'components/ModalDescription';
 import ModalLink from 'components/ModalLink';
 import ItemLink from 'components/ItemLink';
-import transformDate from 'utils/date-formatting';
+import { transformDate } from 'utils';
 
 export default function ServiceModalDetails() {
   const service = useAppSelector(selectCertainService);

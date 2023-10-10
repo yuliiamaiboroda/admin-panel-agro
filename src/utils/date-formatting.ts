@@ -2,7 +2,7 @@ function addLeadingZero(value: number) {
   return String(value).padStart(2, '0');
 }
 
-export default function transformDate(dateString: string) {
+export function transformDate(dateString: string) {
   const birthDate = new Date(dateString);
   const day = birthDate.getDate();
   const monthNumber = birthDate.getMonth();

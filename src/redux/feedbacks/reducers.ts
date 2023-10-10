@@ -22,6 +22,11 @@ export const rejectedReducer = (
   };
 };
 
+export const removeCertainFeedbackReducer = (state: IFeedbackState) => ({
+  ...state,
+  certain: null,
+});
+
 export const getAllFeedbackssReducer = (
   state: IFeedbackState,
   {

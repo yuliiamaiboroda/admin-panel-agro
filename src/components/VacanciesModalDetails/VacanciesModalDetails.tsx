@@ -1,7 +1,7 @@
 import { useLocation } from 'react-router-dom';
 import { useAppSelector } from 'hooks';
 import { selectVacancies } from 'redux/vacancies';
-import translateCategory from 'utils/translate-vacancy-category';
+import { translateCategory } from 'utils';
 import Box from 'components/Box';
 import ItemLink from 'components/ItemLink/ItemLink';
 import ModalTitle from 'components/ModalTitle';

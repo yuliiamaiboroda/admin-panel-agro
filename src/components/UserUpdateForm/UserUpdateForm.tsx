@@ -11,7 +11,7 @@ import Box from 'components/Box';
 import { Button } from 'helpers/styles';
 import DropDown from 'components/DropDown';
 import FormButtons from 'components/FormButtons';
-import translateRole from 'utils/translate-role';
+import { translateRole } from 'utils';
 interface IProps extends IUser {
   onClose: () => void;
 }

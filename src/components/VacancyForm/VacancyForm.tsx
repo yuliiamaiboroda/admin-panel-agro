@@ -5,7 +5,7 @@ import TextareaField from 'components/TextareaField';
 import { Form, Formik, ErrorMessage } from 'formik';
 import { Categories, listVacanciesOptions } from 'helpers/constants';
 import createAndUpdateVacancySchema from 'helpers/schemas/vacancies/createAndUpdateVacancy.schema';
-import translateCategory from 'utils/translate-vacancy-category';
+import { translateCategory } from 'utils';
 
 interface IVacancy {
   category: keyof typeof Categories;

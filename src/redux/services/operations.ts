@@ -1,15 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios, { AxiosError } from 'axios';
-import type { IService } from './slice';
-
-interface IServiceData {
-  title: string;
-  description: string;
-  image: File | null;
-  price: string;
-  contactMail: string;
-  contactPhone: string;
-}
+import type { IService, IServiceData } from 'helpers/types';
 
 export const getAllServices = createAsyncThunk<
   IService[],
@@ -17,7 +8,7 @@ export const getAllServices = createAsyncThunk<
   { rejectValue: string }
 >('services/getAll', async (_, thunkApi) => {
   try {
-    const { data } = await axios.get('/api/services/getAll');
+    const { data } = await axios.get('/api/services/');
     return data;
   } catch (err) {
     const error = err as AxiosError<{ message: string }>;
@@ -67,7 +58,7 @@ export const createService = createAsyncThunk<
       reqBody.append('contactMail', contactMail);
       reqBody.append('contactPhone', contactPhone);
 
-      const { data } = await axios.post('/api/services/create', reqBody, {
+      const { data } = await axios.put('/api/services/', reqBody, {
         headers: { 'Content-Type': 'multipart/form-data' },
       });
       if (!data) {
@@ -126,7 +117,7 @@ export const updateService = createAsyncThunk<
       reqBody.append('contactMail', contactMail);
       reqBody.append('contactPhone', contactPhone);
 
-      const { data } = await axios.patch(`/api/services/${id}`, reqBody, {
+      const { data } = await axios.post(`/api/services/${id}`, reqBody, {
         headers: { 'Content-Type': 'multipart/form-data' },
       });
       if (!data) {

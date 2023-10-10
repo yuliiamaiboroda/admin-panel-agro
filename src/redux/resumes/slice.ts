@@ -7,28 +7,10 @@ import {
   loadMoreResumes,
   updateResumeIsFavorite,
 } from './operations';
-import {
-  removeCertainResumeReducer,
-  pendingResumeReducer,
-  rejectedResumeReducer,
-  getAllResumesFulfilledReducer,
-  loadMoreResumesFulfilledReducer,
-  getCertainResumeFulfilledReducer,
-  removeResumeFulfilledReducer,
-  updateResumeViewsFulfilledReducer,
-  updateResumeIsFavoriteFulfilledReducer,
-} from './reducers';
-import type { IResume, IResumeEntity, IResumePagination } from 'helpers/types';
+import * as resumes from './reducers';
+import type { IResumeState } from 'helpers/types';
 
-export interface IState {
-  entities: IResumeEntity[];
-  pagination: IResumePagination;
-  certain: IResume | null;
-  isLoading: boolean;
-  error: string | null;
-}
-
-const initialState: IState = {
+export const initialState: IResumeState = {
   entities: [],
   pagination: { skip: 0, limit: 0, total: 0 },
   certain: null,
@@ -40,31 +22,31 @@ const resumesSlice = createSlice({
   name: 'resumes',
   initialState,
   reducers: {
-    removeCertainResume: removeCertainResumeReducer,
+    removeCertainResume: resumes.removeCertainResumeReducer,
   },
   extraReducers: builder => {
     builder
-      .addCase(getAllResumes.pending, pendingResumeReducer)
-      .addCase(getAllResumes.fulfilled, getAllResumesFulfilledReducer)
-      .addCase(getAllResumes.rejected, rejectedResumeReducer)
-      .addCase(loadMoreResumes.pending, pendingResumeReducer)
-      .addCase(loadMoreResumes.fulfilled, loadMoreResumesFulfilledReducer)
-      .addCase(loadMoreResumes.rejected, rejectedResumeReducer)
-      .addCase(getCertainResume.pending, pendingResumeReducer)
-      .addCase(getCertainResume.fulfilled, getCertainResumeFulfilledReducer)
-      .addCase(getCertainResume.rejected, rejectedResumeReducer)
-      .addCase(removeResume.pending, pendingResumeReducer)
-      .addCase(removeResume.fulfilled, removeResumeFulfilledReducer)
-      .addCase(removeResume.rejected, rejectedResumeReducer)
-      .addCase(updateResumeViews.pending, pendingResumeReducer)
-      .addCase(updateResumeViews.fulfilled, updateResumeViewsFulfilledReducer)
-      .addCase(updateResumeViews.rejected, rejectedResumeReducer)
-      .addCase(updateResumeIsFavorite.pending, pendingResumeReducer)
+      .addCase(getAllResumes.pending, resumes.pendingReducer)
+      .addCase(getAllResumes.fulfilled, resumes.getAllResumesReducer)
+      .addCase(getAllResumes.rejected, resumes.rejectedReducer)
+      .addCase(loadMoreResumes.pending, resumes.pendingReducer)
+      .addCase(loadMoreResumes.fulfilled, resumes.loadMoreResumesReducer)
+      .addCase(loadMoreResumes.rejected, resumes.rejectedReducer)
+      .addCase(getCertainResume.pending, resumes.pendingReducer)
+      .addCase(getCertainResume.fulfilled, resumes.getCertainResumeReducer)
+      .addCase(getCertainResume.rejected, resumes.rejectedReducer)
+      .addCase(removeResume.pending, resumes.pendingReducer)
+      .addCase(removeResume.fulfilled, resumes.removeResumeReducer)
+      .addCase(removeResume.rejected, resumes.rejectedReducer)
+      .addCase(updateResumeViews.pending, resumes.pendingReducer)
+      .addCase(updateResumeViews.fulfilled, resumes.updateResumeViewsReducer)
+      .addCase(updateResumeViews.rejected, resumes.rejectedReducer)
+      .addCase(updateResumeIsFavorite.pending, resumes.pendingReducer)
       .addCase(
         updateResumeIsFavorite.fulfilled,
-        updateResumeIsFavoriteFulfilledReducer
+        resumes.updateResumeIsFavoriteReducer
       )
-      .addCase(updateResumeIsFavorite.rejected, rejectedResumeReducer);
+      .addCase(updateResumeIsFavorite.rejected, resumes.rejectedReducer);
   },
 });
 
