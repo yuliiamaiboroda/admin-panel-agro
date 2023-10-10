@@ -5,7 +5,7 @@ import { useState } from 'react';
 import { Roles } from 'helpers/constants';
 import Modal from 'components/Modal/Modal';
 import ModalLogout from 'components/ModalLogout/ModalLogout';
-import translateRole from 'utils/translate-role';
+import { translateRole } from 'utils';
 import ModalChangePassword from 'components/ModalChangePassword';
 import PageTitle from 'components/PageTitle';
 import { Button } from 'helpers/styles';

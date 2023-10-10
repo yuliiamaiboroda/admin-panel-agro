@@ -6,7 +6,7 @@ import CardDetailStringMarkup from 'components/CardDetailStringMarkup';
 import ItemLink from 'components/ItemLink';
 import Box from 'components/Box';
 import { Roles } from 'helpers/constants';
-import translateRole from 'utils/translate-role';
+import { translateRole } from 'utils';
 
 export default function UserCard({ id, email, name, surname, role }: IUser) {
   const navigate = useNavigate();

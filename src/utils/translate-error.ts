@@ -1,6 +1,6 @@
 import { Errors } from 'helpers/constants';
 
-export default function translateError(error: string): string {
+export function translateError(error: string): string {
   let translatedError = '';
 
   switch (error) {

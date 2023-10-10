@@ -2,13 +2,13 @@ import { Roles } from 'helpers/constants';
 import { useAppSelector } from 'hooks';
 import { useLocation } from 'react-router-dom';
 import { selectUsersList } from 'redux/users';
-import translateRole from 'utils/translate-role';
+import { translateRole } from 'utils';
 import Box from 'components/Box';
 import ModalTitle from 'components/ModalTitle';
 import ModalDescription from 'components/ModalDescription';
 import ModalLink from 'components/ModalLink';
 import ItemLink from 'components/ItemLink';
-import transformDate from 'utils/date-formatting';
+import { transformDate } from 'utils';
 
 export default function UsersModalDetails() {
   const { certain } = useAppSelector(selectUsersList);

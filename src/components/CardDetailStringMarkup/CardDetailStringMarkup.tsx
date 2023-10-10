@@ -1,5 +1,5 @@
 import { Details } from './CardDetailStringMarkup.styled';
-import stringFormatting from 'utils/string-formatting';
+import { stringFormatting } from 'utils';
 
 interface IProps {
   title?: string | null;

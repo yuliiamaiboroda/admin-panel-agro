@@ -1,4 +1,4 @@
-import translateRole from 'utils/translate-role';
+import { translateRole } from 'utils';
 import { Roles } from './user-roles';
 
 export const listUsersOptions = [

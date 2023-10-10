@@ -36,3 +36,11 @@ export interface IResumeFilter {
   limit?: string;
   skip?: number;
 }
+
+export interface IResumeState {
+  entities: IResumeEntity[];
+  pagination: IResumePagination;
+  certain: IResume | null;
+  isLoading: boolean;
+  error: string | null;
+}

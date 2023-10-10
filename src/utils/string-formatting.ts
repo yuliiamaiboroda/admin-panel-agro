@@ -1,4 +1,4 @@
-export default function stringFormatting(title: string | null, value: string) {
+export function stringFormatting(title: string | null, value: string) {
   if (title === null) {
     return value;
   }

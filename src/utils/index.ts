@@ -5,3 +5,4 @@ export * from './translate-error';
 export * from './string-formatting';
 export * from './date-formatting';
 export * from './axios-instance';
+export * from './translate-vacancy-category';

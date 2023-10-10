@@ -22,9 +22,7 @@ const feedbacksSlice = createSlice({
   name: 'feedbacks',
   initialState,
   reducers: {
-    removeCertainFeedback(state) {
-      return { ...state, certain: null };
-    },
+    removeCertainFeedback: feedbacks.removeCertainFeedbackReducer,
   },
   extraReducers: builder =>
     builder
