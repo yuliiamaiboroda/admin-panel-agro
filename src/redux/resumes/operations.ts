@@ -10,7 +10,7 @@ export const getAllResumes = createAsyncThunk<
   try {
     const {
       data: { resumes, ...pagination },
-    } = await axios.get('/api/resumes', {
+    } = await axios.get('/api/resumes/', {
       params,
     });
     return { resumes, pagination };
@@ -84,7 +84,7 @@ export const updateResumeViews = createAsyncThunk<
   { rejectValue: string }
 >('resumes/updateResumeViews', async (id, thunkApi) => {
   try {
-    await axios.post(`/api/resumes/certain/views/${id}`);
+    await axios.post(`/api/resumes/${id}/views`);
     return id;
   } catch (err) {
     const error = err as AxiosError<{ message: string }>;
@@ -101,7 +101,7 @@ export const updateResumeIsFavorite = createAsyncThunk<
   { rejectValue: string }
 >('resumes/updateResumeFavorite', async (id, thunkApi) => {
   try {
-    await axios.post(`/api/resumes/certain/favorite/${id}`);
+    await axios.post(`/api/resumes/${id}/favorite`);
     return id;
   } catch (err) {
     const error = err as AxiosError<{ message: string }>;

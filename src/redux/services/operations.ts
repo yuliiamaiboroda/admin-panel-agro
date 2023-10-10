@@ -8,7 +8,7 @@ export const getAllServices = createAsyncThunk<
   { rejectValue: string }
 >('services/getAll', async (_, thunkApi) => {
   try {
-    const { data } = await axios.get('/api/services');
+    const { data } = await axios.get('/api/services/');
     return data;
   } catch (err) {
     const error = err as AxiosError<{ message: string }>;
@@ -58,7 +58,7 @@ export const createService = createAsyncThunk<
       reqBody.append('contactMail', contactMail);
       reqBody.append('contactPhone', contactPhone);
 
-      const { data } = await axios.put('/api/services', reqBody, {
+      const { data } = await axios.put('/api/services/', reqBody, {
         headers: { 'Content-Type': 'multipart/form-data' },
       });
       if (!data) {
