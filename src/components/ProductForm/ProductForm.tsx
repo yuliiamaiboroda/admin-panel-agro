@@ -10,6 +10,9 @@ interface IProductState {
   title: string;
   description: string;
   image: File | null;
+  price: string;
+  contactMail: string;
+  contactPhone: string;
 }
 
 interface IProps {
@@ -17,12 +20,21 @@ interface IProps {
     title: string;
     description: string;
     imageURL?: string;
+    price: string;
+    contactMail: string;
+    contactPhone: string;
   };
   onSubmit: (values: IProductState) => void;
   onCancel: () => void;
 }
 
-const PRODUCT_DATA = { title: '', description: '' };
+const PRODUCT_DATA = {
+  title: '',
+  description: '',
+  price: '',
+  contactMail: '',
+  contactPhone: '+380',
+};
 
 export default function ProductForm({
   productData = PRODUCT_DATA,
@@ -31,7 +43,8 @@ export default function ProductForm({
 }: IProps) {
   const fileField = useRef<HTMLInputElement>(null);
 
-  const { title, description, imageURL } = productData;
+  const { title, description, imageURL, price, contactMail, contactPhone } =
+    productData;
 
   const submitBtnTitle = productData === PRODUCT_DATA ? 'Створити' : 'Оновити';
 
@@ -41,7 +54,14 @@ export default function ProductForm({
         {submitBtnTitle} продукт {title ? title : null}
       </h2>
       <Formik
-        initialValues={{ title, description, image: '' }}
+        initialValues={{
+          title,
+          description,
+          image: '',
+          price,
+          contactMail,
+          contactPhone,
+        }}
         validationSchema={productSchema(fileField, imageURL)}
         onSubmit={(values, actions) => {
           onSubmit({
@@ -50,6 +70,9 @@ export default function ProductForm({
             image: fileField.current?.files
               ? fileField.current?.files[0]
               : null,
+            price: values.price,
+            contactMail: values.contactMail,
+            contactPhone: values.contactPhone,
           });
           actions.resetForm();
         }}
@@ -70,6 +93,22 @@ export default function ProductForm({
               placeholderName="Опис"
             />
             <UploadFileField name="image" fileRef={fileField} />
+            <FormField
+              labelName="Ціна:"
+              placeholderName="Ціна"
+              fieldName="price"
+            />
+            <FormField
+              labelName="Контактна пошта:"
+              fieldName="contactMail"
+              placeholderName="Контактна пошта"
+              typeName="email"
+            />
+            <FormField
+              labelName="Контактний номер:"
+              placeholderName="Контактний номер"
+              fieldName="contactPhone"
+            />
             <FormButtons
               onCancel={onCancel}
               onSubmit={handleSubmit}
