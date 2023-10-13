@@ -13,6 +13,9 @@ interface IProps {
   title: string;
   imageURL: string;
   description: string;
+  price: string;
+  contactMail: string;
+  contactPhone: string;
 }
 
 export default function ProductCard({
@@ -20,6 +23,9 @@ export default function ProductCard({
   title,
   imageURL,
   description,
+  price,
+  contactMail,
+  contactPhone,
 }: IProps) {
   const navigate = useNavigate();
   const routeLocation = useLocation();
@@ -36,6 +42,9 @@ export default function ProductCard({
       <CardImageMarkup src={imageURL} alt={title} />
       <CardTitleStringMarkup value={title} />
       <CardDetailStringMarkup title="Опис" value={description} />
+      <CardDetailStringMarkup title="Ціна" value={price} />
+      <CardDetailStringMarkup title="Телефон" value={contactPhone} />
+      <CardDetailStringMarkup title="Пошта" value={contactMail} />
       <RestrictedComponent accessRight={Roles.productsManager}>
         <Box display="flex" justifyContent="center" gridGap={2}>
           <ItemLink type="edit" navigateTo={`${id}/form`} />
