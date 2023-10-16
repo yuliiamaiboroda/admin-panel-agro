@@ -10,6 +10,7 @@ import { Button } from 'helpers/styles';
 import FormButtons from 'components/FormButtons';
 import ResetPasswordButton from 'components/ResetPasswordButton';
 import { selectUser } from 'redux/auth';
+import FormTitle from 'components/FormTitle';
 
 interface IProps {
   onClose: () => void;
@@ -31,7 +32,7 @@ export default function ModalChangePassword({ onClose }: IProps) {
 
   return (
     <>
-      <h2>Змінити пароль</h2>
+      <FormTitle title="Змінити пароль" />
       <div style={{ margin: '14px auto' }}>
         <Formik
           initialValues={initialState}

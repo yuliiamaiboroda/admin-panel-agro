@@ -10,6 +10,7 @@ import Box from 'components/Box';
 import { Button } from 'helpers/styles';
 import DropDown from 'components/DropDown';
 import FormButtons from 'components/FormButtons/FormButtons';
+import FormTitle from 'components/FormTitle';
 
 interface INewUser {
   email: string;
@@ -39,7 +40,7 @@ export default function CreateUserForm({ onClose }: Iprops) {
 
   return (
     <>
-      <h2>Cтворити нового користувача</h2>
+      <FormTitle title="Створити нового користувача" />
       <div style={{ margin: '14px auto' }}>
         <Formik
           initialValues={FORM_INITIAL_STATE}

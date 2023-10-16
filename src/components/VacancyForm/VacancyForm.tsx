@@ -1,4 +1,5 @@
 import DropDown from 'components/DropDown/DropDown';
+import FormTitle from 'components/FormTitle';
 import FormButtons from 'components/FormButtons/FormButtons';
 import FormField from 'components/FormField';
 import TextareaField from 'components/TextareaField';
@@ -70,7 +71,7 @@ export default function VacancyForm({
 
   return (
     <>
-      <h2>{formName}</h2>
+      <FormTitle title={formName} />
       <Formik
         initialValues={{
           category,
