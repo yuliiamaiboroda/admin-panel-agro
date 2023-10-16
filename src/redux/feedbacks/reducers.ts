@@ -3,8 +3,7 @@ import type {
   IFeedback,
   IFeedbackState,
   IFeedbackPagination,
-  IFeedbackCertain,
-  IFeedbackResponse,
+  IFeedbackList,
 } from 'helpers/types';
 
 export const pendingReducer = (state: IFeedbackState) => {
@@ -46,7 +45,7 @@ export const getAllFeedbackssReducer = (
 
 export const getCertainFeedbackReducer = (
   state: IFeedbackState,
-  { payload }: PayloadAction<IFeedbackCertain, string>
+  { payload }: PayloadAction<IFeedback, string>
 ) => {
   return { ...state, isLoading: false, certain: payload };
 };
@@ -100,7 +99,7 @@ export const removeFeedbackReducer = (
 
 export const loadMoreFeedbacksReducer = (
   state: IFeedbackState,
-  { payload }: PayloadAction<IFeedbackResponse, string>
+  { payload }: PayloadAction<IFeedbackList, string>
 ) => {
   return {
     ...state,
