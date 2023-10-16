@@ -17,7 +17,7 @@ export interface IResumePagination {
   total: number;
 }
 
-export interface IResumeResponse {
+export interface IResumeList {
   resumes: IResume[];
   pagination: IResumePagination;
 }

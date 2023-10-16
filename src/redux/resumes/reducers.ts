@@ -1,5 +1,5 @@
 import type { PayloadAction } from '@reduxjs/toolkit';
-import type { IResume, IResumeResponse, IResumeState } from 'helpers/types';
+import type { IResume, IResumeList, IResumeState } from 'helpers/types';
 
 export const removeCertainResumeReducer = (state: IResumeState) => ({
   ...state,
@@ -19,7 +19,7 @@ export const rejectedReducer = (
 
 export const getAllResumesReducer = (
   state: IResumeState,
-  { payload }: PayloadAction<IResumeResponse>
+  { payload }: PayloadAction<IResumeList>
 ) => ({
   ...state,
   isLoading: false,
@@ -29,7 +29,7 @@ export const getAllResumesReducer = (
 
 export const loadMoreResumesReducer = (
   state: IResumeState,
-  { payload }: PayloadAction<IResumeResponse>
+  { payload }: PayloadAction<IResumeList>
 ) => ({
   ...state,
   isLoading: false,
