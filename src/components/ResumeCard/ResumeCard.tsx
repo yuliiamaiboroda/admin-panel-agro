@@ -1,7 +1,7 @@
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useAppDispatch } from 'hooks';
 import { updateResumeViews, updateResumeIsFavorite } from 'redux/resumes';
-import type { IResumeEntity } from 'helpers/types';
+import type { IResume } from 'helpers/types';
 import CardWrapperMarkup from 'components/CardWrapperMarkup';
 import CardTitleStringMarkup from 'components/CardTitleStringMarkup';
 import CardDetailStringMarkup from 'components/CardDetailStringMarkup';
@@ -17,7 +17,7 @@ export default function ResumeCard({
   comment,
   isFavorite,
   isReviewed,
-}: IResumeEntity) {
+}: IResume) {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const location = useLocation();

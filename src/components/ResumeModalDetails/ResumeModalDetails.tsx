@@ -40,7 +40,7 @@ export default function ResumeModalDetails() {
         </ModalLink>
         <ModalDescription label="Позиція" value={position} />
         <ModalLink
-          href={resumeFileURL}
+          href={resumeFileURL || undefined}
           label="Резюме"
           target="_blank"
           rel="noreferrer noopener"

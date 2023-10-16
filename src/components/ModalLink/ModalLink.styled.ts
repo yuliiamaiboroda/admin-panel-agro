@@ -11,6 +11,5 @@ export const StyledModalLink = styled.a`
   :hover {
     color: ${p =>
       p.href ? p.theme.colors.secondaryText : p.theme.colors.primaryText};
-    font-weight: ${p => p.theme.fontWeights.bold};
   }
 `;
