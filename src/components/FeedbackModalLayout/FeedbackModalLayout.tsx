@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { Outlet, useNavigate, useParams, Navigate } from 'react-router-dom';
+import { Notify } from 'notiflix';
 import { useAppDispatch, useAppSelector, useModal } from 'hooks';
 import Modal from 'components/Modal';
 import Loader from 'components/Loader';
@@ -8,6 +9,7 @@ import {
   removeCertainFeedback,
   selectFeedbacks,
 } from 'redux/feedbacks';
+import { translateError } from 'utils';
 
 export default function FeedbackModalLayout() {
   const { feedbackId } = useParams();
@@ -33,6 +35,7 @@ export default function FeedbackModalLayout() {
   }, [dispatch, feedbackId]);
 
   if (error) {
+    Notify.failure(translateError(error));
     return <Navigate to="/feedbacks" replace />;
   }
 

@@ -10,6 +10,7 @@ import { useEffect } from 'react';
 import Loader from 'components/Loader/Loader';
 import { Notify } from 'notiflix';
 import { useModal } from 'hooks';
+import { translateError } from 'utils';
 
 export default function VacanciesModalLayout() {
   const navigate = useNavigate();
@@ -35,7 +36,7 @@ export default function VacanciesModalLayout() {
   }, [vacanciesId, dispatch]);
 
   if (error) {
-    Notify.failure(error);
+    Notify.failure(translateError(error));
     return <Navigate to={`/vacancies/${categoryName || ''}`} replace />;
   }
 

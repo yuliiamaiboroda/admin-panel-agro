@@ -11,6 +11,7 @@ import {
 import Modal from 'components/Modal/';
 import Loader from 'components/Loader';
 import { useModal } from 'hooks';
+import { translateError } from 'utils';
 
 export default function ServiceModalLayout() {
   const { serviceId } = useParams();
@@ -38,7 +39,7 @@ export default function ServiceModalLayout() {
   }, [dispatch, serviceId]);
 
   if (error) {
-    Notify.failure(error);
+    Notify.failure(translateError(error));
     return <Navigate to="/services" replace />;
   }
 
