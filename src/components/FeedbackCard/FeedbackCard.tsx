@@ -7,14 +7,8 @@ import Box from 'components/Box';
 import ItemLink from 'components/ItemLink';
 import FavoriteButton from 'components/FavoriteButton';
 import UnviewedMark from 'components/UnviewedMark';
+import type { IFeedback } from 'helpers/types';
 
-export interface IFeedback {
-  id: string;
-  name: string;
-  comment: string;
-  isReviewed: boolean;
-  isFavorite: boolean;
-}
 export default function FeedbackCard({
   id,
   name,

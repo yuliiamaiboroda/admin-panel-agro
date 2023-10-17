@@ -1,9 +1,9 @@
 import axios, { AxiosError } from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import type { IResume, IResumeResponse, IResumeFilter } from 'helpers/types';
+import type { IResume, IResumeList, IResumeFilter } from 'helpers/types';
 
 export const getAllResumes = createAsyncThunk<
-  IResumeResponse,
+  IResumeList,
   IResumeFilter | undefined,
   { rejectValue: string }
 >('resumes/getAllResumes', async (params, thunkApi) => {
@@ -24,14 +24,14 @@ export const getAllResumes = createAsyncThunk<
 });
 
 export const loadMoreResumes = createAsyncThunk<
-  IResumeResponse,
+  IResumeList,
   IResumeFilter,
   { rejectValue: string }
 >('resumes/loadMoreResumes', async (params, thunkApi) => {
   try {
     const {
       data: { resumes, ...pagination },
-    } = await axios.get('/api/resumes', {
+    } = await axios.get('/api/resumes/', {
       params,
     });
     return { resumes, pagination };

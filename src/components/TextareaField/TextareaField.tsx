@@ -12,15 +12,14 @@ export default function TextareaField({
   labelName,
   placeholderName,
 }: IProps) {
-  const [, meta] = useField(fieldName);
+  const [field, meta] = useField(fieldName);
 
   return (
     <Label>
       {labelName}
       <Textarea
+        {...field}
         as="textarea"
-        name={fieldName}
-        id={fieldName}
         placeholder={placeholderName}
         rows={2}
         cols={32}

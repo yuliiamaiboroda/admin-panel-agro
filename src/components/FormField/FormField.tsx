@@ -17,8 +17,6 @@ export default function FormField({
 }: IProps) {
   const [, meta] = useField(fieldName);
 
-  // TODO:  what's role of position relative for Box component? and what's role of Box component?
-
   return (
     <Box position="relative" width="100%">
       <Label>

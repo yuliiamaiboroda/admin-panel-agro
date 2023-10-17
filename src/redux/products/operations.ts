@@ -1,6 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios, { AxiosError } from 'axios';
 import type { IProduct, IProductData } from 'helpers/types';
+import { createFormData } from 'utils';
 
 export const getAllProducts = createAsyncThunk<
   IProduct[],
@@ -40,15 +41,12 @@ export const createProduct = createAsyncThunk<
   IProduct,
   IProductData,
   { rejectValue: string }
->('products/createProduct', async ({ title, description, image }, thunkApi) => {
+>('products/createProduct', async (productData, thunkApi) => {
   try {
-    if (!image) {
+    if (!productData.image) {
       return thunkApi.rejectWithValue('File should be uploaded');
     }
-    const reqBody = new FormData();
-    reqBody.append('title', title);
-    reqBody.append('description', description);
-    reqBody.append('image', image);
+    const reqBody = createFormData(productData);
     const { data } = await axios.put('/api/products', reqBody, {
       headers: { 'Content-Type': 'multipart/form-data' },
     });
@@ -71,30 +69,21 @@ export const editProduct = createAsyncThunk<
   IProduct,
   { id: string } & IProductData,
   { rejectValue: string }
->(
-  'products/editProduct',
-  async ({ id, title, description, image }, thunkApi) => {
-    try {
-      const reqBody = new FormData();
-      reqBody.append('title', title);
-      reqBody.append('description', description);
-      if (image) {
-        reqBody.append('image', image);
-      }
-
-      const { data } = await axios.post(`/api/products/${id}`, reqBody, {
-        headers: { 'Content-Type': 'multipart/form-data' },
-      });
-      return data;
-    } catch (err) {
-      const error = err as AxiosError<{ message: string }>;
-      if (!error.response) {
-        return thunkApi.rejectWithValue('Something went wrong');
-      }
-      return thunkApi.rejectWithValue(error.response.data.message);
+>('products/editProduct', async ({ id, ...productData }, thunkApi) => {
+  try {
+    const reqBody = createFormData(productData);
+    const { data } = await axios.post(`/api/products/${id}`, reqBody, {
+      headers: { 'Content-Type': 'multipart/form-data' },
+    });
+    return data;
+  } catch (err) {
+    const error = err as AxiosError<{ message: string }>;
+    if (!error.response) {
+      return thunkApi.rejectWithValue('Something went wrong');
     }
+    return thunkApi.rejectWithValue(error.response.data.message);
   }
-);
+});
 
 export const removeProduct = createAsyncThunk<
   string,

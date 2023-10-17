@@ -6,7 +6,7 @@ export interface IService {
   price: string;
   contactMail: string;
   contactPhone: string;
-  createdAt?: string;
+  createdAt: string;
 }
 
 export interface IServiceState {

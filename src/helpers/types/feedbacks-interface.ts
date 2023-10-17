@@ -1,9 +1,13 @@
 export interface IFeedback {
   id: string;
   name: string;
+  contactPhone: string;
+  contactMail: string;
   comment: string;
-  isReviewed: boolean;
+  agreement: boolean;
+  createdAt: string;
   isFavorite: boolean;
+  isReviewed?: boolean;
 }
 
 export interface IFeedbackFilter {
@@ -12,23 +16,13 @@ export interface IFeedbackFilter {
   skip?: number;
   limit?: string;
 }
-export interface IFeedbackCertain {
-  id: string;
-  name: string;
-  contactPhone: string;
-  contactMail: string;
-  comment: string;
-  agreement: boolean;
-  isFavorite: boolean;
-  createdAt: string;
-}
 export interface IFeedbackPagination {
   skip: number;
   limit: number;
   total: number;
 }
 
-export interface IFeedbackResponse {
+export interface IFeedbackList {
   feedbacks: IFeedback[];
   pagination: IFeedbackPagination;
 }
@@ -38,5 +32,5 @@ export interface IFeedbackState {
   isLoading: boolean;
   error: string | null;
   pagination: IFeedbackPagination;
-  certain: IFeedbackCertain | null;
+  certain: IFeedback | null;
 }
