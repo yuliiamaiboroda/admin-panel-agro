@@ -10,10 +10,7 @@ export const loginUser = createAsyncThunk<
   { rejectValue: string }
 >('user/loginUser', async (userCredentials, thunkApi) => {
   try {
-    const { data } = await axios.post<IAuth>(
-      '/api/auth/login',
-      userCredentials
-    );
+    const { data } = await axios.post('/api/auth/login', userCredentials);
     return data;
   } catch (err) {
     const error = err as AxiosError;

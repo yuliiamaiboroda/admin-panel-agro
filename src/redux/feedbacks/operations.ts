@@ -1,14 +1,10 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios, { AxiosError } from 'axios';
-import {
-  IFeedback,
-  IFeedbackCertain,
-  IFeedbackPagination,
-} from 'helpers/types';
+import { IFeedback, IFeedbackList } from 'helpers/types';
 import type { IFeedbackFilter } from 'helpers/types';
 
 export const getAllFeedbacks = createAsyncThunk<
-  { feedbacks: IFeedback[]; pagination: IFeedbackPagination },
+  IFeedbackList,
   IFeedbackFilter,
   { rejectValue: string }
 >('feedback/getAll', async (params, thunkApi) => {
@@ -65,7 +61,7 @@ export const updateFeedbackViews = createAsyncThunk<
 });
 
 export const getCertainFeedback = createAsyncThunk<
-  IFeedbackCertain,
+  IFeedback,
   string,
   {
     rejectValue: string;
@@ -103,7 +99,7 @@ export const updateFeedbackIsFavorite = createAsyncThunk<
 });
 
 export const loadMoreFeedbacks = createAsyncThunk<
-  { feedbacks: IFeedback[]; pagination: IFeedbackPagination },
+  IFeedbackList,
   IFeedbackFilter,
   { rejectValue: string }
 >('feedback/loadMoreFeedbacks', async (params, thunkApi) => {

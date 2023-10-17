@@ -4,18 +4,11 @@ export interface IResume {
   phone: string;
   email: string;
   position: string;
-  resumeFileURL: string;
+  resumeFileURL: string | null;
   comment: string;
+  createdAt: string;
   isFavorite: boolean;
-}
-
-export interface IResumeEntity {
-  id: string;
-  name: string;
-  position: string;
-  comment: string;
-  isFavorite: boolean;
-  isReviewed: boolean;
+  isReviewed?: boolean;
 }
 
 export interface IResumePagination {
@@ -24,8 +17,8 @@ export interface IResumePagination {
   total: number;
 }
 
-export interface IResumeResponse {
-  resumes: IResumeEntity[];
+export interface IResumeList {
+  resumes: IResume[];
   pagination: IResumePagination;
 }
 
@@ -38,7 +31,7 @@ export interface IResumeFilter {
 }
 
 export interface IResumeState {
-  entities: IResumeEntity[];
+  entities: IResume[];
   pagination: IResumePagination;
   certain: IResume | null;
   isLoading: boolean;

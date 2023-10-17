@@ -57,7 +57,7 @@ export const createVacancy = createAsyncThunk<
     thunkApi
   ) => {
     try {
-      const { data } = await axios.post('/api/vacancies/create', {
+      const { data } = await axios.put('/api/vacancies/', {
         category,
         title,
         description,
@@ -103,7 +103,7 @@ export const updateVacancyById = createAsyncThunk<
     thunkApi
   ) => {
     try {
-      const { data } = await axios.put(`/api/vacancies/${id}`, {
+      const { data } = await axios.post(`/api/vacancies/${id}`, {
         category,
         title,
         description,
@@ -125,7 +125,7 @@ export const updateVacancyById = createAsyncThunk<
   }
 );
 
-export const getCertainVacancy = createAsyncThunk<
+export const getVacancyById = createAsyncThunk<
   IVacancy,
   string,
   {
@@ -133,7 +133,7 @@ export const getCertainVacancy = createAsyncThunk<
   }
 >('vacancies/getCertain', async (id, thunkApi) => {
   try {
-    const { data } = await axios.get(`/api/vacancies/certain/${id}`);
+    const { data } = await axios.get(`/api/vacancies/${id}`);
     return data;
   } catch (err) {
     const error = err as AxiosError<{ message: string }>;
@@ -150,7 +150,7 @@ export const getAllVacancyTitles = createAsyncThunk<
   { rejectValue: string }
 >('vacancies/getTittles', async (_, thunkApi) => {
   try {
-    const { data } = await axios.get('/api/vacancies/titles');
+    const { data } = await axios.get('/api/vacancies/titles/');
     return data;
   } catch (err) {
     const error = err as AxiosError<{ message: string }>;
