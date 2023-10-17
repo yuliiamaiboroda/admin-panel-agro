@@ -1,4 +1,4 @@
-import { ErrorMessage, Form, Formik } from 'formik';
+import { Form, Formik } from 'formik';
 import updateUserSchema from 'helpers/schemas/auth/updateUser.schema';
 import { useAppDispatch } from 'hooks';
 import { updateUserById } from 'redux/users';
@@ -83,10 +83,16 @@ export default function UpdateUserForm({
               />
 
               <label
-                style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}
+                style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: '4px',
+                  color: '#232D42',
+                }}
               >
                 Роль нового користувача
                 <DropDown
+                  fieldName="role"
                   options={listUsersOptions}
                   setFieldValue={setFieldValue}
                   initialValue={{
@@ -95,7 +101,6 @@ export default function UpdateUserForm({
                     name: 'role',
                   }}
                 />
-                <ErrorMessage name="role" />
               </label>
               <Box position="relative" width="100%">
                 <FormField

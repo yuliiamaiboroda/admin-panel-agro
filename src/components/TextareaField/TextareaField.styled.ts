@@ -36,6 +36,7 @@ export const Label = styled.label`
   flex-direction: column;
   gap: ${props => props.theme.space[1]}px;
   position: relative;
+  color: ${props => props.theme.colors.secondaryText};
 `;
 
 export const Error = styled.div`
@@ -60,11 +61,10 @@ export const Textarea = styled(Field)<CustomTextareaProps>`
   outline: none;
   animation: ${props => props.$isInvalid && shakeInput} 0.82s
     cubic-bezier(0.36, 0.07, 0.19, 0.97);
-  border-color: ${props =>
+  border: ${props =>
     props.$isInvalid
-      ? props.theme.colors.warning
-      : props.theme.colors.confirmation};
-  height: ${props => props.theme.space[18]}px;
+      ? props.theme.borders.warningBold
+      : props.theme.borders.accent};
+  height: ${props => props.theme.space[19]}px;
   resize: none;
-  border-width: 2px;
 `;

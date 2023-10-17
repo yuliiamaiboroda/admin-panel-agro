@@ -3,7 +3,7 @@ import FormTitle from 'components/FormTitle';
 import FormButtons from 'components/FormButtons/FormButtons';
 import FormField from 'components/FormField';
 import TextareaField from 'components/TextareaField';
-import { Form, Formik, ErrorMessage } from 'formik';
+import { Form, Formik } from 'formik';
 import { Categories, listVacanciesOptions } from 'helpers/constants';
 import createAndUpdateVacancySchema from 'helpers/schemas/vacancies/createAndUpdateVacancy.schema';
 import { translateCategory } from 'utils';
@@ -137,12 +137,18 @@ export default function VacancyForm({
               placeholderName="Місце розташування"
             />
             <label
-              style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}
+              style={{
+                display: 'flex',
+                flexDirection: 'column',
+                gap: '4px',
+                color: '#232D42',
+              }}
             >
               Категорія вакансії
               <DropDown
                 options={listVacanciesOptions}
                 setFieldValue={setFieldValue}
+                fieldName="category"
                 initialValue={
                   vacancyData === VACANCY_DATA
                     ? null
@@ -153,7 +159,6 @@ export default function VacancyForm({
                       }
                 }
               />
-              <ErrorMessage name="category" />
             </label>
             <FormButtons
               onCancel={onClose}
