@@ -1,20 +1,43 @@
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import { Field } from 'formik';
 import { VscTriangleUp, VscTriangleDown } from 'react-icons/vsc';
+
+const shakeInput = keyframes`
+  10%, 90% {
+    transform: translate3d(-1px, 0, 0);
+  }
+  
+  20%, 80% {
+    transform: translate3d(2px, 0, 0);
+  }
+
+  30%, 50%, 70% {
+    transform: translate3d(-4px, 0, 0);
+  }
+
+  40%, 60% {
+    transform: translate3d(4px, 0, 0);
+  }
+`;
 
 export const Dropdown = styled.div`
   position: relative;
 `;
 
-export const SelectedItem = styled.div`
+export const SelectedItem = styled.div<{ $isInvalid?: boolean }>`
   color: ${props => props.theme.colors.secondaryText};
-  border: ${props => props.theme.borders.accent};
+  border: ${props =>
+    props.$isInvalid
+      ? props.theme.borders.warningBold
+      : props.theme.borders.accent};
   padding: ${props => props.theme.space[2]}px;
   height: ${props => props.theme.space[11]}px;
   border-radius: ${props => props.theme.radii.button};
   display: flex;
   justify-content: space-between;
   align-items: center;
+  animation: ${props => props.$isInvalid && shakeInput} 0.82s
+    cubic-bezier(0.36, 0.07, 0.19, 0.97);
 `;
 
 export const IconUp = styled(VscTriangleUp)`

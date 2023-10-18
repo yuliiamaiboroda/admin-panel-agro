@@ -1,4 +1,4 @@
-import { ErrorMessage, Form, Formik } from 'formik';
+import { Form, Formik } from 'formik';
 import updateUserSchema from 'helpers/schemas/auth/updateUser.schema';
 import { useAppDispatch } from 'hooks';
 import { updateUserById } from 'redux/users';
@@ -12,6 +12,7 @@ import { Button } from 'helpers/styles';
 import DropDown from 'components/DropDown';
 import FormButtons from 'components/FormButtons';
 import { translateRole } from 'utils';
+import FormTitle from 'components/FormTitle';
 interface IProps extends IUser {
   onClose: () => void;
 }
@@ -39,9 +40,7 @@ export default function UpdateUserForm({
   const dispatch = useAppDispatch();
   return (
     <>
-      <h2>
-        Оновити користувача {name} {surname}
-      </h2>
+      <FormTitle title={`Оновити користувача ${name} ${surname}`} />
       <div style={{ margin: '14px auto' }}>
         <Formik
           initialValues={FORM_INITIAL_STATE}
@@ -84,10 +83,16 @@ export default function UpdateUserForm({
               />
 
               <label
-                style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}
+                style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: '4px',
+                  color: '#232D42',
+                }}
               >
                 Роль нового користувача
                 <DropDown
+                  fieldName="role"
                   options={listUsersOptions}
                   setFieldValue={setFieldValue}
                   initialValue={{
@@ -96,7 +101,6 @@ export default function UpdateUserForm({
                     name: 'role',
                   }}
                 />
-                <ErrorMessage name="role" />
               </label>
               <Box position="relative" width="100%">
                 <FormField

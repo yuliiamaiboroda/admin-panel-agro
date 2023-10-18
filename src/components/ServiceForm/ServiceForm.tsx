@@ -5,6 +5,7 @@ import UploadFileField from 'components/UploadFileField';
 import FormField from 'components/FormField';
 import FormButtons from 'components/FormButtons';
 import TextareaField from 'components/TextareaField';
+import FormTitle from 'components/FormTitle';
 
 interface IServiceState {
   title: string;
@@ -50,9 +51,7 @@ export default function ServiceForm({
 
   return (
     <>
-      <h2>
-        {submitBtnTitle} послугу {title ? title : null}
-      </h2>
+      <FormTitle title={`${submitBtnTitle} послугу ${title ? title : ''}`} />
       <Formik
         initialValues={{
           title,
