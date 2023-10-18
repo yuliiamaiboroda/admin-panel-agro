@@ -1,4 +1,4 @@
-import { Form, Formik, ErrorMessage } from 'formik';
+import { Form, Formik } from 'formik';
 import createNewUserSchema from 'helpers/schemas/auth/createNewUser.schema';
 import { useAppDispatch } from 'hooks';
 import { registerNewUser } from 'redux/users';
@@ -10,6 +10,7 @@ import Box from 'components/Box';
 import { Button } from 'helpers/styles';
 import DropDown from 'components/DropDown';
 import FormButtons from 'components/FormButtons/FormButtons';
+import FormTitle from 'components/FormTitle';
 
 interface INewUser {
   email: string;
@@ -39,7 +40,7 @@ export default function CreateUserForm({ onClose }: Iprops) {
 
   return (
     <>
-      <h2>Cтворити нового користувача</h2>
+      <FormTitle title="Створити нового користувача" />
       <div style={{ margin: '14px auto' }}>
         <Formik
           initialValues={FORM_INITIAL_STATE}
@@ -120,14 +121,19 @@ export default function CreateUserForm({ onClose }: Iprops) {
                 placeholderName="Прізвище"
               />
               <label
-                style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}
+                style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: '4px',
+                  color: '#232D42',
+                }}
               >
                 Роль нового користувача
                 <DropDown
+                  fieldName="role"
                   options={listUsersOptions}
                   setFieldValue={setFieldValue}
                 />
-                <ErrorMessage name="role" />
               </label>
               <FormButtons
                 onCancel={onClose}

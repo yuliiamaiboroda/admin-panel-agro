@@ -3,7 +3,10 @@ import { Categories } from 'helpers/constants';
 
 const createAndUpdateVacancySchema = Yup.object().shape({
   category: Yup.mixed<Categories>()
-    .oneOf(Object.values(Categories))
+    .oneOf(
+      Object.values(Categories),
+      'Категорія має бути одним із таких значень: актуальна вакансія, неактуальна вакансія'
+    )
     .required("Категорія вакансії є обов'язковим полем"),
   title: Yup.string()
     .matches(
