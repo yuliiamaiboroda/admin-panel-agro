@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { Outlet, useNavigate, useParams, Navigate } from 'react-router-dom';
+import { Notify } from 'notiflix';
 import { useAppDispatch, useAppSelector } from 'hooks';
 import {
   getCertainResume,
@@ -8,6 +9,7 @@ import {
 } from 'redux/resumes';
 import Modal from 'components/Modal/Modal';
 import { useModal } from 'hooks';
+import { translateError } from 'utils';
 
 export default function ResumeModalLayout() {
   const { resumeId } = useParams();
@@ -36,6 +38,7 @@ export default function ResumeModalLayout() {
   const backLinkHref = '/resumes';
 
   if (error) {
+    Notify.failure(translateError(error));
     return <Navigate to={backLinkHref} replace />;
   }
 
