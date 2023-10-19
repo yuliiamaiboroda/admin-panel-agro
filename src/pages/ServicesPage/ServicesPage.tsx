@@ -6,6 +6,7 @@ import { Notify } from 'notiflix';
 
 import PageTitle from 'components/PageTitle';
 import ServicesGallery from 'components/ServicesGallery';
+import { translateError } from 'utils';
 
 export default function ServicesPage() {
   const dispatch = useAppDispatch();
@@ -16,7 +17,7 @@ export default function ServicesPage() {
   }, [dispatch]);
 
   if (error) {
-    Notify.failure(error);
+    Notify.failure(translateError(error));
   }
 
   return (

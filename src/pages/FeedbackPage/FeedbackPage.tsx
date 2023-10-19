@@ -17,6 +17,7 @@ import FilterWrapper from 'components/FilterWrapper';
 import GalleryWrapper from 'components/GalleryWrapper';
 import CardPlaceholder from 'components/CardPlaceholder';
 import LoadMoreButton from 'components/LoadMoreButton';
+import { translateError } from 'utils';
 
 export default function FeedbackPage() {
   const [filterStatus, setFilterStatus] = useState<IFeedbackFilter>({});
@@ -30,12 +31,12 @@ export default function FeedbackPage() {
   }, [dispatch, filterStatus]);
 
   if (error) {
-    Notify.failure(error);
+    Notify.failure(translateError(error));
     return (
       <>
         <PageTitle title="Отримані фідбеки" />
         <GalleryWrapper>
-          <CardPlaceholder title="It seems like:" description={error} />
+          <CardPlaceholder title="Упс... Щось пішло не так." description={translateError(error)} />
         </GalleryWrapper>
       </>
     );
