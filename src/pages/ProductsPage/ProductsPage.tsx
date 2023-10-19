@@ -7,6 +7,7 @@ import ProductsGallery from 'components/ProductsGallery';
 import PageTitle from 'components/PageTitle';
 import GalleryWrapper from 'components/GalleryWrapper';
 import CardPlaceholder from 'components/CardPlaceholder';
+import { translateError } from 'utils';
 
 export default function ProductsPage() {
   const dispatch = useAppDispatch();
@@ -17,14 +18,14 @@ export default function ProductsPage() {
   }, [dispatch]);
 
   if (error) {
-    Notify.failure(error);
+    Notify.failure(translateError(error));
     return (
       <>
         <PageTitle title="Продукти компанії" />
         <GalleryWrapper>
           <CardPlaceholder
-            title="Ooops..."
-            description={`It seems like: ${error}`}
+            title="Упс... Щось пішло не так."
+            description={translateError(error)}
           />
         </GalleryWrapper>
       </>

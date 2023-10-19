@@ -11,6 +11,7 @@ import {
 import Modal from 'components/Modal/';
 import Loader from 'components/Loader';
 import { useModal } from 'hooks';
+import { translateError } from 'utils';
 
 export default function ProductModalLayout() {
   const { productId } = useParams();
@@ -38,7 +39,7 @@ export default function ProductModalLayout() {
   }, [dispatch, productId]);
 
   if (error) {
-    Notify.failure(error);
+    Notify.failure(translateError(error));
     return <Navigate to="/products" replace />;
   }
 

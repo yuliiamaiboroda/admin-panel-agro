@@ -17,6 +17,7 @@ import GalleryWrapper from 'components/GalleryWrapper';
 import CardPlaceholder from 'components/CardPlaceholder';
 import FilterWrapper from 'components/FilterWrapper';
 import LoadMoreButton from 'components/LoadMoreButton';
+import { translateError } from 'utils';
 
 export default function ResumesPage() {
   const [filterStatus, setFilterStatus] = useState<IResumeFilter>({});
@@ -30,12 +31,15 @@ export default function ResumesPage() {
   }, [dispatch, filterStatus]);
 
   if (error) {
-    Notify.failure(error);
+    Notify.failure(translateError(error));
     return (
       <>
         <PageTitle title="Резюме" />
         <GalleryWrapper>
-          <CardPlaceholder title="It seems like:" description={error} />
+          <CardPlaceholder
+            title="Упс... Щось пішло не так."
+            description={translateError(error)}
+          />
         </GalleryWrapper>
       </>
     );
