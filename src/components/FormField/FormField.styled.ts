@@ -33,16 +33,17 @@ export const Label = styled.label`
   flex-direction: column;
   gap: ${props => props.theme.space[1]}px;
   position: relative;
+  color: ${props => props.theme.colors.secondaryText};
 `;
 
 export const Input = styled(Field)`
   padding: ${props => props.theme.space[2]}px;
   border-radius: ${props => props.theme.radii.button};
   outline: none;
-  border-color: ${props =>
+  border: ${props =>
     props.$isInvalid
-      ? props.theme.colors.warning
-      : props.theme.colors.confirmation};
+      ? props.theme.borders.warningBold
+      : props.theme.borders.accent};
   animation: ${props => props.$isInvalid && shakeInput} 0.82s
     cubic-bezier(0.36, 0.07, 0.19, 0.97);
   height: ${props => props.theme.space[11]}px;
@@ -54,8 +55,8 @@ export const Error = styled.div`
   width: 100%;
   top: 105%;
   padding: ${props => props.theme.space[1]}px;
-  animation: ${fadeout} 3s linear;
-  animation-fill-mode: forwards;
+  /* animation: ${fadeout} 3s linear;
+  animation-fill-mode: forwards; */
   border: ${props => props.theme.borders.warning};
   left: ${props => props.theme.space[0]}px;
   background-color: ${props => props.theme.colors.primaryBackground};

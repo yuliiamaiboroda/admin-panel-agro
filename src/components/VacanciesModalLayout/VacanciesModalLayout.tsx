@@ -2,7 +2,7 @@ import { Navigate, Outlet, useNavigate, useParams } from 'react-router-dom';
 import Modal from 'components/Modal/';
 import { useAppDispatch, useAppSelector } from 'hooks';
 import {
-  getCertainVacancy,
+  getVacancyById,
   removeCertainVacancy,
   selectVacancies,
 } from 'redux/vacancies';
@@ -28,7 +28,7 @@ export default function VacanciesModalLayout() {
 
   useEffect(() => {
     if (vacanciesId) {
-      dispatch(getCertainVacancy(vacanciesId));
+      dispatch(getVacancyById(vacanciesId));
     }
     return () => {
       dispatch(removeCertainVacancy());

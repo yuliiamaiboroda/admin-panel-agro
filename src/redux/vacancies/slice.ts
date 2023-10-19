@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import {
   createVacancy,
-  getCertainVacancy,
+  getVacancyById,
   getVacanciesByCategories,
   removeVacancyById,
   updateVacancyById,
@@ -42,9 +42,9 @@ const vacanciesSlice = createSlice({
       .addCase(updateVacancyById.pending, vacancies.pendingReducer)
       .addCase(updateVacancyById.fulfilled, vacancies.updateVacancyReducer)
       .addCase(updateVacancyById.rejected, vacancies.rejectedReducer)
-      .addCase(getCertainVacancy.pending, vacancies.pendingReducer)
-      .addCase(getCertainVacancy.fulfilled, vacancies.getCertainReducer)
-      .addCase(getCertainVacancy.rejected, vacancies.rejectedReducer)
+      .addCase(getVacancyById.pending, vacancies.pendingReducer)
+      .addCase(getVacancyById.fulfilled, vacancies.getCertainReducer)
+      .addCase(getVacancyById.rejected, vacancies.rejectedReducer)
       .addCase(getAllVacancyTitles.pending, vacancies.pendingReducer)
       .addCase(
         getAllVacancyTitles.fulfilled,

@@ -5,6 +5,7 @@ import UploadFileField from 'components/UploadFileField';
 import FormField from 'components/FormField';
 import FormButtons from 'components/FormButtons';
 import TextareaField from 'components/TextareaField';
+import FormTitle from 'components/FormTitle';
 
 interface IProductState {
   title: string;
@@ -50,9 +51,7 @@ export default function ProductForm({
 
   return (
     <>
-      <h2>
-        {submitBtnTitle} продукт {title ? title : null}
-      </h2>
+      <FormTitle title={`${submitBtnTitle} продукт ${title ? title : ''}`} />
       <Formik
         initialValues={{
           title,

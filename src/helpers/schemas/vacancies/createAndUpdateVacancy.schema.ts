@@ -3,7 +3,10 @@ import { Categories } from 'helpers/constants';
 
 const createAndUpdateVacancySchema = Yup.object().shape({
   category: Yup.mixed<Categories>()
-    .oneOf(Object.values(Categories))
+    .oneOf(
+      Object.values(Categories),
+      'Категорія має бути одним із таких значень: актуальна вакансія, неактуальна вакансія'
+    )
     .required("Категорія вакансії є обов'язковим полем"),
   title: Yup.string()
     .matches(
@@ -25,8 +28,8 @@ const createAndUpdateVacancySchema = Yup.object().shape({
       'Опис вакансії занадто короткий - має містити мінімум 10 символів '
     )
     .max(
-      120,
-      'Опис вакансії занадто довгий - має містити максимум 120 символів '
+      2000,
+      'Опис вакансії занадто довгий - має містити максимум 2000 символів '
     )
     .required("Опис вакансії є обов'язковим полем"),
   sallary: Yup.string()

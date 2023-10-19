@@ -1,6 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios, { AxiosError } from 'axios';
 import type { IService, IServiceData } from 'helpers/types';
+import { createFormData } from 'utils';
 
 export const getAllServices = createAsyncThunk<
   IService[],
@@ -40,42 +41,29 @@ export const createService = createAsyncThunk<
   IService,
   IServiceData,
   { rejectValue: string }
->(
-  'services/create',
-  async (
-    { title, description, image, price, contactMail, contactPhone },
-    thunkApi
-  ) => {
-    try {
-      if (!image) {
-        return thunkApi.rejectWithValue('File should be uploaded');
-      }
-      const reqBody = new FormData();
-      reqBody.append('title', title);
-      reqBody.append('description', description);
-      reqBody.append('image', image);
-      reqBody.append('price', price);
-      reqBody.append('contactMail', contactMail);
-      reqBody.append('contactPhone', contactPhone);
-
-      const { data } = await axios.put('/api/services/', reqBody, {
-        headers: { 'Content-Type': 'multipart/form-data' },
-      });
-      if (!data) {
-        thunkApi.rejectWithValue(
-          "Something went wrong... Response doesn't return product"
-        );
-      }
-      return data;
-    } catch (err) {
-      const error = err as AxiosError<{ message: string }>;
-      if (!error.response) {
-        return thunkApi.rejectWithValue('Something went wrong');
-      }
-      return thunkApi.rejectWithValue(error.response.data.message);
+>('services/create', async (serviceData, thunkApi) => {
+  try {
+    if (!serviceData.image) {
+      return thunkApi.rejectWithValue('File should be uploaded');
     }
+    const reqBody = createFormData(serviceData);
+    const { data } = await axios.put('/api/services/', reqBody, {
+      headers: { 'Content-Type': 'multipart/form-data' },
+    });
+    if (!data) {
+      thunkApi.rejectWithValue(
+        "Something went wrong... Response doesn't return product"
+      );
+    }
+    return data;
+  } catch (err) {
+    const error = err as AxiosError<{ message: string }>;
+    if (!error.response) {
+      return thunkApi.rejectWithValue('Something went wrong');
+    }
+    return thunkApi.rejectWithValue(error.response.data.message);
   }
-);
+});
 
 export const deleteService = createAsyncThunk<
   string,
@@ -100,38 +88,24 @@ export const updateService = createAsyncThunk<
     id: string;
   } & IServiceData,
   { rejectValue: string }
->(
-  'services/update',
-  async (
-    { id, title, description, image, price, contactMail, contactPhone },
-    thunkApi
-  ) => {
-    try {
-      const reqBody = new FormData();
-      reqBody.append('title', title);
-      reqBody.append('description', description);
-      if (image) {
-        reqBody.append('image', image);
-      }
-      reqBody.append('price', price);
-      reqBody.append('contactMail', contactMail);
-      reqBody.append('contactPhone', contactPhone);
+>('services/update', async ({ id, ...serviceData }, thunkApi) => {
+  try {
+    const reqBody = createFormData(serviceData);
 
-      const { data } = await axios.post(`/api/services/${id}`, reqBody, {
-        headers: { 'Content-Type': 'multipart/form-data' },
-      });
-      if (!data) {
-        thunkApi.rejectWithValue(
-          "Something went wrong... Response doesn't return product"
-        );
-      }
-      return data;
-    } catch (err) {
-      const error = err as AxiosError<{ message: string }>;
-      if (!error.response) {
-        return thunkApi.rejectWithValue('Something went wrong');
-      }
-      return thunkApi.rejectWithValue(error.response.data.message);
+    const { data } = await axios.post(`/api/services/${id}`, reqBody, {
+      headers: { 'Content-Type': 'multipart/form-data' },
+    });
+    if (!data) {
+      thunkApi.rejectWithValue(
+        "Something went wrong... Response doesn't return product"
+      );
     }
+    return data;
+  } catch (err) {
+    const error = err as AxiosError<{ message: string }>;
+    if (!error.response) {
+      return thunkApi.rejectWithValue('Something went wrong');
+    }
+    return thunkApi.rejectWithValue(error.response.data.message);
   }
-);
+});
