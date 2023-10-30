@@ -3,6 +3,7 @@ import Box from 'components/Box/Box';
 
 export const Backdrop = styled(Box)`
   position: fixed;
+  z-index: 20;
   top: ${p => p.theme.space[0]}px;
   left: ${p => p.theme.space[0]}px;
 
