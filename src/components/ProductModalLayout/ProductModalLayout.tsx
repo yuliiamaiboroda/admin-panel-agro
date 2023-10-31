@@ -48,7 +48,11 @@ export default function ProductModalLayout() {
       isModalOpen={isModalOpen}
       onClose={() => handleCloseModal('/products')}
     >
-      {isLoading ? <Loader /> : <Outlet context={{ handleCloseModal }} />}
+      {isLoading ? (
+        <Loader position="static" />
+      ) : (
+        <Outlet context={{ handleCloseModal }} />
+      )}
     </Modal>
   );
 }
