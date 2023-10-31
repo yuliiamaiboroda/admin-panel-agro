@@ -46,7 +46,11 @@ export default function FeedbackModalLayout() {
         handleCloseModal('/feedbacks');
       }}
     >
-      {isLoading ? <Loader /> : <Outlet context={{ handleCloseModal }} />}
+      {isLoading ? (
+        <Loader position="static" />
+      ) : (
+        <Outlet context={{ handleCloseModal }} />
+      )}
     </Modal>
   );
 }
