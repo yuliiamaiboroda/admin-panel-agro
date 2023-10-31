@@ -17,7 +17,7 @@ export default function FormButtons({
   isDisabled = false,
 }: IProps) {
   return (
-    <Box display="flex" gridGap={[4, 5]}>
+    <Box display="flex" gridGap={[4, 5]} mt={4}>
       <Button variant="secondary" type="button" onClick={onCancel} flexGrow={1}>
         {cancelButtonText}
       </Button>

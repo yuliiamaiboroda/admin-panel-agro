@@ -7,6 +7,8 @@ import ItemLink from 'components/ItemLink/ItemLink';
 import ModalTitle from 'components/ModalTitle';
 import ModalDescription from 'components/ModalDescription';
 import ModalLink from 'components/ModalLink';
+import RestrictedComponent from 'components/RestrictedComponent';
+import { Roles } from 'helpers/constants';
 
 export default function VacanciesModalDetails() {
   const { certain } = useAppSelector(selectVacancies);
@@ -50,18 +52,20 @@ export default function VacanciesModalDetails() {
           {contactMail}
         </ModalLink>
       </Box>
-      <Box display="flex" justifyContent="space-around">
-        <ItemLink
-          type="edit"
-          navigateTo="form"
-          state={{ from: routeLocation }}
-        />
-        <ItemLink
-          type="remove"
-          navigateTo="confirm"
-          state={{ from: routeLocation }}
-        />
-      </Box>
+      <RestrictedComponent accessRight={Roles.applyManager}>
+        <Box display="flex" justifyContent="space-around">
+          <ItemLink
+            type="edit"
+            navigateTo="form"
+            state={{ from: routeLocation }}
+          />
+          <ItemLink
+            type="remove"
+            navigateTo="confirm"
+            state={{ from: routeLocation }}
+          />
+        </Box>
+      </RestrictedComponent>
     </Box>
   );
 }
