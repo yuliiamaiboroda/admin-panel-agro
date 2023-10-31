@@ -3,17 +3,21 @@ import { useField, ErrorMessage } from 'formik';
 import { Label, Error } from 'components/FormField/FormField.styled';
 import { Input } from './UploadFileField.styled';
 
+interface IProps {
+  fileRef: React.RefObject<HTMLInputElement>;
+  label?: string;
+  name: string;
+  placeholder?: string;
+  accept?: string;
+}
+
 export default function UploadFileField({
   fileRef,
   label = 'Зображення',
   name,
   placeholder = 'Оберіть зображення',
-}: {
-  fileRef: React.RefObject<HTMLInputElement>;
-  label?: string;
-  name: string;
-  placeholder?: string;
-}) {
+  accept,
+}: IProps) {
   const [field, meta] = useField(name);
   const [selectedFile, setSelectedFile] = useState<string>('');
 
@@ -28,6 +32,7 @@ export default function UploadFileField({
         type="file"
         ref={fileRef}
         {...field}
+        accept={accept}
         onChangeCapture={handleChange}
         hidden
       />
