@@ -78,7 +78,11 @@ export default function ServiceForm({
       >
         {({ handleSubmit, setFieldValue }) => (
           <Form
-            style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              gap: '10px',
+            }}
           >
             <FormField
               labelName="Заголовок:"
@@ -92,6 +96,7 @@ export default function ServiceForm({
             />
             <UploadFileField
               label="Завантажити зображення"
+              accept=".jpg, .png"
               name="image"
               fileRef={fileField}
             />

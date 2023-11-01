@@ -91,7 +91,11 @@ export default function ProductForm({
               fieldName="description"
               placeholderName="Опис"
             />
-            <UploadFileField name="image" fileRef={fileField} />
+            <UploadFileField
+              name="image"
+              accept=".jpg, .png"
+              fileRef={fileField}
+            />
             <FormField
               labelName="Ціна:"
               placeholderName="Ціна"

@@ -2,15 +2,19 @@ import styled, { keyframes } from 'styled-components';
 import { GiFarmTractor } from 'react-icons/gi';
 interface IProps {
   top: string;
+  position: string;
 }
 
 export const LoaderWrapper = styled.div<IProps>`
   width: 100%;
-  position: absolute;
+  position: ${props => (props.position ? props.position : 'absolute')};
   top: ${props => (props.top ? props.top : '50%')};
-  left: 50%;
-  transform: translateX(-50%) translateY(-50%);
-  z-index: 100;
+  left: ${props => (props.position ? '' : '50%')};
+  transform: ${props =>
+    props.position
+      ? 'translateX(0) translateY(0)'
+      : 'translateX(-50%) translateY(-50%)'};
+  z-index: ${props => (props.position ? '' : '100')};
   display: flex;
   align-items: center;
   justify-content: center;

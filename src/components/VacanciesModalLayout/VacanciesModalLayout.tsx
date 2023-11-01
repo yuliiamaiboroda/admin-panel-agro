@@ -47,7 +47,11 @@ export default function VacanciesModalLayout() {
         handleCloseModal(`/vacancies/${categoryName || ''}`);
       }}
     >
-      {isLoading ? <Loader /> : <Outlet context={{ handleCloseModal }} />}
+      {isLoading ? (
+        <Loader position="static" />
+      ) : (
+        <Outlet context={{ handleCloseModal }} />
+      )}
     </Modal>
   );
 }

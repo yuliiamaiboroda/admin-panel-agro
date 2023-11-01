@@ -50,7 +50,11 @@ export default function ServiceModalLayout() {
         handleCloseModal('/services');
       }}
     >
-      {isLoading ? <Loader /> : <Outlet context={{ handleCloseModal }} />}
+      {isLoading ? (
+        <Loader position="static" />
+      ) : (
+        <Outlet context={{ handleCloseModal }} />
+      )}
     </Modal>
   );
 }
