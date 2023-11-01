@@ -47,7 +47,11 @@ export default function UsersModalLayout() {
         handleCloseModal('/users');
       }}
     >
-      {isLoading ? <Loader /> : <Outlet context={{ handleCloseModal }} />}
+      {isLoading ? (
+        <Loader position="static" />
+      ) : (
+        <Outlet context={{ handleCloseModal }} />
+      )}
     </Modal>
   );
 }
