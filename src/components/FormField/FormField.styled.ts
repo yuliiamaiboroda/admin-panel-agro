@@ -19,15 +19,6 @@ const shakeInput = keyframes`
   }
 `;
 
-const fadeout = keyframes`
-from{
-    opacity: 1;
-}
-to{
-    opacity: 0;
-}
-`;
-
 export const Label = styled.label`
   display: flex;
   flex-direction: column;
