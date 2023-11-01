@@ -55,8 +55,6 @@ export const Error = styled.div`
   width: 100%;
   top: 105%;
   padding: ${props => props.theme.space[1]}px;
-  /* animation: ${fadeout} 3s linear;
-  animation-fill-mode: forwards; */
   border: ${props => props.theme.borders.warning};
   left: ${props => props.theme.space[0]}px;
   background-color: ${props => props.theme.colors.primaryBackground};

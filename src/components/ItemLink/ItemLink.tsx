@@ -1,6 +1,5 @@
 import type { Location } from 'react-router-dom';
 import { HiOutlinePencil, HiOutlineTrash } from 'react-icons/hi';
-// import { ItemLinkLink } from './ItemLink.styled';
 import { ControlLink } from 'helpers/styles';
 
 interface IProps {
