@@ -17,7 +17,6 @@ export const GalleryWrap = styled.ul`
     gap: ${props => props.theme.space[6]}px;
     margin-bottom: ${props => props.theme.space[7]}px;
     margin-top: -${p => p.theme.space[4]}px;
-    /* transform: ${p => `translateY(${-p.theme.space[4]}px)`}; */
   }
 
   @media ${devices.desktop} {
@@ -25,6 +24,5 @@ export const GalleryWrap = styled.ul`
     gap: ${props => props.theme.space[10]}px;
     margin-bottom: ${props => props.theme.space[10]}px;
     margin-top: -${p => p.theme.space[7]}px;
-    /* transform: ${p => `translateY(${-p.theme.space[7]}px)`}; */
   }
 `;

@@ -7,7 +7,6 @@ export const NavigationLink = styled(NavLink)`
   gap: ${p => p.theme.space[2]}px;
 
   padding: ${p => p.theme.space[2]}px ${p => p.theme.space[3]}px;
-  /* width: 100%; */
 
   color: ${p => p.theme.colors.primaryText};
   font-size: ${p => p.theme.fontSizes.m};
