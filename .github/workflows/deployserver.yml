@@ -1,0 +1,37 @@
+name: Deploy to Develop server
+
+on:
+  push:
+    branches:
+      - dev
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20.x'
+
+      - name: Install dependencies, settings and build
+        run: |
+          echo "REACT_APP_BASE_URL=https://api.ahrohimpromcentr.com/" >> .env
+          echo "PUBLIC_URL=https://ahrohimpromcentr.com" >> .env
+          npm ci
+          npm run build
+
+      - name: Copy file via ssh password
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.SERVER_API }}
+          username: ${{ secrets.SERVER_USERNAME }}
+          key: ${{ secrets.SERVER_KEY }}
+          source: './build/'
+          target: /var/www/admin
+          rm: true
+          overwrite: true
