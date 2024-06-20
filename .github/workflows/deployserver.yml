@@ -21,7 +21,7 @@ jobs:
       - name: Install dependencies, settings and build
         run: |
           echo "REACT_APP_BASE_URL=https://api.ahrohimpromcentr.com/" >> .env
-          echo "PUBLIC_URL=https://ahrohimpromcentr.com" >> .env
+          echo "PUBLIC_URL=https://admin.ahrohimpromcentr.com" >> .env
           npm ci
           npm run build
 
